@@ -26,7 +26,9 @@ at section zero (what "different" means, audience, platform, revenue).
 | Sensitive ops | Export/import and similar require biometrics; without biometrics, enable the in-app passcode first, then confirm with it |
 | UI | Modern, animation-rich (app and landing); respect reduced-motion; tokens only |
 
-Details: `docs/06-architecture.md`; phases: `docs/07-roadmap.md`. No bot. Iran and Persian only (RTL, Shamsi calendar); multiple currencies kept. Strings still go through Flutter l10n files, but extra languages are not a goal. Not yet created; code dirs (`app/`, `backend/`, `landing/`) appear when work starts.
+Commands (root `Makefile`): `make setup`, `make run-lite` (no Docker: REST :8010 + gRPC :50051), `make macos`, `make proto` (Python and Dart stubs; add new protos to `DART_PROTOS`), `make check`, `make test`. App id `com.summa.app`; dark glass theme only; no web target for now.
+
+Details: `docs/06-architecture.md`; phases: `docs/07-roadmap.md`. No bot. Iran and Persian only (RTL, Shamsi calendar); multiple currencies kept. Strings still go through Flutter l10n files, but extra languages are not a goal. `app/` and `backend/` exist (phase 00); `landing/` comes in phase 16.
 
 ## Rules
 
