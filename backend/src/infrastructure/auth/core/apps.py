@@ -77,3 +77,24 @@ class AuthCoreConfig(AppConfig):
 
     def ready(self) -> None:
         from infrastructure.auth.core import checks  # noqa: F401
+        from infrastructure.auth.core.challenges import (
+            ChallengeAttemptsExhausted,
+            ChallengeError,
+            ChallengeExpired,
+            InvalidCode,
+        )
+        from infrastructure.auth.core.identities import IdentityError
+        from infrastructure.auth.core.throttling import RateLimited
+        from infrastructure.common.grpc.errors import register_grpc_error
+        from infrastructure.common.responses import ResponseTitle
+
+        # The REST handlers in ``errors.py`` mirror these; gRPC needs its own mapping
+        # or a wrong code would reach the client as UNKNOWN.
+        register_grpc_error(RateLimited, status=429, title=ResponseTitle.RATE_LIMITED)
+        register_grpc_error(
+            ChallengeAttemptsExhausted, status=429, title=ResponseTitle.TOO_MANY_ATTEMPTS
+        )
+        register_grpc_error(ChallengeExpired, status=410, title=ResponseTitle.CODE_EXPIRED)
+        register_grpc_error(InvalidCode, status=400, title=ResponseTitle.INVALID_CODE)
+        register_grpc_error(ChallengeError, status=400, title=ResponseTitle.CHALLENGE_INVALID)
+        register_grpc_error(IdentityError, status=400, title=ResponseTitle.INVALID_IDENTIFIER)

@@ -27,6 +27,29 @@ STATUS_CODES = {
 }
 
 
+# Domain errors that are not ApiErrors but still mean "the client did that". An app
+# registers them from its ``ready()`` (most specific first), so ``common`` never has
+# to import the apps built on it.
+_REGISTERED: list[tuple[type[Exception], int, ResponseTitle]] = []
+
+
+def register_grpc_error(error_type: type[Exception], *, status: int, title: ResponseTitle) -> None:
+    """Render ``error_type`` as ``status`` and ``title`` when a gRPC action raises it.
+
+    Registering the same type twice keeps the first, so an app's ``ready()`` can run
+    more than once without stacking duplicates.
+    """
+    if all(existing is not error_type for existing, _, _ in _REGISTERED):
+        _REGISTERED.append((error_type, status, title))
+
+
+def _registered_refusal(error: Exception) -> ApiError | None:
+    for error_type, status, title in _REGISTERED:
+        if isinstance(error, error_type):
+            return ApiError(str(error), status=status, title=title)
+    return None
+
+
 async def abort(context: Any, error: ApiError) -> None:
     """End the call with the status and the title this refusal carries."""
     code = STATUS_CODES.get(error.status, grpc.StatusCode.UNKNOWN)
@@ -57,5 +80,10 @@ def action(function: Callable[..., Awaitable[Any]]) -> Callable[..., Awaitable[A
             return await function(self, request, context)
         except ApiError as error:
             await abort(context, error)
+        except Exception as error:
+            refusal = _registered_refusal(error)
+            if refusal is None:
+                raise
+            await abort(context, refusal)
 
     return wrapper
