@@ -11,7 +11,7 @@ Future<void> _pump(WidgetTester tester, HealthService service) async {
   await tester.pumpWidget(
     ProviderScope(
       overrides: [healthServiceProvider.overrideWithValue(service)],
-      child: const SummaApp(),
+      child: const SummaApp(initialRoute: healthRoute),
     ),
   );
   await tester.pumpAndSettle();

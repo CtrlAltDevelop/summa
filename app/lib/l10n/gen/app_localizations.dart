@@ -183,6 +183,150 @@ abstract class AppLocalizations {
   /// In fa, this message translates to:
   /// **'خطا'**
   String get statusBad;
+
+  /// No description provided for @loginTitle.
+  ///
+  /// In fa, this message translates to:
+  /// **'ورود به سومّا'**
+  String get loginTitle;
+
+  /// No description provided for @loginSubtitle.
+  ///
+  /// In fa, this message translates to:
+  /// **'شماره موبایلت را بنویس تا کد تأیید برایت بفرستیم.'**
+  String get loginSubtitle;
+
+  /// No description provided for @phoneLabel.
+  ///
+  /// In fa, this message translates to:
+  /// **'شماره موبایل'**
+  String get phoneLabel;
+
+  /// No description provided for @phoneHint.
+  ///
+  /// In fa, this message translates to:
+  /// **'۰۹۱۲ ۳۴۵ ۶۷۸۹'**
+  String get phoneHint;
+
+  /// No description provided for @sendCode.
+  ///
+  /// In fa, this message translates to:
+  /// **'ارسال کد'**
+  String get sendCode;
+
+  /// No description provided for @codeTitle.
+  ///
+  /// In fa, this message translates to:
+  /// **'کد تأیید'**
+  String get codeTitle;
+
+  /// No description provided for @codeSubtitle.
+  ///
+  /// In fa, this message translates to:
+  /// **'کد ۶ رقمی به {destination} فرستاده شد.'**
+  String codeSubtitle(String destination);
+
+  /// No description provided for @codeLabel.
+  ///
+  /// In fa, this message translates to:
+  /// **'کد ۶ رقمی'**
+  String get codeLabel;
+
+  /// No description provided for @verify.
+  ///
+  /// In fa, this message translates to:
+  /// **'تأیید'**
+  String get verify;
+
+  /// No description provided for @resendIn.
+  ///
+  /// In fa, this message translates to:
+  /// **'ارسال دوباره تا {seconds} ثانیه دیگر'**
+  String resendIn(String seconds);
+
+  /// No description provided for @resend.
+  ///
+  /// In fa, this message translates to:
+  /// **'ارسال دوباره کد'**
+  String get resend;
+
+  /// No description provided for @changeNumber.
+  ///
+  /// In fa, this message translates to:
+  /// **'عوض کردن شماره'**
+  String get changeNumber;
+
+  /// No description provided for @nameTitle.
+  ///
+  /// In fa, this message translates to:
+  /// **'اسمت چیه؟'**
+  String get nameTitle;
+
+  /// No description provided for @nameSubtitle.
+  ///
+  /// In fa, this message translates to:
+  /// **'با همین اسم صدایت می‌زنیم.'**
+  String get nameSubtitle;
+
+  /// No description provided for @nameLabel.
+  ///
+  /// In fa, this message translates to:
+  /// **'نام'**
+  String get nameLabel;
+
+  /// No description provided for @continueLabel.
+  ///
+  /// In fa, this message translates to:
+  /// **'ادامه'**
+  String get continueLabel;
+
+  /// No description provided for @homeGreeting.
+  ///
+  /// In fa, this message translates to:
+  /// **'سلام {name}'**
+  String homeGreeting(String name);
+
+  /// No description provided for @signOut.
+  ///
+  /// In fa, this message translates to:
+  /// **'خروج'**
+  String get signOut;
+
+  /// No description provided for @errInvalidPhone.
+  ///
+  /// In fa, this message translates to:
+  /// **'این شماره درست نیست. شماره موبایل ایران را بنویس.'**
+  String get errInvalidPhone;
+
+  /// No description provided for @errWrongCode.
+  ///
+  /// In fa, this message translates to:
+  /// **'کد درست نیست یا منقضی شده. دوباره امتحان کن.'**
+  String get errWrongCode;
+
+  /// No description provided for @errTooMany.
+  ///
+  /// In fa, this message translates to:
+  /// **'تلاش‌ها زیاد بود. کمی بعد دوباره امتحان کن.'**
+  String get errTooMany;
+
+  /// No description provided for @errOffline.
+  ///
+  /// In fa, this message translates to:
+  /// **'اتصال برقرار نشد. اینترنت را بررسی کن.'**
+  String get errOffline;
+
+  /// No description provided for @errUnknown.
+  ///
+  /// In fa, this message translates to:
+  /// **'مشکلی پیش آمد. دوباره امتحان کن.'**
+  String get errUnknown;
+
+  /// No description provided for @retry.
+  ///
+  /// In fa, this message translates to:
+  /// **'تلاش دوباره'**
+  String get retry;
 }
 
 class _AppLocalizationsDelegate
