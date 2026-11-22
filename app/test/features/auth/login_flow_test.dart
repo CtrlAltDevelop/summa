@@ -1,0 +1,152 @@
+import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:flutter_test/flutter_test.dart';
+import 'package:summa/app.dart';
+import 'package:summa/features/auth/auth_controller.dart';
+import 'package:summa/features/auth/auth_models.dart';
+import 'package:summa/features/auth/token_store.dart';
+
+import 'fake_auth_api.dart';
+
+Future<MemoryTokenStore> _pump(
+  WidgetTester tester,
+  FakeAuthApi api, {
+  Tokens? stored,
+}) async {
+  final store = MemoryTokenStore(stored);
+  await tester.pumpWidget(
+    ProviderScope(
+      overrides: [
+        authApiProvider.overrideWithValue(api),
+        tokenStoreProvider.overrideWithValue(store),
+      ],
+      child: const SummaApp(),
+    ),
+  );
+  await tester.pumpAndSettle();
+  return store;
+}
+
+void main() {
+  testWidgets('new person: phone, code, name, then home', (t) async {
+    final api = FakeAuthApi();
+    final store = await _pump(t, api);
+
+    expect(find.text('ورود به سومّا'), findsOneWidget);
+    await t.enterText(find.byType(TextField), '۰۹۱۲۳۴۵۶۷۸۹');
+    await t.tap(find.text('ارسال کد'));
+    await t.pumpAndSettle();
+    expect(api.calls, contains('start:۰۹۱۲۳۴۵۶۷۸۹'));
+    expect(find.text('کد تأیید'), findsOneWidget);
+
+    await t.enterText(find.byType(TextField), '۱۲۳۴۵۶');
+    await t.pumpAndSettle();
+    expect(find.text('اسمت چیه؟'), findsOneWidget);
+    expect(await store.read(), isNotNull);
+
+    await t.enterText(find.byType(TextField), 'سارا');
+    await t.tap(find.text('ادامه'));
+    await t.pumpAndSettle();
+    expect(find.text('سلام سارا'), findsOneWidget);
+  });
+
+  testWidgets('existing person goes straight to home after the code', (
+    t,
+  ) async {
+    final api = FakeAuthApi(profileName: 'رضا');
+    await _pump(t, api);
+
+    await t.enterText(find.byType(TextField), '09123456789');
+    await t.tap(find.text('ارسال کد'));
+    await t.pumpAndSettle();
+    await t.enterText(find.byType(TextField), '123456');
+    await t.pumpAndSettle();
+
+    expect(find.text('سلام رضا'), findsOneWidget);
+  });
+
+  testWidgets('a short number is refused without calling the server', (
+    t,
+  ) async {
+    final api = FakeAuthApi();
+    await _pump(t, api);
+
+    await t.enterText(find.byType(TextField), '0912');
+    await t.tap(find.text('ارسال کد'));
+    await t.pumpAndSettle();
+
+    expect(find.textContaining('این شماره درست نیست'), findsOneWidget);
+    expect(api.calls, isEmpty);
+  });
+
+  testWidgets('a wrong code shows an error and clears the field', (t) async {
+    final api = FakeAuthApi();
+    await _pump(t, api);
+    await t.enterText(find.byType(TextField), '09123456789');
+    await t.tap(find.text('ارسال کد'));
+    await t.pumpAndSettle();
+
+    await t.enterText(find.byType(TextField), '000000');
+    await t.pumpAndSettle();
+
+    expect(find.textContaining('کد درست نیست'), findsOneWidget);
+    expect(t.widget<TextField>(find.byType(TextField)).controller!.text, '');
+  });
+
+  testWidgets('too many requests shows the waiting message', (t) async {
+    final api = FakeAuthApi()..startFailure = AuthFailure.tooMany;
+    await _pump(t, api);
+
+    await t.enterText(find.byType(TextField), '09123456789');
+    await t.tap(find.text('ارسال کد'));
+    await t.pumpAndSettle();
+
+    expect(find.textContaining('تلاش‌ها زیاد بود'), findsOneWidget);
+  });
+
+  testWidgets('resend unlocks after the countdown', (t) async {
+    final api = FakeAuthApi();
+    await _pump(t, api);
+    await t.enterText(find.byType(TextField), '09123456789');
+    await t.tap(find.text('ارسال کد'));
+    await t.pumpAndSettle();
+
+    expect(find.textContaining('ارسال دوباره تا'), findsOneWidget);
+    await t.pump(const Duration(seconds: 61));
+
+    expect(find.text('ارسال دوباره کد'), findsOneWidget);
+    await t.tap(find.text('ارسال دوباره کد'));
+    await t.pump();
+    expect(api.calls.where((x) => x.startsWith('start:')), hasLength(2));
+    await t.pump(const Duration(seconds: 61));
+  });
+
+  testWidgets('a stored session opens home directly', (t) async {
+    final api = FakeAuthApi(profileName: 'سارا');
+    await _pump(t, api, stored: api.currentTokens);
+    expect(find.text('سلام سارا'), findsOneWidget);
+  });
+
+  testWidgets('offline at start offers a retry', (t) async {
+    final api = FakeAuthApi(profileName: 'سارا')
+      ..meFailure = AuthFailure.offline;
+    await _pump(t, api, stored: api.currentTokens);
+    expect(find.textContaining('اتصال برقرار نشد'), findsOneWidget);
+
+    api.meFailure = null;
+    await t.tap(find.text('تلاش دوباره'));
+    await t.pumpAndSettle();
+    expect(find.text('سلام سارا'), findsOneWidget);
+  });
+
+  testWidgets('sign out returns to the login screen', (t) async {
+    final api = FakeAuthApi(profileName: 'سارا');
+    final store = await _pump(t, api, stored: api.currentTokens);
+
+    await t.tap(find.text('خروج'));
+    await t.pumpAndSettle();
+
+    expect(find.text('ورود به سومّا'), findsOneWidget);
+    expect(await store.read(), isNull);
+  });
+}

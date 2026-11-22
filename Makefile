@@ -12,7 +12,10 @@ LITE_ENV := DJANGO_SETTINGS_MODULE=config.settings.development \
 ALL_APPS := DJANGO_CMS_ENABLED=true DJANGO_NOTIFICATIONS_ENABLED=true DJANGO_SHOP_ENABLED=true DJANGO_SUPPORT_ENABLED=true DJANGO_WALLET_ENABLED=true DJANGO_CLUB_ENABLED=true
 
 # Dart stubs are generated for these protos (paths under backend/src). Add new ones here.
-DART_PROTOS := infrastructure/common/grpc/common.proto
+DART_PROTOS := infrastructure/common/grpc/common.proto \
+	infrastructure/accounts/grpc/accounts.proto \
+	infrastructure/auth/sms_code/grpc/auth_sms_code.proto \
+	infrastructure/oauth/rotation/grpc/oauth_rotation.proto
 
 # One-time setup on a clean clone. Contract tooling is installed separately:
 #   brew install protobuf buf && dart pub global activate protoc_plugin

@@ -1,4 +1,4 @@
-import 'package:flutter/widgets.dart';
+import 'package:flutter/material.dart';
 
 import '../tokens/tokens.dart';
 
@@ -29,7 +29,8 @@ class SmBackground extends StatelessWidget {
             alignment: AlignmentDirectional.bottomStart,
             color: SmColors.glowB,
           ),
-          child,
+          // Inputs and ink need a Material ancestor; this one paints nothing.
+          Material(type: MaterialType.transparency, child: child),
         ],
       ),
     );

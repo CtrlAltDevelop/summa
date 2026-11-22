@@ -7,7 +7,13 @@
   "healthFailed": "اتصال برقرار نشد",
   "healthRetry": "دوباره بررسی کن",
   "healthLatency": "تأخیر: {ms} میلی‌ثانیه",
-  "@healthLatency": {"placeholders": {"ms": {"type": "String"}}},
+  "@healthLatency": {
+    "placeholders": {
+      "ms": {
+        "type": "String"
+      }
+    }
+  },
   "galleryTitle": "گالری اجزا",
   "galleryButton": "دکمه اصلی",
   "galleryCard": "کارت شیشه‌ای",
@@ -15,5 +21,50 @@
   "galleryStatus": "وضعیت‌ها",
   "statusOk": "موفق",
   "statusWarn": "هشدار",
-  "statusBad": "خطا"
+  "statusBad": "خطا",
+  "loginTitle": "ورود به سومّا",
+  "loginSubtitle": "شماره موبایلت را بنویس تا کد تأیید برایت بفرستیم.",
+  "phoneLabel": "شماره موبایل",
+  "phoneHint": "۰۹۱۲ ۳۴۵ ۶۷۸۹",
+  "sendCode": "ارسال کد",
+  "codeTitle": "کد تأیید",
+  "codeSubtitle": "کد ۶ رقمی به {destination} فرستاده شد.",
+  "@codeSubtitle": {
+    "placeholders": {
+      "destination": {
+        "type": "String"
+      }
+    }
+  },
+  "codeLabel": "کد ۶ رقمی",
+  "verify": "تأیید",
+  "resendIn": "ارسال دوباره تا {seconds} ثانیه دیگر",
+  "@resendIn": {
+    "placeholders": {
+      "seconds": {
+        "type": "String"
+      }
+    }
+  },
+  "resend": "ارسال دوباره کد",
+  "changeNumber": "عوض کردن شماره",
+  "nameTitle": "اسمت چیه؟",
+  "nameSubtitle": "با همین اسم صدایت می‌زنیم.",
+  "nameLabel": "نام",
+  "continueLabel": "ادامه",
+  "homeGreeting": "سلام {name}",
+  "@homeGreeting": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "signOut": "خروج",
+  "errInvalidPhone": "این شماره درست نیست. شماره موبایل ایران را بنویس.",
+  "errWrongCode": "کد درست نیست یا منقضی شده. دوباره امتحان کن.",
+  "errTooMany": "تلاش‌ها زیاد بود. کمی بعد دوباره امتحان کن.",
+  "errOffline": "اتصال برقرار نشد. اینترنت را بررسی کن.",
+  "errUnknown": "مشکلی پیش آمد. دوباره امتحان کن.",
+  "retry": "تلاش دوباره"
 }

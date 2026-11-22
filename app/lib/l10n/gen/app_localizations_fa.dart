@@ -55,4 +55,84 @@ class AppLocalizationsFa extends AppLocalizations {
 
   @override
   String get statusBad => 'خطا';
+
+  @override
+  String get loginTitle => 'ورود به سومّا';
+
+  @override
+  String get loginSubtitle =>
+      'شماره موبایلت را بنویس تا کد تأیید برایت بفرستیم.';
+
+  @override
+  String get phoneLabel => 'شماره موبایل';
+
+  @override
+  String get phoneHint => '۰۹۱۲ ۳۴۵ ۶۷۸۹';
+
+  @override
+  String get sendCode => 'ارسال کد';
+
+  @override
+  String get codeTitle => 'کد تأیید';
+
+  @override
+  String codeSubtitle(String destination) {
+    return 'کد ۶ رقمی به $destination فرستاده شد.';
+  }
+
+  @override
+  String get codeLabel => 'کد ۶ رقمی';
+
+  @override
+  String get verify => 'تأیید';
+
+  @override
+  String resendIn(String seconds) {
+    return 'ارسال دوباره تا $seconds ثانیه دیگر';
+  }
+
+  @override
+  String get resend => 'ارسال دوباره کد';
+
+  @override
+  String get changeNumber => 'عوض کردن شماره';
+
+  @override
+  String get nameTitle => 'اسمت چیه؟';
+
+  @override
+  String get nameSubtitle => 'با همین اسم صدایت می‌زنیم.';
+
+  @override
+  String get nameLabel => 'نام';
+
+  @override
+  String get continueLabel => 'ادامه';
+
+  @override
+  String homeGreeting(String name) {
+    return 'سلام $name';
+  }
+
+  @override
+  String get signOut => 'خروج';
+
+  @override
+  String get errInvalidPhone =>
+      'این شماره درست نیست. شماره موبایل ایران را بنویس.';
+
+  @override
+  String get errWrongCode => 'کد درست نیست یا منقضی شده. دوباره امتحان کن.';
+
+  @override
+  String get errTooMany => 'تلاش‌ها زیاد بود. کمی بعد دوباره امتحان کن.';
+
+  @override
+  String get errOffline => 'اتصال برقرار نشد. اینترنت را بررسی کن.';
+
+  @override
+  String get errUnknown => 'مشکلی پیش آمد. دوباره امتحان کن.';
+
+  @override
+  String get retry => 'تلاش دوباره';
 }
