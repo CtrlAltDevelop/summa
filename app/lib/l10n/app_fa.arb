@@ -1,0 +1,19 @@
+{
+  "@@locale": "fa",
+  "appName": "سومّا",
+  "healthTitle": "اتصال به سرور",
+  "healthChecking": "در حال بررسی…",
+  "healthOk": "سرور آماده است",
+  "healthFailed": "اتصال برقرار نشد",
+  "healthRetry": "دوباره بررسی کن",
+  "healthLatency": "تأخیر: {ms} میلی‌ثانیه",
+  "@healthLatency": {"placeholders": {"ms": {"type": "String"}}},
+  "galleryTitle": "گالری اجزا",
+  "galleryButton": "دکمه اصلی",
+  "galleryCard": "کارت شیشه‌ای",
+  "galleryCount": "شمارنده",
+  "galleryStatus": "وضعیت‌ها",
+  "statusOk": "موفق",
+  "statusWarn": "هشدار",
+  "statusBad": "خطا"
+}
