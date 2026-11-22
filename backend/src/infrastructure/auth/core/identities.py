@@ -16,6 +16,10 @@ from django.db import transaction
 
 PHONE_PATTERN = re.compile(r"^\+[1-9]\d{7,14}$")
 PHONE_SEPARATORS = re.compile(r"[\s\-().]")
+# Persian and Arabic-Indic digits, as people type them on a local keyboard.
+LOCAL_DIGITS = str.maketrans("۰۱۲۳۴۵۶۷۸۹٠١٢٣٤٥٦٧٨٩", "01234567890123456789")
+# Iranian mobiles as typed without a "+": 0912..., 912..., 98912..., 0098912...
+IRAN_MOBILE = re.compile(r"^(?:0098|98|0)?(9\d{9})$")
 USERNAME_SAFE = re.compile(r"[^A-Za-z0-9_.-]")
 
 
@@ -34,8 +38,15 @@ def normalize_email(raw: str) -> str:
 
 
 def normalize_phone(raw: str) -> str:
-    """Return an E.164 number, tolerating the spacing people actually type."""
-    value = PHONE_SEPARATORS.sub("", raw.strip())
+    """Return an E.164 number, tolerating the spacing and local forms people type.
+
+    Iranian mobiles may be written without the ``+`` (``0912...``), and Persian digits
+    are accepted.
+    """
+    value = PHONE_SEPARATORS.sub("", raw.strip().translate(LOCAL_DIGITS))
+    iranian = IRAN_MOBILE.fullmatch(value)
+    if iranian:
+        return f"+98{iranian.group(1)}"
     if not PHONE_PATTERN.fullmatch(value):
         raise IdentityError("Enter a phone number in international format, such as +14155550101.")
     return value

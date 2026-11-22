@@ -47,6 +47,29 @@ def test_phone_numbers_tolerate_human_spacing(raw: str, expected: str) -> None:
     assert normalize_phone(raw) == expected
 
 
+@pytest.mark.parametrize(
+    "raw",
+    [
+        "09123456789",
+        "9123456789",
+        "989123456789",
+        "00989123456789",
+        "+98 912 345 6789",
+        "۰۹۱۲۳۴۵۶۷۸۹",
+        "0912-345-6789",
+        "٠٩١٢٣٤٥٦٧٨٩",
+    ],
+)
+def test_iranian_mobiles_in_local_forms_become_e164(raw: str) -> None:
+    assert normalize_phone(raw) == "+989123456789"
+
+
+@pytest.mark.parametrize("raw", ["0812345678", "091234567", "0912345678901", "02112345678"])
+def test_non_mobile_iranian_numbers_are_refused(raw: str) -> None:
+    with pytest.raises(IdentityError, match="international format"):
+        normalize_phone(raw)
+
+
 @pytest.mark.parametrize("raw", ["4155550101", "+0155550101", "+123", "+1415555010112345"])
 def test_numbers_outside_e164_are_refused(raw: str) -> None:
     with pytest.raises(IdentityError, match="international format"):
