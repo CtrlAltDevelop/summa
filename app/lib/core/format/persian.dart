@@ -84,3 +84,28 @@ String formatJalaliLong(DateTime date) {
     end: Jalali(nextYear, nextMonth, 1).toDateTime().toUtc(),
   );
 }
+
+/// Parses `۱۴۰۵/۰۹/۱۵` (any digits, `/` or `-`) into the Gregorian date at
+/// local midnight; `null` if it is not a real Shamsi date.
+DateTime? parseJalaliDate(String input) {
+  final parts = toLatinDigits(input.trim()).split(RegExp('[/-]'));
+  if (parts.length != 3) return null;
+  final y = int.tryParse(parts[0]);
+  final m = int.tryParse(parts[1]);
+  final d = int.tryParse(parts[2]);
+  if (y == null || m == null || d == null) return null;
+  if (m < 1 || m > 12 || d < 1 || d > 31) return null;
+  try {
+    final date = Jalali(y, m, d).toDateTime();
+    final back = Jalali.fromDateTime(date);
+    return back.year == y && back.month == m && back.day == d ? date : null;
+  } on Object {
+    return null;
+  }
+}
+
+/// `2026-12-06`, the form the backend takes for a plain date.
+String isoDate(DateTime date) =>
+    '${date.year.toString().padLeft(4, '0')}-'
+    '${date.month.toString().padLeft(2, '0')}-'
+    '${date.day.toString().padLeft(2, '0')}';

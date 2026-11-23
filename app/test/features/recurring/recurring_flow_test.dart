@@ -8,6 +8,7 @@ import 'package:summa/features/categories/category_controller.dart';
 import 'package:summa/features/recurring/recurring_controller.dart';
 import 'package:summa/features/recurring/recurring_models.dart';
 import 'package:summa/features/assistant/assistant_controller.dart';
+import 'package:summa/features/debts/debt_controller.dart';
 import 'package:summa/features/wallets/ledger_controller.dart';
 import 'package:summa/features/wallets/wallet_models.dart';
 import 'package:summa/features/wallets/wallets_controller.dart';
@@ -17,6 +18,7 @@ import '../categories/fake_category_api.dart';
 import '../wallets/fake_ledger_api.dart';
 import '../wallets/fake_wallet_api.dart';
 import 'fake_recurring_api.dart';
+import '../debts/fake_debt_api.dart';
 import '../assistant/fake_assistant_api.dart';
 
 Wallet _wallet(String id, String name) => Wallet(
@@ -71,6 +73,7 @@ Future<FakeRecurringApi> _pump(
           MemoryTokenStore(auth.currentTokens),
         ),
         assistantApiProvider.overrideWithValue(FakeAssistantApi()),
+        debtApiProvider.overrideWithValue(FakeDebtApi()),
         walletApiProvider.overrideWithValue(wallets),
         ledgerApiProvider.overrideWithValue(ledger),
         categoryApiProvider.overrideWithValue(FakeCategoryApi(ledger)),

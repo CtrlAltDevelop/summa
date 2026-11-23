@@ -591,4 +591,76 @@ class AppLocalizationsFa extends AppLocalizations {
 
   @override
   String get accountingHourOff => 'خاموش';
+
+  @override
+  String get debtAdd => 'وام یا قسط جدید';
+
+  @override
+  String get debtTitle => 'وام یا قسط';
+
+  @override
+  String get debtFormTitle => 'بدهی جدید';
+
+  @override
+  String get debtKindLoan => 'وام بانکی';
+
+  @override
+  String get debtKindPurchase => 'خرید اقساطی';
+
+  @override
+  String get debtKindPersonal => 'قرض شخصی';
+
+  @override
+  String get debtTitleLabel => 'عنوان (مثلاً وام مسکن)';
+
+  @override
+  String get debtInstallmentLabel => 'مبلغ هر قسط';
+
+  @override
+  String get debtCountLabel => 'تعداد اقساط';
+
+  @override
+  String get debtFirstDueLabel => 'تاریخ اولین قسط (مثل ۱۴۰۵/۰۹/۱۵)';
+
+  @override
+  String get debtPrincipalLabel => 'مبلغ اصل (اختیاری)';
+
+  @override
+  String get debtWalletLabel => 'کیف پرداخت (اختیاری)';
+
+  @override
+  String get debtRemaining => 'مانده';
+
+  @override
+  String get debtNextDue => 'قسط بعدی';
+
+  @override
+  String get debtClosed => 'تسویه شد';
+
+  @override
+  String get debtOverdue => 'عقب‌افتاده';
+
+  @override
+  String get installmentPay => 'پرداخت شد';
+
+  @override
+  String get installmentUndo => 'لغو پرداخت';
+
+  @override
+  String get installmentPaid => 'پرداخت‌شده';
+
+  @override
+  String get debtDelete => 'حذف بدهی';
+
+  @override
+  String get debtCountInvalid => 'تعداد اقساط باید بین ۱ تا ۱۲۰ باشد.';
+
+  @override
+  String get debtDateInvalid => 'تاریخ اولین قسط درست نیست.';
+
+  @override
+  String get debtPayWallet => 'از کدام کیف پرداخت شود؟';
+
+  @override
+  String get debtPayFailed => 'پرداخت انجام نشد؛ کیف و مبلغ را بررسی کن.';
 }
