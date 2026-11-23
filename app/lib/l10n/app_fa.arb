@@ -331,5 +331,33 @@
         "type": "String"
       }
     }
-  }
+  },
+  "reportOpen": "گزارش ماه",
+  "reportTitle": "گزارش ماه",
+  "reportPrev": "ماه قبل",
+  "reportNext": "ماه بعد",
+  "reportIncome": "درآمد",
+  "reportExpense": "خرج",
+  "reportNet": "خالص",
+  "reportByCategory": "خرج به تفکیک دسته",
+  "reportIncomeByCategory": "درآمد به تفکیک دسته",
+  "reportDaily": "خرج روزانه",
+  "reportEmpty": "در این ماه تراکنشی نیست.",
+  "reportEntries": "تعداد تراکنش: {count}",
+  "@reportEntries": {
+    "placeholders": {
+      "count": {
+        "type": "String"
+      }
+    }
+  },
+  "reportTop": "پرخرج‌ترین دسته: {name}",
+  "@reportTop": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "reportFailed": "گزارش گرفته نشد. دوباره امتحان کن."
 }

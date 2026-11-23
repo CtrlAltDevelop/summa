@@ -120,3 +120,26 @@ String quantityText(String input) =>
 /// Persian digits for a decimal quantity such as `0.5` -> `۰٫۵`.
 String formatQuantity(String quantity) =>
     toPersianDigits(quantity.replaceAll('.', '٫'));
+
+/// The Shamsi month [offset] months from the one containing [moment]
+/// (0 = this month, -1 = last), as `[start, end)` in UTC.
+({DateTime start, DateTime end}) shamsiMonthWindowAt(
+  DateTime moment,
+  int offset,
+) {
+  final j = Jalali.fromDateTime(moment);
+  final index = j.year * 12 + (j.month - 1) + offset;
+  final year = index ~/ 12;
+  final month = index % 12 + 1;
+  final next = index + 1;
+  return (
+    start: Jalali(year, month, 1).toDateTime().toUtc(),
+    end: Jalali(next ~/ 12, next % 12 + 1, 1).toDateTime().toUtc(),
+  );
+}
+
+/// `آذر ۱۴۰۵` for the Shamsi month containing [moment].
+String formatJalaliMonth(DateTime moment) {
+  final j = Jalali.fromDateTime(moment);
+  return toPersianDigits('${_monthNames[j.month - 1]} ${j.year}');
+}

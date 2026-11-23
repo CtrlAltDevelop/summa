@@ -1623,6 +1623,90 @@ abstract class AppLocalizations {
   /// In fa, this message translates to:
   /// **'{percent}٪ از هدف'**
   String basketProgress(String percent);
+
+  /// No description provided for @reportOpen.
+  ///
+  /// In fa, this message translates to:
+  /// **'گزارش ماه'**
+  String get reportOpen;
+
+  /// No description provided for @reportTitle.
+  ///
+  /// In fa, this message translates to:
+  /// **'گزارش ماه'**
+  String get reportTitle;
+
+  /// No description provided for @reportPrev.
+  ///
+  /// In fa, this message translates to:
+  /// **'ماه قبل'**
+  String get reportPrev;
+
+  /// No description provided for @reportNext.
+  ///
+  /// In fa, this message translates to:
+  /// **'ماه بعد'**
+  String get reportNext;
+
+  /// No description provided for @reportIncome.
+  ///
+  /// In fa, this message translates to:
+  /// **'درآمد'**
+  String get reportIncome;
+
+  /// No description provided for @reportExpense.
+  ///
+  /// In fa, this message translates to:
+  /// **'خرج'**
+  String get reportExpense;
+
+  /// No description provided for @reportNet.
+  ///
+  /// In fa, this message translates to:
+  /// **'خالص'**
+  String get reportNet;
+
+  /// No description provided for @reportByCategory.
+  ///
+  /// In fa, this message translates to:
+  /// **'خرج به تفکیک دسته'**
+  String get reportByCategory;
+
+  /// No description provided for @reportIncomeByCategory.
+  ///
+  /// In fa, this message translates to:
+  /// **'درآمد به تفکیک دسته'**
+  String get reportIncomeByCategory;
+
+  /// No description provided for @reportDaily.
+  ///
+  /// In fa, this message translates to:
+  /// **'خرج روزانه'**
+  String get reportDaily;
+
+  /// No description provided for @reportEmpty.
+  ///
+  /// In fa, this message translates to:
+  /// **'در این ماه تراکنشی نیست.'**
+  String get reportEmpty;
+
+  /// No description provided for @reportEntries.
+  ///
+  /// In fa, this message translates to:
+  /// **'تعداد تراکنش: {count}'**
+  String reportEntries(String count);
+
+  /// No description provided for @reportTop.
+  ///
+  /// In fa, this message translates to:
+  /// **'پرخرج‌ترین دسته: {name}'**
+  String reportTop(String name);
+
+  /// No description provided for @reportFailed.
+  ///
+  /// In fa, this message translates to:
+  /// **'گزارش گرفته نشد. دوباره امتحان کن.'**
+  String get reportFailed;
 }
 
 class _AppLocalizationsDelegate
