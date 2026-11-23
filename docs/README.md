@@ -41,6 +41,7 @@
 31. [phases/phase-14-support.md](phases/phase-14-support.md): سند فاز ۱۴ (پشتیبانی)
 32. [phases/phase-15-privacy.md](phases/phase-15-privacy.md): سند فاز ۱۵ (حساب، حریم و قفل اپ)
 33. [phases/phase-15b-data.md](phases/phase-15b-data.md): سند فاز ۱۵b (ورود و خروج داده)
+34. [phases/phase-16b-cms.md](phases/phase-16b-cms.md): سند فاز ۱۶b (مدیریت محتوای لندینگ)
 
 ## محدودیت‌های بررسی
 - همه صفحه‌های عمومی خونده شد، به جز `/disclosure` (دوبار خطای ۵۰۳؛ لیست شریک‌های رفرال و مدل درآمد رفرال مشخص نیست).
