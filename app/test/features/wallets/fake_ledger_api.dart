@@ -28,6 +28,7 @@ class FakeLedgerApi implements LedgerApi {
     required String clientMutationId,
     String categoryId = '',
     DateTime? occurredAt,
+    bool outsideTotals = false,
   }) async {
     if (mutations.contains(clientMutationId)) return entries.first;
     mutations.add(clientMutationId);
@@ -41,6 +42,7 @@ class FakeLedgerApi implements LedgerApi {
       occurredAt: DateTime.utc(2026, 11, 1),
       note: note,
       categoryId: categoryId,
+      outsideTotals: outsideTotals,
     );
     entries.add(entry);
     wallets.shift(
@@ -48,6 +50,35 @@ class FakeLedgerApi implements LedgerApi {
       kind == EntryKind.income ? amountMinor : -amountMinor,
     );
     return entry;
+  }
+
+  @override
+  Future<void> recordSplit(
+    String access, {
+    required String walletId,
+    required List<SplitPart> parts,
+    required String note,
+    required String clientMutationId,
+  }) async {
+    final wallet = wallets.wallets.firstWhere((w) => w.id == walletId);
+    final group = 'split${entries.length}';
+    for (final p in parts) {
+      entries.add(
+        Entry(
+          id: 'e${entries.length + 1}',
+          walletId: walletId,
+          kind: EntryKind.expense,
+          amountMinor: p.amountMinor,
+          currency: wallet.currency,
+          occurredAt: DateTime.utc(2026, 11, 1),
+          note: note,
+          categoryId: p.categoryId,
+          outsideTotals: p.outsideTotals,
+          splitId: group,
+        ),
+      );
+      wallets.shift(walletId, -p.amountMinor);
+    }
   }
 
   @override

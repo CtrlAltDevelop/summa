@@ -8,6 +8,7 @@ import '../../l10n/gen/app_localizations.dart';
 import '../categories/category_controller.dart';
 import 'entry_form_screen.dart';
 import 'entry_models.dart';
+import 'split_form_screen.dart';
 import 'transfer_form_screen.dart';
 import 'ledger_controller.dart';
 import 'wallet_labels.dart';
@@ -34,6 +35,17 @@ class EntriesPanel extends ConsumerWidget {
             onPressed: () => Navigator.of(context).push(
               PageRouteBuilder<void>(
                 pageBuilder: (_, _, _) => EntryFormScreen(wallets: wallets),
+              ),
+            ),
+          ),
+          const SizedBox(height: SmSpace.sm),
+        ],
+        if (wallets.isNotEmpty) ...[
+          SmButton(
+            label: l10n.splitOpen,
+            onPressed: () => Navigator.of(context).push(
+              PageRouteBuilder<void>(
+                pageBuilder: (_, _, _) => SplitFormScreen(wallets: wallets),
               ),
             ),
           ),
@@ -95,6 +107,8 @@ class _EntryTile extends ConsumerWidget {
                   [
                     formatJalaliDate(entry.occurredAt.toLocal()),
                     if (categoryName != null) categoryName,
+                    if (entry.outsideTotals) l10n.entryOutsideTag,
+                    if (entry.splitId.isNotEmpty) l10n.entrySplitTag,
                   ].join(' · '),
                   style: SmType.caption,
                 ),

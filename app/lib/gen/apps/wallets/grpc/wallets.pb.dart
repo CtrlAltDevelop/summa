@@ -728,6 +728,8 @@ class Entry extends $pb.GeneratedMessage {
     $core.String? occurredAt,
     $core.String? note,
     $core.String? categoryId,
+    $core.bool? outsideTotals,
+    $core.String? splitId,
   }) {
     final result = Entry._();
     if (id != null) result.id = id;
@@ -738,6 +740,8 @@ class Entry extends $pb.GeneratedMessage {
     if (occurredAt != null) result.occurredAt = occurredAt;
     if (note != null) result.note = note;
     if (categoryId != null) result.categoryId = categoryId;
+    if (outsideTotals != null) result.outsideTotals = outsideTotals;
+    if (splitId != null) result.splitId = splitId;
     return result;
   }
 
@@ -762,6 +766,8 @@ class Entry extends $pb.GeneratedMessage {
     ..aOS(6, _omitFieldNames ? '' : 'occurredAt')
     ..aOS(7, _omitFieldNames ? '' : 'note')
     ..aOS(8, _omitFieldNames ? '' : 'categoryId')
+    ..aOB(9, _omitFieldNames ? '' : 'outsideTotals')
+    ..aOS(10, _omitFieldNames ? '' : 'splitId')
     ..hasRequiredFields = false;
 
   @$core.Deprecated('See https://github.com/google/protobuf.dart/issues/998.')
@@ -855,6 +861,24 @@ class Entry extends $pb.GeneratedMessage {
   $core.bool hasCategoryId() => $_has(7);
   @$pb.TagNumber(8)
   void clearCategoryId() => $_clearField(8);
+
+  @$pb.TagNumber(9)
+  $core.bool get outsideTotals => $_getBF(8);
+  @$pb.TagNumber(9)
+  set outsideTotals($core.bool value) => $_setBool(8, value);
+  @$pb.TagNumber(9)
+  $core.bool hasOutsideTotals() => $_has(8);
+  @$pb.TagNumber(9)
+  void clearOutsideTotals() => $_clearField(9);
+
+  @$pb.TagNumber(10)
+  $core.String get splitId => $_getSZ(9);
+  @$pb.TagNumber(10)
+  set splitId($core.String value) => $_setString(9, value);
+  @$pb.TagNumber(10)
+  $core.bool hasSplitId() => $_has(9);
+  @$pb.TagNumber(10)
+  void clearSplitId() => $_clearField(10);
 }
 
 class EntryEdit extends $pb.GeneratedMessage {
@@ -864,6 +888,7 @@ class EntryEdit extends $pb.GeneratedMessage {
     $core.String? occurredAt,
     $core.String? note,
     $core.String? categoryId,
+    $core.bool? outsideTotals,
   }) {
     final result = EntryEdit._();
     if (entryId != null) result.entryId = entryId;
@@ -871,6 +896,7 @@ class EntryEdit extends $pb.GeneratedMessage {
     if (occurredAt != null) result.occurredAt = occurredAt;
     if (note != null) result.note = note;
     if (categoryId != null) result.categoryId = categoryId;
+    if (outsideTotals != null) result.outsideTotals = outsideTotals;
     return result;
   }
 
@@ -892,6 +918,7 @@ class EntryEdit extends $pb.GeneratedMessage {
     ..aOS(3, _omitFieldNames ? '' : 'occurredAt')
     ..aOS(4, _omitFieldNames ? '' : 'note')
     ..aOS(5, _omitFieldNames ? '' : 'categoryId')
+    ..aOB(6, _omitFieldNames ? '' : 'outsideTotals')
     ..hasRequiredFields = false;
 
   @$core.Deprecated('See https://github.com/google/protobuf.dart/issues/998.')
@@ -958,6 +985,15 @@ class EntryEdit extends $pb.GeneratedMessage {
   $core.bool hasCategoryId() => $_has(4);
   @$pb.TagNumber(5)
   void clearCategoryId() => $_clearField(5);
+
+  @$pb.TagNumber(6)
+  $core.bool get outsideTotals => $_getBF(5);
+  @$pb.TagNumber(6)
+  set outsideTotals($core.bool value) => $_setBool(5, value);
+  @$pb.TagNumber(6)
+  $core.bool hasOutsideTotals() => $_has(5);
+  @$pb.TagNumber(6)
+  void clearOutsideTotals() => $_clearField(6);
 }
 
 class EntryListReply extends $pb.GeneratedMessage {
@@ -1088,6 +1124,7 @@ class EntryRecord extends $pb.GeneratedMessage {
     $core.String? note,
     $core.String? clientMutationId,
     $core.String? categoryId,
+    $core.bool? outsideTotals,
   }) {
     final result = EntryRecord._();
     if (walletId != null) result.walletId = walletId;
@@ -1097,6 +1134,7 @@ class EntryRecord extends $pb.GeneratedMessage {
     if (note != null) result.note = note;
     if (clientMutationId != null) result.clientMutationId = clientMutationId;
     if (categoryId != null) result.categoryId = categoryId;
+    if (outsideTotals != null) result.outsideTotals = outsideTotals;
     return result;
   }
 
@@ -1120,6 +1158,7 @@ class EntryRecord extends $pb.GeneratedMessage {
     ..aOS(5, _omitFieldNames ? '' : 'note')
     ..aOS(6, _omitFieldNames ? '' : 'clientMutationId')
     ..aOS(7, _omitFieldNames ? '' : 'categoryId')
+    ..aOB(8, _omitFieldNames ? '' : 'outsideTotals')
     ..hasRequiredFields = false;
 
   @$core.Deprecated('See https://github.com/google/protobuf.dart/issues/998.')
@@ -1206,6 +1245,15 @@ class EntryRecord extends $pb.GeneratedMessage {
   $core.bool hasCategoryId() => $_has(6);
   @$pb.TagNumber(7)
   void clearCategoryId() => $_clearField(7);
+
+  @$pb.TagNumber(8)
+  $core.bool get outsideTotals => $_getBF(7);
+  @$pb.TagNumber(8)
+  set outsideTotals($core.bool value) => $_setBool(7, value);
+  @$pb.TagNumber(8)
+  $core.bool hasOutsideTotals() => $_has(7);
+  @$pb.TagNumber(8)
+  void clearOutsideTotals() => $_clearField(8);
 }
 
 class EntryRef extends $pb.GeneratedMessage {
@@ -1319,6 +1367,187 @@ class EntryReply extends $pb.GeneratedMessage {
   void clearEntry() => $_clearField(1);
   @$pb.TagNumber(1)
   Entry ensureEntry() => $_ensure(0);
+}
+
+class SplitPartMsg extends $pb.GeneratedMessage {
+  factory SplitPartMsg({
+    $core.String? categoryId,
+    $fixnum.Int64? amountMinor,
+    $core.bool? outsideTotals,
+  }) {
+    final result = SplitPartMsg._();
+    if (categoryId != null) result.categoryId = categoryId;
+    if (amountMinor != null) result.amountMinor = amountMinor;
+    if (outsideTotals != null) result.outsideTotals = outsideTotals;
+    return result;
+  }
+
+  SplitPartMsg._();
+
+  factory SplitPartMsg.fromBuffer($core.List<$core.int> data,
+          [$pb.ExtensionRegistry registry = $pb.ExtensionRegistry.EMPTY]) =>
+      SplitPartMsg()..mergeFromBuffer(data, registry);
+  factory SplitPartMsg.fromJson($core.String json,
+          [$pb.ExtensionRegistry registry = $pb.ExtensionRegistry.EMPTY]) =>
+      SplitPartMsg()..mergeFromJson(json, registry);
+
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo(
+      _omitMessageNames ? '' : 'SplitPartMsg',
+      package: const $pb.PackageName(_omitMessageNames ? '' : 'config.wallets'),
+      createEmptyInstance: SplitPartMsg.$_createMessage)
+    ..aOS(1, _omitFieldNames ? '' : 'categoryId')
+    ..aInt64(2, _omitFieldNames ? '' : 'amountMinor')
+    ..aOB(3, _omitFieldNames ? '' : 'outsideTotals')
+    ..hasRequiredFields = false;
+
+  @$core.Deprecated('See https://github.com/google/protobuf.dart/issues/998.')
+  SplitPartMsg clone() => deepCopy();
+  @$core.Deprecated('See https://github.com/google/protobuf.dart/issues/998.')
+  SplitPartMsg copyWith(void Function(SplitPartMsg) updates) =>
+      super.copyWith((message) => updates(message as SplitPartMsg))
+          as SplitPartMsg;
+
+  @$core.override
+  $pb.BuilderInfo get info_ => _i;
+
+  @$core.pragma('dart2js:noInline')
+  @$core.Deprecated('Use SplitPartMsg() / SplitPartMsg.new instead')
+  static SplitPartMsg create() => SplitPartMsg._();
+  static $pb.GeneratedMessage $_createMessage() => SplitPartMsg._();
+  @$core.override
+  SplitPartMsg createEmptyInstance() => SplitPartMsg._();
+  @$core.pragma('dart2js:noInline')
+  static SplitPartMsg getDefault() =>
+      _defaultInstance ??= $pb.GeneratedMessage.$_defaultFor<SplitPartMsg>(
+          SplitPartMsg.$_createMessage);
+  static SplitPartMsg? _defaultInstance;
+
+  @$pb.TagNumber(1)
+  $core.String get categoryId => $_getSZ(0);
+  @$pb.TagNumber(1)
+  set categoryId($core.String value) => $_setString(0, value);
+  @$pb.TagNumber(1)
+  $core.bool hasCategoryId() => $_has(0);
+  @$pb.TagNumber(1)
+  void clearCategoryId() => $_clearField(1);
+
+  @$pb.TagNumber(2)
+  $fixnum.Int64 get amountMinor => $_getI64(1);
+  @$pb.TagNumber(2)
+  set amountMinor($fixnum.Int64 value) => $_setInt64(1, value);
+  @$pb.TagNumber(2)
+  $core.bool hasAmountMinor() => $_has(1);
+  @$pb.TagNumber(2)
+  void clearAmountMinor() => $_clearField(2);
+
+  @$pb.TagNumber(3)
+  $core.bool get outsideTotals => $_getBF(2);
+  @$pb.TagNumber(3)
+  set outsideTotals($core.bool value) => $_setBool(2, value);
+  @$pb.TagNumber(3)
+  $core.bool hasOutsideTotals() => $_has(2);
+  @$pb.TagNumber(3)
+  void clearOutsideTotals() => $_clearField(3);
+}
+
+class SplitRequest extends $pb.GeneratedMessage {
+  factory SplitRequest({
+    $core.String? walletId,
+    $core.Iterable<SplitPartMsg>? parts,
+    $core.String? occurredAt,
+    $core.String? note,
+    $core.String? clientMutationId,
+  }) {
+    final result = SplitRequest._();
+    if (walletId != null) result.walletId = walletId;
+    if (parts != null) result.parts.addAll(parts);
+    if (occurredAt != null) result.occurredAt = occurredAt;
+    if (note != null) result.note = note;
+    if (clientMutationId != null) result.clientMutationId = clientMutationId;
+    return result;
+  }
+
+  SplitRequest._();
+
+  factory SplitRequest.fromBuffer($core.List<$core.int> data,
+          [$pb.ExtensionRegistry registry = $pb.ExtensionRegistry.EMPTY]) =>
+      SplitRequest()..mergeFromBuffer(data, registry);
+  factory SplitRequest.fromJson($core.String json,
+          [$pb.ExtensionRegistry registry = $pb.ExtensionRegistry.EMPTY]) =>
+      SplitRequest()..mergeFromJson(json, registry);
+
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo(
+      _omitMessageNames ? '' : 'SplitRequest',
+      package: const $pb.PackageName(_omitMessageNames ? '' : 'config.wallets'),
+      createEmptyInstance: SplitRequest.$_createMessage)
+    ..aOS(1, _omitFieldNames ? '' : 'walletId')
+    ..pPM<SplitPartMsg>(2, _omitFieldNames ? '' : 'parts',
+        subBuilder: SplitPartMsg.$_createMessage)
+    ..aOS(3, _omitFieldNames ? '' : 'occurredAt')
+    ..aOS(4, _omitFieldNames ? '' : 'note')
+    ..aOS(5, _omitFieldNames ? '' : 'clientMutationId')
+    ..hasRequiredFields = false;
+
+  @$core.Deprecated('See https://github.com/google/protobuf.dart/issues/998.')
+  SplitRequest clone() => deepCopy();
+  @$core.Deprecated('See https://github.com/google/protobuf.dart/issues/998.')
+  SplitRequest copyWith(void Function(SplitRequest) updates) =>
+      super.copyWith((message) => updates(message as SplitRequest))
+          as SplitRequest;
+
+  @$core.override
+  $pb.BuilderInfo get info_ => _i;
+
+  @$core.pragma('dart2js:noInline')
+  @$core.Deprecated('Use SplitRequest() / SplitRequest.new instead')
+  static SplitRequest create() => SplitRequest._();
+  static $pb.GeneratedMessage $_createMessage() => SplitRequest._();
+  @$core.override
+  SplitRequest createEmptyInstance() => SplitRequest._();
+  @$core.pragma('dart2js:noInline')
+  static SplitRequest getDefault() =>
+      _defaultInstance ??= $pb.GeneratedMessage.$_defaultFor<SplitRequest>(
+          SplitRequest.$_createMessage);
+  static SplitRequest? _defaultInstance;
+
+  @$pb.TagNumber(1)
+  $core.String get walletId => $_getSZ(0);
+  @$pb.TagNumber(1)
+  set walletId($core.String value) => $_setString(0, value);
+  @$pb.TagNumber(1)
+  $core.bool hasWalletId() => $_has(0);
+  @$pb.TagNumber(1)
+  void clearWalletId() => $_clearField(1);
+
+  @$pb.TagNumber(2)
+  $pb.PbList<SplitPartMsg> get parts => $_getList(1);
+
+  @$pb.TagNumber(3)
+  $core.String get occurredAt => $_getSZ(2);
+  @$pb.TagNumber(3)
+  set occurredAt($core.String value) => $_setString(2, value);
+  @$pb.TagNumber(3)
+  $core.bool hasOccurredAt() => $_has(2);
+  @$pb.TagNumber(3)
+  void clearOccurredAt() => $_clearField(3);
+
+  @$pb.TagNumber(4)
+  $core.String get note => $_getSZ(3);
+  @$pb.TagNumber(4)
+  set note($core.String value) => $_setString(3, value);
+  @$pb.TagNumber(4)
+  $core.bool hasNote() => $_has(3);
+  @$pb.TagNumber(4)
+  void clearNote() => $_clearField(4);
+
+  @$pb.TagNumber(5)
+  $core.String get clientMutationId => $_getSZ(4);
+  @$pb.TagNumber(5)
+  set clientMutationId($core.String value) => $_setString(4, value);
+  @$pb.TagNumber(5)
+  $core.bool hasClientMutationId() => $_has(4);
+  @$pb.TagNumber(5)
+  void clearClientMutationId() => $_clearField(5);
 }
 
 class TransferRequest extends $pb.GeneratedMessage {

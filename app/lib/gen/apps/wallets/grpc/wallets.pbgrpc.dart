@@ -217,6 +217,13 @@ class LedgerControllerClient extends $grpc.Client {
     return $createUnaryCall(_$record, request, options: options);
   }
 
+  $grpc.ResponseFuture<$0.EntryListReply> recordSplit(
+    $0.SplitRequest request, {
+    $grpc.CallOptions? options,
+  }) {
+    return $createUnaryCall(_$recordSplit, request, options: options);
+  }
+
   $grpc.ResponseFuture<$0.EntryListReply> transfer(
     $0.TransferRequest request, {
     $grpc.CallOptions? options,
@@ -242,6 +249,11 @@ class LedgerControllerClient extends $grpc.Client {
       '/config.wallets.LedgerController/Record',
       ($0.EntryRecord value) => value.writeToBuffer(),
       $0.EntryReply.fromBuffer);
+  static final _$recordSplit =
+      $grpc.ClientMethod<$0.SplitRequest, $0.EntryListReply>(
+          '/config.wallets.LedgerController/RecordSplit',
+          ($0.SplitRequest value) => value.writeToBuffer(),
+          $0.EntryListReply.fromBuffer);
   static final _$transfer =
       $grpc.ClientMethod<$0.TransferRequest, $0.EntryListReply>(
           '/config.wallets.LedgerController/Transfer',
@@ -282,6 +294,13 @@ abstract class LedgerControllerServiceBase extends $grpc.Service {
         false,
         ($core.List<$core.int> value) => $0.EntryRecord.fromBuffer(value),
         ($0.EntryReply value) => value.writeToBuffer()));
+    $addMethod($grpc.ServiceMethod<$0.SplitRequest, $0.EntryListReply>(
+        'RecordSplit',
+        recordSplit_Pre,
+        false,
+        false,
+        ($core.List<$core.int> value) => $0.SplitRequest.fromBuffer(value),
+        ($0.EntryListReply value) => value.writeToBuffer()));
     $addMethod($grpc.ServiceMethod<$0.TransferRequest, $0.EntryListReply>(
         'Transfer',
         transfer_Pre,
@@ -321,6 +340,14 @@ abstract class LedgerControllerServiceBase extends $grpc.Service {
 
   $async.Future<$0.EntryReply> record(
       $grpc.ServiceCall call, $0.EntryRecord request);
+
+  $async.Future<$0.EntryListReply> recordSplit_Pre(
+      $grpc.ServiceCall $call, $async.Future<$0.SplitRequest> $request) async {
+    return recordSplit($call, await $request);
+  }
+
+  $async.Future<$0.EntryListReply> recordSplit(
+      $grpc.ServiceCall call, $0.SplitRequest request);
 
   $async.Future<$0.EntryListReply> transfer_Pre($grpc.ServiceCall $call,
       $async.Future<$0.TransferRequest> $request) async {

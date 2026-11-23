@@ -97,6 +97,7 @@ class FakeCategoryApi implements CategoryApi {
               (x) =>
                   x.categoryId == e.key &&
                   x.kind == EntryKind.expense &&
+                  !x.outsideTotals &&
                   x.currency == e.value.$1,
             )
             .fold(0, (a, x) => a + x.amountMinor),

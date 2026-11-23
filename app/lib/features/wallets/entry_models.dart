@@ -28,6 +28,8 @@ class Entry {
     required this.occurredAt,
     required this.note,
     this.categoryId = '',
+    this.outsideTotals = false,
+    this.splitId = '',
   });
 
   final String id;
@@ -40,4 +42,23 @@ class Entry {
 
   /// Empty when the entry has no category (transfers, fees).
   final String categoryId;
+
+  /// Money that left the wallet but is not the person's own expense.
+  final bool outsideTotals;
+
+  /// Shared by all parts of one split expense; empty otherwise.
+  final String splitId;
+}
+
+/// One share of a split expense.
+class SplitPart {
+  const SplitPart({
+    required this.categoryId,
+    required this.amountMinor,
+    this.outsideTotals = false,
+  });
+
+  final String categoryId;
+  final int amountMinor;
+  final bool outsideTotals;
 }
