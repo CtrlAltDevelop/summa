@@ -1,0 +1,66 @@
+syntax = "proto3";
+
+package config.networth;
+
+import "google/protobuf/empty.proto";
+
+service NetWorthController {
+    rpc CreateBasket(BasketCreate) returns (BasketReply) {}
+    rpc DeleteBasket(BasketRef) returns (google.protobuf.Empty) {}
+    rpc Get(google.protobuf.Empty) returns (NetWorthReply) {}
+    rpc ListBaskets(google.protobuf.Empty) returns (BasketListReply) {}
+}
+
+message BasketCreate {
+    string name = 1;
+    int64 target_minor = 2;
+    repeated BasketItemRefMsg items = 3;
+    string client_mutation_id = 4;
+}
+
+message BasketItemMsg {
+    string kind = 1;
+    string ref_id = 2;
+    string name = 3;
+    int64 value_minor = 4;
+}
+
+message BasketItemRefMsg {
+    string kind = 1;
+    string ref_id = 2;
+}
+
+message BasketListReply {
+    repeated BasketMsg baskets = 1;
+}
+
+message BasketMsg {
+    string id = 1;
+    string name = 2;
+    int64 target_minor = 3;
+    int64 value_minor = 4;
+    int64 percent = 5;
+    repeated BasketItemMsg items = 6;
+}
+
+message BasketRef {
+    string basket_id = 1;
+}
+
+message BasketReply {
+    BasketMsg basket = 1;
+}
+
+message NetWorthReply {
+    int64 total_minor = 1;
+    int64 wallets_minor = 2;
+    int64 assets_minor = 3;
+    int64 debts_minor = 4;
+    bool usd_present = 5;
+    int64 usd_minor = 6;
+    string gold_grams = 7;
+    bool stale = 8;
+    repeated string unconverted = 9;
+    int32 unpriced_assets = 10;
+}
+
