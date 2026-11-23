@@ -4,6 +4,7 @@ package config.reports;
 
 service ReportsController {
     rpc ExportCsv(ExportRequest) returns (ExportReply) {}
+    rpc ImportCsv(ImportRequest) returns (ImportReply) {}
     rpc Monthly(ReportRequest) returns (ReportReply) {}
 }
 
@@ -28,6 +29,24 @@ message ExportReply {
 message ExportRequest {
     string starts_at = 1;
     string ends_at = 2;
+}
+
+message ImportErrorMsg {
+    int32 line = 1;
+    string message = 2;
+}
+
+message ImportReply {
+    int32 rows = 1;
+    int32 importable = 2;
+    int32 imported = 3;
+    int32 skipped = 4;
+    repeated ImportErrorMsg errors = 5;
+}
+
+message ImportRequest {
+    string text = 1;
+    bool commit = 2;
 }
 
 message ReportReply {

@@ -116,6 +116,82 @@ class ExportRequest(_message.Message):
 Global___ExportRequest: _TypeAlias = ExportRequest  # noqa: Y015
 
 @_typing.final
+class ImportErrorMsg(_message.Message):
+    DESCRIPTOR: _descriptor.Descriptor
+
+    LINE_FIELD_NUMBER: _builtins.int
+    MESSAGE_FIELD_NUMBER: _builtins.int
+    line: _builtins.int
+    message: _builtins.str
+    def __init__(
+        self,
+        *,
+        line: _builtins.int = ...,
+        message: _builtins.str = ...,
+    ) -> None: ...
+    _HasFieldArgType: _TypeAlias = _Never  # noqa: Y015
+    def HasField(self, field_name: _HasFieldArgType) -> _builtins.bool: ...
+    _ClearFieldArgType: _TypeAlias = _typing.Literal["line", b"line", "message", b"message"]  # noqa: Y015
+    def ClearField(self, field_name: _ClearFieldArgType) -> None: ...
+    def WhichOneof(self, oneof_group: _Never) -> None: ...
+
+Global___ImportErrorMsg: _TypeAlias = ImportErrorMsg  # noqa: Y015
+
+@_typing.final
+class ImportReply(_message.Message):
+    DESCRIPTOR: _descriptor.Descriptor
+
+    ROWS_FIELD_NUMBER: _builtins.int
+    IMPORTABLE_FIELD_NUMBER: _builtins.int
+    IMPORTED_FIELD_NUMBER: _builtins.int
+    SKIPPED_FIELD_NUMBER: _builtins.int
+    ERRORS_FIELD_NUMBER: _builtins.int
+    rows: _builtins.int
+    importable: _builtins.int
+    imported: _builtins.int
+    skipped: _builtins.int
+    @_builtins.property
+    def errors(self) -> _containers.RepeatedCompositeFieldContainer[Global___ImportErrorMsg]: ...
+    def __init__(
+        self,
+        *,
+        rows: _builtins.int = ...,
+        importable: _builtins.int = ...,
+        imported: _builtins.int = ...,
+        skipped: _builtins.int = ...,
+        errors: _abc.Iterable[Global___ImportErrorMsg] | None = ...,
+    ) -> None: ...
+    _HasFieldArgType: _TypeAlias = _Never  # noqa: Y015
+    def HasField(self, field_name: _HasFieldArgType) -> _builtins.bool: ...
+    _ClearFieldArgType: _TypeAlias = _typing.Literal["errors", b"errors", "importable", b"importable", "imported", b"imported", "rows", b"rows", "skipped", b"skipped"]  # noqa: Y015
+    def ClearField(self, field_name: _ClearFieldArgType) -> None: ...
+    def WhichOneof(self, oneof_group: _Never) -> None: ...
+
+Global___ImportReply: _TypeAlias = ImportReply  # noqa: Y015
+
+@_typing.final
+class ImportRequest(_message.Message):
+    DESCRIPTOR: _descriptor.Descriptor
+
+    TEXT_FIELD_NUMBER: _builtins.int
+    COMMIT_FIELD_NUMBER: _builtins.int
+    text: _builtins.str
+    commit: _builtins.bool
+    def __init__(
+        self,
+        *,
+        text: _builtins.str = ...,
+        commit: _builtins.bool = ...,
+    ) -> None: ...
+    _HasFieldArgType: _TypeAlias = _Never  # noqa: Y015
+    def HasField(self, field_name: _HasFieldArgType) -> _builtins.bool: ...
+    _ClearFieldArgType: _TypeAlias = _typing.Literal["commit", b"commit", "text", b"text"]  # noqa: Y015
+    def ClearField(self, field_name: _ClearFieldArgType) -> None: ...
+    def WhichOneof(self, oneof_group: _Never) -> None: ...
+
+Global___ImportRequest: _TypeAlias = ImportRequest  # noqa: Y015
+
+@_typing.final
 class ReportReply(_message.Message):
     DESCRIPTOR: _descriptor.Descriptor
 
