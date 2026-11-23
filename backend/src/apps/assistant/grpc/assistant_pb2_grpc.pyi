@@ -33,19 +33,23 @@ class AssistantControllerStub:
     @_typing.overload
     def __new__(cls, channel: _aio.Channel) -> AssistantControllerAsyncStub: ...
     Clear: _grpc.UnaryUnaryMultiCallable[_empty_pb2.Empty, _empty_pb2.Empty]
+    Digest: _grpc.UnaryUnaryMultiCallable[_empty_pb2.Empty, _assistant_pb2.DigestReply]
     History: _grpc.UnaryUnaryMultiCallable[_assistant_pb2.HistoryQuery, _assistant_pb2.ChatReply]
     LinkCard: _grpc.UnaryUnaryMultiCallable[_assistant_pb2.CardLink, _empty_pb2.Empty]
     ParseSms: _grpc.UnaryUnaryMultiCallable[_assistant_pb2.SmsText, _assistant_pb2.SmsCard]
     Send: _grpc.UnaryUnaryMultiCallable[_assistant_pb2.MessageSend, _assistant_pb2.ChatReply]
+    SetAccountingHour: _grpc.UnaryUnaryMultiCallable[_assistant_pb2.AccountingHour, _empty_pb2.Empty]
 
 @_typing.type_check_only
 class AssistantControllerAsyncStub(AssistantControllerStub):
     def __init__(self, channel: _aio.Channel) -> None: ...
     Clear: _aio.UnaryUnaryMultiCallable[_empty_pb2.Empty, _empty_pb2.Empty]  # type: ignore[assignment]
+    Digest: _aio.UnaryUnaryMultiCallable[_empty_pb2.Empty, _assistant_pb2.DigestReply]  # type: ignore[assignment]
     History: _aio.UnaryUnaryMultiCallable[_assistant_pb2.HistoryQuery, _assistant_pb2.ChatReply]  # type: ignore[assignment]
     LinkCard: _aio.UnaryUnaryMultiCallable[_assistant_pb2.CardLink, _empty_pb2.Empty]  # type: ignore[assignment]
     ParseSms: _aio.UnaryUnaryMultiCallable[_assistant_pb2.SmsText, _assistant_pb2.SmsCard]  # type: ignore[assignment]
     Send: _aio.UnaryUnaryMultiCallable[_assistant_pb2.MessageSend, _assistant_pb2.ChatReply]  # type: ignore[assignment]
+    SetAccountingHour: _aio.UnaryUnaryMultiCallable[_assistant_pb2.AccountingHour, _empty_pb2.Empty]  # type: ignore[assignment]
 
 class AssistantControllerServicer(metaclass=_abc_1.ABCMeta):
     @_abc_1.abstractmethod
@@ -54,6 +58,13 @@ class AssistantControllerServicer(metaclass=_abc_1.ABCMeta):
         request: _empty_pb2.Empty,
         context: _ServicerContext,
     ) -> _typing.Union[_empty_pb2.Empty, _abc.Awaitable[_empty_pb2.Empty]]: ...
+
+    @_abc_1.abstractmethod
+    def Digest(
+        self,
+        request: _empty_pb2.Empty,
+        context: _ServicerContext,
+    ) -> _typing.Union[_assistant_pb2.DigestReply, _abc.Awaitable[_assistant_pb2.DigestReply]]: ...
 
     @_abc_1.abstractmethod
     def History(
@@ -82,5 +93,12 @@ class AssistantControllerServicer(metaclass=_abc_1.ABCMeta):
         request: _assistant_pb2.MessageSend,
         context: _ServicerContext,
     ) -> _typing.Union[_assistant_pb2.ChatReply, _abc.Awaitable[_assistant_pb2.ChatReply]]: ...
+
+    @_abc_1.abstractmethod
+    def SetAccountingHour(
+        self,
+        request: _assistant_pb2.AccountingHour,
+        context: _ServicerContext,
+    ) -> _typing.Union[_empty_pb2.Empty, _abc.Awaitable[_empty_pb2.Empty]]: ...
 
 def add_AssistantControllerServicer_to_server(servicer: AssistantControllerServicer, server: _typing.Union[_grpc.Server, _aio.Server]) -> None: ...

@@ -6,10 +6,16 @@ import "google/protobuf/empty.proto";
 
 service AssistantController {
     rpc Clear(google.protobuf.Empty) returns (google.protobuf.Empty) {}
+    rpc Digest(google.protobuf.Empty) returns (DigestReply) {}
     rpc History(HistoryQuery) returns (ChatReply) {}
     rpc LinkCard(CardLink) returns (google.protobuf.Empty) {}
     rpc ParseSms(SmsText) returns (SmsCard) {}
     rpc Send(MessageSend) returns (ChatReply) {}
+    rpc SetAccountingHour(AccountingHour) returns (google.protobuf.Empty) {}
+}
+
+message AccountingHour {
+    int32 hour = 1;
 }
 
 message Card {
@@ -30,6 +36,15 @@ message CardLink {
 
 message ChatReply {
     repeated Message messages = 1;
+}
+
+message DigestReply {
+    int32 accounting_hour = 1;
+    int32 entries_today = 2;
+    int32 uncategorized_today = 3;
+    int32 due_questions = 4;
+    int32 low_balance_warnings = 5;
+    bool should_remind = 6;
 }
 
 message HistoryQuery {

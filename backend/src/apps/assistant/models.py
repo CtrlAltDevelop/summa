@@ -53,3 +53,16 @@ class SmsCardLink(models.Model):
 
     def __str__(self) -> str:
         return f"****{self.last4} -> {self.wallet_id}"
+
+
+class UserPreference(models.Model):
+    """Per-user settings the assistant needs. Today: the daily accounting hour."""
+
+    user = models.OneToOneField(
+        settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name="+", primary_key=True
+    )
+    # Tehran hour 0-23 after which the app reminds the user; null = no reminder.
+    accounting_hour = models.PositiveSmallIntegerField(null=True, blank=True)
+
+    def __str__(self) -> str:
+        return f"{self.user_id}: {self.accounting_hour}"

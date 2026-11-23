@@ -19,6 +19,25 @@ else:
 DESCRIPTOR: _descriptor.FileDescriptor
 
 @_typing.final
+class AccountingHour(_message.Message):
+    DESCRIPTOR: _descriptor.Descriptor
+
+    HOUR_FIELD_NUMBER: _builtins.int
+    hour: _builtins.int
+    def __init__(
+        self,
+        *,
+        hour: _builtins.int = ...,
+    ) -> None: ...
+    _HasFieldArgType: _TypeAlias = _Never  # noqa: Y015
+    def HasField(self, field_name: _HasFieldArgType) -> _builtins.bool: ...
+    _ClearFieldArgType: _TypeAlias = _typing.Literal["hour", b"hour"]  # noqa: Y015
+    def ClearField(self, field_name: _ClearFieldArgType) -> None: ...
+    def WhichOneof(self, oneof_group: _Never) -> None: ...
+
+Global___AccountingHour: _TypeAlias = AccountingHour  # noqa: Y015
+
+@_typing.final
 class Card(_message.Message):
     DESCRIPTOR: _descriptor.Descriptor
 
@@ -99,6 +118,40 @@ class ChatReply(_message.Message):
     def WhichOneof(self, oneof_group: _Never) -> None: ...
 
 Global___ChatReply: _TypeAlias = ChatReply  # noqa: Y015
+
+@_typing.final
+class DigestReply(_message.Message):
+    DESCRIPTOR: _descriptor.Descriptor
+
+    ACCOUNTING_HOUR_FIELD_NUMBER: _builtins.int
+    ENTRIES_TODAY_FIELD_NUMBER: _builtins.int
+    UNCATEGORIZED_TODAY_FIELD_NUMBER: _builtins.int
+    DUE_QUESTIONS_FIELD_NUMBER: _builtins.int
+    LOW_BALANCE_WARNINGS_FIELD_NUMBER: _builtins.int
+    SHOULD_REMIND_FIELD_NUMBER: _builtins.int
+    accounting_hour: _builtins.int
+    entries_today: _builtins.int
+    uncategorized_today: _builtins.int
+    due_questions: _builtins.int
+    low_balance_warnings: _builtins.int
+    should_remind: _builtins.bool
+    def __init__(
+        self,
+        *,
+        accounting_hour: _builtins.int = ...,
+        entries_today: _builtins.int = ...,
+        uncategorized_today: _builtins.int = ...,
+        due_questions: _builtins.int = ...,
+        low_balance_warnings: _builtins.int = ...,
+        should_remind: _builtins.bool = ...,
+    ) -> None: ...
+    _HasFieldArgType: _TypeAlias = _Never  # noqa: Y015
+    def HasField(self, field_name: _HasFieldArgType) -> _builtins.bool: ...
+    _ClearFieldArgType: _TypeAlias = _typing.Literal["accounting_hour", b"accounting_hour", "due_questions", b"due_questions", "entries_today", b"entries_today", "low_balance_warnings", b"low_balance_warnings", "should_remind", b"should_remind", "uncategorized_today", b"uncategorized_today"]  # noqa: Y015
+    def ClearField(self, field_name: _ClearFieldArgType) -> None: ...
+    def WhichOneof(self, oneof_group: _Never) -> None: ...
+
+Global___DigestReply: _TypeAlias = DigestReply  # noqa: Y015
 
 @_typing.final
 class HistoryQuery(_message.Message):
