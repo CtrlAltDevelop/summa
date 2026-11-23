@@ -4,6 +4,13 @@ package config.wallets;
 
 import "google/protobuf/empty.proto";
 
+service LedgerController {
+    rpc Delete(EntryRef) returns (google.protobuf.Empty) {}
+    rpc Edit(EntryEdit) returns (EntryReply) {}
+    rpc List(EntryQuery) returns (EntryListReply) {}
+    rpc Record(EntryRecord) returns (EntryReply) {}
+}
+
 service WalletsController {
     rpc Archive(WalletRef) returns (WalletReply) {}
     rpc Create(WalletCreate) returns (WalletReply) {}
@@ -13,6 +20,49 @@ service WalletsController {
 message CurrencyTotal {
     string currency = 1;
     int64 balance_minor = 2;
+}
+
+message Entry {
+    string id = 1;
+    string wallet_id = 2;
+    string kind = 3;
+    int64 amount_minor = 4;
+    string currency = 5;
+    string occurred_at = 6;
+    string note = 7;
+}
+
+message EntryEdit {
+    string entry_id = 1;
+    int64 amount_minor = 2;
+    string occurred_at = 3;
+    string note = 4;
+}
+
+message EntryListReply {
+    repeated Entry entries = 1;
+}
+
+message EntryQuery {
+    string wallet_id = 1;
+    int32 limit = 2;
+}
+
+message EntryRecord {
+    string wallet_id = 1;
+    string kind = 2;
+    int64 amount_minor = 3;
+    string occurred_at = 4;
+    string note = 5;
+    string client_mutation_id = 6;
+}
+
+message EntryRef {
+    string entry_id = 1;
+}
+
+message EntryReply {
+    Entry entry = 1;
 }
 
 message Wallet {

@@ -18,3 +18,13 @@ class Wallet(serializers.Serializer[dict[str, object]]):
 class CurrencyTotal(serializers.Serializer[dict[str, object]]):
     currency = serializers.CharField()
     balance_minor = serializers.IntegerField(min_value=BIG_MIN, max_value=BIG_MAX)
+
+
+class Entry(serializers.Serializer[dict[str, object]]):
+    id = serializers.CharField()
+    wallet_id = serializers.CharField()
+    kind = serializers.CharField()
+    amount_minor = serializers.IntegerField(min_value=BIG_MIN, max_value=BIG_MAX)
+    currency = serializers.CharField()
+    occurred_at = serializers.CharField()
+    note = serializers.CharField()

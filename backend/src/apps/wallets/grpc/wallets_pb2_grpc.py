@@ -26,6 +26,207 @@ if _version_not_supported:
     )
 
 
+class LedgerControllerStub:
+    """Missing associated documentation comment in .proto file."""
+
+    def __init__(self, channel):
+        """Constructor.
+
+        Args:
+            channel: A grpc.Channel.
+        """
+        self.Delete = channel.unary_unary(
+                '/config.wallets.LedgerController/Delete',
+                request_serializer=apps_dot_wallets_dot_grpc_dot_wallets__pb2.EntryRef.SerializeToString,
+                response_deserializer=google_dot_protobuf_dot_empty__pb2.Empty.FromString,
+                _registered_method=True)
+        self.Edit = channel.unary_unary(
+                '/config.wallets.LedgerController/Edit',
+                request_serializer=apps_dot_wallets_dot_grpc_dot_wallets__pb2.EntryEdit.SerializeToString,
+                response_deserializer=apps_dot_wallets_dot_grpc_dot_wallets__pb2.EntryReply.FromString,
+                _registered_method=True)
+        self.List = channel.unary_unary(
+                '/config.wallets.LedgerController/List',
+                request_serializer=apps_dot_wallets_dot_grpc_dot_wallets__pb2.EntryQuery.SerializeToString,
+                response_deserializer=apps_dot_wallets_dot_grpc_dot_wallets__pb2.EntryListReply.FromString,
+                _registered_method=True)
+        self.Record = channel.unary_unary(
+                '/config.wallets.LedgerController/Record',
+                request_serializer=apps_dot_wallets_dot_grpc_dot_wallets__pb2.EntryRecord.SerializeToString,
+                response_deserializer=apps_dot_wallets_dot_grpc_dot_wallets__pb2.EntryReply.FromString,
+                _registered_method=True)
+
+
+class LedgerControllerServicer:
+    """Missing associated documentation comment in .proto file."""
+
+    def Delete(self, request, context):
+        """Missing associated documentation comment in .proto file."""
+        context.set_code(grpc.StatusCode.UNIMPLEMENTED)
+        context.set_details('Method not implemented!')
+        raise NotImplementedError('Method not implemented!')
+
+    def Edit(self, request, context):
+        """Missing associated documentation comment in .proto file."""
+        context.set_code(grpc.StatusCode.UNIMPLEMENTED)
+        context.set_details('Method not implemented!')
+        raise NotImplementedError('Method not implemented!')
+
+    def List(self, request, context):
+        """Missing associated documentation comment in .proto file."""
+        context.set_code(grpc.StatusCode.UNIMPLEMENTED)
+        context.set_details('Method not implemented!')
+        raise NotImplementedError('Method not implemented!')
+
+    def Record(self, request, context):
+        """Missing associated documentation comment in .proto file."""
+        context.set_code(grpc.StatusCode.UNIMPLEMENTED)
+        context.set_details('Method not implemented!')
+        raise NotImplementedError('Method not implemented!')
+
+
+def add_LedgerControllerServicer_to_server(servicer, server):
+    rpc_method_handlers = {
+            'Delete': grpc.unary_unary_rpc_method_handler(
+                    servicer.Delete,
+                    request_deserializer=apps_dot_wallets_dot_grpc_dot_wallets__pb2.EntryRef.FromString,
+                    response_serializer=google_dot_protobuf_dot_empty__pb2.Empty.SerializeToString,
+            ),
+            'Edit': grpc.unary_unary_rpc_method_handler(
+                    servicer.Edit,
+                    request_deserializer=apps_dot_wallets_dot_grpc_dot_wallets__pb2.EntryEdit.FromString,
+                    response_serializer=apps_dot_wallets_dot_grpc_dot_wallets__pb2.EntryReply.SerializeToString,
+            ),
+            'List': grpc.unary_unary_rpc_method_handler(
+                    servicer.List,
+                    request_deserializer=apps_dot_wallets_dot_grpc_dot_wallets__pb2.EntryQuery.FromString,
+                    response_serializer=apps_dot_wallets_dot_grpc_dot_wallets__pb2.EntryListReply.SerializeToString,
+            ),
+            'Record': grpc.unary_unary_rpc_method_handler(
+                    servicer.Record,
+                    request_deserializer=apps_dot_wallets_dot_grpc_dot_wallets__pb2.EntryRecord.FromString,
+                    response_serializer=apps_dot_wallets_dot_grpc_dot_wallets__pb2.EntryReply.SerializeToString,
+            ),
+    }
+    generic_handler = grpc.method_handlers_generic_handler(
+            'config.wallets.LedgerController', rpc_method_handlers)
+    server.add_generic_rpc_handlers((generic_handler,))
+    server.add_registered_method_handlers('config.wallets.LedgerController', rpc_method_handlers)
+
+
+ # This class is part of an EXPERIMENTAL API.
+class LedgerController:
+    """Missing associated documentation comment in .proto file."""
+
+    @staticmethod
+    def Delete(request,
+            target,
+            options=(),
+            channel_credentials=None,
+            call_credentials=None,
+            insecure=False,
+            compression=None,
+            wait_for_ready=None,
+            timeout=None,
+            metadata=None):
+        return grpc.experimental.unary_unary(
+            request,
+            target,
+            '/config.wallets.LedgerController/Delete',
+            apps_dot_wallets_dot_grpc_dot_wallets__pb2.EntryRef.SerializeToString,
+            google_dot_protobuf_dot_empty__pb2.Empty.FromString,
+            options,
+            channel_credentials,
+            insecure,
+            call_credentials,
+            compression,
+            wait_for_ready,
+            timeout,
+            metadata,
+            _registered_method=True)
+
+    @staticmethod
+    def Edit(request,
+            target,
+            options=(),
+            channel_credentials=None,
+            call_credentials=None,
+            insecure=False,
+            compression=None,
+            wait_for_ready=None,
+            timeout=None,
+            metadata=None):
+        return grpc.experimental.unary_unary(
+            request,
+            target,
+            '/config.wallets.LedgerController/Edit',
+            apps_dot_wallets_dot_grpc_dot_wallets__pb2.EntryEdit.SerializeToString,
+            apps_dot_wallets_dot_grpc_dot_wallets__pb2.EntryReply.FromString,
+            options,
+            channel_credentials,
+            insecure,
+            call_credentials,
+            compression,
+            wait_for_ready,
+            timeout,
+            metadata,
+            _registered_method=True)
+
+    @staticmethod
+    def List(request,
+            target,
+            options=(),
+            channel_credentials=None,
+            call_credentials=None,
+            insecure=False,
+            compression=None,
+            wait_for_ready=None,
+            timeout=None,
+            metadata=None):
+        return grpc.experimental.unary_unary(
+            request,
+            target,
+            '/config.wallets.LedgerController/List',
+            apps_dot_wallets_dot_grpc_dot_wallets__pb2.EntryQuery.SerializeToString,
+            apps_dot_wallets_dot_grpc_dot_wallets__pb2.EntryListReply.FromString,
+            options,
+            channel_credentials,
+            insecure,
+            call_credentials,
+            compression,
+            wait_for_ready,
+            timeout,
+            metadata,
+            _registered_method=True)
+
+    @staticmethod
+    def Record(request,
+            target,
+            options=(),
+            channel_credentials=None,
+            call_credentials=None,
+            insecure=False,
+            compression=None,
+            wait_for_ready=None,
+            timeout=None,
+            metadata=None):
+        return grpc.experimental.unary_unary(
+            request,
+            target,
+            '/config.wallets.LedgerController/Record',
+            apps_dot_wallets_dot_grpc_dot_wallets__pb2.EntryRecord.SerializeToString,
+            apps_dot_wallets_dot_grpc_dot_wallets__pb2.EntryReply.FromString,
+            options,
+            channel_credentials,
+            insecure,
+            call_credentials,
+            compression,
+            wait_for_ready,
+            timeout,
+            metadata,
+            _registered_method=True)
+
+
 class WalletsControllerStub:
     """Missing associated documentation comment in .proto file."""
 

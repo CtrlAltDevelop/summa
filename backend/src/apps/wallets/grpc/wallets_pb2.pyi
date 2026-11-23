@@ -41,6 +41,186 @@ class CurrencyTotal(_message.Message):
 Global___CurrencyTotal: _TypeAlias = CurrencyTotal  # noqa: Y015
 
 @_typing.final
+class Entry(_message.Message):
+    DESCRIPTOR: _descriptor.Descriptor
+
+    ID_FIELD_NUMBER: _builtins.int
+    WALLET_ID_FIELD_NUMBER: _builtins.int
+    KIND_FIELD_NUMBER: _builtins.int
+    AMOUNT_MINOR_FIELD_NUMBER: _builtins.int
+    CURRENCY_FIELD_NUMBER: _builtins.int
+    OCCURRED_AT_FIELD_NUMBER: _builtins.int
+    NOTE_FIELD_NUMBER: _builtins.int
+    id: _builtins.str
+    wallet_id: _builtins.str
+    kind: _builtins.str
+    amount_minor: _builtins.int
+    currency: _builtins.str
+    occurred_at: _builtins.str
+    note: _builtins.str
+    def __init__(
+        self,
+        *,
+        id: _builtins.str = ...,
+        wallet_id: _builtins.str = ...,
+        kind: _builtins.str = ...,
+        amount_minor: _builtins.int = ...,
+        currency: _builtins.str = ...,
+        occurred_at: _builtins.str = ...,
+        note: _builtins.str = ...,
+    ) -> None: ...
+    _HasFieldArgType: _TypeAlias = _Never  # noqa: Y015
+    def HasField(self, field_name: _HasFieldArgType) -> _builtins.bool: ...
+    _ClearFieldArgType: _TypeAlias = _typing.Literal["amount_minor", b"amount_minor", "currency", b"currency", "id", b"id", "kind", b"kind", "note", b"note", "occurred_at", b"occurred_at", "wallet_id", b"wallet_id"]  # noqa: Y015
+    def ClearField(self, field_name: _ClearFieldArgType) -> None: ...
+    def WhichOneof(self, oneof_group: _Never) -> None: ...
+
+Global___Entry: _TypeAlias = Entry  # noqa: Y015
+
+@_typing.final
+class EntryEdit(_message.Message):
+    DESCRIPTOR: _descriptor.Descriptor
+
+    ENTRY_ID_FIELD_NUMBER: _builtins.int
+    AMOUNT_MINOR_FIELD_NUMBER: _builtins.int
+    OCCURRED_AT_FIELD_NUMBER: _builtins.int
+    NOTE_FIELD_NUMBER: _builtins.int
+    entry_id: _builtins.str
+    amount_minor: _builtins.int
+    occurred_at: _builtins.str
+    note: _builtins.str
+    def __init__(
+        self,
+        *,
+        entry_id: _builtins.str = ...,
+        amount_minor: _builtins.int = ...,
+        occurred_at: _builtins.str = ...,
+        note: _builtins.str = ...,
+    ) -> None: ...
+    _HasFieldArgType: _TypeAlias = _Never  # noqa: Y015
+    def HasField(self, field_name: _HasFieldArgType) -> _builtins.bool: ...
+    _ClearFieldArgType: _TypeAlias = _typing.Literal["amount_minor", b"amount_minor", "entry_id", b"entry_id", "note", b"note", "occurred_at", b"occurred_at"]  # noqa: Y015
+    def ClearField(self, field_name: _ClearFieldArgType) -> None: ...
+    def WhichOneof(self, oneof_group: _Never) -> None: ...
+
+Global___EntryEdit: _TypeAlias = EntryEdit  # noqa: Y015
+
+@_typing.final
+class EntryListReply(_message.Message):
+    DESCRIPTOR: _descriptor.Descriptor
+
+    ENTRIES_FIELD_NUMBER: _builtins.int
+    @_builtins.property
+    def entries(self) -> _containers.RepeatedCompositeFieldContainer[Global___Entry]: ...
+    def __init__(
+        self,
+        *,
+        entries: _abc.Iterable[Global___Entry] | None = ...,
+    ) -> None: ...
+    _HasFieldArgType: _TypeAlias = _Never  # noqa: Y015
+    def HasField(self, field_name: _HasFieldArgType) -> _builtins.bool: ...
+    _ClearFieldArgType: _TypeAlias = _typing.Literal["entries", b"entries"]  # noqa: Y015
+    def ClearField(self, field_name: _ClearFieldArgType) -> None: ...
+    def WhichOneof(self, oneof_group: _Never) -> None: ...
+
+Global___EntryListReply: _TypeAlias = EntryListReply  # noqa: Y015
+
+@_typing.final
+class EntryQuery(_message.Message):
+    DESCRIPTOR: _descriptor.Descriptor
+
+    WALLET_ID_FIELD_NUMBER: _builtins.int
+    LIMIT_FIELD_NUMBER: _builtins.int
+    wallet_id: _builtins.str
+    limit: _builtins.int
+    def __init__(
+        self,
+        *,
+        wallet_id: _builtins.str = ...,
+        limit: _builtins.int = ...,
+    ) -> None: ...
+    _HasFieldArgType: _TypeAlias = _Never  # noqa: Y015
+    def HasField(self, field_name: _HasFieldArgType) -> _builtins.bool: ...
+    _ClearFieldArgType: _TypeAlias = _typing.Literal["limit", b"limit", "wallet_id", b"wallet_id"]  # noqa: Y015
+    def ClearField(self, field_name: _ClearFieldArgType) -> None: ...
+    def WhichOneof(self, oneof_group: _Never) -> None: ...
+
+Global___EntryQuery: _TypeAlias = EntryQuery  # noqa: Y015
+
+@_typing.final
+class EntryRecord(_message.Message):
+    DESCRIPTOR: _descriptor.Descriptor
+
+    WALLET_ID_FIELD_NUMBER: _builtins.int
+    KIND_FIELD_NUMBER: _builtins.int
+    AMOUNT_MINOR_FIELD_NUMBER: _builtins.int
+    OCCURRED_AT_FIELD_NUMBER: _builtins.int
+    NOTE_FIELD_NUMBER: _builtins.int
+    CLIENT_MUTATION_ID_FIELD_NUMBER: _builtins.int
+    wallet_id: _builtins.str
+    kind: _builtins.str
+    amount_minor: _builtins.int
+    occurred_at: _builtins.str
+    note: _builtins.str
+    client_mutation_id: _builtins.str
+    def __init__(
+        self,
+        *,
+        wallet_id: _builtins.str = ...,
+        kind: _builtins.str = ...,
+        amount_minor: _builtins.int = ...,
+        occurred_at: _builtins.str = ...,
+        note: _builtins.str = ...,
+        client_mutation_id: _builtins.str = ...,
+    ) -> None: ...
+    _HasFieldArgType: _TypeAlias = _Never  # noqa: Y015
+    def HasField(self, field_name: _HasFieldArgType) -> _builtins.bool: ...
+    _ClearFieldArgType: _TypeAlias = _typing.Literal["amount_minor", b"amount_minor", "client_mutation_id", b"client_mutation_id", "kind", b"kind", "note", b"note", "occurred_at", b"occurred_at", "wallet_id", b"wallet_id"]  # noqa: Y015
+    def ClearField(self, field_name: _ClearFieldArgType) -> None: ...
+    def WhichOneof(self, oneof_group: _Never) -> None: ...
+
+Global___EntryRecord: _TypeAlias = EntryRecord  # noqa: Y015
+
+@_typing.final
+class EntryRef(_message.Message):
+    DESCRIPTOR: _descriptor.Descriptor
+
+    ENTRY_ID_FIELD_NUMBER: _builtins.int
+    entry_id: _builtins.str
+    def __init__(
+        self,
+        *,
+        entry_id: _builtins.str = ...,
+    ) -> None: ...
+    _HasFieldArgType: _TypeAlias = _Never  # noqa: Y015
+    def HasField(self, field_name: _HasFieldArgType) -> _builtins.bool: ...
+    _ClearFieldArgType: _TypeAlias = _typing.Literal["entry_id", b"entry_id"]  # noqa: Y015
+    def ClearField(self, field_name: _ClearFieldArgType) -> None: ...
+    def WhichOneof(self, oneof_group: _Never) -> None: ...
+
+Global___EntryRef: _TypeAlias = EntryRef  # noqa: Y015
+
+@_typing.final
+class EntryReply(_message.Message):
+    DESCRIPTOR: _descriptor.Descriptor
+
+    ENTRY_FIELD_NUMBER: _builtins.int
+    @_builtins.property
+    def entry(self) -> Global___Entry: ...
+    def __init__(
+        self,
+        *,
+        entry: Global___Entry | None = ...,
+    ) -> None: ...
+    _HasFieldArgType: _TypeAlias = _typing.Literal["entry", b"entry"]  # noqa: Y015
+    def HasField(self, field_name: _HasFieldArgType) -> _builtins.bool: ...
+    _ClearFieldArgType: _TypeAlias = _typing.Literal["entry", b"entry"]  # noqa: Y015
+    def ClearField(self, field_name: _ClearFieldArgType) -> None: ...
+    def WhichOneof(self, oneof_group: _Never) -> None: ...
+
+Global___EntryReply: _TypeAlias = EntryReply  # noqa: Y015
+
+@_typing.final
 class Wallet(_message.Message):
     DESCRIPTOR: _descriptor.Descriptor
 

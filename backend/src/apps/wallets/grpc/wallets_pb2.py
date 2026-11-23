@@ -25,7 +25,7 @@ _sym_db = _symbol_database.Default()
 from google.protobuf import empty_pb2 as google_dot_protobuf_dot_empty__pb2
 
 
-DESCRIPTOR = _descriptor_pool.Default().AddSerializedFile(b'\n\x1f\x61pps/wallets/grpc/wallets.proto\x12\x0e\x63onfig.wallets\x1a\x1bgoogle/protobuf/empty.proto\"8\n\rCurrencyTotal\x12\x10\n\x08\x63urrency\x18\x01 \x01(\t\x12\x15\n\rbalance_minor\x18\x02 \x01(\x03\"y\n\x06Wallet\x12\n\n\x02id\x18\x01 \x01(\t\x12\x0c\n\x04name\x18\x02 \x01(\t\x12\x0c\n\x04kind\x18\x03 \x01(\t\x12\x10\n\x08\x63urrency\x18\x04 \x01(\t\x12\x0c\n\x04\x62\x61nk\x18\x05 \x01(\t\x12\x10\n\x08\x61rchived\x18\x06 \x01(\x08\x12\x15\n\rbalance_minor\x18\x07 \x01(\x03\"\x85\x01\n\x0cWalletCreate\x12\x0c\n\x04name\x18\x01 \x01(\t\x12\x0c\n\x04kind\x18\x02 \x01(\t\x12\x10\n\x08\x63urrency\x18\x03 \x01(\t\x12\x0c\n\x04\x62\x61nk\x18\x04 \x01(\t\x12\x1d\n\x15opening_balance_minor\x18\x05 \x01(\x03\x12\x1a\n\x12\x63lient_mutation_id\x18\x06 \x01(\t\"i\n\x0fWalletListReply\x12\'\n\x07wallets\x18\x01 \x03(\x0b\x32\x16.config.wallets.Wallet\x12-\n\x06totals\x18\x02 \x03(\x0b\x32\x1d.config.wallets.CurrencyTotal\"\x1e\n\tWalletRef\x12\x11\n\twallet_id\x18\x01 \x01(\t\"5\n\x0bWalletReply\x12&\n\x06wallet\x18\x01 \x01(\x0b\x32\x16.config.wallets.Wallet2\xe2\x01\n\x11WalletsController\x12\x43\n\x07\x41rchive\x12\x19.config.wallets.WalletRef\x1a\x1b.config.wallets.WalletReply\"\x00\x12\x45\n\x06\x43reate\x12\x1c.config.wallets.WalletCreate\x1a\x1b.config.wallets.WalletReply\"\x00\x12\x41\n\x04List\x12\x16.google.protobuf.Empty\x1a\x1f.config.wallets.WalletListReply\"\x00\x62\x06proto3')
+DESCRIPTOR = _descriptor_pool.Default().AddSerializedFile(b'\n\x1f\x61pps/wallets/grpc/wallets.proto\x12\x0e\x63onfig.wallets\x1a\x1bgoogle/protobuf/empty.proto\"8\n\rCurrencyTotal\x12\x10\n\x08\x63urrency\x18\x01 \x01(\t\x12\x15\n\rbalance_minor\x18\x02 \x01(\x03\"\x7f\n\x05\x45ntry\x12\n\n\x02id\x18\x01 \x01(\t\x12\x11\n\twallet_id\x18\x02 \x01(\t\x12\x0c\n\x04kind\x18\x03 \x01(\t\x12\x14\n\x0c\x61mount_minor\x18\x04 \x01(\x03\x12\x10\n\x08\x63urrency\x18\x05 \x01(\t\x12\x13\n\x0boccurred_at\x18\x06 \x01(\t\x12\x0c\n\x04note\x18\x07 \x01(\t\"V\n\tEntryEdit\x12\x10\n\x08\x65ntry_id\x18\x01 \x01(\t\x12\x14\n\x0c\x61mount_minor\x18\x02 \x01(\x03\x12\x13\n\x0boccurred_at\x18\x03 \x01(\t\x12\x0c\n\x04note\x18\x04 \x01(\t\"8\n\x0e\x45ntryListReply\x12&\n\x07\x65ntries\x18\x01 \x03(\x0b\x32\x15.config.wallets.Entry\".\n\nEntryQuery\x12\x11\n\twallet_id\x18\x01 \x01(\t\x12\r\n\x05limit\x18\x02 \x01(\x05\"\x83\x01\n\x0b\x45ntryRecord\x12\x11\n\twallet_id\x18\x01 \x01(\t\x12\x0c\n\x04kind\x18\x02 \x01(\t\x12\x14\n\x0c\x61mount_minor\x18\x03 \x01(\x03\x12\x13\n\x0boccurred_at\x18\x04 \x01(\t\x12\x0c\n\x04note\x18\x05 \x01(\t\x12\x1a\n\x12\x63lient_mutation_id\x18\x06 \x01(\t\"\x1c\n\x08\x45ntryRef\x12\x10\n\x08\x65ntry_id\x18\x01 \x01(\t\"2\n\nEntryReply\x12$\n\x05\x65ntry\x18\x01 \x01(\x0b\x32\x15.config.wallets.Entry\"y\n\x06Wallet\x12\n\n\x02id\x18\x01 \x01(\t\x12\x0c\n\x04name\x18\x02 \x01(\t\x12\x0c\n\x04kind\x18\x03 \x01(\t\x12\x10\n\x08\x63urrency\x18\x04 \x01(\t\x12\x0c\n\x04\x62\x61nk\x18\x05 \x01(\t\x12\x10\n\x08\x61rchived\x18\x06 \x01(\x08\x12\x15\n\rbalance_minor\x18\x07 \x01(\x03\"\x85\x01\n\x0cWalletCreate\x12\x0c\n\x04name\x18\x01 \x01(\t\x12\x0c\n\x04kind\x18\x02 \x01(\t\x12\x10\n\x08\x63urrency\x18\x03 \x01(\t\x12\x0c\n\x04\x62\x61nk\x18\x04 \x01(\t\x12\x1d\n\x15opening_balance_minor\x18\x05 \x01(\x03\x12\x1a\n\x12\x63lient_mutation_id\x18\x06 \x01(\t\"i\n\x0fWalletListReply\x12\'\n\x07wallets\x18\x01 \x03(\x0b\x32\x16.config.wallets.Wallet\x12-\n\x06totals\x18\x02 \x03(\x0b\x32\x1d.config.wallets.CurrencyTotal\"\x1e\n\tWalletRef\x12\x11\n\twallet_id\x18\x01 \x01(\t\"5\n\x0bWalletReply\x12&\n\x06wallet\x18\x01 \x01(\x0b\x32\x16.config.wallets.Wallet2\x9c\x02\n\x10LedgerController\x12<\n\x06\x44\x65lete\x12\x18.config.wallets.EntryRef\x1a\x16.google.protobuf.Empty\"\x00\x12?\n\x04\x45\x64it\x12\x19.config.wallets.EntryEdit\x1a\x1a.config.wallets.EntryReply\"\x00\x12\x44\n\x04List\x12\x1a.config.wallets.EntryQuery\x1a\x1e.config.wallets.EntryListReply\"\x00\x12\x43\n\x06Record\x12\x1b.config.wallets.EntryRecord\x1a\x1a.config.wallets.EntryReply\"\x00\x32\xe2\x01\n\x11WalletsController\x12\x43\n\x07\x41rchive\x12\x19.config.wallets.WalletRef\x1a\x1b.config.wallets.WalletReply\"\x00\x12\x45\n\x06\x43reate\x12\x1c.config.wallets.WalletCreate\x1a\x1b.config.wallets.WalletReply\"\x00\x12\x41\n\x04List\x12\x16.google.protobuf.Empty\x1a\x1f.config.wallets.WalletListReply\"\x00\x62\x06proto3')
 
 _globals = globals()
 _builder.BuildMessageAndEnumDescriptors(DESCRIPTOR, _globals)
@@ -34,16 +34,32 @@ if not _descriptor._USE_C_DESCRIPTORS:
   DESCRIPTOR._loaded_options = None
   _globals['_CURRENCYTOTAL']._serialized_start=80
   _globals['_CURRENCYTOTAL']._serialized_end=136
-  _globals['_WALLET']._serialized_start=138
-  _globals['_WALLET']._serialized_end=259
-  _globals['_WALLETCREATE']._serialized_start=262
-  _globals['_WALLETCREATE']._serialized_end=395
-  _globals['_WALLETLISTREPLY']._serialized_start=397
-  _globals['_WALLETLISTREPLY']._serialized_end=502
-  _globals['_WALLETREF']._serialized_start=504
-  _globals['_WALLETREF']._serialized_end=534
-  _globals['_WALLETREPLY']._serialized_start=536
-  _globals['_WALLETREPLY']._serialized_end=589
-  _globals['_WALLETSCONTROLLER']._serialized_start=592
-  _globals['_WALLETSCONTROLLER']._serialized_end=818
+  _globals['_ENTRY']._serialized_start=138
+  _globals['_ENTRY']._serialized_end=265
+  _globals['_ENTRYEDIT']._serialized_start=267
+  _globals['_ENTRYEDIT']._serialized_end=353
+  _globals['_ENTRYLISTREPLY']._serialized_start=355
+  _globals['_ENTRYLISTREPLY']._serialized_end=411
+  _globals['_ENTRYQUERY']._serialized_start=413
+  _globals['_ENTRYQUERY']._serialized_end=459
+  _globals['_ENTRYRECORD']._serialized_start=462
+  _globals['_ENTRYRECORD']._serialized_end=593
+  _globals['_ENTRYREF']._serialized_start=595
+  _globals['_ENTRYREF']._serialized_end=623
+  _globals['_ENTRYREPLY']._serialized_start=625
+  _globals['_ENTRYREPLY']._serialized_end=675
+  _globals['_WALLET']._serialized_start=677
+  _globals['_WALLET']._serialized_end=798
+  _globals['_WALLETCREATE']._serialized_start=801
+  _globals['_WALLETCREATE']._serialized_end=934
+  _globals['_WALLETLISTREPLY']._serialized_start=936
+  _globals['_WALLETLISTREPLY']._serialized_end=1041
+  _globals['_WALLETREF']._serialized_start=1043
+  _globals['_WALLETREF']._serialized_end=1073
+  _globals['_WALLETREPLY']._serialized_start=1075
+  _globals['_WALLETREPLY']._serialized_end=1128
+  _globals['_LEDGERCONTROLLER']._serialized_start=1131
+  _globals['_LEDGERCONTROLLER']._serialized_end=1415
+  _globals['_WALLETSCONTROLLER']._serialized_start=1418
+  _globals['_WALLETSCONTROLLER']._serialized_end=1644
 # @@protoc_insertion_point(module_scope)
