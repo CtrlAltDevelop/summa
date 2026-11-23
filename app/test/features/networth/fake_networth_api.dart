@@ -20,6 +20,12 @@ class FakeNetWorthApi implements NetWorthApi {
   @override
   Future<NetWorth> get(String access) async => worth;
 
+  List<NetWorthPoint> points = [];
+
+  @override
+  Future<List<NetWorthPoint>> history(String access, int days) async =>
+      List.of(points);
+
   @override
   Future<List<Basket>> baskets(String access) async => List.of(baskets_);
 

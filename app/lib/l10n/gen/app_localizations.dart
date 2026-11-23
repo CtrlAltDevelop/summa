@@ -2241,6 +2241,30 @@ abstract class AppLocalizations {
   /// In fa, this message translates to:
   /// **'ورود انجام نشد. فایل را بررسی کن.'**
   String get dataImportFailed;
+
+  /// No description provided for @netWorthHistoryEmpty.
+  ///
+  /// In fa, this message translates to:
+  /// **'نمودار با گذشت چند روز ساخته می‌شود؛ هر روز یک نقطه ثبت می‌شود.'**
+  String get netWorthHistoryEmpty;
+
+  /// No description provided for @netWorthRange.
+  ///
+  /// In fa, this message translates to:
+  /// **'{days} روز'**
+  String netWorthRange(String days);
+
+  /// No description provided for @setupTitle.
+  ///
+  /// In fa, this message translates to:
+  /// **'حساب‌ات را کامل کن'**
+  String get setupTitle;
+
+  /// No description provided for @setupLater.
+  ///
+  /// In fa, this message translates to:
+  /// **'بعداً'**
+  String get setupLater;
 }
 
 class _AppLocalizationsDelegate

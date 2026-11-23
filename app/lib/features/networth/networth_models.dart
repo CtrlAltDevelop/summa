@@ -77,3 +77,11 @@ class Basket {
   final int percent;
   final List<BasketItem> items;
 }
+
+/// One day's recorded net worth in toman.
+class NetWorthPoint {
+  const NetWorthPoint(this.day, this.totalMinor);
+
+  final DateTime day;
+  final int totalMinor;
+}

@@ -57,106 +57,95 @@ class _DebtScreenState extends ConsumerState<DebtScreen> {
     final wallets = (ref.watch(walletsControllerProvider).value?.active ?? [])
         .where((w) => w.currency == debt.currency)
         .toList();
-    return SmBackground(
-      child: SafeArea(
-        child: ListView(
-          padding: const EdgeInsets.all(SmSpace.screen),
-          children: [
-            Text(debt.title, style: SmType.title),
-            const SizedBox(height: SmSpace.sm),
-            Text(
-              '${l10n.debtRemaining}: '
-              '${formatMinor(debt.remainingMinor, debt.currency)} $unit',
-              style: SmType.body,
-            ),
-            const SizedBox(height: SmSpace.lg),
-            for (final i in debt.installments)
-              Padding(
-                padding: const EdgeInsets.only(bottom: SmSpace.sm),
-                child: SmGlassCard(
-                  padding: const EdgeInsets.all(SmSpace.lg),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
+    return SmScreen(
+      title: debt.title,
+      children: [
+        Text(
+          '${l10n.debtRemaining}: '
+          '${formatMinor(debt.remainingMinor, debt.currency)} $unit',
+          style: SmType.body,
+        ),
+        const SizedBox(height: SmSpace.lg),
+        for (final i in debt.installments)
+          Padding(
+            padding: const EdgeInsets.only(bottom: SmSpace.sm),
+            child: SmGlassCard(
+              padding: const EdgeInsets.all(SmSpace.lg),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Row(
                     children: [
-                      Row(
-                        children: [
-                          Expanded(
-                            child: Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                Text(
-                                  toPersianDigits(
-                                    '${i.number}) '
-                                    '${formatMinor(i.amountMinor, debt.currency)} $unit',
-                                  ),
-                                  style: SmType.body,
-                                ),
-                                Text(
-                                  [
-                                    formatJalaliDate(i.dueDate),
-                                    if (i.paid) l10n.installmentPaid,
-                                    if (i.overdue) l10n.debtOverdue,
-                                  ].join(' · '),
-                                  style: SmType.caption.copyWith(
-                                    color: i.overdue ? SmColors.danger : null,
-                                  ),
-                                ),
-                              ],
+                      Expanded(
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Text(
+                              toPersianDigits(
+                                '${i.number}) '
+                                '${formatMinor(i.amountMinor, debt.currency)} $unit',
+                              ),
+                              style: SmType.body,
                             ),
-                          ),
-                          _Action(
-                            label: i.paid
-                                ? l10n.installmentUndo
-                                : l10n.installmentPay,
-                            color: i.paid ? SmColors.danger : SmColors.accent,
-                            onTap: () {
-                              if (i.paid) {
-                                ref
-                                    .read(debtsControllerProvider.notifier)
-                                    .unpay(i.id);
-                              } else if (debt.walletId.isEmpty) {
-                                setState(() => _choosing = i.id);
-                              } else {
-                                _pay(i);
-                              }
-                            },
-                          ),
-                        ],
-                      ),
-                      if (_choosing == i.id && wallets.isNotEmpty) ...[
-                        const SizedBox(height: SmSpace.sm),
-                        Text(l10n.debtPayWallet, style: SmType.caption),
-                        const SizedBox(height: SmSpace.sm),
-                        Choices<Wallet>(
-                          values: wallets,
-                          selected: wallets.first,
-                          label: (w) => w.name,
-                          onSelected: (w) => _pay(i, walletId: w.id),
+                            Text(
+                              [
+                                formatJalaliDate(i.dueDate),
+                                if (i.paid) l10n.installmentPaid,
+                                if (i.overdue) l10n.debtOverdue,
+                              ].join(' · '),
+                              style: SmType.caption.copyWith(
+                                color: i.overdue ? SmColors.danger : null,
+                              ),
+                            ),
+                          ],
                         ),
-                      ],
+                      ),
+                      _Action(
+                        label: i.paid
+                            ? l10n.installmentUndo
+                            : l10n.installmentPay,
+                        color: i.paid ? SmColors.danger : SmColors.accent,
+                        onTap: () {
+                          if (i.paid) {
+                            ref
+                                .read(debtsControllerProvider.notifier)
+                                .unpay(i.id);
+                          } else if (debt.walletId.isEmpty) {
+                            setState(() => _choosing = i.id);
+                          } else {
+                            _pay(i);
+                          }
+                        },
+                      ),
                     ],
                   ),
-                ),
+                  if (_choosing == i.id && wallets.isNotEmpty) ...[
+                    const SizedBox(height: SmSpace.sm),
+                    Text(l10n.debtPayWallet, style: SmType.caption),
+                    const SizedBox(height: SmSpace.sm),
+                    Choices<Wallet>(
+                      values: wallets,
+                      selected: wallets.first,
+                      label: (w) => w.name,
+                      onSelected: (w) => _pay(i, walletId: w.id),
+                    ),
+                  ],
+                ],
               ),
-            if (_error != null)
-              Text(
-                _error!,
-                style: SmType.caption.copyWith(color: SmColors.danger),
-              ),
-            const SizedBox(height: SmSpace.lg),
-            SmButton(
-              label: l10n.debtDelete,
-              onPressed: () async {
-                final navigator = Navigator.of(context);
-                await ref
-                    .read(debtsControllerProvider.notifier)
-                    .delete(debt.id);
-                navigator.pop();
-              },
             ),
-          ],
+          ),
+        if (_error != null)
+          Text(_error!, style: SmType.caption.copyWith(color: SmColors.danger)),
+        const SizedBox(height: SmSpace.lg),
+        SmButton(
+          label: l10n.debtDelete,
+          onPressed: () async {
+            final navigator = Navigator.of(context);
+            await ref.read(debtsControllerProvider.notifier).delete(debt.id);
+            navigator.pop();
+          },
         ),
-      ),
+      ],
     );
   }
 }

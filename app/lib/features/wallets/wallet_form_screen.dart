@@ -98,60 +98,51 @@ class _WalletFormScreenState extends ConsumerState<WalletFormScreen> {
   @override
   Widget build(BuildContext context) {
     final l10n = AppLocalizations.of(context);
-    return SmBackground(
-      child: SafeArea(
-        child: ListView(
-          padding: const EdgeInsets.all(SmSpace.screen),
-          children: [
-            Text(l10n.walletFormTitle, style: SmType.title),
-            const SizedBox(height: SmSpace.lg),
-            SmTextField(
-              controller: _name,
-              label: l10n.walletNameLabel,
-              autofocus: true,
-            ),
-            const SizedBox(height: SmSpace.lg),
-            Text(l10n.walletKindLabel, style: SmType.caption),
-            const SizedBox(height: SmSpace.sm),
-            Choices<WalletKind>(
-              values: WalletKind.values,
-              selected: _kind,
-              label: (k) => walletKindLabel(l10n, k),
-              onSelected: (k) => setState(() => _kind = k),
-            ),
-            const SizedBox(height: SmSpace.lg),
-            Text(l10n.walletCurrencyLabel, style: SmType.caption),
-            const SizedBox(height: SmSpace.sm),
-            Choices<String>(
-              values: currencyDecimals.keys.toList(),
-              selected: _currency,
-              label: (c) => currencyLabel(l10n, c),
-              onSelected: (c) => setState(() => _currency = c),
-            ),
-            const SizedBox(height: SmSpace.lg),
-            SmTextField(controller: _bank, label: l10n.walletBankLabel),
-            const SizedBox(height: SmSpace.lg),
-            SmTextField(
-              controller: _balance,
-              label: l10n.walletOpeningLabel,
-              keyboardType: const TextInputType.numberWithOptions(
-                signed: true,
-                decimal: true,
-              ),
-              textDirection: TextDirection.ltr,
-            ),
-            if (_error != null) ...[
-              const SizedBox(height: SmSpace.md),
-              Text(
-                _error!,
-                style: SmType.caption.copyWith(color: SmColors.danger),
-              ),
-            ],
-            const SizedBox(height: SmSpace.xl),
-            SmButton(label: l10n.walletSave, onPressed: _saving ? null : _save),
-          ],
+    return SmScreen(
+      title: l10n.walletFormTitle,
+      children: [
+        SmTextField(
+          controller: _name,
+          label: l10n.walletNameLabel,
+          autofocus: true,
         ),
-      ),
+        const SizedBox(height: SmSpace.lg),
+        Text(l10n.walletKindLabel, style: SmType.caption),
+        const SizedBox(height: SmSpace.sm),
+        Choices<WalletKind>(
+          values: WalletKind.values,
+          selected: _kind,
+          label: (k) => walletKindLabel(l10n, k),
+          onSelected: (k) => setState(() => _kind = k),
+        ),
+        const SizedBox(height: SmSpace.lg),
+        Text(l10n.walletCurrencyLabel, style: SmType.caption),
+        const SizedBox(height: SmSpace.sm),
+        Choices<String>(
+          values: currencyDecimals.keys.toList(),
+          selected: _currency,
+          label: (c) => currencyLabel(l10n, c),
+          onSelected: (c) => setState(() => _currency = c),
+        ),
+        const SizedBox(height: SmSpace.lg),
+        SmTextField(controller: _bank, label: l10n.walletBankLabel),
+        const SizedBox(height: SmSpace.lg),
+        SmTextField(
+          controller: _balance,
+          label: l10n.walletOpeningLabel,
+          keyboardType: const TextInputType.numberWithOptions(
+            signed: true,
+            decimal: true,
+          ),
+          textDirection: TextDirection.ltr,
+        ),
+        if (_error != null) ...[
+          const SizedBox(height: SmSpace.md),
+          Text(_error!, style: SmType.caption.copyWith(color: SmColors.danger)),
+        ],
+        const SizedBox(height: SmSpace.xl),
+        SmButton(label: l10n.walletSave, onPressed: _saving ? null : _save),
+      ],
     );
   }
 }

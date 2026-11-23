@@ -46,50 +46,41 @@ class _CategoriesScreenState extends ConsumerState<CategoriesScreen> {
   Widget build(BuildContext context) {
     final l10n = AppLocalizations.of(context);
     final categories = ref.watch(categoriesControllerProvider).value ?? [];
-    return SmBackground(
-      child: SafeArea(
-        child: ListView(
-          padding: const EdgeInsets.all(SmSpace.screen),
-          children: [
-            Text(l10n.categoriesTitle, style: SmType.title),
-            const SizedBox(height: SmSpace.lg),
-            SmTextField(controller: _name, label: l10n.categoryNameLabel),
-            if (_error != null) ...[
-              const SizedBox(height: SmSpace.sm),
-              Text(
-                _error!,
-                style: SmType.caption.copyWith(color: SmColors.danger),
-              ),
-            ],
-            const SizedBox(height: SmSpace.md),
-            SmButton(
-              label: '${l10n.categoryAdd} · ${l10n.categoryExpenses}',
-              onPressed: () => _add(CategoryKind.expense),
-            ),
-            const SizedBox(height: SmSpace.sm),
-            SmButton(
-              label: '${l10n.categoryAdd} · ${l10n.categoryIncomes}',
-              onPressed: () => _add(CategoryKind.income),
-            ),
-            const SizedBox(height: SmSpace.xl),
-            for (final kind in CategoryKind.values) ...[
-              Text(
-                kind == CategoryKind.expense
-                    ? l10n.categoryExpenses
-                    : l10n.categoryIncomes,
-                style: SmType.caption,
-              ),
-              const SizedBox(height: SmSpace.sm),
-              for (final c in categories.where((c) => c.kind == kind))
-                Padding(
-                  padding: const EdgeInsets.only(bottom: SmSpace.sm),
-                  child: _CategoryTile(category: c),
-                ),
-              const SizedBox(height: SmSpace.lg),
-            ],
-          ],
+    return SmScreen(
+      title: l10n.categoriesTitle,
+      children: [
+        SmTextField(controller: _name, label: l10n.categoryNameLabel),
+        if (_error != null) ...[
+          const SizedBox(height: SmSpace.sm),
+          Text(_error!, style: SmType.caption.copyWith(color: SmColors.danger)),
+        ],
+        const SizedBox(height: SmSpace.md),
+        SmButton(
+          label: '${l10n.categoryAdd} · ${l10n.categoryExpenses}',
+          onPressed: () => _add(CategoryKind.expense),
         ),
-      ),
+        const SizedBox(height: SmSpace.sm),
+        SmButton(
+          label: '${l10n.categoryAdd} · ${l10n.categoryIncomes}',
+          onPressed: () => _add(CategoryKind.income),
+        ),
+        const SizedBox(height: SmSpace.xl),
+        for (final kind in CategoryKind.values) ...[
+          Text(
+            kind == CategoryKind.expense
+                ? l10n.categoryExpenses
+                : l10n.categoryIncomes,
+            style: SmType.caption,
+          ),
+          const SizedBox(height: SmSpace.sm),
+          for (final c in categories.where((c) => c.kind == kind))
+            Padding(
+              padding: const EdgeInsets.only(bottom: SmSpace.sm),
+              child: _CategoryTile(category: c),
+            ),
+          const SizedBox(height: SmSpace.lg),
+        ],
+      ],
     );
   }
 }

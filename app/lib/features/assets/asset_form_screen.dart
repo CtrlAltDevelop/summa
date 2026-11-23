@@ -110,69 +110,58 @@ class _AssetFormScreenState extends ConsumerState<AssetFormScreen> {
     final l10n = AppLocalizations.of(context);
     final rates = ref.watch(ratesProvider).value ?? const <RateRow>[];
     final chosen = _symbol ?? (rates.isEmpty ? null : rates.first);
-    return SmBackground(
-      child: SafeArea(
-        child: ListView(
-          padding: const EdgeInsets.all(SmSpace.screen),
-          children: [
-            Text(l10n.assetFormTitle, style: SmType.title),
-            const SizedBox(height: SmSpace.lg),
-            if (!_custom && chosen != null)
-              Choices<RateRow>(
-                values: rates,
-                selected: chosen,
-                label: (r) => r.name,
-                onSelected: (r) => setState(() => _symbol = r),
-              ),
-            const SizedBox(height: SmSpace.sm),
-            Choices<bool>(
-              values: const [false, true],
-              selected: _custom,
-              label: (v) => v ? l10n.assetCustom : chosen?.name ?? '',
-              onSelected: (v) => setState(() => _custom = v),
-            ),
-            if (_custom) ...[
-              const SizedBox(height: SmSpace.lg),
-              SmTextField(controller: _name, label: l10n.assetNameLabel),
-              const SizedBox(height: SmSpace.lg),
-              SmTextField(
-                controller: _manual,
-                label: l10n.assetManualPriceLabel,
-                keyboardType: TextInputType.number,
-                textDirection: TextDirection.ltr,
-              ),
-            ],
-            const SizedBox(height: SmSpace.lg),
-            SmTextField(
-              controller: _quantity,
-              label: l10n.assetQuantityLabel,
-              keyboardType: const TextInputType.numberWithOptions(
-                decimal: true,
-              ),
-              textDirection: TextDirection.ltr,
-            ),
-            const SizedBox(height: SmSpace.lg),
-            SmTextField(
-              controller: _price,
-              label: l10n.assetBuyPriceLabel,
-              keyboardType: TextInputType.number,
-              textDirection: TextDirection.ltr,
-            ),
-            if (_error != null) ...[
-              const SizedBox(height: SmSpace.md),
-              Text(
-                _error!,
-                style: SmType.caption.copyWith(color: SmColors.danger),
-              ),
-            ],
-            const SizedBox(height: SmSpace.xl),
-            SmButton(
-              label: l10n.walletSave,
-              onPressed: _saving ? null : () => _save(rates),
-            ),
-          ],
+    return SmScreen(
+      title: l10n.assetFormTitle,
+      children: [
+        if (!_custom && chosen != null)
+          Choices<RateRow>(
+            values: rates,
+            selected: chosen,
+            label: (r) => r.name,
+            onSelected: (r) => setState(() => _symbol = r),
+          ),
+        const SizedBox(height: SmSpace.sm),
+        Choices<bool>(
+          values: const [false, true],
+          selected: _custom,
+          label: (v) => v ? l10n.assetCustom : chosen?.name ?? '',
+          onSelected: (v) => setState(() => _custom = v),
         ),
-      ),
+        if (_custom) ...[
+          const SizedBox(height: SmSpace.lg),
+          SmTextField(controller: _name, label: l10n.assetNameLabel),
+          const SizedBox(height: SmSpace.lg),
+          SmTextField(
+            controller: _manual,
+            label: l10n.assetManualPriceLabel,
+            keyboardType: TextInputType.number,
+            textDirection: TextDirection.ltr,
+          ),
+        ],
+        const SizedBox(height: SmSpace.lg),
+        SmTextField(
+          controller: _quantity,
+          label: l10n.assetQuantityLabel,
+          keyboardType: const TextInputType.numberWithOptions(decimal: true),
+          textDirection: TextDirection.ltr,
+        ),
+        const SizedBox(height: SmSpace.lg),
+        SmTextField(
+          controller: _price,
+          label: l10n.assetBuyPriceLabel,
+          keyboardType: TextInputType.number,
+          textDirection: TextDirection.ltr,
+        ),
+        if (_error != null) ...[
+          const SizedBox(height: SmSpace.md),
+          Text(_error!, style: SmType.caption.copyWith(color: SmColors.danger)),
+        ],
+        const SizedBox(height: SmSpace.xl),
+        SmButton(
+          label: l10n.walletSave,
+          onPressed: _saving ? null : () => _save(rates),
+        ),
+      ],
     );
   }
 }

@@ -125,64 +125,55 @@ class _DataScreenState extends ConsumerState<DataScreen> {
     final preview = _preview;
     final clean =
         preview != null && preview.errors.isEmpty && preview.importable > 0;
-    return SmBackground(
-      child: SafeArea(
-        child: ListView(
-          padding: const EdgeInsets.all(SmSpace.screen),
-          children: [
-            Text(l10n.dataTitle, style: SmType.title),
-            const SizedBox(height: SmSpace.lg),
-            SmButton(label: l10n.dataExport, onPressed: _busy ? null : _export),
-            const SizedBox(height: SmSpace.xl),
-            Text(l10n.dataImportTitle, style: SmType.caption),
-            const SizedBox(height: SmSpace.sm),
-            SmTextField(
-              controller: _csv,
-              label: l10n.dataImportHint,
-              maxLines: 8,
-              textDirection: TextDirection.ltr,
-              onChanged: (_) => setState(() => _preview = null),
-            ),
-            const SizedBox(height: SmSpace.md),
-            SmButton(
-              label: l10n.dataPreview,
-              onPressed: _busy || _csv.text.trim().isEmpty ? null : _check,
-            ),
-            if (preview != null) ...[
-              const SizedBox(height: SmSpace.md),
-              Text(
-                l10n.dataPreviewResult(
-                  toPersianDigits('${preview.rows}'),
-                  toPersianDigits('${preview.importable}'),
-                  toPersianDigits('${preview.skipped}'),
-                ),
-                style: SmType.body,
-              ),
-              for (final e in preview.errors.take(_shownErrors))
-                Text(
-                  l10n.dataLineError(toPersianDigits('${e.line}'), e.message),
-                  style: SmType.caption.copyWith(color: SmColors.danger),
-                ),
-            ],
-            if (clean) ...[
-              const SizedBox(height: SmSpace.md),
-              SmButton(
-                label: l10n.dataImport,
-                onPressed: _busy ? null : _commit,
-              ),
-            ],
-            if (_message != null) ...[
-              const SizedBox(height: SmSpace.lg),
-              Text(
-                _message!,
-                style: SmType.body.copyWith(
-                  color: _isError ? SmColors.danger : SmColors.success,
-                ),
-              ),
-            ],
-          ],
+    return SmScreen(
+      title: l10n.dataTitle,
+      children: [
+        SmButton(label: l10n.dataExport, onPressed: _busy ? null : _export),
+        const SizedBox(height: SmSpace.xl),
+        Text(l10n.dataImportTitle, style: SmType.caption),
+        const SizedBox(height: SmSpace.sm),
+        SmTextField(
+          controller: _csv,
+          label: l10n.dataImportHint,
+          maxLines: 8,
+          textDirection: TextDirection.ltr,
+          onChanged: (_) => setState(() => _preview = null),
         ),
-      ),
+        const SizedBox(height: SmSpace.md),
+        SmButton(
+          label: l10n.dataPreview,
+          onPressed: _busy || _csv.text.trim().isEmpty ? null : _check,
+        ),
+        if (preview != null) ...[
+          const SizedBox(height: SmSpace.md),
+          Text(
+            l10n.dataPreviewResult(
+              toPersianDigits('${preview.rows}'),
+              toPersianDigits('${preview.importable}'),
+              toPersianDigits('${preview.skipped}'),
+            ),
+            style: SmType.body,
+          ),
+          for (final e in preview.errors.take(_shownErrors))
+            Text(
+              l10n.dataLineError(toPersianDigits('${e.line}'), e.message),
+              style: SmType.caption.copyWith(color: SmColors.danger),
+            ),
+        ],
+        if (clean) ...[
+          const SizedBox(height: SmSpace.md),
+          SmButton(label: l10n.dataImport, onPressed: _busy ? null : _commit),
+        ],
+        if (_message != null) ...[
+          const SizedBox(height: SmSpace.lg),
+          Text(
+            _message!,
+            style: SmType.body.copyWith(
+              color: _isError ? SmColors.danger : SmColors.success,
+            ),
+          ),
+        ],
+      ],
     );
   }
 }

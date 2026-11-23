@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:summa/features/auth/setup_prompt.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:summa/app.dart';
 import 'package:summa/features/assets/asset_controller.dart';
@@ -11,6 +12,7 @@ import 'package:summa/features/networth/networth_controller.dart';
 import 'package:summa/features/networth/networth_models.dart';
 import 'package:summa/features/wallets/ledger_controller.dart';
 import 'package:summa/features/wallets/wallet_models.dart';
+import 'package:summa/core/ui/widgets/widgets.dart';
 import 'package:summa/features/wallets/wallets_controller.dart';
 
 import '../assets/fake_asset_api.dart';
@@ -25,6 +27,7 @@ Future<FakeNetWorthApi> _pump(
   WidgetTester t, {
   NetWorth? worth,
   bool withGold = false,
+  List<NetWorthPoint> points = const [],
 }) async {
   t.view.physicalSize = const Size(800, 10000);
   t.view.devicePixelRatio = 1;
@@ -56,10 +59,12 @@ Future<FakeNetWorthApi> _pump(
   }
   final api = FakeNetWorthApi();
   if (worth != null) api.worth = worth;
+  api.points = points;
   final auth = FakeAuthApi(profileName: 'سارا');
   await t.pumpWidget(
     ProviderScope(
       overrides: [
+        setupPromptEnabledProvider.overrideWithValue(false),
         authApiProvider.overrideWithValue(auth),
         tokenStoreProvider.overrideWithValue(
           MemoryTokenStore(auth.currentTokens),
@@ -97,11 +102,37 @@ NetWorth _worth({
 );
 
 void main() {
+  testWidgets('with one day of history the chart explains it will fill in', (
+    t,
+  ) async {
+    await _pump(t, worth: _worth(), points: [NetWorthPoint(DateTime(2026), 1)]);
+
+    expect(find.textContaining('نمودار با گذشت'), findsOneWidget);
+    expect(find.byType(SmLineChart), findsNothing);
+  });
+
+  testWidgets('with several days of history the line chart is drawn', (
+    t,
+  ) async {
+    await _pump(
+      t,
+      worth: _worth(),
+      points: [
+        for (var d = 1; d <= 5; d++)
+          NetWorthPoint(DateTime(2026, 1, d), d * 100),
+      ],
+    );
+
+    expect(find.byType(SmLineChart), findsOneWidget);
+  });
+
   testWidgets('the card shows toman, dollars, gold and the parts', (t) async {
     await _pump(t, worth: _worth());
+    await t.pumpAndSettle();
 
     expect(find.text('خالص دارایی'), findsOneWidget);
-    expect(find.text('۱۲٬۰۰۰٬۰۰۰ تومان'), findsOneWidget);
+    expect(find.text('۱۲٬۰۰۰٬۰۰۰'), findsOneWidget);
+    expect(find.text('تومان'), findsOneWidget);
     expect(find.text('۲۰۰٫۰۰ دلار'), findsOneWidget);
     expect(find.text('۱٫۵ گرم طلای ۱۸ عیار'), findsOneWidget);
     expect(find.text('کیف‌ها: ۵٬۰۰۰٬۰۰۰'), findsOneWidget);

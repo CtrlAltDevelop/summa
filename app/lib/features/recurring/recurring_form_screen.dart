@@ -145,103 +145,92 @@ class _RecurringFormScreenState extends ConsumerState<RecurringFormScreen> {
       3: l10n.weekdayThu,
       4: l10n.weekdayFri,
     };
-    return SmBackground(
-      child: SafeArea(
-        child: ListView(
-          padding: const EdgeInsets.all(SmSpace.screen),
-          children: [
-            Text(l10n.recurringTitle, style: SmType.title),
-            const SizedBox(height: SmSpace.lg),
-            Choices<EntryKind>(
-              values: EntryKind.recordable,
-              selected: _kind,
-              label: (k) =>
-                  k == EntryKind.expense ? l10n.entryExpense : l10n.entryIncome,
-              onSelected: (k) => setState(() => _kind = k),
-            ),
-            const SizedBox(height: SmSpace.lg),
-            Text(l10n.entryWalletLabel, style: SmType.caption),
-            const SizedBox(height: SmSpace.sm),
-            Choices<Wallet>(
-              values: widget.wallets,
-              selected: _wallet,
-              label: (w) => w.name,
-              onSelected: (w) => setState(() => _wallet = w),
-            ),
-            if (_categoriesFor(ref).isNotEmpty) ...[
-              const SizedBox(height: SmSpace.lg),
-              Text(l10n.recurringCategoryLabel, style: SmType.caption),
-              const SizedBox(height: SmSpace.sm),
-              Choices<Category>(
-                values: _categoriesFor(ref),
-                selected: _chosenCategory(ref)!,
-                label: (c) => c.name,
-                onSelected: (c) => setState(() => _category = c),
-              ),
-            ],
-            const SizedBox(height: SmSpace.lg),
-            SmTextField(
-              controller: _note,
-              label: l10n.recurringNoteLabel,
-              maxLength: 200,
-            ),
-            const SizedBox(height: SmSpace.lg),
-            SmTextField(
-              controller: _amount,
-              label: l10n.recurringAmountLabel,
-              keyboardType: const TextInputType.numberWithOptions(
-                decimal: true,
-              ),
-              textDirection: TextDirection.ltr,
-            ),
-            const SizedBox(height: SmSpace.lg),
-            Text(l10n.recurringPeriodLabel, style: SmType.caption),
-            const SizedBox(height: SmSpace.sm),
-            Choices<RecurringPeriod>(
-              values: RecurringPeriod.values,
-              selected: _period,
-              label: (p) => p == RecurringPeriod.monthly
-                  ? l10n.recurringMonthly
-                  : l10n.recurringWeekly,
-              onSelected: (p) => setState(() => _period = p),
-            ),
-            const SizedBox(height: SmSpace.lg),
-            if (_period == RecurringPeriod.monthly)
-              SmTextField(
-                controller: _day,
-                label: l10n.recurringDayLabel,
-                keyboardType: TextInputType.number,
-                textDirection: TextDirection.ltr,
-              )
-            else ...[
-              Text(l10n.recurringWeekdayLabel, style: SmType.caption),
-              const SizedBox(height: SmSpace.sm),
-              Choices<int>(
-                values: weekdayOrder,
-                selected: _weekday,
-                label: (d) => weekdays[d]!,
-                onSelected: (d) => setState(() => _weekday = d),
-              ),
-            ],
-            const SizedBox(height: SmSpace.lg),
-            Choices<bool>(
-              values: const [false, true],
-              selected: _auto,
-              label: (v) => v ? l10n.recurringAuto : l10n.recurringAskMe,
-              onSelected: (v) => setState(() => _auto = v),
-            ),
-            if (_error != null) ...[
-              const SizedBox(height: SmSpace.md),
-              Text(
-                _error!,
-                style: SmType.caption.copyWith(color: SmColors.danger),
-              ),
-            ],
-            const SizedBox(height: SmSpace.xl),
-            SmButton(label: l10n.walletSave, onPressed: _saving ? null : _save),
-          ],
+    return SmScreen(
+      title: l10n.recurringTitle,
+      children: [
+        Choices<EntryKind>(
+          values: EntryKind.recordable,
+          selected: _kind,
+          label: (k) =>
+              k == EntryKind.expense ? l10n.entryExpense : l10n.entryIncome,
+          onSelected: (k) => setState(() => _kind = k),
         ),
-      ),
+        const SizedBox(height: SmSpace.lg),
+        Text(l10n.entryWalletLabel, style: SmType.caption),
+        const SizedBox(height: SmSpace.sm),
+        Choices<Wallet>(
+          values: widget.wallets,
+          selected: _wallet,
+          label: (w) => w.name,
+          onSelected: (w) => setState(() => _wallet = w),
+        ),
+        if (_categoriesFor(ref).isNotEmpty) ...[
+          const SizedBox(height: SmSpace.lg),
+          Text(l10n.recurringCategoryLabel, style: SmType.caption),
+          const SizedBox(height: SmSpace.sm),
+          Choices<Category>(
+            values: _categoriesFor(ref),
+            selected: _chosenCategory(ref)!,
+            label: (c) => c.name,
+            onSelected: (c) => setState(() => _category = c),
+          ),
+        ],
+        const SizedBox(height: SmSpace.lg),
+        SmTextField(
+          controller: _note,
+          label: l10n.recurringNoteLabel,
+          maxLength: 200,
+        ),
+        const SizedBox(height: SmSpace.lg),
+        SmTextField(
+          controller: _amount,
+          label: l10n.recurringAmountLabel,
+          keyboardType: const TextInputType.numberWithOptions(decimal: true),
+          textDirection: TextDirection.ltr,
+        ),
+        const SizedBox(height: SmSpace.lg),
+        Text(l10n.recurringPeriodLabel, style: SmType.caption),
+        const SizedBox(height: SmSpace.sm),
+        Choices<RecurringPeriod>(
+          values: RecurringPeriod.values,
+          selected: _period,
+          label: (p) => p == RecurringPeriod.monthly
+              ? l10n.recurringMonthly
+              : l10n.recurringWeekly,
+          onSelected: (p) => setState(() => _period = p),
+        ),
+        const SizedBox(height: SmSpace.lg),
+        if (_period == RecurringPeriod.monthly)
+          SmTextField(
+            controller: _day,
+            label: l10n.recurringDayLabel,
+            keyboardType: TextInputType.number,
+            textDirection: TextDirection.ltr,
+          )
+        else ...[
+          Text(l10n.recurringWeekdayLabel, style: SmType.caption),
+          const SizedBox(height: SmSpace.sm),
+          Choices<int>(
+            values: weekdayOrder,
+            selected: _weekday,
+            label: (d) => weekdays[d]!,
+            onSelected: (d) => setState(() => _weekday = d),
+          ),
+        ],
+        const SizedBox(height: SmSpace.lg),
+        Choices<bool>(
+          values: const [false, true],
+          selected: _auto,
+          label: (v) => v ? l10n.recurringAuto : l10n.recurringAskMe,
+          onSelected: (v) => setState(() => _auto = v),
+        ),
+        if (_error != null) ...[
+          const SizedBox(height: SmSpace.md),
+          Text(_error!, style: SmType.caption.copyWith(color: SmColors.danger)),
+        ],
+        const SizedBox(height: SmSpace.xl),
+        SmButton(label: l10n.walletSave, onPressed: _saving ? null : _save),
+      ],
     );
   }
 }

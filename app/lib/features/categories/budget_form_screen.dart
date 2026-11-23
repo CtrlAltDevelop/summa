@@ -61,46 +61,32 @@ class _BudgetFormScreenState extends ConsumerState<BudgetFormScreen> {
   @override
   Widget build(BuildContext context) {
     final l10n = AppLocalizations.of(context);
-    return SmBackground(
-      child: SafeArea(
-        child: ListView(
-          padding: const EdgeInsets.all(SmSpace.screen),
-          children: [
-            Text(
-              '${l10n.budgetFormTitle} · ${widget.category.name}',
-              style: SmType.title,
-            ),
-            const SizedBox(height: SmSpace.lg),
-            Text(l10n.budgetCurrencyLabel, style: SmType.caption),
-            const SizedBox(height: SmSpace.sm),
-            Choices<String>(
-              values: currencyDecimals.keys.toList(),
-              selected: _currency,
-              label: (c) => currencyLabel(l10n, c),
-              onSelected: (c) => setState(() => _currency = c),
-            ),
-            const SizedBox(height: SmSpace.lg),
-            SmTextField(
-              controller: _limit,
-              label: l10n.budgetLimitLabel,
-              keyboardType: const TextInputType.numberWithOptions(
-                decimal: true,
-              ),
-              textDirection: TextDirection.ltr,
-              autofocus: true,
-            ),
-            if (_error != null) ...[
-              const SizedBox(height: SmSpace.md),
-              Text(
-                _error!,
-                style: SmType.caption.copyWith(color: SmColors.danger),
-              ),
-            ],
-            const SizedBox(height: SmSpace.xl),
-            SmButton(label: l10n.walletSave, onPressed: _saving ? null : _save),
-          ],
+    return SmScreen(
+      title: '${l10n.budgetFormTitle} · ${widget.category.name}',
+      children: [
+        Text(l10n.budgetCurrencyLabel, style: SmType.caption),
+        const SizedBox(height: SmSpace.sm),
+        Choices<String>(
+          values: currencyDecimals.keys.toList(),
+          selected: _currency,
+          label: (c) => currencyLabel(l10n, c),
+          onSelected: (c) => setState(() => _currency = c),
         ),
-      ),
+        const SizedBox(height: SmSpace.lg),
+        SmTextField(
+          controller: _limit,
+          label: l10n.budgetLimitLabel,
+          keyboardType: const TextInputType.numberWithOptions(decimal: true),
+          textDirection: TextDirection.ltr,
+          autofocus: true,
+        ),
+        if (_error != null) ...[
+          const SizedBox(height: SmSpace.md),
+          Text(_error!, style: SmType.caption.copyWith(color: SmColors.danger)),
+        ],
+        const SizedBox(height: SmSpace.xl),
+        SmButton(label: l10n.walletSave, onPressed: _saving ? null : _save),
+      ],
     );
   }
 }

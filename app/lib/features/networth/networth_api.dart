@@ -9,6 +9,7 @@ import 'networth_models.dart';
 abstract interface class NetWorthApi {
   Future<NetWorth> get(String access);
   Future<List<Basket>> baskets(String access);
+  Future<List<NetWorthPoint>> history(String access, int days);
   Future<void> createBasket(
     String access, {
     required String name,
@@ -43,6 +44,19 @@ class GrpcNetWorthApi implements NetWorthApi {
       unpricedAssets: r.unpricedAssets,
     );
   });
+
+  @override
+  Future<List<NetWorthPoint>> history(String access, int days) =>
+      guardGrpc(() async {
+        final r = await _client.history(
+          pb.HistoryRequest(days: days),
+          options: _bearer(access),
+        );
+        return [
+          for (final p in r.points)
+            NetWorthPoint(DateTime.parse(p.date), p.totalMinor.toInt()),
+        ];
+      });
 
   @override
   Future<List<Basket>> baskets(String access) => guardGrpc(() async {

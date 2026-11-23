@@ -29,44 +29,36 @@ class _ReportScreenState extends ConsumerState<ReportScreen> {
     final query = ReportQuery(monthOffset: _offset, currency: _currency);
     final report = ref.watch(reportProvider(query));
     final window = shamsiMonthWindowAt(DateTime.now(), _offset);
-    return SmBackground(
-      child: SafeArea(
-        child: ListView(
-          padding: const EdgeInsets.all(SmSpace.screen),
+    return SmScreen(
+      title: l10n.reportTitle,
+      children: [
+        Row(
           children: [
-            Text(l10n.reportTitle, style: SmType.title),
-            const SizedBox(height: SmSpace.md),
-            Row(
-              children: [
-                _Link(
-                  label: l10n.reportPrev,
-                  onTap: () => setState(() => _offset--),
-                ),
-                Expanded(
-                  child: Center(
-                    child: Text(
-                      formatJalaliMonth(window.start.toLocal()),
-                      style: SmType.body,
-                    ),
-                  ),
-                ),
-                _Link(
-                  label: l10n.reportNext,
-                  onTap: () => setState(() => _offset++),
-                ),
-              ],
+            _Link(
+              label: l10n.reportPrev,
+              onTap: () => setState(() => _offset--),
             ),
-            const SizedBox(height: SmSpace.lg),
-            ...report.when(
-              loading: () => [
-                const Center(child: Text('…', style: SmType.body)),
-              ],
-              error: (_, _) => [Text(l10n.reportFailed, style: SmType.body)],
-              data: (r) => _content(context, r),
+            Expanded(
+              child: Center(
+                child: Text(
+                  formatJalaliMonth(window.start.toLocal()),
+                  style: SmType.body,
+                ),
+              ),
+            ),
+            _Link(
+              label: l10n.reportNext,
+              onTap: () => setState(() => _offset++),
             ),
           ],
         ),
-      ),
+        const SizedBox(height: SmSpace.lg),
+        ...report.when(
+          loading: () => [const Center(child: Text('…', style: SmType.body))],
+          error: (_, _) => [Text(l10n.reportFailed, style: SmType.body)],
+          data: (r) => _content(context, r),
+        ),
+      ],
     );
   }
 

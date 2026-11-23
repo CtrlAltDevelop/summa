@@ -69,91 +69,77 @@ class _AssetScreenState extends ConsumerState<AssetScreen> {
         .where((a) => a.id == widget.assetId)
         .firstOrNull;
     if (asset == null) return const SmBackground(child: SizedBox.shrink());
-    return SmBackground(
-      child: SafeArea(
-        child: ListView(
-          padding: const EdgeInsets.all(SmSpace.screen),
-          children: [
-            Text(asset.name, style: SmType.title),
-            const SizedBox(height: SmSpace.sm),
-            Text(
-              '${l10n.assetHeld}: ${formatQuantity(asset.quantity)} ${asset.unit}',
-              style: SmType.body,
-            ),
-            if (asset.priceKnown) ...[
-              Text(
-                '${l10n.assetsValue}: ${formatNumber(asset.valueMinor)}',
-                style: SmType.body,
-              ),
-              Text(
-                '${l10n.assetCost}: ${formatNumber(asset.costMinor)}',
-                style: SmType.caption,
-              ),
-              Text(
-                '${l10n.assetsProfit}: ${formatNumber(asset.profitMinor)}',
-                style: SmType.caption.copyWith(
-                  color: asset.profitMinor < 0
-                      ? SmColors.danger
-                      : SmColors.success,
-                ),
-              ),
-            ] else
-              Text(l10n.assetUnknownPrice, style: SmType.caption),
-            Text(
-              '${l10n.assetsRealized}: ${formatNumber(asset.realizedMinor)}',
-              style: SmType.caption,
-            ),
-            const SizedBox(height: SmSpace.xl),
-            SmTextField(
-              controller: _quantity,
-              label: l10n.assetQuantityLabel,
-              keyboardType: const TextInputType.numberWithOptions(
-                decimal: true,
-              ),
-              textDirection: TextDirection.ltr,
-            ),
-            const SizedBox(height: SmSpace.md),
-            SmTextField(
-              controller: _price,
-              label: l10n.assetSellPriceLabel,
-              keyboardType: TextInputType.number,
-              textDirection: TextDirection.ltr,
-            ),
-            if (_error != null) ...[
-              const SizedBox(height: SmSpace.md),
-              Text(
-                _error!,
-                style: SmType.caption.copyWith(color: SmColors.danger),
-              ),
-            ],
-            const SizedBox(height: SmSpace.lg),
-            SmButton(
-              label: l10n.assetBuyMore,
-              onPressed: () => _submit(
-                (q, p) =>
-                    controller.addLot(asset.id, quantity: q, unitPriceMinor: p),
-              ),
-            ),
-            const SizedBox(height: SmSpace.sm),
-            SmButton(
-              label: l10n.assetSell,
-              onPressed: () => _submit(
-                (q, p) =>
-                    controller.sell(asset.id, quantity: q, unitPriceMinor: p),
-              ),
-            ),
-            const SizedBox(height: SmSpace.sm),
-            SmButton(
-              label: l10n.assetDelete,
-              onPressed: () async {
-                final navigator = Navigator.of(context);
-                await controller.delete(asset.id);
-                navigator.pop();
-              },
-            ),
-          ],
+    return SmScreen(
+      title: asset.name,
+      children: [
+        Text(
+          '${l10n.assetHeld}: ${formatQuantity(asset.quantity)} ${asset.unit}',
+          style: SmType.body,
         ),
-      ),
+        if (asset.priceKnown) ...[
+          Text(
+            '${l10n.assetsValue}: ${formatNumber(asset.valueMinor)}',
+            style: SmType.body,
+          ),
+          Text(
+            '${l10n.assetCost}: ${formatNumber(asset.costMinor)}',
+            style: SmType.caption,
+          ),
+          Text(
+            '${l10n.assetsProfit}: ${formatNumber(asset.profitMinor)}',
+            style: SmType.caption.copyWith(
+              color: asset.profitMinor < 0 ? SmColors.danger : SmColors.success,
+            ),
+          ),
+        ] else
+          Text(l10n.assetUnknownPrice, style: SmType.caption),
+        Text(
+          '${l10n.assetsRealized}: ${formatNumber(asset.realizedMinor)}',
+          style: SmType.caption,
+        ),
+        const SizedBox(height: SmSpace.xl),
+        SmTextField(
+          controller: _quantity,
+          label: l10n.assetQuantityLabel,
+          keyboardType: const TextInputType.numberWithOptions(decimal: true),
+          textDirection: TextDirection.ltr,
+        ),
+        const SizedBox(height: SmSpace.md),
+        SmTextField(
+          controller: _price,
+          label: l10n.assetSellPriceLabel,
+          keyboardType: TextInputType.number,
+          textDirection: TextDirection.ltr,
+        ),
+        if (_error != null) ...[
+          const SizedBox(height: SmSpace.md),
+          Text(_error!, style: SmType.caption.copyWith(color: SmColors.danger)),
+        ],
+        const SizedBox(height: SmSpace.lg),
+        SmButton(
+          label: l10n.assetBuyMore,
+          onPressed: () => _submit(
+            (q, p) =>
+                controller.addLot(asset.id, quantity: q, unitPriceMinor: p),
+          ),
+        ),
+        const SizedBox(height: SmSpace.sm),
+        SmButton(
+          label: l10n.assetSell,
+          onPressed: () => _submit(
+            (q, p) => controller.sell(asset.id, quantity: q, unitPriceMinor: p),
+          ),
+        ),
+        const SizedBox(height: SmSpace.sm),
+        SmButton(
+          label: l10n.assetDelete,
+          onPressed: () async {
+            final navigator = Navigator.of(context);
+            await controller.delete(asset.id);
+            navigator.pop();
+          },
+        ),
+      ],
     );
   }
 }

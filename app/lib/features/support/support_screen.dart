@@ -23,71 +23,63 @@ class SupportScreen extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final l10n = AppLocalizations.of(context);
     final tickets = ref.watch(ticketsProvider).value ?? const <SupportTicket>[];
-    return SmBackground(
-      child: SafeArea(
-        child: ListView(
-          padding: const EdgeInsets.all(SmSpace.screen),
-          children: [
-            Text(l10n.supportTitle, style: SmType.title),
-            const SizedBox(height: SmSpace.lg),
-            SmButton(
-              label: l10n.supportNew,
-              onPressed: () => Navigator.of(context).push(
-                PageRouteBuilder<void>(
-                  pageBuilder: (_, _, _) => const TicketFormScreen(),
+    return SmScreen(
+      title: l10n.supportTitle,
+      children: [
+        SmButton(
+          label: l10n.supportNew,
+          onPressed: () => Navigator.of(context).push(
+            PageRouteBuilder<void>(
+              pageBuilder: (_, _, _) => const TicketFormScreen(),
+            ),
+          ),
+        ),
+        const SizedBox(height: SmSpace.lg),
+        if (tickets.isEmpty)
+          Text(l10n.supportEmpty, style: SmType.body)
+        else
+          for (final t in tickets)
+            Padding(
+              padding: const EdgeInsets.only(bottom: SmSpace.sm),
+              child: GestureDetector(
+                onTap: () => Navigator.of(context).push(
+                  PageRouteBuilder<void>(
+                    pageBuilder: (_, _, _) => ThreadScreen(ticket: t),
+                  ),
+                ),
+                child: SmGlassCard(
+                  padding: const EdgeInsets.all(SmSpace.lg),
+                  child: Row(
+                    children: [
+                      Expanded(
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Text(t.subject, style: SmType.body),
+                            Text(
+                              [
+                                _statusLabel(l10n, t.status),
+                                if (t.lastMessageAt != null)
+                                  formatJalaliDate(t.lastMessageAt!.toLocal()),
+                              ].join(' · '),
+                              style: SmType.caption,
+                            ),
+                          ],
+                        ),
+                      ),
+                      if (t.unread > 0)
+                        Text(
+                          l10n.supportUnread,
+                          style: SmType.caption.copyWith(
+                            color: SmColors.accent,
+                          ),
+                        ),
+                    ],
+                  ),
                 ),
               ),
             ),
-            const SizedBox(height: SmSpace.lg),
-            if (tickets.isEmpty)
-              Text(l10n.supportEmpty, style: SmType.body)
-            else
-              for (final t in tickets)
-                Padding(
-                  padding: const EdgeInsets.only(bottom: SmSpace.sm),
-                  child: GestureDetector(
-                    onTap: () => Navigator.of(context).push(
-                      PageRouteBuilder<void>(
-                        pageBuilder: (_, _, _) => ThreadScreen(ticket: t),
-                      ),
-                    ),
-                    child: SmGlassCard(
-                      padding: const EdgeInsets.all(SmSpace.lg),
-                      child: Row(
-                        children: [
-                          Expanded(
-                            child: Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                Text(t.subject, style: SmType.body),
-                                Text(
-                                  [
-                                    _statusLabel(l10n, t.status),
-                                    if (t.lastMessageAt != null)
-                                      formatJalaliDate(
-                                        t.lastMessageAt!.toLocal(),
-                                      ),
-                                  ].join(' · '),
-                                  style: SmType.caption,
-                                ),
-                              ],
-                            ),
-                          ),
-                          if (t.unread > 0)
-                            Text(
-                              l10n.supportUnread,
-                              style: SmType.caption.copyWith(
-                                color: SmColors.accent,
-                              ),
-                            ),
-                        ],
-                      ),
-                    ),
-                  ),
-                ),
-          ],
-        ),
-      ),
+      ],
     );
   }
 }
@@ -144,36 +136,27 @@ class _TicketFormScreenState extends ConsumerState<TicketFormScreen> {
   @override
   Widget build(BuildContext context) {
     final l10n = AppLocalizations.of(context);
-    return SmBackground(
-      child: SafeArea(
-        child: ListView(
-          padding: const EdgeInsets.all(SmSpace.screen),
-          children: [
-            Text(l10n.supportNew, style: SmType.title),
-            const SizedBox(height: SmSpace.lg),
-            SmTextField(
-              controller: _subject,
-              label: l10n.supportSubjectLabel,
-              autofocus: true,
-            ),
-            const SizedBox(height: SmSpace.lg),
-            SmTextField(
-              controller: _body,
-              label: l10n.supportBodyLabel,
-              maxLines: 6,
-            ),
-            if (_error != null) ...[
-              const SizedBox(height: SmSpace.md),
-              Text(
-                _error!,
-                style: SmType.caption.copyWith(color: SmColors.danger),
-              ),
-            ],
-            const SizedBox(height: SmSpace.xl),
-            SmButton(label: l10n.supportSend, onPressed: _busy ? null : _send),
-          ],
+    return SmScreen(
+      title: l10n.supportNew,
+      children: [
+        SmTextField(
+          controller: _subject,
+          label: l10n.supportSubjectLabel,
+          autofocus: true,
         ),
-      ),
+        const SizedBox(height: SmSpace.lg),
+        SmTextField(
+          controller: _body,
+          label: l10n.supportBodyLabel,
+          maxLines: 6,
+        ),
+        if (_error != null) ...[
+          const SizedBox(height: SmSpace.md),
+          Text(_error!, style: SmType.caption.copyWith(color: SmColors.danger)),
+        ],
+        const SizedBox(height: SmSpace.xl),
+        SmButton(label: l10n.supportSend, onPressed: _busy ? null : _send),
+      ],
     );
   }
 }

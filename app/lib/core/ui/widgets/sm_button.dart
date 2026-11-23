@@ -8,12 +8,16 @@ class SmButton extends StatefulWidget {
     required this.label,
     required this.onPressed,
     this.icon,
+    this.secondary = false,
     super.key,
   });
 
   final String label;
   final VoidCallback? onPressed;
   final IconData? icon;
+
+  /// Quiet glass style for actions that are not the screen's main one.
+  final bool secondary;
 
   @override
   State<SmButton> createState() => _SmButtonState();
@@ -48,24 +52,43 @@ class _SmButtonState extends State<SmButton> {
           child: Opacity(
             opacity: enabled ? 1 : _disabledOpacity,
             child: DecoratedBox(
-              decoration: const BoxDecoration(
-                color: SmColors.accent,
+              decoration: BoxDecoration(
+                color: widget.secondary ? SmColors.glassFill : SmColors.accent,
                 borderRadius: SmRadius.pill,
+                border: widget.secondary
+                    ? Border.all(color: SmColors.glassBorder)
+                    : null,
               ),
-              child: Padding(
-                padding: const EdgeInsets.symmetric(
-                  horizontal: SmSpace.xl,
-                  vertical: SmSpace.md,
-                ),
-                child: Row(
-                  mainAxisSize: MainAxisSize.min,
-                  children: [
-                    if (widget.icon != null) ...[
-                      Icon(widget.icon, size: 20, color: SmColors.onAccent),
-                      const SizedBox(width: SmSpace.sm),
+              child: Center(
+                widthFactor: 1,
+                child: Padding(
+                  padding: const EdgeInsets.symmetric(
+                    horizontal: SmSpace.xl,
+                    vertical: SmSpace.md,
+                  ),
+                  child: Row(
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                      if (widget.icon != null) ...[
+                        Icon(
+                          widget.icon,
+                          size: 20,
+                          color: widget.secondary
+                              ? SmColors.textPrimary
+                              : SmColors.onAccent,
+                        ),
+                        const SizedBox(width: SmSpace.sm),
+                      ],
+                      Text(
+                        widget.label,
+                        style: widget.secondary
+                            ? SmType.button.copyWith(
+                                color: SmColors.textPrimary,
+                              )
+                            : SmType.button,
+                      ),
                     ],
-                    Text(widget.label, style: SmType.button),
-                  ],
+                  ),
                 ),
               ),
             ),

@@ -122,88 +122,77 @@ class _SplitFormScreenState extends ConsumerState<SplitFormScreen> {
     final categories = (ref.watch(categoriesControllerProvider).value ?? [])
         .where((c) => c.kind == CategoryKind.expense)
         .toList();
-    return SmBackground(
-      child: SafeArea(
-        child: ListView(
-          padding: const EdgeInsets.all(SmSpace.screen),
-          children: [
-            Text(l10n.splitTitle, style: SmType.title),
-            const SizedBox(height: SmSpace.lg),
-            Text(l10n.entryWalletLabel, style: SmType.caption),
+    return SmScreen(
+      title: l10n.splitTitle,
+      children: [
+        Text(l10n.entryWalletLabel, style: SmType.caption),
+        const SizedBox(height: SmSpace.sm),
+        Choices<Wallet>(
+          values: widget.wallets,
+          selected: _wallet,
+          label: (w) => w.name,
+          onSelected: (w) => setState(() => _wallet = w),
+        ),
+        for (var i = 0; i < _parts.length; i++) ...[
+          const SizedBox(height: SmSpace.xl),
+          Text(
+            toPersianDigits('${l10n.splitPart} ${i + 1}'),
+            style: SmType.caption,
+          ),
+          const SizedBox(height: SmSpace.sm),
+          SmTextField(
+            controller: _parts[i].amount,
+            label: l10n.entryAmountLabel,
+            keyboardType: const TextInputType.numberWithOptions(decimal: true),
+            textDirection: TextDirection.ltr,
+            onChanged: (_) => setState(() {}),
+          ),
+          if (categories.isNotEmpty) ...[
             const SizedBox(height: SmSpace.sm),
-            Choices<Wallet>(
-              values: widget.wallets,
-              selected: _wallet,
-              label: (w) => w.name,
-              onSelected: (w) => setState(() => _wallet = w),
-            ),
-            for (var i = 0; i < _parts.length; i++) ...[
-              const SizedBox(height: SmSpace.xl),
-              Text(
-                toPersianDigits('${l10n.splitPart} ${i + 1}'),
-                style: SmType.caption,
-              ),
-              const SizedBox(height: SmSpace.sm),
-              SmTextField(
-                controller: _parts[i].amount,
-                label: l10n.entryAmountLabel,
-                keyboardType: const TextInputType.numberWithOptions(
-                  decimal: true,
-                ),
-                textDirection: TextDirection.ltr,
-                onChanged: (_) => setState(() {}),
-              ),
-              if (categories.isNotEmpty) ...[
-                const SizedBox(height: SmSpace.sm),
-                Choices<Category>(
-                  values: categories,
-                  selected: _parts[i].category ?? categories.first,
-                  label: (c) => c.name,
-                  onSelected: (c) => setState(() => _parts[i].category = c),
-                ),
-              ],
-              const SizedBox(height: SmSpace.sm),
-              Choices<bool>(
-                values: const [false, true],
-                selected: _parts[i].outside,
-                label: (v) => v ? l10n.entryOutside : l10n.entryCounted,
-                onSelected: (v) => setState(() => _parts[i].outside = v),
-              ),
-            ],
-            const SizedBox(height: SmSpace.lg),
-            if (_parts.length < _maxParts)
-              SmButton(
-                label: l10n.splitAddPart,
-                onPressed: () => setState(() => _parts.add(_Part())),
-              ),
-            const SizedBox(height: SmSpace.lg),
-            Text(
-              '${l10n.splitTotal}: ${formatMinor(_total, _wallet.currency)} '
-              '${currencyLabel(l10n, _wallet.currency)}',
-              style: SmType.body,
-            ),
-            SmTextField(
-              controller: _note,
-              label: l10n.entryNoteLabel,
-              maxLength: 200,
-            ),
-            if (_error != null) ...[
-              const SizedBox(height: SmSpace.md),
-              Text(
-                _error!,
-                style: SmType.caption.copyWith(color: SmColors.danger),
-              ),
-            ],
-            const SizedBox(height: SmSpace.xl),
-            SmButton(
-              label: l10n.walletSave,
-              onPressed: _saving || _parts.length < _minParts
-                  ? null
-                  : () => _save(categories),
+            Choices<Category>(
+              values: categories,
+              selected: _parts[i].category ?? categories.first,
+              label: (c) => c.name,
+              onSelected: (c) => setState(() => _parts[i].category = c),
             ),
           ],
+          const SizedBox(height: SmSpace.sm),
+          Choices<bool>(
+            values: const [false, true],
+            selected: _parts[i].outside,
+            label: (v) => v ? l10n.entryOutside : l10n.entryCounted,
+            onSelected: (v) => setState(() => _parts[i].outside = v),
+          ),
+        ],
+        const SizedBox(height: SmSpace.lg),
+        if (_parts.length < _maxParts)
+          SmButton(
+            label: l10n.splitAddPart,
+            onPressed: () => setState(() => _parts.add(_Part())),
+          ),
+        const SizedBox(height: SmSpace.lg),
+        Text(
+          '${l10n.splitTotal}: ${formatMinor(_total, _wallet.currency)} '
+          '${currencyLabel(l10n, _wallet.currency)}',
+          style: SmType.body,
         ),
-      ),
+        SmTextField(
+          controller: _note,
+          label: l10n.entryNoteLabel,
+          maxLength: 200,
+        ),
+        if (_error != null) ...[
+          const SizedBox(height: SmSpace.md),
+          Text(_error!, style: SmType.caption.copyWith(color: SmColors.danger)),
+        ],
+        const SizedBox(height: SmSpace.xl),
+        SmButton(
+          label: l10n.walletSave,
+          onPressed: _saving || _parts.length < _minParts
+              ? null
+              : () => _save(categories),
+        ),
+      ],
     );
   }
 }

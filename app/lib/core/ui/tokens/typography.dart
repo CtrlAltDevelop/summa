@@ -5,6 +5,12 @@ import 'colors.dart';
 /// Text styles. No font file is bundled yet, so the platform's Persian-capable
 /// system font is used.
 abstract final class SmType {
+  static const TextStyle hero = TextStyle(
+    fontSize: 48,
+    fontWeight: FontWeight.w800,
+    height: 1.2,
+    color: SmColors.textPrimary,
+  );
   static const TextStyle display = TextStyle(
     fontSize: 34,
     fontWeight: FontWeight.w800,

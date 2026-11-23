@@ -123,40 +123,24 @@ class _SmsScreenState extends ConsumerState<SmsScreen> {
   Widget build(BuildContext context) {
     final l10n = AppLocalizations.of(context);
     final card = _card;
-    return SmBackground(
-      child: SafeArea(
-        child: ListView(
-          padding: const EdgeInsets.all(SmSpace.screen),
-          children: [
-            Text(l10n.smsTitle, style: SmType.title),
-            const SizedBox(height: SmSpace.lg),
-            SmTextField(
-              controller: _text,
-              label: l10n.smsPasteLabel,
-              maxLines: 5,
-            ),
-            const SizedBox(height: SmSpace.md),
-            SmButton(
-              label: l10n.smsAnalyze,
-              onPressed: _busy ? null : _analyze,
-            ),
-            if (_error != null) ...[
-              const SizedBox(height: SmSpace.md),
-              Text(
-                _error!,
-                style: SmType.caption.copyWith(color: SmColors.danger),
-              ),
-            ],
-            if (card != null) ...[
-              const SizedBox(height: SmSpace.xl),
-              if (card.ignored.isNotEmpty)
-                Text(_ignoredText(l10n, card.ignored), style: SmType.body)
-              else
-                _result(context, card),
-            ],
-          ],
-        ),
-      ),
+    return SmScreen(
+      title: l10n.smsTitle,
+      children: [
+        SmTextField(controller: _text, label: l10n.smsPasteLabel, maxLines: 5),
+        const SizedBox(height: SmSpace.md),
+        SmButton(label: l10n.smsAnalyze, onPressed: _busy ? null : _analyze),
+        if (_error != null) ...[
+          const SizedBox(height: SmSpace.md),
+          Text(_error!, style: SmType.caption.copyWith(color: SmColors.danger)),
+        ],
+        if (card != null) ...[
+          const SizedBox(height: SmSpace.xl),
+          if (card.ignored.isNotEmpty)
+            Text(_ignoredText(l10n, card.ignored), style: SmType.body)
+          else
+            _result(context, card),
+        ],
+      ],
     );
   }
 

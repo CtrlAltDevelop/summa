@@ -30,7 +30,8 @@ class Choices<T> extends StatelessWidget {
             label: label(v),
             child: GestureDetector(
               onTap: () => onSelected(v),
-              child: DecoratedBox(
+              child: AnimatedContainer(
+                duration: SmMotion.of(context, SmMotion.fast),
                 decoration: BoxDecoration(
                   color: v == selected ? SmColors.accent : SmColors.glassFill,
                   borderRadius: SmRadius.pill,
@@ -86,7 +87,8 @@ class MultiChoices<T> extends StatelessWidget {
             label: label(v),
             child: GestureDetector(
               onTap: () => onToggle(v),
-              child: DecoratedBox(
+              child: AnimatedContainer(
+                duration: SmMotion.of(context, SmMotion.fast),
                 decoration: BoxDecoration(
                   color: selected.contains(v)
                       ? SmColors.accent

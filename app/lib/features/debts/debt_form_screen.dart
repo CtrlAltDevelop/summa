@@ -127,92 +127,79 @@ class _DebtFormScreenState extends ConsumerState<DebtFormScreen> {
   Widget build(BuildContext context) {
     final l10n = AppLocalizations.of(context);
     final wallets = _walletsOfCurrency;
-    return SmBackground(
-      child: SafeArea(
-        child: ListView(
-          padding: const EdgeInsets.all(SmSpace.screen),
-          children: [
-            Text(l10n.debtFormTitle, style: SmType.title),
-            const SizedBox(height: SmSpace.lg),
-            Choices<DebtKind>(
-              values: DebtKind.values,
-              selected: _kind,
-              label: (k) => switch (k) {
-                DebtKind.bankLoan => l10n.debtKindLoan,
-                DebtKind.installmentPurchase => l10n.debtKindPurchase,
-                DebtKind.personal => l10n.debtKindPersonal,
-              },
-              onSelected: (k) => setState(() => _kind = k),
-            ),
-            const SizedBox(height: SmSpace.lg),
-            SmTextField(controller: _title, label: l10n.debtTitleLabel),
-            const SizedBox(height: SmSpace.lg),
-            Text(l10n.walletCurrencyLabel, style: SmType.caption),
-            const SizedBox(height: SmSpace.sm),
-            Choices<String>(
-              values: currencyDecimals.keys.toList(),
-              selected: _currency,
-              label: (c) => currencyLabel(l10n, c),
-              onSelected: (c) => setState(() {
-                _currency = c;
-                _wallet = null;
-              }),
-            ),
-            const SizedBox(height: SmSpace.lg),
-            SmTextField(
-              controller: _installment,
-              label: l10n.debtInstallmentLabel,
-              keyboardType: const TextInputType.numberWithOptions(
-                decimal: true,
-              ),
-              textDirection: TextDirection.ltr,
-            ),
-            const SizedBox(height: SmSpace.lg),
-            SmTextField(
-              controller: _count,
-              label: l10n.debtCountLabel,
-              keyboardType: TextInputType.number,
-              textDirection: TextDirection.ltr,
-            ),
-            const SizedBox(height: SmSpace.lg),
-            SmTextField(
-              controller: _firstDue,
-              label: l10n.debtFirstDueLabel,
-              keyboardType: TextInputType.datetime,
-              textDirection: TextDirection.ltr,
-            ),
-            const SizedBox(height: SmSpace.lg),
-            SmTextField(
-              controller: _principal,
-              label: l10n.debtPrincipalLabel,
-              keyboardType: const TextInputType.numberWithOptions(
-                decimal: true,
-              ),
-              textDirection: TextDirection.ltr,
-            ),
-            if (wallets.isNotEmpty) ...[
-              const SizedBox(height: SmSpace.lg),
-              Text(l10n.debtWalletLabel, style: SmType.caption),
-              const SizedBox(height: SmSpace.sm),
-              Choices<Wallet?>(
-                values: [null, ...wallets],
-                selected: _wallet,
-                label: (w) => w?.name ?? l10n.recurringAskMe,
-                onSelected: (w) => setState(() => _wallet = w),
-              ),
-            ],
-            if (_error != null) ...[
-              const SizedBox(height: SmSpace.md),
-              Text(
-                _error!,
-                style: SmType.caption.copyWith(color: SmColors.danger),
-              ),
-            ],
-            const SizedBox(height: SmSpace.xl),
-            SmButton(label: l10n.walletSave, onPressed: _saving ? null : _save),
-          ],
+    return SmScreen(
+      title: l10n.debtFormTitle,
+      children: [
+        Choices<DebtKind>(
+          values: DebtKind.values,
+          selected: _kind,
+          label: (k) => switch (k) {
+            DebtKind.bankLoan => l10n.debtKindLoan,
+            DebtKind.installmentPurchase => l10n.debtKindPurchase,
+            DebtKind.personal => l10n.debtKindPersonal,
+          },
+          onSelected: (k) => setState(() => _kind = k),
         ),
-      ),
+        const SizedBox(height: SmSpace.lg),
+        SmTextField(controller: _title, label: l10n.debtTitleLabel),
+        const SizedBox(height: SmSpace.lg),
+        Text(l10n.walletCurrencyLabel, style: SmType.caption),
+        const SizedBox(height: SmSpace.sm),
+        Choices<String>(
+          values: currencyDecimals.keys.toList(),
+          selected: _currency,
+          label: (c) => currencyLabel(l10n, c),
+          onSelected: (c) => setState(() {
+            _currency = c;
+            _wallet = null;
+          }),
+        ),
+        const SizedBox(height: SmSpace.lg),
+        SmTextField(
+          controller: _installment,
+          label: l10n.debtInstallmentLabel,
+          keyboardType: const TextInputType.numberWithOptions(decimal: true),
+          textDirection: TextDirection.ltr,
+        ),
+        const SizedBox(height: SmSpace.lg),
+        SmTextField(
+          controller: _count,
+          label: l10n.debtCountLabel,
+          keyboardType: TextInputType.number,
+          textDirection: TextDirection.ltr,
+        ),
+        const SizedBox(height: SmSpace.lg),
+        SmTextField(
+          controller: _firstDue,
+          label: l10n.debtFirstDueLabel,
+          keyboardType: TextInputType.datetime,
+          textDirection: TextDirection.ltr,
+        ),
+        const SizedBox(height: SmSpace.lg),
+        SmTextField(
+          controller: _principal,
+          label: l10n.debtPrincipalLabel,
+          keyboardType: const TextInputType.numberWithOptions(decimal: true),
+          textDirection: TextDirection.ltr,
+        ),
+        if (wallets.isNotEmpty) ...[
+          const SizedBox(height: SmSpace.lg),
+          Text(l10n.debtWalletLabel, style: SmType.caption),
+          const SizedBox(height: SmSpace.sm),
+          Choices<Wallet?>(
+            values: [null, ...wallets],
+            selected: _wallet,
+            label: (w) => w?.name ?? l10n.recurringAskMe,
+            onSelected: (w) => setState(() => _wallet = w),
+          ),
+        ],
+        if (_error != null) ...[
+          const SizedBox(height: SmSpace.md),
+          Text(_error!, style: SmType.caption.copyWith(color: SmColors.danger)),
+        ],
+        const SizedBox(height: SmSpace.xl),
+        SmButton(label: l10n.walletSave, onPressed: _saving ? null : _save),
+      ],
     );
   }
 }

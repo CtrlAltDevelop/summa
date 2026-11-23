@@ -97,46 +97,37 @@ class _BasketFormScreenState extends ConsumerState<BasketFormScreen> {
       for (final w in wallets) BasketItemRef('wallet', w.id): w.name,
       for (final a in assets) BasketItemRef('asset', a.id): a.name,
     };
-    return SmBackground(
-      child: SafeArea(
-        child: ListView(
-          padding: const EdgeInsets.all(SmSpace.screen),
-          children: [
-            Text(l10n.basketFormTitle, style: SmType.title),
-            const SizedBox(height: SmSpace.lg),
-            SmTextField(controller: _name, label: l10n.basketNameLabel),
-            const SizedBox(height: SmSpace.lg),
-            SmTextField(
-              controller: _target,
-              label: l10n.basketTargetLabel,
-              keyboardType: TextInputType.number,
-              textDirection: TextDirection.ltr,
-            ),
-            if (names.isNotEmpty) ...[
-              const SizedBox(height: SmSpace.lg),
-              Text(l10n.basketItemsLabel, style: SmType.caption),
-              const SizedBox(height: SmSpace.sm),
-              MultiChoices<BasketItemRef>(
-                values: names.keys.toList(),
-                selected: _picked,
-                label: (r) => names[r]!,
-                onToggle: (r) => setState(() {
-                  if (!_picked.remove(r)) _picked.add(r);
-                }),
-              ),
-            ],
-            if (_error != null) ...[
-              const SizedBox(height: SmSpace.md),
-              Text(
-                _error!,
-                style: SmType.caption.copyWith(color: SmColors.danger),
-              ),
-            ],
-            const SizedBox(height: SmSpace.xl),
-            SmButton(label: l10n.walletSave, onPressed: _saving ? null : _save),
-          ],
+    return SmScreen(
+      title: l10n.basketFormTitle,
+      children: [
+        SmTextField(controller: _name, label: l10n.basketNameLabel),
+        const SizedBox(height: SmSpace.lg),
+        SmTextField(
+          controller: _target,
+          label: l10n.basketTargetLabel,
+          keyboardType: TextInputType.number,
+          textDirection: TextDirection.ltr,
         ),
-      ),
+        if (names.isNotEmpty) ...[
+          const SizedBox(height: SmSpace.lg),
+          Text(l10n.basketItemsLabel, style: SmType.caption),
+          const SizedBox(height: SmSpace.sm),
+          MultiChoices<BasketItemRef>(
+            values: names.keys.toList(),
+            selected: _picked,
+            label: (r) => names[r]!,
+            onToggle: (r) => setState(() {
+              if (!_picked.remove(r)) _picked.add(r);
+            }),
+          ),
+        ],
+        if (_error != null) ...[
+          const SizedBox(height: SmSpace.md),
+          Text(_error!, style: SmType.caption.copyWith(color: SmColors.danger)),
+        ],
+        const SizedBox(height: SmSpace.xl),
+        SmButton(label: l10n.walletSave, onPressed: _saving ? null : _save),
+      ],
     );
   }
 }

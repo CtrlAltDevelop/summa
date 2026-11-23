@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:summa/features/auth/setup_prompt.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:shamsi_date/shamsi_date.dart';
 import 'package:summa/app.dart';
@@ -108,6 +109,7 @@ Future<_FakeReportApi> _pump(WidgetTester t) async {
   await t.pumpWidget(
     ProviderScope(
       overrides: [
+        setupPromptEnabledProvider.overrideWithValue(false),
         authApiProvider.overrideWithValue(auth),
         tokenStoreProvider.overrideWithValue(
           MemoryTokenStore(auth.currentTokens),
