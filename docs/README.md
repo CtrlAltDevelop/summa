@@ -37,6 +37,7 @@
 27. [phases/phase-10-networth.md](phases/phase-10-networth.md): سند فاز ۱۰ (خالص دارایی و سبدها)
 28. [phases/phase-11-reports.md](phases/phase-11-reports.md): سند فاز ۱۱ (گزارش و خروجی)
 29. [phases/phase-12-sync.md](phases/phase-12-sync.md): سند فاز ۱۲ (آفلاین و همگام‌سازی)
+30. [phases/phase-13-billing.md](phases/phase-13-billing.md): سند فاز ۱۳ (اشتراک و پرداخت)
 
 ## محدودیت‌های بررسی
 - همه صفحه‌های عمومی خونده شد، به جز `/disclosure` (دوبار خطای ۵۰۳؛ لیست شریک‌های رفرال و مدل درآمد رفرال مشخص نیست).
