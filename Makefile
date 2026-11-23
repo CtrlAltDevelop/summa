@@ -15,6 +15,7 @@ ALL_APPS := DJANGO_CMS_ENABLED=true DJANGO_NOTIFICATIONS_ENABLED=true DJANGO_SHO
 DART_PROTOS := infrastructure/common/grpc/common.proto \
 	infrastructure/accounts/grpc/accounts.proto \
 	apps/wallets/grpc/wallets.proto \
+	apps/assistant/grpc/assistant.proto \
 	infrastructure/auth/sms_code/grpc/auth_sms_code.proto \
 	infrastructure/oauth/rotation/grpc/oauth_rotation.proto
 
