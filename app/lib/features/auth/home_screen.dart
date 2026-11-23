@@ -5,6 +5,7 @@ import '../../core/ui/tokens/tokens.dart';
 import '../../core/ui/widgets/widgets.dart';
 import '../../l10n/gen/app_localizations.dart';
 import '../assistant/chat_screen.dart';
+import '../assistant/digest_panel.dart';
 import '../assistant/sms_screen.dart';
 import '../categories/budgets_panel.dart';
 import '../recurring/recurring_panel.dart';
@@ -49,6 +50,8 @@ class HomeScreen extends ConsumerWidget {
             ),
             const SizedBox(height: SmSpace.lg),
             const WalletsPanel(),
+            const SizedBox(height: SmSpace.lg),
+            const DigestPanel(),
             const SizedBox(height: SmSpace.lg),
             const RecurringPanel(),
             const SizedBox(height: SmSpace.lg),

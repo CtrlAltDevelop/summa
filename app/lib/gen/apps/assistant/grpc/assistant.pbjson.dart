@@ -15,6 +15,18 @@ import 'dart:convert' as $convert;
 import 'dart:core' as $core;
 import 'dart:typed_data' as $typed_data;
 
+@$core.Deprecated('Use accountingHourDescriptor instead')
+const AccountingHour$json = {
+  '1': 'AccountingHour',
+  '2': [
+    {'1': 'hour', '3': 1, '4': 1, '5': 5, '10': 'hour'},
+  ],
+};
+
+/// Descriptor for `AccountingHour`. Decode as a `google.protobuf.DescriptorProto`.
+final $typed_data.Uint8List accountingHourDescriptor =
+    $convert.base64Decode('Cg5BY2NvdW50aW5nSG91chISCgRob3VyGAEgASgFUgRob3Vy');
+
 @$core.Deprecated('Use cardDescriptor instead')
 const Card$json = {
   '1': 'Card',
@@ -71,6 +83,39 @@ const ChatReply$json = {
 final $typed_data.Uint8List chatReplyDescriptor = $convert.base64Decode(
     'CglDaGF0UmVwbHkSNQoIbWVzc2FnZXMYASADKAsyGS5jb25maWcuYXNzaXN0YW50Lk1lc3NhZ2'
     'VSCG1lc3NhZ2Vz');
+
+@$core.Deprecated('Use digestReplyDescriptor instead')
+const DigestReply$json = {
+  '1': 'DigestReply',
+  '2': [
+    {'1': 'accounting_hour', '3': 1, '4': 1, '5': 5, '10': 'accountingHour'},
+    {'1': 'entries_today', '3': 2, '4': 1, '5': 5, '10': 'entriesToday'},
+    {
+      '1': 'uncategorized_today',
+      '3': 3,
+      '4': 1,
+      '5': 5,
+      '10': 'uncategorizedToday'
+    },
+    {'1': 'due_questions', '3': 4, '4': 1, '5': 5, '10': 'dueQuestions'},
+    {
+      '1': 'low_balance_warnings',
+      '3': 5,
+      '4': 1,
+      '5': 5,
+      '10': 'lowBalanceWarnings'
+    },
+    {'1': 'should_remind', '3': 6, '4': 1, '5': 8, '10': 'shouldRemind'},
+  ],
+};
+
+/// Descriptor for `DigestReply`. Decode as a `google.protobuf.DescriptorProto`.
+final $typed_data.Uint8List digestReplyDescriptor = $convert.base64Decode(
+    'CgtEaWdlc3RSZXBseRInCg9hY2NvdW50aW5nX2hvdXIYASABKAVSDmFjY291bnRpbmdIb3VyEi'
+    'MKDWVudHJpZXNfdG9kYXkYAiABKAVSDGVudHJpZXNUb2RheRIvChN1bmNhdGVnb3JpemVkX3Rv'
+    'ZGF5GAMgASgFUhJ1bmNhdGVnb3JpemVkVG9kYXkSIwoNZHVlX3F1ZXN0aW9ucxgEIAEoBVIMZH'
+    'VlUXVlc3Rpb25zEjAKFGxvd19iYWxhbmNlX3dhcm5pbmdzGAUgASgFUhJsb3dCYWxhbmNlV2Fy'
+    'bmluZ3MSIwoNc2hvdWxkX3JlbWluZBgGIAEoCFIMc2hvdWxkUmVtaW5k');
 
 @$core.Deprecated('Use historyQueryDescriptor instead')
 const HistoryQuery$json = {

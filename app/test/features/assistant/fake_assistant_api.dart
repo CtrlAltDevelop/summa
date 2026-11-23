@@ -7,6 +7,15 @@ class FakeAssistantApi implements AssistantApi {
   final List<ChatMessage> messages = [];
   final List<String> sent = [];
   SmsCard? nextSms;
+  Digest digestResult = const Digest(
+    accountingHour: -1,
+    entriesToday: 0,
+    uncategorizedToday: 0,
+    dueQuestions: 0,
+    lowBalanceWarnings: 0,
+    shouldRemind: false,
+  );
+  final List<int> hours = [];
   final List<(String, String)> links = [];
 
   @override
@@ -48,4 +57,20 @@ class FakeAssistantApi implements AssistantApi {
     required String last4,
     required String walletId,
   }) async => links.add((last4, walletId));
+
+  @override
+  Future<Digest> digest(String access) async => digestResult;
+
+  @override
+  Future<void> setAccountingHour(String access, int hour) async {
+    hours.add(hour);
+    digestResult = Digest(
+      accountingHour: hour,
+      entriesToday: digestResult.entriesToday,
+      uncategorizedToday: digestResult.uncategorizedToday,
+      dueQuestions: digestResult.dueQuestions,
+      lowBalanceWarnings: digestResult.lowBalanceWarnings,
+      shouldRemind: digestResult.shouldRemind,
+    );
+  }
 }

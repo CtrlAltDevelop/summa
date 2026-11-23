@@ -16,6 +16,10 @@ abstract interface class AssistantApi {
   });
   Future<void> clear(String access);
   Future<SmsCard> parseSms(String access, String text);
+  Future<Digest> digest(String access);
+
+  /// An [hour] of -1 turns the reminder off.
+  Future<void> setAccountingHour(String access, int hour);
   Future<void> linkCard(
     String access, {
     required String last4,
@@ -80,6 +84,28 @@ class GrpcAssistantApi implements AssistantApi {
       duplicateEntryId: r.duplicateEntryId,
     );
   });
+
+  @override
+  Future<Digest> digest(String access) => guardGrpc(() async {
+    final r = await _client.digest(Empty(), options: _bearer(access));
+    return Digest(
+      accountingHour: r.accountingHour,
+      entriesToday: r.entriesToday,
+      uncategorizedToday: r.uncategorizedToday,
+      dueQuestions: r.dueQuestions,
+      lowBalanceWarnings: r.lowBalanceWarnings,
+      shouldRemind: r.shouldRemind,
+    );
+  });
+
+  @override
+  Future<void> setAccountingHour(String access, int hour) =>
+      guardGrpc(() async {
+        await _client.setAccountingHour(
+          pb.AccountingHour(hour: hour),
+          options: _bearer(access),
+        );
+      });
 
   @override
   Future<void> linkCard(

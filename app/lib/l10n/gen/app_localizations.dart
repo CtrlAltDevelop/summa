@@ -1167,6 +1167,48 @@ abstract class AppLocalizations {
   /// In fa, this message translates to:
   /// **'دسته'**
   String get recurringCategoryLabel;
+
+  /// No description provided for @digestTitle.
+  ///
+  /// In fa, this message translates to:
+  /// **'حساب‌وکتاب امروز'**
+  String get digestTitle;
+
+  /// No description provided for @digestEntries.
+  ///
+  /// In fa, this message translates to:
+  /// **'تراکنش ثبت‌شده امروز: {count}'**
+  String digestEntries(String count);
+
+  /// No description provided for @digestUncategorized.
+  ///
+  /// In fa, this message translates to:
+  /// **'بدون دسته: {count}'**
+  String digestUncategorized(String count);
+
+  /// No description provided for @digestDue.
+  ///
+  /// In fa, this message translates to:
+  /// **'سررسید منتظر پاسخ: {count}'**
+  String digestDue(String count);
+
+  /// No description provided for @digestNothingYet.
+  ///
+  /// In fa, this message translates to:
+  /// **'امروز هنوز چیزی ثبت نکرده‌ای.'**
+  String get digestNothingYet;
+
+  /// No description provided for @accountingHourTitle.
+  ///
+  /// In fa, this message translates to:
+  /// **'ساعت حساب‌وکتاب روزانه'**
+  String get accountingHourTitle;
+
+  /// No description provided for @accountingHourOff.
+  ///
+  /// In fa, this message translates to:
+  /// **'خاموش'**
+  String get accountingHourOff;
 }
 
 class _AppLocalizationsDelegate

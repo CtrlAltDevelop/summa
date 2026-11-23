@@ -213,5 +213,33 @@
   "occurrenceDidYouGetIt": "گرفتی؟",
   "recurringReceived": "حقوق این ماه را گرفتم",
   "recurringPaid": "این ماه پرداخت شد",
-  "recurringCategoryLabel": "دسته"
+  "recurringCategoryLabel": "دسته",
+  "digestTitle": "حساب‌وکتاب امروز",
+  "digestEntries": "تراکنش ثبت‌شده امروز: {count}",
+  "@digestEntries": {
+    "placeholders": {
+      "count": {
+        "type": "String"
+      }
+    }
+  },
+  "digestUncategorized": "بدون دسته: {count}",
+  "@digestUncategorized": {
+    "placeholders": {
+      "count": {
+        "type": "String"
+      }
+    }
+  },
+  "digestDue": "سررسید منتظر پاسخ: {count}",
+  "@digestDue": {
+    "placeholders": {
+      "count": {
+        "type": "String"
+      }
+    }
+  },
+  "digestNothingYet": "امروز هنوز چیزی ثبت نکرده‌ای.",
+  "accountingHourTitle": "ساعت حساب‌وکتاب روزانه",
+  "accountingHourOff": "خاموش"
 }
