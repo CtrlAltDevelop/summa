@@ -427,4 +427,30 @@ class AppLocalizationsFa extends AppLocalizations {
 
   @override
   String get splitNeedsTwo => 'حداقل دو بخش با مبلغ درست لازم است.';
+
+  @override
+  String get entryRefund => 'برگشت وجه';
+
+  @override
+  String get refundOpen => 'برگشت';
+
+  @override
+  String get refundTitle => 'برگشت وجه';
+
+  @override
+  String get refundAmountLabel => 'مبلغ (خالی = همه باقی‌مانده)';
+
+  @override
+  String get refundRemaining => 'قابل برگشت';
+
+  @override
+  String get entryRefundedTag => 'برگشت‌خورده';
+
+  @override
+  String get entryDeleteBlocked =>
+      'این خرج برگشت دارد؛ اول برگشت‌ها را حذف کن.';
+
+  @override
+  String get refundInvalid =>
+      'مبلغ برگشت درست نیست یا بیشتر از باقی‌مانده است.';
 }

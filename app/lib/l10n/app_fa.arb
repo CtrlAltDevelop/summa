@@ -168,5 +168,13 @@
   "splitPart": "بخش",
   "splitAddPart": "افزودن بخش",
   "splitTotal": "جمع",
-  "splitNeedsTwo": "حداقل دو بخش با مبلغ درست لازم است."
+  "splitNeedsTwo": "حداقل دو بخش با مبلغ درست لازم است.",
+  "entryRefund": "برگشت وجه",
+  "refundOpen": "برگشت",
+  "refundTitle": "برگشت وجه",
+  "refundAmountLabel": "مبلغ (خالی = همه باقی‌مانده)",
+  "refundRemaining": "قابل برگشت",
+  "entryRefundedTag": "برگشت‌خورده",
+  "entryDeleteBlocked": "این خرج برگشت دارد؛ اول برگشت‌ها را حذف کن.",
+  "refundInvalid": "مبلغ برگشت درست نیست یا بیشتر از باقی‌مانده است."
 }

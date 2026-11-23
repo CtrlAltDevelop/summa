@@ -730,6 +730,8 @@ class Entry extends $pb.GeneratedMessage {
     $core.String? categoryId,
     $core.bool? outsideTotals,
     $core.String? splitId,
+    $core.String? refundOf,
+    $fixnum.Int64? refundedMinor,
   }) {
     final result = Entry._();
     if (id != null) result.id = id;
@@ -742,6 +744,8 @@ class Entry extends $pb.GeneratedMessage {
     if (categoryId != null) result.categoryId = categoryId;
     if (outsideTotals != null) result.outsideTotals = outsideTotals;
     if (splitId != null) result.splitId = splitId;
+    if (refundOf != null) result.refundOf = refundOf;
+    if (refundedMinor != null) result.refundedMinor = refundedMinor;
     return result;
   }
 
@@ -768,6 +772,8 @@ class Entry extends $pb.GeneratedMessage {
     ..aOS(8, _omitFieldNames ? '' : 'categoryId')
     ..aOB(9, _omitFieldNames ? '' : 'outsideTotals')
     ..aOS(10, _omitFieldNames ? '' : 'splitId')
+    ..aOS(11, _omitFieldNames ? '' : 'refundOf')
+    ..aInt64(12, _omitFieldNames ? '' : 'refundedMinor')
     ..hasRequiredFields = false;
 
   @$core.Deprecated('See https://github.com/google/protobuf.dart/issues/998.')
@@ -879,6 +885,24 @@ class Entry extends $pb.GeneratedMessage {
   $core.bool hasSplitId() => $_has(9);
   @$pb.TagNumber(10)
   void clearSplitId() => $_clearField(10);
+
+  @$pb.TagNumber(11)
+  $core.String get refundOf => $_getSZ(10);
+  @$pb.TagNumber(11)
+  set refundOf($core.String value) => $_setString(10, value);
+  @$pb.TagNumber(11)
+  $core.bool hasRefundOf() => $_has(10);
+  @$pb.TagNumber(11)
+  void clearRefundOf() => $_clearField(11);
+
+  @$pb.TagNumber(12)
+  $fixnum.Int64 get refundedMinor => $_getI64(11);
+  @$pb.TagNumber(12)
+  set refundedMinor($fixnum.Int64 value) => $_setInt64(11, value);
+  @$pb.TagNumber(12)
+  $core.bool hasRefundedMinor() => $_has(11);
+  @$pb.TagNumber(12)
+  void clearRefundedMinor() => $_clearField(12);
 }
 
 class EntryEdit extends $pb.GeneratedMessage {
@@ -1367,6 +1391,123 @@ class EntryReply extends $pb.GeneratedMessage {
   void clearEntry() => $_clearField(1);
   @$pb.TagNumber(1)
   Entry ensureEntry() => $_ensure(0);
+}
+
+class RefundRequest extends $pb.GeneratedMessage {
+  factory RefundRequest({
+    $core.String? entryId,
+    $core.String? walletId,
+    $fixnum.Int64? amountMinor,
+    $core.String? occurredAt,
+    $core.String? note,
+    $core.String? clientMutationId,
+  }) {
+    final result = RefundRequest._();
+    if (entryId != null) result.entryId = entryId;
+    if (walletId != null) result.walletId = walletId;
+    if (amountMinor != null) result.amountMinor = amountMinor;
+    if (occurredAt != null) result.occurredAt = occurredAt;
+    if (note != null) result.note = note;
+    if (clientMutationId != null) result.clientMutationId = clientMutationId;
+    return result;
+  }
+
+  RefundRequest._();
+
+  factory RefundRequest.fromBuffer($core.List<$core.int> data,
+          [$pb.ExtensionRegistry registry = $pb.ExtensionRegistry.EMPTY]) =>
+      RefundRequest()..mergeFromBuffer(data, registry);
+  factory RefundRequest.fromJson($core.String json,
+          [$pb.ExtensionRegistry registry = $pb.ExtensionRegistry.EMPTY]) =>
+      RefundRequest()..mergeFromJson(json, registry);
+
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo(
+      _omitMessageNames ? '' : 'RefundRequest',
+      package: const $pb.PackageName(_omitMessageNames ? '' : 'config.wallets'),
+      createEmptyInstance: RefundRequest.$_createMessage)
+    ..aOS(1, _omitFieldNames ? '' : 'entryId')
+    ..aOS(2, _omitFieldNames ? '' : 'walletId')
+    ..aInt64(3, _omitFieldNames ? '' : 'amountMinor')
+    ..aOS(4, _omitFieldNames ? '' : 'occurredAt')
+    ..aOS(5, _omitFieldNames ? '' : 'note')
+    ..aOS(6, _omitFieldNames ? '' : 'clientMutationId')
+    ..hasRequiredFields = false;
+
+  @$core.Deprecated('See https://github.com/google/protobuf.dart/issues/998.')
+  RefundRequest clone() => deepCopy();
+  @$core.Deprecated('See https://github.com/google/protobuf.dart/issues/998.')
+  RefundRequest copyWith(void Function(RefundRequest) updates) =>
+      super.copyWith((message) => updates(message as RefundRequest))
+          as RefundRequest;
+
+  @$core.override
+  $pb.BuilderInfo get info_ => _i;
+
+  @$core.pragma('dart2js:noInline')
+  @$core.Deprecated('Use RefundRequest() / RefundRequest.new instead')
+  static RefundRequest create() => RefundRequest._();
+  static $pb.GeneratedMessage $_createMessage() => RefundRequest._();
+  @$core.override
+  RefundRequest createEmptyInstance() => RefundRequest._();
+  @$core.pragma('dart2js:noInline')
+  static RefundRequest getDefault() =>
+      _defaultInstance ??= $pb.GeneratedMessage.$_defaultFor<RefundRequest>(
+          RefundRequest.$_createMessage);
+  static RefundRequest? _defaultInstance;
+
+  @$pb.TagNumber(1)
+  $core.String get entryId => $_getSZ(0);
+  @$pb.TagNumber(1)
+  set entryId($core.String value) => $_setString(0, value);
+  @$pb.TagNumber(1)
+  $core.bool hasEntryId() => $_has(0);
+  @$pb.TagNumber(1)
+  void clearEntryId() => $_clearField(1);
+
+  @$pb.TagNumber(2)
+  $core.String get walletId => $_getSZ(1);
+  @$pb.TagNumber(2)
+  set walletId($core.String value) => $_setString(1, value);
+  @$pb.TagNumber(2)
+  $core.bool hasWalletId() => $_has(1);
+  @$pb.TagNumber(2)
+  void clearWalletId() => $_clearField(2);
+
+  @$pb.TagNumber(3)
+  $fixnum.Int64 get amountMinor => $_getI64(2);
+  @$pb.TagNumber(3)
+  set amountMinor($fixnum.Int64 value) => $_setInt64(2, value);
+  @$pb.TagNumber(3)
+  $core.bool hasAmountMinor() => $_has(2);
+  @$pb.TagNumber(3)
+  void clearAmountMinor() => $_clearField(3);
+
+  @$pb.TagNumber(4)
+  $core.String get occurredAt => $_getSZ(3);
+  @$pb.TagNumber(4)
+  set occurredAt($core.String value) => $_setString(3, value);
+  @$pb.TagNumber(4)
+  $core.bool hasOccurredAt() => $_has(3);
+  @$pb.TagNumber(4)
+  void clearOccurredAt() => $_clearField(4);
+
+  @$pb.TagNumber(5)
+  $core.String get note => $_getSZ(4);
+  @$pb.TagNumber(5)
+  set note($core.String value) => $_setString(4, value);
+  @$pb.TagNumber(5)
+  $core.bool hasNote() => $_has(4);
+  @$pb.TagNumber(5)
+  void clearNote() => $_clearField(5);
+
+  @$pb.TagNumber(6)
+  $core.String get clientMutationId => $_getSZ(5);
+  @$pb.TagNumber(6)
+  set clientMutationId($core.String value) => $_setString(5, value);
+  @$pb.TagNumber(6)
+  $core.bool hasClientMutationId() => $_has(5);
+  @$pb.TagNumber(6)
+  void clearClientMutationId() => $_clearField(6);
 }
 
 class SplitPartMsg extends $pb.GeneratedMessage {

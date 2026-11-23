@@ -93,6 +93,26 @@ class LedgerController extends AsyncNotifier<List<Entry>> {
     await _refresh();
   }
 
+  Future<void> refund({
+    required String entryId,
+    required String walletId,
+    required int amountMinor,
+    required String note,
+    required String clientMutationId,
+  }) async {
+    await _auth.withAccess(
+      (access) => _api.refund(
+        access,
+        entryId: entryId,
+        walletId: walletId,
+        amountMinor: amountMinor,
+        note: note,
+        clientMutationId: clientMutationId,
+      ),
+    );
+    await _refresh();
+  }
+
   Future<void> delete(String entryId) async {
     await _auth.withAccess((access) => _api.delete(access, entryId));
     await _refresh();

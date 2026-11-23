@@ -11,6 +11,7 @@ import 'entry_models.dart';
 import 'split_form_screen.dart';
 import 'transfer_form_screen.dart';
 import 'ledger_controller.dart';
+import 'refund_form_screen.dart';
 import 'wallet_labels.dart';
 import 'wallet_models.dart';
 import 'wallets_controller.dart';
@@ -73,13 +74,31 @@ class EntriesPanel extends ConsumerWidget {
   }
 }
 
-class _EntryTile extends ConsumerWidget {
+class _EntryTile extends ConsumerStatefulWidget {
   const _EntryTile({required this.entry});
 
   final Entry entry;
 
   @override
-  Widget build(BuildContext context, WidgetRef ref) {
+  ConsumerState<_EntryTile> createState() => _EntryTileState();
+}
+
+class _EntryTileState extends ConsumerState<_EntryTile> {
+  String? _error;
+
+  Future<void> _delete() async {
+    final l10n = AppLocalizations.of(context);
+    try {
+      await ref.read(ledgerControllerProvider.notifier).delete(widget.entry.id);
+    } on WalletException {
+      // The server refuses to delete an expense that still has refunds.
+      if (mounted) setState(() => _error = l10n.entryDeleteBlocked);
+    }
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    final entry = widget.entry;
     final l10n = AppLocalizations.of(context);
     final income = entry.kind.isCredit;
     final amount = formatMinor(entry.amountMinor, entry.currency);
@@ -89,52 +108,101 @@ class _EntryTile extends ConsumerWidget {
         ?.where((c) => c.id == entry.categoryId)
         .map((c) => c.name)
         .firstOrNull;
+    final wallets = (ref.watch(walletsControllerProvider).value?.active ?? [])
+        .where((w) => w.currency == entry.currency)
+        .toList();
     return SmGlassCard(
       padding: const EdgeInsets.all(SmSpace.lg),
-      child: Row(
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Expanded(
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text(
-                  entry.note.isEmpty
-                      ? _kindLabel(l10n, entry.kind)
-                      : entry.note,
-                  style: SmType.body,
+          Row(
+            children: [
+              Expanded(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      entry.note.isEmpty
+                          ? _kindLabel(l10n, entry.kind)
+                          : entry.note,
+                      style: SmType.body,
+                    ),
+                    Text(
+                      [
+                        formatJalaliDate(entry.occurredAt.toLocal()),
+                        if (categoryName != null) categoryName,
+                        if (entry.outsideTotals) l10n.entryOutsideTag,
+                        if (entry.splitId.isNotEmpty) l10n.entrySplitTag,
+                        if (entry.refundedMinor > 0) l10n.entryRefundedTag,
+                      ].join(' · '),
+                      style: SmType.caption,
+                    ),
+                  ],
                 ),
-                Text(
-                  [
-                    formatJalaliDate(entry.occurredAt.toLocal()),
-                    if (categoryName != null) categoryName,
-                    if (entry.outsideTotals) l10n.entryOutsideTag,
-                    if (entry.splitId.isNotEmpty) l10n.entrySplitTag,
-                  ].join(' · '),
-                  style: SmType.caption,
-                ),
-              ],
-            ),
-          ),
-          Text(
-            '${income ? '+' : '-'}$amount ${currencyLabel(l10n, entry.currency)}',
-            style: SmType.body.copyWith(
-              color: income ? SmColors.success : SmColors.textPrimary,
-            ),
-          ),
-          const SizedBox(width: SmSpace.md),
-          Semantics(
-            button: true,
-            label: l10n.entryDelete,
-            child: GestureDetector(
-              onTap: () =>
-                  ref.read(ledgerControllerProvider.notifier).delete(entry.id),
-              child: Text(
-                l10n.entryDelete,
-                style: SmType.caption.copyWith(color: SmColors.danger),
               ),
-            ),
+              Text(
+                '${income ? '+' : '-'}$amount '
+                '${currencyLabel(l10n, entry.currency)}',
+                style: SmType.body.copyWith(
+                  color: income ? SmColors.success : SmColors.textPrimary,
+                ),
+              ),
+            ],
           ),
+          const SizedBox(height: SmSpace.sm),
+          Row(
+            children: [
+              if (entry.refundableMinor > 0 && wallets.isNotEmpty) ...[
+                _TileAction(
+                  label: l10n.refundOpen,
+                  color: SmColors.accent,
+                  onTap: () => Navigator.of(context).push(
+                    PageRouteBuilder<void>(
+                      pageBuilder: (_, _, _) =>
+                          RefundFormScreen(entry: entry, wallets: wallets),
+                    ),
+                  ),
+                ),
+                const SizedBox(width: SmSpace.lg),
+              ],
+              _TileAction(
+                label: l10n.entryDelete,
+                color: SmColors.danger,
+                onTap: _delete,
+              ),
+            ],
+          ),
+          if (_error != null)
+            Text(
+              _error!,
+              style: SmType.caption.copyWith(color: SmColors.danger),
+            ),
         ],
+      ),
+    );
+  }
+}
+
+class _TileAction extends StatelessWidget {
+  const _TileAction({
+    required this.label,
+    required this.color,
+    required this.onTap,
+  });
+
+  final String label;
+  final Color color;
+  final VoidCallback onTap;
+
+  @override
+  Widget build(BuildContext context) {
+    return Semantics(
+      button: true,
+      label: label,
+      child: GestureDetector(
+        onTap: onTap,
+        child: Text(label, style: SmType.caption.copyWith(color: color)),
       ),
     );
   }
@@ -145,4 +213,5 @@ String _kindLabel(AppLocalizations l10n, EntryKind kind) => switch (kind) {
   EntryKind.expense => l10n.entryExpense,
   EntryKind.transferOut => l10n.transferOut,
   EntryKind.transferIn => l10n.transferIn,
+  EntryKind.refund => l10n.entryRefund,
 };
