@@ -38,6 +38,7 @@
 28. [phases/phase-11-reports.md](phases/phase-11-reports.md): سند فاز ۱۱ (گزارش و خروجی)
 29. [phases/phase-12-sync.md](phases/phase-12-sync.md): سند فاز ۱۲ (آفلاین و همگام‌سازی)
 30. [phases/phase-13-billing.md](phases/phase-13-billing.md): سند فاز ۱۳ (اشتراک و پرداخت)
+31. [phases/phase-14-support.md](phases/phase-14-support.md): سند فاز ۱۴ (پشتیبانی)
 
 ## محدودیت‌های بررسی
 - همه صفحه‌های عمومی خونده شد، به جز `/disclosure` (دوبار خطای ۵۰۳؛ لیست شریک‌های رفرال و مدل درآمد رفرال مشخص نیست).
