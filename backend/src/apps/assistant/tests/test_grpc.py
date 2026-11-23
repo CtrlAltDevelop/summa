@@ -170,3 +170,31 @@ def test_link_card_is_private_and_validated(
 
     assert foreign.value.code() is grpc.StatusCode.NOT_FOUND
     assert bad.value.code() is grpc.StatusCode.INVALID_ARGUMENT
+
+
+def test_hour_and_digest_over_the_wire(
+    transactional_db: None, grpc_call: Callable[..., Any]
+) -> None:
+    token = sign_up("zoe")
+
+    before = grpc_call(Stub, "Digest", Empty(), token=token)
+    grpc_call(Stub, "SetAccountingHour", assistant_pb2.AccountingHour(hour=0), token=token)
+    after = grpc_call(Stub, "Digest", Empty(), token=token)
+
+    assert (before.accounting_hour, before.should_remind) == (-1, False)
+    assert (after.accounting_hour, after.entries_today) == (0, 0)
+    assert after.should_remind is True  # hour 0 has passed, nothing recorded today
+
+
+def test_a_bad_hour_is_invalid_argument(
+    transactional_db: None, grpc_call: Callable[..., Any]
+) -> None:
+    with pytest.raises(grpc.aio.AioRpcError) as refusal:
+        grpc_call(
+            Stub,
+            "SetAccountingHour",
+            assistant_pb2.AccountingHour(hour=24),
+            token=sign_up("zoe"),
+        )
+
+    assert refusal.value.code() is grpc.StatusCode.INVALID_ARGUMENT

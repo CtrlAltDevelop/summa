@@ -40,6 +40,11 @@ class AssistantControllerStub:
                 request_serializer=google_dot_protobuf_dot_empty__pb2.Empty.SerializeToString,
                 response_deserializer=google_dot_protobuf_dot_empty__pb2.Empty.FromString,
                 _registered_method=True)
+        self.Digest = channel.unary_unary(
+                '/config.assistant.AssistantController/Digest',
+                request_serializer=google_dot_protobuf_dot_empty__pb2.Empty.SerializeToString,
+                response_deserializer=apps_dot_assistant_dot_grpc_dot_assistant__pb2.DigestReply.FromString,
+                _registered_method=True)
         self.History = channel.unary_unary(
                 '/config.assistant.AssistantController/History',
                 request_serializer=apps_dot_assistant_dot_grpc_dot_assistant__pb2.HistoryQuery.SerializeToString,
@@ -60,12 +65,23 @@ class AssistantControllerStub:
                 request_serializer=apps_dot_assistant_dot_grpc_dot_assistant__pb2.MessageSend.SerializeToString,
                 response_deserializer=apps_dot_assistant_dot_grpc_dot_assistant__pb2.ChatReply.FromString,
                 _registered_method=True)
+        self.SetAccountingHour = channel.unary_unary(
+                '/config.assistant.AssistantController/SetAccountingHour',
+                request_serializer=apps_dot_assistant_dot_grpc_dot_assistant__pb2.AccountingHour.SerializeToString,
+                response_deserializer=google_dot_protobuf_dot_empty__pb2.Empty.FromString,
+                _registered_method=True)
 
 
 class AssistantControllerServicer:
     """Missing associated documentation comment in .proto file."""
 
     def Clear(self, request, context):
+        """Missing associated documentation comment in .proto file."""
+        context.set_code(grpc.StatusCode.UNIMPLEMENTED)
+        context.set_details('Method not implemented!')
+        raise NotImplementedError('Method not implemented!')
+
+    def Digest(self, request, context):
         """Missing associated documentation comment in .proto file."""
         context.set_code(grpc.StatusCode.UNIMPLEMENTED)
         context.set_details('Method not implemented!')
@@ -95,6 +111,12 @@ class AssistantControllerServicer:
         context.set_details('Method not implemented!')
         raise NotImplementedError('Method not implemented!')
 
+    def SetAccountingHour(self, request, context):
+        """Missing associated documentation comment in .proto file."""
+        context.set_code(grpc.StatusCode.UNIMPLEMENTED)
+        context.set_details('Method not implemented!')
+        raise NotImplementedError('Method not implemented!')
+
 
 def add_AssistantControllerServicer_to_server(servicer, server):
     rpc_method_handlers = {
@@ -102,6 +124,11 @@ def add_AssistantControllerServicer_to_server(servicer, server):
                     servicer.Clear,
                     request_deserializer=google_dot_protobuf_dot_empty__pb2.Empty.FromString,
                     response_serializer=google_dot_protobuf_dot_empty__pb2.Empty.SerializeToString,
+            ),
+            'Digest': grpc.unary_unary_rpc_method_handler(
+                    servicer.Digest,
+                    request_deserializer=google_dot_protobuf_dot_empty__pb2.Empty.FromString,
+                    response_serializer=apps_dot_assistant_dot_grpc_dot_assistant__pb2.DigestReply.SerializeToString,
             ),
             'History': grpc.unary_unary_rpc_method_handler(
                     servicer.History,
@@ -122,6 +149,11 @@ def add_AssistantControllerServicer_to_server(servicer, server):
                     servicer.Send,
                     request_deserializer=apps_dot_assistant_dot_grpc_dot_assistant__pb2.MessageSend.FromString,
                     response_serializer=apps_dot_assistant_dot_grpc_dot_assistant__pb2.ChatReply.SerializeToString,
+            ),
+            'SetAccountingHour': grpc.unary_unary_rpc_method_handler(
+                    servicer.SetAccountingHour,
+                    request_deserializer=apps_dot_assistant_dot_grpc_dot_assistant__pb2.AccountingHour.FromString,
+                    response_serializer=google_dot_protobuf_dot_empty__pb2.Empty.SerializeToString,
             ),
     }
     generic_handler = grpc.method_handlers_generic_handler(
@@ -151,6 +183,33 @@ class AssistantController:
             '/config.assistant.AssistantController/Clear',
             google_dot_protobuf_dot_empty__pb2.Empty.SerializeToString,
             google_dot_protobuf_dot_empty__pb2.Empty.FromString,
+            options,
+            channel_credentials,
+            insecure,
+            call_credentials,
+            compression,
+            wait_for_ready,
+            timeout,
+            metadata,
+            _registered_method=True)
+
+    @staticmethod
+    def Digest(request,
+            target,
+            options=(),
+            channel_credentials=None,
+            call_credentials=None,
+            insecure=False,
+            compression=None,
+            wait_for_ready=None,
+            timeout=None,
+            metadata=None):
+        return grpc.experimental.unary_unary(
+            request,
+            target,
+            '/config.assistant.AssistantController/Digest',
+            google_dot_protobuf_dot_empty__pb2.Empty.SerializeToString,
+            apps_dot_assistant_dot_grpc_dot_assistant__pb2.DigestReply.FromString,
             options,
             channel_credentials,
             insecure,
@@ -259,6 +318,33 @@ class AssistantController:
             '/config.assistant.AssistantController/Send',
             apps_dot_assistant_dot_grpc_dot_assistant__pb2.MessageSend.SerializeToString,
             apps_dot_assistant_dot_grpc_dot_assistant__pb2.ChatReply.FromString,
+            options,
+            channel_credentials,
+            insecure,
+            call_credentials,
+            compression,
+            wait_for_ready,
+            timeout,
+            metadata,
+            _registered_method=True)
+
+    @staticmethod
+    def SetAccountingHour(request,
+            target,
+            options=(),
+            channel_credentials=None,
+            call_credentials=None,
+            insecure=False,
+            compression=None,
+            wait_for_ready=None,
+            timeout=None,
+            metadata=None):
+        return grpc.experimental.unary_unary(
+            request,
+            target,
+            '/config.assistant.AssistantController/SetAccountingHour',
+            apps_dot_assistant_dot_grpc_dot_assistant__pb2.AccountingHour.SerializeToString,
+            google_dot_protobuf_dot_empty__pb2.Empty.FromString,
             options,
             channel_credentials,
             insecure,

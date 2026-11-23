@@ -3,11 +3,13 @@
 from typing import Any
 
 from asgiref.sync import sync_to_async
+from django.utils import timezone
 from django_socio_grpc import generics
 from django_socio_grpc.decorators import grpc_action
 from google.protobuf.empty_pb2 import Empty
 
 from apps.assistant.chat import MessageView, chat_service
+from apps.assistant.digest import digest_service
 from apps.assistant.grpc.serializers import Message
 from apps.assistant.sms import SmsResult, sms_service
 from infrastructure.common.grpc.errors import action, require_caller
@@ -122,6 +124,45 @@ class AssistantService(generics.GenericService):
         await sync_to_async(sms_service.link_card)(
             user, last4=request.last4, wallet_id=request.wallet_id
         )
+        return Empty()
+
+    @grpc_action(
+        request=[],
+        response=[
+            # Tehran hour 0-23, or -1 when the reminder is off.
+            {"name": "accounting_hour", "type": "int32"},
+            {"name": "entries_today", "type": "int32"},
+            {"name": "uncategorized_today", "type": "int32"},
+            {"name": "due_questions", "type": "int32"},
+            {"name": "low_balance_warnings", "type": "int32"},
+            {"name": "should_remind", "type": "bool"},
+        ],
+        response_name="DigestReply",
+    )
+    @action
+    async def Digest(self, request: Any, context: Any) -> Any:
+        from apps.assistant.grpc import assistant_pb2
+
+        user = require_caller(await grpc_caller(context))
+        view = await sync_to_async(digest_service.digest)(user, timezone.now())
+        return assistant_pb2.DigestReply(
+            accounting_hour=view.accounting_hour,
+            entries_today=view.entries_today,
+            uncategorized_today=view.uncategorized_today,
+            due_questions=view.due_questions,
+            low_balance_warnings=view.low_balance_warnings,
+            should_remind=view.should_remind,
+        )
+
+    @grpc_action(
+        request=[{"name": "hour", "type": "int32"}],
+        request_name="AccountingHour",
+        response=[],
+    )
+    @action
+    async def SetAccountingHour(self, request: Any, context: Any) -> Any:
+        user = require_caller(await grpc_caller(context))
+        await sync_to_async(digest_service.set_accounting_hour)(user, request.hour)
         return Empty()
 
 

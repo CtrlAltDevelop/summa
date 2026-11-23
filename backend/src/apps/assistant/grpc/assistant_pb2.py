@@ -25,29 +25,33 @@ _sym_db = _symbol_database.Default()
 from google.protobuf import empty_pb2 as google_dot_protobuf_dot_empty__pb2
 
 
-DESCRIPTOR = _descriptor_pool.Default().AddSerializedFile(b'\n#apps/assistant/grpc/assistant.proto\x12\x10\x63onfig.assistant\x1a\x1bgoogle/protobuf/empty.proto\"\x9d\x01\n\x04\x43\x61rd\x12\x0c\n\x04kind\x18\x01 \x01(\t\x12\x14\n\x0c\x61mount_minor\x18\x02 \x01(\x03\x12\x10\n\x08\x63urrency\x18\x03 \x01(\t\x12\x11\n\twallet_id\x18\x04 \x01(\t\x12\x14\n\x0cto_wallet_id\x18\x05 \x01(\t\x12\x13\n\x0b\x63\x61tegory_id\x18\x06 \x01(\t\x12\x0c\n\x04note\x18\x07 \x01(\t\x12\x13\n\x0boccurred_at\x18\x08 \x01(\t\",\n\x08\x43\x61rdLink\x12\r\n\x05last4\x18\x01 \x01(\t\x12\x11\n\twallet_id\x18\x02 \x01(\t\"8\n\tChatReply\x12+\n\x08messages\x18\x01 \x03(\x0b\x32\x19.config.assistant.Message\"\x1d\n\x0cHistoryQuery\x12\r\n\x05limit\x18\x01 \x01(\x05\"\x81\x01\n\x07Message\x12\n\n\x02id\x18\x01 \x01(\t\x12\x0c\n\x04role\x18\x02 \x01(\t\x12\x0c\n\x04text\x18\x03 \x01(\t\x12\x12\n\ncreated_at\x18\x04 \x01(\t\x12$\n\x04\x63\x61rd\x18\x06 \x01(\x0b\x32\x16.config.assistant.Card\x12\x14\n\x0c\x63\x61rd_present\x18\x07 \x01(\x08\"7\n\x0bMessageSend\x12\x0c\n\x04text\x18\x01 \x01(\t\x12\x1a\n\x12\x63lient_mutation_id\x18\x02 \x01(\t\"\x9c\x02\n\x07SmsCard\x12\x0f\n\x07ignored\x18\x01 \x01(\t\x12\x0c\n\x04kind\x18\x02 \x01(\t\x12\x14\n\x0c\x61mount_minor\x18\x03 \x01(\x03\x12\x10\n\x08\x63urrency\x18\x04 \x01(\t\x12\x11\n\twallet_id\x18\x05 \x01(\t\x12\x12\n\nconfidence\x18\x06 \x01(\t\x12\x13\n\x0boccurred_at\x18\x07 \x01(\t\x12\x17\n\x0f\x62\x61lance_present\x18\x08 \x01(\x08\x12\x15\n\rbalance_minor\x18\t \x01(\x03\x12\r\n\x05last4\x18\n \x01(\t\x12\x13\n\x0b\x63\x61tegory_id\x18\x0b \x01(\t\x12\x1e\n\x16suggested_category_ids\x18\x0c \x03(\t\x12\x1a\n\x12\x64uplicate_entry_id\x18\r \x01(\t\"\x17\n\x07SmsText\x12\x0c\n\x04text\x18\x01 \x01(\t2\xe6\x02\n\x13\x41ssistantController\x12\x39\n\x05\x43lear\x12\x16.google.protobuf.Empty\x1a\x16.google.protobuf.Empty\"\x00\x12H\n\x07History\x12\x1e.config.assistant.HistoryQuery\x1a\x1b.config.assistant.ChatReply\"\x00\x12@\n\x08LinkCard\x12\x1a.config.assistant.CardLink\x1a\x16.google.protobuf.Empty\"\x00\x12\x42\n\x08ParseSms\x12\x19.config.assistant.SmsText\x1a\x19.config.assistant.SmsCard\"\x00\x12\x44\n\x04Send\x12\x1d.config.assistant.MessageSend\x1a\x1b.config.assistant.ChatReply\"\x00\x62\x06proto3')
+DESCRIPTOR = _descriptor_pool.Default().AddSerializedFile(b'\n#apps/assistant/grpc/assistant.proto\x12\x10\x63onfig.assistant\x1a\x1bgoogle/protobuf/empty.proto\"\x1e\n\x0e\x41\x63\x63ountingHour\x12\x0c\n\x04hour\x18\x01 \x01(\x05\"\x9d\x01\n\x04\x43\x61rd\x12\x0c\n\x04kind\x18\x01 \x01(\t\x12\x14\n\x0c\x61mount_minor\x18\x02 \x01(\x03\x12\x10\n\x08\x63urrency\x18\x03 \x01(\t\x12\x11\n\twallet_id\x18\x04 \x01(\t\x12\x14\n\x0cto_wallet_id\x18\x05 \x01(\t\x12\x13\n\x0b\x63\x61tegory_id\x18\x06 \x01(\t\x12\x0c\n\x04note\x18\x07 \x01(\t\x12\x13\n\x0boccurred_at\x18\x08 \x01(\t\",\n\x08\x43\x61rdLink\x12\r\n\x05last4\x18\x01 \x01(\t\x12\x11\n\twallet_id\x18\x02 \x01(\t\"8\n\tChatReply\x12+\n\x08messages\x18\x01 \x03(\x0b\x32\x19.config.assistant.Message\"\xa6\x01\n\x0b\x44igestReply\x12\x17\n\x0f\x61\x63\x63ounting_hour\x18\x01 \x01(\x05\x12\x15\n\rentries_today\x18\x02 \x01(\x05\x12\x1b\n\x13uncategorized_today\x18\x03 \x01(\x05\x12\x15\n\rdue_questions\x18\x04 \x01(\x05\x12\x1c\n\x14low_balance_warnings\x18\x05 \x01(\x05\x12\x15\n\rshould_remind\x18\x06 \x01(\x08\"\x1d\n\x0cHistoryQuery\x12\r\n\x05limit\x18\x01 \x01(\x05\"\x81\x01\n\x07Message\x12\n\n\x02id\x18\x01 \x01(\t\x12\x0c\n\x04role\x18\x02 \x01(\t\x12\x0c\n\x04text\x18\x03 \x01(\t\x12\x12\n\ncreated_at\x18\x04 \x01(\t\x12$\n\x04\x63\x61rd\x18\x06 \x01(\x0b\x32\x16.config.assistant.Card\x12\x14\n\x0c\x63\x61rd_present\x18\x07 \x01(\x08\"7\n\x0bMessageSend\x12\x0c\n\x04text\x18\x01 \x01(\t\x12\x1a\n\x12\x63lient_mutation_id\x18\x02 \x01(\t\"\x9c\x02\n\x07SmsCard\x12\x0f\n\x07ignored\x18\x01 \x01(\t\x12\x0c\n\x04kind\x18\x02 \x01(\t\x12\x14\n\x0c\x61mount_minor\x18\x03 \x01(\x03\x12\x10\n\x08\x63urrency\x18\x04 \x01(\t\x12\x11\n\twallet_id\x18\x05 \x01(\t\x12\x12\n\nconfidence\x18\x06 \x01(\t\x12\x13\n\x0boccurred_at\x18\x07 \x01(\t\x12\x17\n\x0f\x62\x61lance_present\x18\x08 \x01(\x08\x12\x15\n\rbalance_minor\x18\t \x01(\x03\x12\r\n\x05last4\x18\n \x01(\t\x12\x13\n\x0b\x63\x61tegory_id\x18\x0b \x01(\t\x12\x1e\n\x16suggested_category_ids\x18\x0c \x03(\t\x12\x1a\n\x12\x64uplicate_entry_id\x18\r \x01(\t\"\x17\n\x07SmsText\x12\x0c\n\x04text\x18\x01 \x01(\t2\xfa\x03\n\x13\x41ssistantController\x12\x39\n\x05\x43lear\x12\x16.google.protobuf.Empty\x1a\x16.google.protobuf.Empty\"\x00\x12\x41\n\x06\x44igest\x12\x16.google.protobuf.Empty\x1a\x1d.config.assistant.DigestReply\"\x00\x12H\n\x07History\x12\x1e.config.assistant.HistoryQuery\x1a\x1b.config.assistant.ChatReply\"\x00\x12@\n\x08LinkCard\x12\x1a.config.assistant.CardLink\x1a\x16.google.protobuf.Empty\"\x00\x12\x42\n\x08ParseSms\x12\x19.config.assistant.SmsText\x1a\x19.config.assistant.SmsCard\"\x00\x12\x44\n\x04Send\x12\x1d.config.assistant.MessageSend\x1a\x1b.config.assistant.ChatReply\"\x00\x12O\n\x11SetAccountingHour\x12 .config.assistant.AccountingHour\x1a\x16.google.protobuf.Empty\"\x00\x62\x06proto3')
 
 _globals = globals()
 _builder.BuildMessageAndEnumDescriptors(DESCRIPTOR, _globals)
 _builder.BuildTopDescriptorsAndMessages(DESCRIPTOR, 'apps.assistant.grpc.assistant_pb2', _globals)
 if not _descriptor._USE_C_DESCRIPTORS:
   DESCRIPTOR._loaded_options = None
-  _globals['_CARD']._serialized_start=87
-  _globals['_CARD']._serialized_end=244
-  _globals['_CARDLINK']._serialized_start=246
-  _globals['_CARDLINK']._serialized_end=290
-  _globals['_CHATREPLY']._serialized_start=292
-  _globals['_CHATREPLY']._serialized_end=348
-  _globals['_HISTORYQUERY']._serialized_start=350
-  _globals['_HISTORYQUERY']._serialized_end=379
-  _globals['_MESSAGE']._serialized_start=382
-  _globals['_MESSAGE']._serialized_end=511
-  _globals['_MESSAGESEND']._serialized_start=513
-  _globals['_MESSAGESEND']._serialized_end=568
-  _globals['_SMSCARD']._serialized_start=571
-  _globals['_SMSCARD']._serialized_end=855
-  _globals['_SMSTEXT']._serialized_start=857
-  _globals['_SMSTEXT']._serialized_end=880
-  _globals['_ASSISTANTCONTROLLER']._serialized_start=883
-  _globals['_ASSISTANTCONTROLLER']._serialized_end=1241
+  _globals['_ACCOUNTINGHOUR']._serialized_start=86
+  _globals['_ACCOUNTINGHOUR']._serialized_end=116
+  _globals['_CARD']._serialized_start=119
+  _globals['_CARD']._serialized_end=276
+  _globals['_CARDLINK']._serialized_start=278
+  _globals['_CARDLINK']._serialized_end=322
+  _globals['_CHATREPLY']._serialized_start=324
+  _globals['_CHATREPLY']._serialized_end=380
+  _globals['_DIGESTREPLY']._serialized_start=383
+  _globals['_DIGESTREPLY']._serialized_end=549
+  _globals['_HISTORYQUERY']._serialized_start=551
+  _globals['_HISTORYQUERY']._serialized_end=580
+  _globals['_MESSAGE']._serialized_start=583
+  _globals['_MESSAGE']._serialized_end=712
+  _globals['_MESSAGESEND']._serialized_start=714
+  _globals['_MESSAGESEND']._serialized_end=769
+  _globals['_SMSCARD']._serialized_start=772
+  _globals['_SMSCARD']._serialized_end=1056
+  _globals['_SMSTEXT']._serialized_start=1058
+  _globals['_SMSTEXT']._serialized_end=1081
+  _globals['_ASSISTANTCONTROLLER']._serialized_start=1084
+  _globals['_ASSISTANTCONTROLLER']._serialized_end=1590
 # @@protoc_insertion_point(module_scope)
