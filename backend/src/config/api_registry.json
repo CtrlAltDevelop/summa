@@ -14,6 +14,13 @@
         "prefix": "/wallets",
         "router": "apps.wallets.rest.v1.router",
         "tag": "Wallets"
+      },
+      {
+        "app_config": "apps.assistant.apps.AssistantConfig",
+        "description": "Endpoints published by the assistant app.",
+        "prefix": "/assistant",
+        "router": "apps.assistant.rest.v1.router",
+        "tag": "Assistant"
       }
     ]
   }
