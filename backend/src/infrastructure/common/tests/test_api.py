@@ -267,3 +267,47 @@ def test_database_readiness_handles_operational_error(connections: MagicMock) ->
     connections.__getitem__.side_effect = OperationalError
 
     assert database_is_ready() is False
+
+
+def test_documentation_routes_are_absent_when_switched_off() -> None:
+    from config.urls import docs_patterns
+
+    assert docs_patterns(False) == []
+    assert {p.name for p in docs_patterns(True)} == {"api-docs", "api-redoc", "api-version-redoc"}
+
+
+def _production_docs_flag(**extra: str) -> str:
+    """API_DOCS_ENABLED as a fresh production settings import reads it."""
+    import os
+    import subprocess
+    import sys
+
+    env = {
+        **os.environ,
+        "DJANGO_SETTINGS_MODULE": "config.settings.production",
+        "DJANGO_SECRET_KEY": "k" * 40,
+        "DJANGO_ALLOWED_HOSTS": "example.com",
+        "DJANGO_AUTH_SMS_BACKEND": "x.RealSmsBackend",
+        **extra,
+    }
+    env.pop("DJANGO_API_DOCS_ENABLED", None) if "DJANGO_API_DOCS_ENABLED" not in extra else None
+    result = subprocess.run(
+        [
+            sys.executable,
+            "-c",
+            "from django.conf import settings; print(settings.API_DOCS_ENABLED)",
+        ],
+        env=env,
+        capture_output=True,
+        text=True,
+        check=True,
+    )
+    return result.stdout.strip().splitlines()[-1]
+
+
+def test_production_turns_documentation_off_by_default() -> None:
+    assert _production_docs_flag() == "False"
+
+
+def test_production_documentation_can_be_switched_on() -> None:
+    assert _production_docs_flag(DJANGO_API_DOCS_ENABLED="true") == "True"

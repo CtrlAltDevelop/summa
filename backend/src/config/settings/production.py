@@ -23,6 +23,8 @@ if AUTH_SMS_BACKEND.endswith("ConsoleSmsBackend"):  # noqa: F405
         "the log instead of sending them. Set a real SMS backend in production."
     )
 
+API_DOCS_ENABLED = os.getenv("DJANGO_API_DOCS_ENABLED", "false").lower() == "true"
+
 SECURE_CONTENT_TYPE_NOSNIFF = True
 SECURE_REFERRER_POLICY = "same-origin"
 SECURE_SSL_REDIRECT = os.getenv("DJANGO_SECURE_SSL_REDIRECT", "true").lower() == "true"

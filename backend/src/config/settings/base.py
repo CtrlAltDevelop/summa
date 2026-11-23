@@ -965,6 +965,9 @@ API_THROTTLE_LOGIN = os.getenv("DJANGO_API_THROTTLE_LOGIN", "60/min")
 API_THROTTLE_UPLOAD = os.getenv("DJANGO_API_THROTTLE_UPLOAD", "60/hour")
 
 GRAPHQL_ENABLED = os.getenv("DJANGO_GRAPHQL_ENABLED", "true").lower() == "true"
+# Swagger, ReDoc and openapi.json. On for development; production turns it off
+# unless DJANGO_API_DOCS_ENABLED=true, so a deployment does not publish its map.
+API_DOCS_ENABLED = os.getenv("DJANGO_API_DOCS_ENABLED", "true").lower() == "true"
 # The in-browser query editor. Handy in development, and an unauthenticated
 # schema browser in production, so it is off here and turned on by the
 # development settings -- which is the only honest way to write it. Deriving the

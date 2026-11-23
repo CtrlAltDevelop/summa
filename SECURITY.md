@@ -31,4 +31,5 @@ Only the latest commit on `main`. There are no released versions yet.
 Production settings refuse to start without a strong `DJANGO_SECRET_KEY`
 (32+ characters), `DJANGO_ALLOWED_HOSTS`, and a real SMS backend. Serve gRPC
 over TLS (the app does this for every non-local host), and restrict `/admin/`
-and `/api/docs` at your reverse proxy.
+at your reverse proxy (by IP or VPN). Swagger, ReDoc and `openapi.json` are off
+in production; set `DJANGO_API_DOCS_ENABLED=true` only where you want them.

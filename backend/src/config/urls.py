@@ -3,7 +3,7 @@ from django.conf import settings
 from django.conf.urls.static import static
 from django.contrib import admin
 from django.http import Http404, HttpRequest, HttpResponse
-from django.urls import path
+from django.urls import URLPattern, path
 from django.views.decorators.csrf import csrf_exempt
 from ninja.openapi.docs import Redoc
 from strawberry.django.views import AsyncGraphQLView
@@ -33,14 +33,23 @@ def api_redoc(request: HttpRequest, version: str = "") -> HttpResponse:
     return Redoc().render_page(request, apis[version])
 
 
+def docs_patterns(enabled: bool) -> list[URLPattern]:
+    """The Swagger and ReDoc pages; none at all when documentation is switched off."""
+    if not enabled:
+        return []
+    return [
+        path("api/docs", api_docs, name="api-docs"),
+        path("api/redoc", api_redoc, name="api-redoc"),
+        # Ahead of the version includes: each version's own router owns everything
+        # under its prefix, and would answer this path with its 404 rather than one
+        # naming the version that is missing.
+        path("api/<str:version>/redoc", api_redoc, name="api-version-redoc"),
+    ]
+
+
 urlpatterns = [
     path("admin/", admin.site.urls),
-    path("api/docs", api_docs, name="api-docs"),
-    path("api/redoc", api_redoc, name="api-redoc"),
-    # Ahead of the version includes: each version's own router owns everything
-    # under its prefix, and would answer this path with its 404 rather than one
-    # naming the version that is missing.
-    path("api/<str:version>/redoc", api_redoc, name="api-version-redoc"),
+    *docs_patterns(settings.API_DOCS_ENABLED),
     *(path(f"api/{version}/", api.urls) for version, api in apis.items()),
 ]
 

@@ -38,7 +38,7 @@ Flutter · Django · gRPC · PostgreSQL · Redis · Celery
 
 ### مستندات API
 
-بک‌اند Swagger دارد: بعد از `make run-lite` روی `http://127.0.0.1:8010/api/docs` (و ReDoc روی `/api/redoc`) و پنل ادمین روی `/admin/`. اپ از gRPC استفاده می‌کند و Swagger فقط REST را نشان می‌دهد.
+بک‌اند Swagger دارد: بعد از `make run-lite` روی `http://127.0.0.1:8010/api/docs` (و ReDoc روی `/api/redoc`) و پنل ادمین روی `/admin/`. در production مستندات به‌طور پیش‌فرض خاموش است (`DJANGO_API_DOCS_ENABLED=true` روشنش می‌کند). اپ از gRPC استفاده می‌کند و Swagger فقط REST را نشان می‌دهد.
 
 <p align="center">
   <img src="docs/screenshots/swagger.png" alt="Swagger" width="80%">

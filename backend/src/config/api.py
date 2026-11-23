@@ -70,7 +70,8 @@ def build_apis() -> dict[str, NinjaAPI]:
                     "urls.primaryName": version,
                 }
             ),
-            docs_url="/docs",
+            docs_url="/docs" if settings.API_DOCS_ENABLED else None,
+            openapi_url="/openapi.json" if settings.API_DOCS_ENABLED else None,
             renderer=EnvelopeRenderer(),
             # What the reader sees before a single operation: one described
             # group per attached router, in the order above.
