@@ -327,6 +327,162 @@ abstract class AppLocalizations {
   /// In fa, this message translates to:
   /// **'تلاش دوباره'**
   String get retry;
+
+  /// No description provided for @walletsTotalTitle.
+  ///
+  /// In fa, this message translates to:
+  /// **'صندوق حساب‌وکتاب'**
+  String get walletsTotalTitle;
+
+  /// No description provided for @walletsEmpty.
+  ///
+  /// In fa, this message translates to:
+  /// **'هنوز کیف پولی نداری. اولین را بساز تا موجودی‌ات را ببینی.'**
+  String get walletsEmpty;
+
+  /// No description provided for @walletAdd.
+  ///
+  /// In fa, this message translates to:
+  /// **'کیف پول جدید'**
+  String get walletAdd;
+
+  /// No description provided for @walletFormTitle.
+  ///
+  /// In fa, this message translates to:
+  /// **'کیف پول جدید'**
+  String get walletFormTitle;
+
+  /// No description provided for @walletNameLabel.
+  ///
+  /// In fa, this message translates to:
+  /// **'نام کیف پول'**
+  String get walletNameLabel;
+
+  /// No description provided for @walletKindLabel.
+  ///
+  /// In fa, this message translates to:
+  /// **'نوع'**
+  String get walletKindLabel;
+
+  /// No description provided for @walletCurrencyLabel.
+  ///
+  /// In fa, this message translates to:
+  /// **'ارز'**
+  String get walletCurrencyLabel;
+
+  /// No description provided for @walletBankLabel.
+  ///
+  /// In fa, this message translates to:
+  /// **'بانک (اختیاری)'**
+  String get walletBankLabel;
+
+  /// No description provided for @walletOpeningLabel.
+  ///
+  /// In fa, this message translates to:
+  /// **'موجودی اولیه'**
+  String get walletOpeningLabel;
+
+  /// No description provided for @walletSave.
+  ///
+  /// In fa, this message translates to:
+  /// **'ذخیره'**
+  String get walletSave;
+
+  /// No description provided for @walletNameRequired.
+  ///
+  /// In fa, this message translates to:
+  /// **'برای کیف پول یک نام بنویس.'**
+  String get walletNameRequired;
+
+  /// No description provided for @walletBalanceInvalid.
+  ///
+  /// In fa, this message translates to:
+  /// **'موجودی اولیه درست نیست. فقط کارت اعتباری و اقساط می‌توانند منفی شروع شوند.'**
+  String get walletBalanceInvalid;
+
+  /// No description provided for @kindCash.
+  ///
+  /// In fa, this message translates to:
+  /// **'نقد'**
+  String get kindCash;
+
+  /// No description provided for @kindBank.
+  ///
+  /// In fa, this message translates to:
+  /// **'حساب بانکی'**
+  String get kindBank;
+
+  /// No description provided for @kindCreditCard.
+  ///
+  /// In fa, this message translates to:
+  /// **'کارت اعتباری'**
+  String get kindCreditCard;
+
+  /// No description provided for @kindBnpl.
+  ///
+  /// In fa, this message translates to:
+  /// **'خرید اقساطی'**
+  String get kindBnpl;
+
+  /// No description provided for @kindGiftCard.
+  ///
+  /// In fa, this message translates to:
+  /// **'هدیه‌کارت'**
+  String get kindGiftCard;
+
+  /// No description provided for @kindCrypto.
+  ///
+  /// In fa, this message translates to:
+  /// **'رمزارز'**
+  String get kindCrypto;
+
+  /// No description provided for @kindGold.
+  ///
+  /// In fa, this message translates to:
+  /// **'طلا'**
+  String get kindGold;
+
+  /// No description provided for @currencyIRT.
+  ///
+  /// In fa, this message translates to:
+  /// **'تومان'**
+  String get currencyIRT;
+
+  /// No description provided for @currencyIRR.
+  ///
+  /// In fa, this message translates to:
+  /// **'ریال'**
+  String get currencyIRR;
+
+  /// No description provided for @currencyUSD.
+  ///
+  /// In fa, this message translates to:
+  /// **'دلار'**
+  String get currencyUSD;
+
+  /// No description provided for @currencyEUR.
+  ///
+  /// In fa, this message translates to:
+  /// **'یورو'**
+  String get currencyEUR;
+
+  /// No description provided for @currencyAED.
+  ///
+  /// In fa, this message translates to:
+  /// **'درهم'**
+  String get currencyAED;
+
+  /// No description provided for @currencyTRY.
+  ///
+  /// In fa, this message translates to:
+  /// **'لیر'**
+  String get currencyTRY;
+
+  /// No description provided for @currencyUSDT.
+  ///
+  /// In fa, this message translates to:
+  /// **'تتر'**
+  String get currencyUSDT;
 }
 
 class _AppLocalizationsDelegate

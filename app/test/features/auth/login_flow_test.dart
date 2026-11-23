@@ -5,7 +5,9 @@ import 'package:summa/app.dart';
 import 'package:summa/features/auth/auth_controller.dart';
 import 'package:summa/features/auth/auth_models.dart';
 import 'package:summa/features/auth/token_store.dart';
+import 'package:summa/features/wallets/wallets_controller.dart';
 
+import '../wallets/fake_wallet_api.dart';
 import 'fake_auth_api.dart';
 
 Future<MemoryTokenStore> _pump(
@@ -19,6 +21,7 @@ Future<MemoryTokenStore> _pump(
       overrides: [
         authApiProvider.overrideWithValue(api),
         tokenStoreProvider.overrideWithValue(store),
+        walletApiProvider.overrideWithValue(FakeWalletApi()),
       ],
       child: const SummaApp(),
     ),
