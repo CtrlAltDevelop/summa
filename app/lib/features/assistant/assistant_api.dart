@@ -15,6 +15,12 @@ abstract interface class AssistantApi {
     required String clientMutationId,
   });
   Future<void> clear(String access);
+  Future<SmsCard> parseSms(String access, String text);
+  Future<void> linkCard(
+    String access, {
+    required String last4,
+    required String walletId,
+  });
 }
 
 class GrpcAssistantApi implements AssistantApi {
@@ -51,6 +57,40 @@ class GrpcAssistantApi implements AssistantApi {
   @override
   Future<void> clear(String access) => guardGrpc(() async {
     await _client.clear(Empty(), options: _bearer(access));
+  });
+
+  @override
+  Future<SmsCard> parseSms(String access, String text) => guardGrpc(() async {
+    final r = await _client.parseSms(
+      pb.SmsText(text: text),
+      options: _bearer(access),
+    );
+    return SmsCard(
+      ignored: r.ignored,
+      kind: r.kind,
+      amountMinor: r.amountMinor.toInt(),
+      currency: r.currency,
+      walletId: r.walletId,
+      confidence: r.confidence,
+      occurredAt: DateTime.tryParse(r.occurredAt),
+      balanceMinor: r.balancePresent ? r.balanceMinor.toInt() : null,
+      last4: r.last4,
+      categoryId: r.categoryId,
+      suggestedCategoryIds: r.suggestedCategoryIds.toList(),
+      duplicateEntryId: r.duplicateEntryId,
+    );
+  });
+
+  @override
+  Future<void> linkCard(
+    String access, {
+    required String last4,
+    required String walletId,
+  }) => guardGrpc(() async {
+    await _client.linkCard(
+      pb.CardLink(last4: last4, walletId: walletId),
+      options: _bearer(access),
+    );
   });
 
   static ChatMessage _message(pb.Message m) => ChatMessage(

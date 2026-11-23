@@ -38,6 +38,20 @@ final $typed_data.Uint8List cardDescriptor = $convert.base64Decode(
     'QYBiABKAlSCmNhdGVnb3J5SWQSEgoEbm90ZRgHIAEoCVIEbm90ZRIfCgtvY2N1cnJlZF9hdBgI'
     'IAEoCVIKb2NjdXJyZWRBdA==');
 
+@$core.Deprecated('Use cardLinkDescriptor instead')
+const CardLink$json = {
+  '1': 'CardLink',
+  '2': [
+    {'1': 'last4', '3': 1, '4': 1, '5': 9, '10': 'last4'},
+    {'1': 'wallet_id', '3': 2, '4': 1, '5': 9, '10': 'walletId'},
+  ],
+};
+
+/// Descriptor for `CardLink`. Decode as a `google.protobuf.DescriptorProto`.
+final $typed_data.Uint8List cardLinkDescriptor = $convert.base64Decode(
+    'CghDYXJkTGluaxIUCgVsYXN0NBgBIAEoCVIFbGFzdDQSGwoJd2FsbGV0X2lkGAIgASgJUgh3YW'
+    'xsZXRJZA==');
+
 @$core.Deprecated('Use chatReplyDescriptor instead')
 const ChatReply$json = {
   '1': 'ChatReply',
@@ -116,3 +130,59 @@ const MessageSend$json = {
 final $typed_data.Uint8List messageSendDescriptor = $convert.base64Decode(
     'CgtNZXNzYWdlU2VuZBISCgR0ZXh0GAEgASgJUgR0ZXh0EiwKEmNsaWVudF9tdXRhdGlvbl9pZB'
     'gCIAEoCVIQY2xpZW50TXV0YXRpb25JZA==');
+
+@$core.Deprecated('Use smsCardDescriptor instead')
+const SmsCard$json = {
+  '1': 'SmsCard',
+  '2': [
+    {'1': 'ignored', '3': 1, '4': 1, '5': 9, '10': 'ignored'},
+    {'1': 'kind', '3': 2, '4': 1, '5': 9, '10': 'kind'},
+    {'1': 'amount_minor', '3': 3, '4': 1, '5': 3, '10': 'amountMinor'},
+    {'1': 'currency', '3': 4, '4': 1, '5': 9, '10': 'currency'},
+    {'1': 'wallet_id', '3': 5, '4': 1, '5': 9, '10': 'walletId'},
+    {'1': 'confidence', '3': 6, '4': 1, '5': 9, '10': 'confidence'},
+    {'1': 'occurred_at', '3': 7, '4': 1, '5': 9, '10': 'occurredAt'},
+    {'1': 'balance_present', '3': 8, '4': 1, '5': 8, '10': 'balancePresent'},
+    {'1': 'balance_minor', '3': 9, '4': 1, '5': 3, '10': 'balanceMinor'},
+    {'1': 'last4', '3': 10, '4': 1, '5': 9, '10': 'last4'},
+    {'1': 'category_id', '3': 11, '4': 1, '5': 9, '10': 'categoryId'},
+    {
+      '1': 'suggested_category_ids',
+      '3': 12,
+      '4': 3,
+      '5': 9,
+      '10': 'suggestedCategoryIds'
+    },
+    {
+      '1': 'duplicate_entry_id',
+      '3': 13,
+      '4': 1,
+      '5': 9,
+      '10': 'duplicateEntryId'
+    },
+  ],
+};
+
+/// Descriptor for `SmsCard`. Decode as a `google.protobuf.DescriptorProto`.
+final $typed_data.Uint8List smsCardDescriptor = $convert.base64Decode(
+    'CgdTbXNDYXJkEhgKB2lnbm9yZWQYASABKAlSB2lnbm9yZWQSEgoEa2luZBgCIAEoCVIEa2luZB'
+    'IhCgxhbW91bnRfbWlub3IYAyABKANSC2Ftb3VudE1pbm9yEhoKCGN1cnJlbmN5GAQgASgJUghj'
+    'dXJyZW5jeRIbCgl3YWxsZXRfaWQYBSABKAlSCHdhbGxldElkEh4KCmNvbmZpZGVuY2UYBiABKA'
+    'lSCmNvbmZpZGVuY2USHwoLb2NjdXJyZWRfYXQYByABKAlSCm9jY3VycmVkQXQSJwoPYmFsYW5j'
+    'ZV9wcmVzZW50GAggASgIUg5iYWxhbmNlUHJlc2VudBIjCg1iYWxhbmNlX21pbm9yGAkgASgDUg'
+    'xiYWxhbmNlTWlub3ISFAoFbGFzdDQYCiABKAlSBWxhc3Q0Eh8KC2NhdGVnb3J5X2lkGAsgASgJ'
+    'UgpjYXRlZ29yeUlkEjQKFnN1Z2dlc3RlZF9jYXRlZ29yeV9pZHMYDCADKAlSFHN1Z2dlc3RlZE'
+    'NhdGVnb3J5SWRzEiwKEmR1cGxpY2F0ZV9lbnRyeV9pZBgNIAEoCVIQZHVwbGljYXRlRW50cnlJ'
+    'ZA==');
+
+@$core.Deprecated('Use smsTextDescriptor instead')
+const SmsText$json = {
+  '1': 'SmsText',
+  '2': [
+    {'1': 'text', '3': 1, '4': 1, '5': 9, '10': 'text'},
+  ],
+};
+
+/// Descriptor for `SmsText`. Decode as a `google.protobuf.DescriptorProto`.
+final $typed_data.Uint8List smsTextDescriptor =
+    $convert.base64Decode('CgdTbXNUZXh0EhIKBHRleHQYASABKAlSBHRleHQ=');

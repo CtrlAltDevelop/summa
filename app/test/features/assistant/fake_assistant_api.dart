@@ -6,6 +6,8 @@ class FakeAssistantApi implements AssistantApi {
   ChatCard? nextCard;
   final List<ChatMessage> messages = [];
   final List<String> sent = [];
+  SmsCard? nextSms;
+  final List<(String, String)> links = [];
 
   @override
   Future<List<ChatMessage>> history(String access) async => List.of(messages);
@@ -33,4 +35,17 @@ class FakeAssistantApi implements AssistantApi {
 
   @override
   Future<void> clear(String access) async => messages.clear();
+
+  @override
+  Future<SmsCard> parseSms(String access, String text) async {
+    sent.add(text);
+    return nextSms!;
+  }
+
+  @override
+  Future<void> linkCard(
+    String access, {
+    required String last4,
+    required String walletId,
+  }) async => links.add((last4, walletId));
 }

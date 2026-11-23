@@ -136,5 +136,26 @@
   "chatRegistered": "ثبت شد",
   "chatClear": "پاک‌کردن گفتگو",
   "chatChooseWallet": "کیف را انتخاب کن",
-  "chatEmpty": "جمله‌ای بنویس تا برایت کارت ثبت بسازم."
+  "chatEmpty": "جمله‌ای بنویس تا برایت کارت ثبت بسازم.",
+  "smsOpen": "پیامک بانک",
+  "smsTitle": "پیامک بانک",
+  "smsPasteLabel": "متن پیامک را اینجا بچسبان",
+  "smsAnalyze": "بررسی پیامک",
+  "smsIgnoredOtp": "این پیامک رمز یکبارمصرف است؛ ثبت نمی‌شود.",
+  "smsIgnoredFailed": "این تراکنش ناموفق بوده؛ ثبت نمی‌شود.",
+  "smsIgnoredAd": "این پیامک تبلیغاتی است؛ ثبت نمی‌شود.",
+  "smsIgnoredNoAmount": "مبلغی در این پیامک پیدا نکردم.",
+  "smsKindLabel": "نوع تراکنش",
+  "smsWhatFor": "برای چه بود؟",
+  "smsBalance": "مانده پس از تراکنش",
+  "smsLowConfidence": "مطمئن نیستم؛ لطفاً قبل از ثبت بررسی کن.",
+  "smsDuplicate": "شبیه همین تراکنش قبلاً ثبت شده است. باز هم ثبت شود؟",
+  "smsCardNote": "این کارت (۴ رقم آخر {last4}) برای دفعه بعد به همین کیف وصل می‌شود.",
+  "@smsCardNote": {
+    "placeholders": {
+      "last4": {
+        "type": "String"
+      }
+    }
+  }
 }

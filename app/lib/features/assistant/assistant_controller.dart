@@ -44,6 +44,13 @@ class AssistantController extends AsyncNotifier<List<ChatMessage>> {
     state = AsyncData([...?state.value, ...created]);
   }
 
+  Future<SmsCard> parseSms(String text) =>
+      _auth.withAccess((access) => _api.parseSms(access, text));
+
+  Future<void> linkCard(String last4, String walletId) => _auth.withAccess(
+    (access) => _api.linkCard(access, last4: last4, walletId: walletId),
+  );
+
   Future<void> clear() async {
     await _auth.withAccess(_api.clear);
     state = const AsyncData([]);

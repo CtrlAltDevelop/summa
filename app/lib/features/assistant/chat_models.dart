@@ -40,3 +40,38 @@ class ChatMessage {
   final String text;
   final ChatCard? card;
 }
+
+/// The result of parsing one bank SMS. A suggestion: registering it is the
+/// app's own ordinary record request.
+class SmsCard {
+  const SmsCard({
+    required this.ignored,
+    required this.kind,
+    required this.amountMinor,
+    required this.currency,
+    required this.walletId,
+    required this.confidence,
+    required this.occurredAt,
+    required this.balanceMinor,
+    required this.last4,
+    required this.categoryId,
+    required this.suggestedCategoryIds,
+    required this.duplicateEntryId,
+  });
+
+  /// `otp`, `failed`, `ad`, `no_amount`, or empty when there is a card.
+  final String ignored;
+
+  /// `expense`, `income`, or empty when the direction is unknown.
+  final String kind;
+  final int amountMinor;
+  final String currency;
+  final String walletId;
+  final String confidence;
+  final DateTime? occurredAt;
+  final int? balanceMinor;
+  final String last4;
+  final String categoryId;
+  final List<String> suggestedCategoryIds;
+  final String duplicateEntryId;
+}
