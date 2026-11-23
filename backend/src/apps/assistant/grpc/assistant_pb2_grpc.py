@@ -45,6 +45,16 @@ class AssistantControllerStub:
                 request_serializer=apps_dot_assistant_dot_grpc_dot_assistant__pb2.HistoryQuery.SerializeToString,
                 response_deserializer=apps_dot_assistant_dot_grpc_dot_assistant__pb2.ChatReply.FromString,
                 _registered_method=True)
+        self.LinkCard = channel.unary_unary(
+                '/config.assistant.AssistantController/LinkCard',
+                request_serializer=apps_dot_assistant_dot_grpc_dot_assistant__pb2.CardLink.SerializeToString,
+                response_deserializer=google_dot_protobuf_dot_empty__pb2.Empty.FromString,
+                _registered_method=True)
+        self.ParseSms = channel.unary_unary(
+                '/config.assistant.AssistantController/ParseSms',
+                request_serializer=apps_dot_assistant_dot_grpc_dot_assistant__pb2.SmsText.SerializeToString,
+                response_deserializer=apps_dot_assistant_dot_grpc_dot_assistant__pb2.SmsCard.FromString,
+                _registered_method=True)
         self.Send = channel.unary_unary(
                 '/config.assistant.AssistantController/Send',
                 request_serializer=apps_dot_assistant_dot_grpc_dot_assistant__pb2.MessageSend.SerializeToString,
@@ -62,6 +72,18 @@ class AssistantControllerServicer:
         raise NotImplementedError('Method not implemented!')
 
     def History(self, request, context):
+        """Missing associated documentation comment in .proto file."""
+        context.set_code(grpc.StatusCode.UNIMPLEMENTED)
+        context.set_details('Method not implemented!')
+        raise NotImplementedError('Method not implemented!')
+
+    def LinkCard(self, request, context):
+        """Missing associated documentation comment in .proto file."""
+        context.set_code(grpc.StatusCode.UNIMPLEMENTED)
+        context.set_details('Method not implemented!')
+        raise NotImplementedError('Method not implemented!')
+
+    def ParseSms(self, request, context):
         """Missing associated documentation comment in .proto file."""
         context.set_code(grpc.StatusCode.UNIMPLEMENTED)
         context.set_details('Method not implemented!')
@@ -85,6 +107,16 @@ def add_AssistantControllerServicer_to_server(servicer, server):
                     servicer.History,
                     request_deserializer=apps_dot_assistant_dot_grpc_dot_assistant__pb2.HistoryQuery.FromString,
                     response_serializer=apps_dot_assistant_dot_grpc_dot_assistant__pb2.ChatReply.SerializeToString,
+            ),
+            'LinkCard': grpc.unary_unary_rpc_method_handler(
+                    servicer.LinkCard,
+                    request_deserializer=apps_dot_assistant_dot_grpc_dot_assistant__pb2.CardLink.FromString,
+                    response_serializer=google_dot_protobuf_dot_empty__pb2.Empty.SerializeToString,
+            ),
+            'ParseSms': grpc.unary_unary_rpc_method_handler(
+                    servicer.ParseSms,
+                    request_deserializer=apps_dot_assistant_dot_grpc_dot_assistant__pb2.SmsText.FromString,
+                    response_serializer=apps_dot_assistant_dot_grpc_dot_assistant__pb2.SmsCard.SerializeToString,
             ),
             'Send': grpc.unary_unary_rpc_method_handler(
                     servicer.Send,
@@ -146,6 +178,60 @@ class AssistantController:
             '/config.assistant.AssistantController/History',
             apps_dot_assistant_dot_grpc_dot_assistant__pb2.HistoryQuery.SerializeToString,
             apps_dot_assistant_dot_grpc_dot_assistant__pb2.ChatReply.FromString,
+            options,
+            channel_credentials,
+            insecure,
+            call_credentials,
+            compression,
+            wait_for_ready,
+            timeout,
+            metadata,
+            _registered_method=True)
+
+    @staticmethod
+    def LinkCard(request,
+            target,
+            options=(),
+            channel_credentials=None,
+            call_credentials=None,
+            insecure=False,
+            compression=None,
+            wait_for_ready=None,
+            timeout=None,
+            metadata=None):
+        return grpc.experimental.unary_unary(
+            request,
+            target,
+            '/config.assistant.AssistantController/LinkCard',
+            apps_dot_assistant_dot_grpc_dot_assistant__pb2.CardLink.SerializeToString,
+            google_dot_protobuf_dot_empty__pb2.Empty.FromString,
+            options,
+            channel_credentials,
+            insecure,
+            call_credentials,
+            compression,
+            wait_for_ready,
+            timeout,
+            metadata,
+            _registered_method=True)
+
+    @staticmethod
+    def ParseSms(request,
+            target,
+            options=(),
+            channel_credentials=None,
+            call_credentials=None,
+            insecure=False,
+            compression=None,
+            wait_for_ready=None,
+            timeout=None,
+            metadata=None):
+        return grpc.experimental.unary_unary(
+            request,
+            target,
+            '/config.assistant.AssistantController/ParseSms',
+            apps_dot_assistant_dot_grpc_dot_assistant__pb2.SmsText.SerializeToString,
+            apps_dot_assistant_dot_grpc_dot_assistant__pb2.SmsCard.FromString,
             options,
             channel_credentials,
             insecure,

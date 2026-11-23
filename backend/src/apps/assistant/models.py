@@ -33,3 +33,23 @@ class ChatMessage(models.Model):
 
     def __str__(self) -> str:
         return f"{self.role}: {self.text[:30]}"
+
+
+class SmsCardLink(models.Model):
+    """Which wallet a bank card (by its last four digits) belongs to, once confirmed.
+
+    The only thing kept from an SMS: the SMS text itself is never stored.
+    """
+
+    id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
+    user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name="+")
+    last4 = models.CharField(max_length=4)
+    wallet = models.ForeignKey("wallets.Wallet", on_delete=models.CASCADE, related_name="+")
+
+    class Meta:
+        constraints = [
+            models.UniqueConstraint(fields=["user", "last4"], name="sms_card_once_per_user")
+        ]
+
+    def __str__(self) -> str:
+        return f"****{self.last4} -> {self.wallet_id}"

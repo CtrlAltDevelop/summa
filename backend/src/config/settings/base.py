@@ -758,6 +758,11 @@ CLUB_JOIN_ON_SIGNUP = os.getenv("DJANGO_CLUB_JOIN_ON_SIGNUP", "").strip()
 CLUB_PAGE_SIZE = int(os.getenv("DJANGO_CLUB_PAGE_SIZE", "50"))
 CLUB_MAX_PAGE_SIZE = int(os.getenv("DJANGO_CLUB_MAX_PAGE_SIZE", "200"))
 
+# The assistant's optional language model (Ollama). Empty means: regex only, and
+# no network call is ever made to parse a message.
+ASSISTANT_LLM_URL = os.getenv("DJANGO_ASSISTANT_LLM_URL", "")
+ASSISTANT_LLM_MODEL = os.getenv("DJANGO_ASSISTANT_LLM_MODEL", "qwen2.5:3b")
+
 # The support app. Optional the same way the CMS, the notifications and the shop
 # are: naming it installs its tables, its routes, its admin and its socket, and
 # a project that does not name it never imports the package.

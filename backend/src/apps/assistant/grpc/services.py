@@ -9,6 +9,7 @@ from google.protobuf.empty_pb2 import Empty
 
 from apps.assistant.chat import MessageView, chat_service
 from apps.assistant.grpc.serializers import Message
+from apps.assistant.sms import SmsResult, sms_service
 from infrastructure.common.grpc.errors import action, require_caller
 from infrastructure.common.identity import grpc_caller
 
@@ -80,6 +81,68 @@ class AssistantService(generics.GenericService):
         user = require_caller(await grpc_caller(context))
         await sync_to_async(chat_service.clear)(user)
         return Empty()
+
+    @grpc_action(
+        request=[{"name": "text", "type": "string"}],
+        request_name="SmsText",
+        response=[
+            {"name": "ignored", "type": "string"},
+            {"name": "kind", "type": "string"},
+            {"name": "amount_minor", "type": "int64"},
+            {"name": "currency", "type": "string"},
+            {"name": "wallet_id", "type": "string"},
+            {"name": "confidence", "type": "string"},
+            {"name": "occurred_at", "type": "string"},
+            {"name": "balance_present", "type": "bool"},
+            {"name": "balance_minor", "type": "int64"},
+            {"name": "last4", "type": "string"},
+            {"name": "category_id", "type": "string"},
+            {"name": "suggested_category_ids", "type": "string", "cardinality": "repeated"},
+            {"name": "duplicate_entry_id", "type": "string"},
+        ],
+        response_name="SmsCard",
+    )
+    @action
+    async def ParseSms(self, request: Any, context: Any) -> Any:
+        user = require_caller(await grpc_caller(context))
+        result = await sync_to_async(sms_service.parse)(user, request.text)
+        return _sms_card(result)
+
+    @grpc_action(
+        request=[
+            {"name": "last4", "type": "string"},
+            {"name": "wallet_id", "type": "string"},
+        ],
+        request_name="CardLink",
+        response=[],
+    )
+    @action
+    async def LinkCard(self, request: Any, context: Any) -> Any:
+        user = require_caller(await grpc_caller(context))
+        await sync_to_async(sms_service.link_card)(
+            user, last4=request.last4, wallet_id=request.wallet_id
+        )
+        return Empty()
+
+
+def _sms_card(result: SmsResult) -> Any:
+    from apps.assistant.grpc import assistant_pb2
+
+    return assistant_pb2.SmsCard(
+        ignored=result.ignored,
+        kind=result.kind,
+        amount_minor=result.amount_minor,
+        currency=result.currency,
+        wallet_id=result.wallet_id,
+        confidence=result.confidence,
+        occurred_at=result.occurred_at.isoformat() if result.occurred_at else "",
+        balance_present=result.balance_minor is not None,
+        balance_minor=result.balance_minor or 0,
+        last4=result.last4,
+        category_id=result.category_id,
+        suggested_category_ids=result.suggested_category_ids,
+        duplicate_entry_id=result.duplicate_entry_id,
+    )
 
 
 GRPC_SERVICES = [AssistantService]

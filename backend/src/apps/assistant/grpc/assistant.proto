@@ -7,6 +7,8 @@ import "google/protobuf/empty.proto";
 service AssistantController {
     rpc Clear(google.protobuf.Empty) returns (google.protobuf.Empty) {}
     rpc History(HistoryQuery) returns (ChatReply) {}
+    rpc LinkCard(CardLink) returns (google.protobuf.Empty) {}
+    rpc ParseSms(SmsText) returns (SmsCard) {}
     rpc Send(MessageSend) returns (ChatReply) {}
 }
 
@@ -19,6 +21,11 @@ message Card {
     string category_id = 6;
     string note = 7;
     string occurred_at = 8;
+}
+
+message CardLink {
+    string last4 = 1;
+    string wallet_id = 2;
 }
 
 message ChatReply {
@@ -41,5 +48,25 @@ message Message {
 message MessageSend {
     string text = 1;
     string client_mutation_id = 2;
+}
+
+message SmsCard {
+    string ignored = 1;
+    string kind = 2;
+    int64 amount_minor = 3;
+    string currency = 4;
+    string wallet_id = 5;
+    string confidence = 6;
+    string occurred_at = 7;
+    bool balance_present = 8;
+    int64 balance_minor = 9;
+    string last4 = 10;
+    string category_id = 11;
+    repeated string suggested_category_ids = 12;
+    string duplicate_entry_id = 13;
+}
+
+message SmsText {
+    string text = 1;
 }
 
