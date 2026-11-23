@@ -57,6 +57,8 @@ export function createScale(canvas) {
     renderer.setSize(w, h, false);
     camera.aspect = w / h;
     camera.updateProjectionMatrix();
+    // Resizing clears the canvas, so draw again or it stays blank.
+    draw();
   }
 
   function draw() {
@@ -77,8 +79,12 @@ export function createScale(canvas) {
     frame = requestAnimationFrame(step);
   }
 
+  // The canvas is created before it is on the page, so its first real size
+  // arrives later; watch it rather than only the window.
+  const observer = typeof ResizeObserver === 'function' ? new ResizeObserver(resize) : null;
+  if (observer) observer.observe(canvas);
+  else window.addEventListener('resize', resize);
   resize();
-  window.addEventListener('resize', resize);
   draw();
 
   return {
@@ -97,6 +103,7 @@ export function createScale(canvas) {
     },
     dispose() {
       cancelAnimationFrame(frame);
+      observer?.disconnect();
       window.removeEventListener('resize', resize);
       renderer.dispose();
     },
