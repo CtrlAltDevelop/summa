@@ -15,6 +15,7 @@ abstract interface class LedgerApi {
     required String note,
     required String clientMutationId,
     String categoryId = '',
+    DateTime? occurredAt,
   });
   Future<void> transfer(
     String access, {
@@ -53,6 +54,7 @@ class GrpcLedgerApi implements LedgerApi {
     required String note,
     required String clientMutationId,
     String categoryId = '',
+    DateTime? occurredAt,
   }) => guardGrpc(() async {
     final r = await _client.record(
       pb.EntryRecord(
@@ -62,6 +64,7 @@ class GrpcLedgerApi implements LedgerApi {
         note: note,
         clientMutationId: clientMutationId,
         categoryId: categoryId,
+        occurredAt: occurredAt?.toUtc().toIso8601String() ?? '',
       ),
       options: _bearer(access),
     );

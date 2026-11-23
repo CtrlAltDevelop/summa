@@ -127,5 +127,14 @@
   "budgetCurrencyLabel": "ارز",
   "budgetsTitle": "سقف این ماه",
   "budgetOver": "از سقف گذشتی",
-  "budgetWarning": "نزدیک سقفی"
+  "budgetWarning": "نزدیک سقفی",
+  "chatOpen": "دستیار",
+  "chatTitle": "دستیار",
+  "chatHint": "مثلاً: ۲۵۰ هزار تومن خرید نان",
+  "chatSend": "ارسال",
+  "chatRegister": "ثبت",
+  "chatRegistered": "ثبت شد",
+  "chatClear": "پاک‌کردن گفتگو",
+  "chatChooseWallet": "کیف را انتخاب کن",
+  "chatEmpty": "جمله‌ای بنویس تا برایت کارت ثبت بسازم."
 }

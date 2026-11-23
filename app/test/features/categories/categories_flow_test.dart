@@ -31,6 +31,10 @@ Future<({FakeLedgerApi ledger, FakeCategoryApi categories})> _pump(
     );
   final ledger = FakeLedgerApi(wallets);
   final categories = FakeCategoryApi(ledger);
+  // Tall enough that the whole home list is built.
+  t.view.physicalSize = const Size(800, 4000);
+  t.view.devicePixelRatio = 1;
+  addTearDown(t.view.reset);
   final auth = FakeAuthApi(profileName: 'سارا');
   await t.pumpWidget(
     ProviderScope(

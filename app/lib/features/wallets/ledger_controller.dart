@@ -32,6 +32,7 @@ class LedgerController extends AsyncNotifier<List<Entry>> {
     required String note,
     required String clientMutationId,
     String categoryId = '',
+    DateTime? occurredAt,
   }) async {
     await _auth.withAccess(
       (access) => _api.record(
@@ -42,6 +43,7 @@ class LedgerController extends AsyncNotifier<List<Entry>> {
         note: note,
         clientMutationId: clientMutationId,
         categoryId: categoryId,
+        occurredAt: occurredAt,
       ),
     );
     await _refresh();
