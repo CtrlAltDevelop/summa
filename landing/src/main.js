@@ -1,8 +1,10 @@
+import '@fontsource-variable/vazirmatn';
 import { createApi } from './api.js';
 import { renderFaq, renderHero, renderHomeSections, renderMenu, renderTextPage } from './content.js';
 import { createDemo } from './demo.js';
 import { el } from './dom.js';
 import { renderPlans, renderRates } from './prices.js';
+import { revealOnScroll } from './reveal.js';
 import { renderTools } from './tools.js';
 
 const api = createApi();
@@ -39,10 +41,12 @@ async function home() {
     await safe(plans, renderPlans),
     await safe(faq, renderFaq),
   );
+  revealOnScroll(app);
 }
 
 async function textPage(slug) {
   app.replaceChildren(await safe(api.page(slug), renderTextPage));
+  revealOnScroll(app);
 }
 
 function route() {
