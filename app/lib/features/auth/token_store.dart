@@ -12,7 +12,13 @@ abstract interface class TokenStore {
 /// Tokens in the platform's secure storage (Keychain / Keystore).
 class SecureTokenStore implements TokenStore {
   SecureTokenStore([FlutterSecureStorage? storage])
-    : _storage = storage ?? const FlutterSecureStorage();
+    : _storage =
+          storage ??
+          const FlutterSecureStorage(
+            // Legacy keychain on macOS: the data-protection one needs a
+            // signing team (error -34018 in unsigned dev builds).
+            mOptions: MacOsOptions(usesDataProtectionKeychain: false),
+          );
 
   static const _accessKey = 'access_token';
   static const _refreshKey = 'refresh_token';

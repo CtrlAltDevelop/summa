@@ -48,6 +48,7 @@ class SmTextField extends StatelessWidget {
       decoration: InputDecoration(
         labelText: label,
         hintText: hint,
+        hintTextDirection: textDirection,
         counterText: '',
         labelStyle: SmType.caption,
         hintStyle: SmType.body.copyWith(color: SmColors.textMuted),
