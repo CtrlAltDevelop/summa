@@ -43,6 +43,7 @@
 33. [phases/phase-15b-data.md](phases/phase-15b-data.md): سند فاز ۱۵b (ورود و خروج داده)
 34. [phases/phase-16b-cms.md](phases/phase-16b-cms.md): سند فاز ۱۶b (مدیریت محتوای لندینگ)
 35. [phases/phase-16-landing.md](phases/phase-16-landing.md): سند فاز ۱۶ (سایت لندینگ)
+36. [phases/phase-17-calculators.md](phases/phase-17-calculators.md): سند فاز ۱۷ (ماشین‌حساب‌های عمومی)
 
 ## محدودیت‌های بررسی
 - همه صفحه‌های عمومی خونده شد، به جز `/disclosure` (دوبار خطای ۵۰۳؛ لیست شریک‌های رفرال و مدل درآمد رفرال مشخص نیست).
