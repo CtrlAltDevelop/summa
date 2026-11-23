@@ -277,4 +277,49 @@ class AppLocalizationsFa extends AppLocalizations {
 
   @override
   String get transferFeeInvalid => 'کارمزد درست نیست.';
+
+  @override
+  String get entryCategoryLabel => 'دسته';
+
+  @override
+  String get categoriesTitle => 'دسته‌ها و سقف';
+
+  @override
+  String get categoriesOpen => 'دسته‌ها و سقف ماهانه';
+
+  @override
+  String get categoryNameLabel => 'نام دسته جدید';
+
+  @override
+  String get categoryAdd => 'افزودن';
+
+  @override
+  String get categoryExpenses => 'دسته‌های خرج';
+
+  @override
+  String get categoryIncomes => 'دسته‌های درآمد';
+
+  @override
+  String get categoryNameInvalid => 'نام دسته درست نیست یا تکراری است.';
+
+  @override
+  String get budgetSet => 'سقف';
+
+  @override
+  String get budgetFormTitle => 'سقف ماهانه';
+
+  @override
+  String get budgetLimitLabel => 'سقف (صفر یعنی بدون سقف)';
+
+  @override
+  String get budgetCurrencyLabel => 'ارز';
+
+  @override
+  String get budgetsTitle => 'سقف این ماه';
+
+  @override
+  String get budgetOver => 'از سقف گذشتی';
+
+  @override
+  String get budgetWarning => 'نزدیک سقفی';
 }

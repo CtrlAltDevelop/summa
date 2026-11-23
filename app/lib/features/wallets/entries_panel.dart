@@ -5,6 +5,7 @@ import '../../core/format/persian.dart';
 import '../../core/ui/tokens/tokens.dart';
 import '../../core/ui/widgets/widgets.dart';
 import '../../l10n/gen/app_localizations.dart';
+import '../categories/category_controller.dart';
 import 'entry_form_screen.dart';
 import 'entry_models.dart';
 import 'transfer_form_screen.dart';
@@ -22,6 +23,7 @@ class EntriesPanel extends ConsumerWidget {
     final l10n = AppLocalizations.of(context);
     final wallets = ref.watch(walletsControllerProvider).value?.active ?? [];
     final entries = ref.watch(ledgerControllerProvider).value ?? const [];
+    ref.watch(categoriesControllerProvider); // load them before the form opens
     return Column(
       crossAxisAlignment: CrossAxisAlignment.stretch,
       children: [
@@ -69,6 +71,12 @@ class _EntryTile extends ConsumerWidget {
     final l10n = AppLocalizations.of(context);
     final income = entry.kind.isCredit;
     final amount = formatMinor(entry.amountMinor, entry.currency);
+    final categoryName = ref
+        .watch(categoriesControllerProvider)
+        .value
+        ?.where((c) => c.id == entry.categoryId)
+        .map((c) => c.name)
+        .firstOrNull;
     return SmGlassCard(
       padding: const EdgeInsets.all(SmSpace.lg),
       child: Row(
@@ -84,7 +92,10 @@ class _EntryTile extends ConsumerWidget {
                   style: SmType.body,
                 ),
                 Text(
-                  formatJalaliDate(entry.occurredAt.toLocal()),
+                  [
+                    formatJalaliDate(entry.occurredAt.toLocal()),
+                    if (categoryName != null) categoryName,
+                  ].join(' · '),
                   style: SmType.caption,
                 ),
               ],

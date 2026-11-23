@@ -5,15 +5,18 @@ import 'package:summa/app.dart';
 import 'package:summa/features/auth/auth_controller.dart';
 import 'package:summa/features/auth/token_store.dart';
 import 'package:summa/features/wallets/wallet_models.dart';
+import 'package:summa/features/categories/category_controller.dart';
 import 'package:summa/features/wallets/ledger_controller.dart';
 import 'package:summa/features/wallets/wallets_controller.dart';
 
 import '../auth/fake_auth_api.dart';
+import '../categories/fake_category_api.dart';
 import 'fake_ledger_api.dart';
 import 'fake_wallet_api.dart';
 
 Future<FakeLedgerApi> _pump(WidgetTester t, FakeWalletApi wallets) async {
   final ledger = FakeLedgerApi(wallets);
+  final categories = FakeCategoryApi(ledger);
   final auth = FakeAuthApi(profileName: 'سارا');
   await t.pumpWidget(
     ProviderScope(
@@ -24,6 +27,7 @@ Future<FakeLedgerApi> _pump(WidgetTester t, FakeWalletApi wallets) async {
         ),
         walletApiProvider.overrideWithValue(wallets),
         ledgerApiProvider.overrideWithValue(ledger),
+        categoryApiProvider.overrideWithValue(categories),
       ],
       child: const SummaApp(),
     ),

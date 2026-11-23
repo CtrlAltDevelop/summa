@@ -112,5 +112,20 @@
   "transferIn": "انتقال (دریافت)",
   "transferSameWallet": "مبدأ و مقصد باید دو کیف پول متفاوت باشند.",
   "transferRateInvalid": "نرخ درست نیست. یک عدد بزرگ‌تر از صفر بنویس.",
-  "transferFeeInvalid": "کارمزد درست نیست."
+  "transferFeeInvalid": "کارمزد درست نیست.",
+  "entryCategoryLabel": "دسته",
+  "categoriesTitle": "دسته‌ها و سقف",
+  "categoriesOpen": "دسته‌ها و سقف ماهانه",
+  "categoryNameLabel": "نام دسته جدید",
+  "categoryAdd": "افزودن",
+  "categoryExpenses": "دسته‌های خرج",
+  "categoryIncomes": "دسته‌های درآمد",
+  "categoryNameInvalid": "نام دسته درست نیست یا تکراری است.",
+  "budgetSet": "سقف",
+  "budgetFormTitle": "سقف ماهانه",
+  "budgetLimitLabel": "سقف (صفر یعنی بدون سقف)",
+  "budgetCurrencyLabel": "ارز",
+  "budgetsTitle": "سقف این ماه",
+  "budgetOver": "از سقف گذشتی",
+  "budgetWarning": "نزدیک سقفی"
 }

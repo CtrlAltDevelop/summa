@@ -73,3 +73,14 @@ String formatJalaliLong(DateTime date) {
   final j = Jalali.fromDateTime(date);
   return toPersianDigits('${j.day} ${_monthNames[j.month - 1]} ${j.year}');
 }
+
+/// The Shamsi month containing [moment], as `[start, end)` in UTC.
+({DateTime start, DateTime end}) shamsiMonthWindow(DateTime moment) {
+  final j = Jalali.fromDateTime(moment);
+  final nextYear = j.month == 12 ? j.year + 1 : j.year;
+  final nextMonth = j.month == 12 ? 1 : j.month + 1;
+  return (
+    start: Jalali(j.year, j.month, 1).toDateTime().toUtc(),
+    end: Jalali(nextYear, nextMonth, 1).toDateTime().toUtc(),
+  );
+}

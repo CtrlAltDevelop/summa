@@ -603,6 +603,96 @@ abstract class AppLocalizations {
   /// In fa, this message translates to:
   /// **'کارمزد درست نیست.'**
   String get transferFeeInvalid;
+
+  /// No description provided for @entryCategoryLabel.
+  ///
+  /// In fa, this message translates to:
+  /// **'دسته'**
+  String get entryCategoryLabel;
+
+  /// No description provided for @categoriesTitle.
+  ///
+  /// In fa, this message translates to:
+  /// **'دسته‌ها و سقف'**
+  String get categoriesTitle;
+
+  /// No description provided for @categoriesOpen.
+  ///
+  /// In fa, this message translates to:
+  /// **'دسته‌ها و سقف ماهانه'**
+  String get categoriesOpen;
+
+  /// No description provided for @categoryNameLabel.
+  ///
+  /// In fa, this message translates to:
+  /// **'نام دسته جدید'**
+  String get categoryNameLabel;
+
+  /// No description provided for @categoryAdd.
+  ///
+  /// In fa, this message translates to:
+  /// **'افزودن'**
+  String get categoryAdd;
+
+  /// No description provided for @categoryExpenses.
+  ///
+  /// In fa, this message translates to:
+  /// **'دسته‌های خرج'**
+  String get categoryExpenses;
+
+  /// No description provided for @categoryIncomes.
+  ///
+  /// In fa, this message translates to:
+  /// **'دسته‌های درآمد'**
+  String get categoryIncomes;
+
+  /// No description provided for @categoryNameInvalid.
+  ///
+  /// In fa, this message translates to:
+  /// **'نام دسته درست نیست یا تکراری است.'**
+  String get categoryNameInvalid;
+
+  /// No description provided for @budgetSet.
+  ///
+  /// In fa, this message translates to:
+  /// **'سقف'**
+  String get budgetSet;
+
+  /// No description provided for @budgetFormTitle.
+  ///
+  /// In fa, this message translates to:
+  /// **'سقف ماهانه'**
+  String get budgetFormTitle;
+
+  /// No description provided for @budgetLimitLabel.
+  ///
+  /// In fa, this message translates to:
+  /// **'سقف (صفر یعنی بدون سقف)'**
+  String get budgetLimitLabel;
+
+  /// No description provided for @budgetCurrencyLabel.
+  ///
+  /// In fa, this message translates to:
+  /// **'ارز'**
+  String get budgetCurrencyLabel;
+
+  /// No description provided for @budgetsTitle.
+  ///
+  /// In fa, this message translates to:
+  /// **'سقف این ماه'**
+  String get budgetsTitle;
+
+  /// No description provided for @budgetOver.
+  ///
+  /// In fa, this message translates to:
+  /// **'از سقف گذشتی'**
+  String get budgetOver;
+
+  /// No description provided for @budgetWarning.
+  ///
+  /// In fa, this message translates to:
+  /// **'نزدیک سقفی'**
+  String get budgetWarning;
 }
 
 class _AppLocalizationsDelegate

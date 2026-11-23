@@ -2,6 +2,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../core/grpc/grpc_providers.dart';
 import '../auth/auth_controller.dart';
+import '../categories/category_controller.dart';
 import 'entry_models.dart';
 import 'ledger_api.dart';
 import 'wallets_controller.dart';
@@ -30,6 +31,7 @@ class LedgerController extends AsyncNotifier<List<Entry>> {
     required int amountMinor,
     required String note,
     required String clientMutationId,
+    String categoryId = '',
   }) async {
     await _auth.withAccess(
       (access) => _api.record(
@@ -39,6 +41,7 @@ class LedgerController extends AsyncNotifier<List<Entry>> {
         amountMinor: amountMinor,
         note: note,
         clientMutationId: clientMutationId,
+        categoryId: categoryId,
       ),
     );
     await _refresh();
@@ -76,6 +79,8 @@ class LedgerController extends AsyncNotifier<List<Entry>> {
   /// Balances change with every entry, so the wallets reload too.
   Future<void> _refresh() async {
     state = AsyncData(await _auth.withAccess(_api.list));
-    ref.invalidate(walletsControllerProvider);
+    ref
+      ..invalidate(walletsControllerProvider)
+      ..invalidate(budgetsProvider);
   }
 }

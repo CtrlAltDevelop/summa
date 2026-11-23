@@ -27,6 +27,7 @@ class Entry {
     required this.currency,
     required this.occurredAt,
     required this.note,
+    this.categoryId = '',
   });
 
   final String id;
@@ -36,4 +37,7 @@ class Entry {
   final String currency;
   final DateTime occurredAt;
   final String note;
+
+  /// Empty when the entry has no category (transfers, fees).
+  final String categoryId;
 }

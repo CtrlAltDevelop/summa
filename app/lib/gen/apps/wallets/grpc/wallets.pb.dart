@@ -17,6 +17,638 @@ import 'package:protobuf/protobuf.dart' as $pb;
 
 export 'package:protobuf/protobuf.dart' show GeneratedMessageGenericExtensions;
 
+class BudgetRow extends $pb.GeneratedMessage {
+  factory BudgetRow({
+    $core.String? categoryId,
+    $core.String? categoryName,
+    $core.String? currency,
+    $fixnum.Int64? limitMinor,
+    $fixnum.Int64? spentMinor,
+  }) {
+    final result = BudgetRow._();
+    if (categoryId != null) result.categoryId = categoryId;
+    if (categoryName != null) result.categoryName = categoryName;
+    if (currency != null) result.currency = currency;
+    if (limitMinor != null) result.limitMinor = limitMinor;
+    if (spentMinor != null) result.spentMinor = spentMinor;
+    return result;
+  }
+
+  BudgetRow._();
+
+  factory BudgetRow.fromBuffer($core.List<$core.int> data,
+          [$pb.ExtensionRegistry registry = $pb.ExtensionRegistry.EMPTY]) =>
+      BudgetRow()..mergeFromBuffer(data, registry);
+  factory BudgetRow.fromJson($core.String json,
+          [$pb.ExtensionRegistry registry = $pb.ExtensionRegistry.EMPTY]) =>
+      BudgetRow()..mergeFromJson(json, registry);
+
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo(
+      _omitMessageNames ? '' : 'BudgetRow',
+      package: const $pb.PackageName(_omitMessageNames ? '' : 'config.wallets'),
+      createEmptyInstance: BudgetRow.$_createMessage)
+    ..aOS(1, _omitFieldNames ? '' : 'categoryId')
+    ..aOS(2, _omitFieldNames ? '' : 'categoryName')
+    ..aOS(3, _omitFieldNames ? '' : 'currency')
+    ..aInt64(4, _omitFieldNames ? '' : 'limitMinor')
+    ..aInt64(5, _omitFieldNames ? '' : 'spentMinor')
+    ..hasRequiredFields = false;
+
+  @$core.Deprecated('See https://github.com/google/protobuf.dart/issues/998.')
+  BudgetRow clone() => deepCopy();
+  @$core.Deprecated('See https://github.com/google/protobuf.dart/issues/998.')
+  BudgetRow copyWith(void Function(BudgetRow) updates) =>
+      super.copyWith((message) => updates(message as BudgetRow)) as BudgetRow;
+
+  @$core.override
+  $pb.BuilderInfo get info_ => _i;
+
+  @$core.pragma('dart2js:noInline')
+  @$core.Deprecated('Use BudgetRow() / BudgetRow.new instead')
+  static BudgetRow create() => BudgetRow._();
+  static $pb.GeneratedMessage $_createMessage() => BudgetRow._();
+  @$core.override
+  BudgetRow createEmptyInstance() => BudgetRow._();
+  @$core.pragma('dart2js:noInline')
+  static BudgetRow getDefault() => _defaultInstance ??=
+      $pb.GeneratedMessage.$_defaultFor<BudgetRow>(BudgetRow.$_createMessage);
+  static BudgetRow? _defaultInstance;
+
+  @$pb.TagNumber(1)
+  $core.String get categoryId => $_getSZ(0);
+  @$pb.TagNumber(1)
+  set categoryId($core.String value) => $_setString(0, value);
+  @$pb.TagNumber(1)
+  $core.bool hasCategoryId() => $_has(0);
+  @$pb.TagNumber(1)
+  void clearCategoryId() => $_clearField(1);
+
+  @$pb.TagNumber(2)
+  $core.String get categoryName => $_getSZ(1);
+  @$pb.TagNumber(2)
+  set categoryName($core.String value) => $_setString(1, value);
+  @$pb.TagNumber(2)
+  $core.bool hasCategoryName() => $_has(1);
+  @$pb.TagNumber(2)
+  void clearCategoryName() => $_clearField(2);
+
+  @$pb.TagNumber(3)
+  $core.String get currency => $_getSZ(2);
+  @$pb.TagNumber(3)
+  set currency($core.String value) => $_setString(2, value);
+  @$pb.TagNumber(3)
+  $core.bool hasCurrency() => $_has(2);
+  @$pb.TagNumber(3)
+  void clearCurrency() => $_clearField(3);
+
+  @$pb.TagNumber(4)
+  $fixnum.Int64 get limitMinor => $_getI64(3);
+  @$pb.TagNumber(4)
+  set limitMinor($fixnum.Int64 value) => $_setInt64(3, value);
+  @$pb.TagNumber(4)
+  $core.bool hasLimitMinor() => $_has(3);
+  @$pb.TagNumber(4)
+  void clearLimitMinor() => $_clearField(4);
+
+  @$pb.TagNumber(5)
+  $fixnum.Int64 get spentMinor => $_getI64(4);
+  @$pb.TagNumber(5)
+  set spentMinor($fixnum.Int64 value) => $_setInt64(4, value);
+  @$pb.TagNumber(5)
+  $core.bool hasSpentMinor() => $_has(4);
+  @$pb.TagNumber(5)
+  void clearSpentMinor() => $_clearField(5);
+}
+
+class BudgetSet extends $pb.GeneratedMessage {
+  factory BudgetSet({
+    $core.String? categoryId,
+    $core.String? currency,
+    $fixnum.Int64? limitMinor,
+  }) {
+    final result = BudgetSet._();
+    if (categoryId != null) result.categoryId = categoryId;
+    if (currency != null) result.currency = currency;
+    if (limitMinor != null) result.limitMinor = limitMinor;
+    return result;
+  }
+
+  BudgetSet._();
+
+  factory BudgetSet.fromBuffer($core.List<$core.int> data,
+          [$pb.ExtensionRegistry registry = $pb.ExtensionRegistry.EMPTY]) =>
+      BudgetSet()..mergeFromBuffer(data, registry);
+  factory BudgetSet.fromJson($core.String json,
+          [$pb.ExtensionRegistry registry = $pb.ExtensionRegistry.EMPTY]) =>
+      BudgetSet()..mergeFromJson(json, registry);
+
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo(
+      _omitMessageNames ? '' : 'BudgetSet',
+      package: const $pb.PackageName(_omitMessageNames ? '' : 'config.wallets'),
+      createEmptyInstance: BudgetSet.$_createMessage)
+    ..aOS(1, _omitFieldNames ? '' : 'categoryId')
+    ..aOS(2, _omitFieldNames ? '' : 'currency')
+    ..aInt64(3, _omitFieldNames ? '' : 'limitMinor')
+    ..hasRequiredFields = false;
+
+  @$core.Deprecated('See https://github.com/google/protobuf.dart/issues/998.')
+  BudgetSet clone() => deepCopy();
+  @$core.Deprecated('See https://github.com/google/protobuf.dart/issues/998.')
+  BudgetSet copyWith(void Function(BudgetSet) updates) =>
+      super.copyWith((message) => updates(message as BudgetSet)) as BudgetSet;
+
+  @$core.override
+  $pb.BuilderInfo get info_ => _i;
+
+  @$core.pragma('dart2js:noInline')
+  @$core.Deprecated('Use BudgetSet() / BudgetSet.new instead')
+  static BudgetSet create() => BudgetSet._();
+  static $pb.GeneratedMessage $_createMessage() => BudgetSet._();
+  @$core.override
+  BudgetSet createEmptyInstance() => BudgetSet._();
+  @$core.pragma('dart2js:noInline')
+  static BudgetSet getDefault() => _defaultInstance ??=
+      $pb.GeneratedMessage.$_defaultFor<BudgetSet>(BudgetSet.$_createMessage);
+  static BudgetSet? _defaultInstance;
+
+  @$pb.TagNumber(1)
+  $core.String get categoryId => $_getSZ(0);
+  @$pb.TagNumber(1)
+  set categoryId($core.String value) => $_setString(0, value);
+  @$pb.TagNumber(1)
+  $core.bool hasCategoryId() => $_has(0);
+  @$pb.TagNumber(1)
+  void clearCategoryId() => $_clearField(1);
+
+  @$pb.TagNumber(2)
+  $core.String get currency => $_getSZ(1);
+  @$pb.TagNumber(2)
+  set currency($core.String value) => $_setString(1, value);
+  @$pb.TagNumber(2)
+  $core.bool hasCurrency() => $_has(1);
+  @$pb.TagNumber(2)
+  void clearCurrency() => $_clearField(2);
+
+  @$pb.TagNumber(3)
+  $fixnum.Int64 get limitMinor => $_getI64(2);
+  @$pb.TagNumber(3)
+  set limitMinor($fixnum.Int64 value) => $_setInt64(2, value);
+  @$pb.TagNumber(3)
+  $core.bool hasLimitMinor() => $_has(2);
+  @$pb.TagNumber(3)
+  void clearLimitMinor() => $_clearField(3);
+}
+
+class BudgetStatusReply extends $pb.GeneratedMessage {
+  factory BudgetStatusReply({
+    $core.Iterable<BudgetRow>? budgets,
+  }) {
+    final result = BudgetStatusReply._();
+    if (budgets != null) result.budgets.addAll(budgets);
+    return result;
+  }
+
+  BudgetStatusReply._();
+
+  factory BudgetStatusReply.fromBuffer($core.List<$core.int> data,
+          [$pb.ExtensionRegistry registry = $pb.ExtensionRegistry.EMPTY]) =>
+      BudgetStatusReply()..mergeFromBuffer(data, registry);
+  factory BudgetStatusReply.fromJson($core.String json,
+          [$pb.ExtensionRegistry registry = $pb.ExtensionRegistry.EMPTY]) =>
+      BudgetStatusReply()..mergeFromJson(json, registry);
+
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo(
+      _omitMessageNames ? '' : 'BudgetStatusReply',
+      package: const $pb.PackageName(_omitMessageNames ? '' : 'config.wallets'),
+      createEmptyInstance: BudgetStatusReply.$_createMessage)
+    ..pPM<BudgetRow>(1, _omitFieldNames ? '' : 'budgets',
+        subBuilder: BudgetRow.$_createMessage)
+    ..hasRequiredFields = false;
+
+  @$core.Deprecated('See https://github.com/google/protobuf.dart/issues/998.')
+  BudgetStatusReply clone() => deepCopy();
+  @$core.Deprecated('See https://github.com/google/protobuf.dart/issues/998.')
+  BudgetStatusReply copyWith(void Function(BudgetStatusReply) updates) =>
+      super.copyWith((message) => updates(message as BudgetStatusReply))
+          as BudgetStatusReply;
+
+  @$core.override
+  $pb.BuilderInfo get info_ => _i;
+
+  @$core.pragma('dart2js:noInline')
+  @$core.Deprecated('Use BudgetStatusReply() / BudgetStatusReply.new instead')
+  static BudgetStatusReply create() => BudgetStatusReply._();
+  static $pb.GeneratedMessage $_createMessage() => BudgetStatusReply._();
+  @$core.override
+  BudgetStatusReply createEmptyInstance() => BudgetStatusReply._();
+  @$core.pragma('dart2js:noInline')
+  static BudgetStatusReply getDefault() =>
+      _defaultInstance ??= $pb.GeneratedMessage.$_defaultFor<BudgetStatusReply>(
+          BudgetStatusReply.$_createMessage);
+  static BudgetStatusReply? _defaultInstance;
+
+  @$pb.TagNumber(1)
+  $pb.PbList<BudgetRow> get budgets => $_getList(0);
+}
+
+class BudgetWindow extends $pb.GeneratedMessage {
+  factory BudgetWindow({
+    $core.String? startsAt,
+    $core.String? endsAt,
+  }) {
+    final result = BudgetWindow._();
+    if (startsAt != null) result.startsAt = startsAt;
+    if (endsAt != null) result.endsAt = endsAt;
+    return result;
+  }
+
+  BudgetWindow._();
+
+  factory BudgetWindow.fromBuffer($core.List<$core.int> data,
+          [$pb.ExtensionRegistry registry = $pb.ExtensionRegistry.EMPTY]) =>
+      BudgetWindow()..mergeFromBuffer(data, registry);
+  factory BudgetWindow.fromJson($core.String json,
+          [$pb.ExtensionRegistry registry = $pb.ExtensionRegistry.EMPTY]) =>
+      BudgetWindow()..mergeFromJson(json, registry);
+
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo(
+      _omitMessageNames ? '' : 'BudgetWindow',
+      package: const $pb.PackageName(_omitMessageNames ? '' : 'config.wallets'),
+      createEmptyInstance: BudgetWindow.$_createMessage)
+    ..aOS(1, _omitFieldNames ? '' : 'startsAt')
+    ..aOS(2, _omitFieldNames ? '' : 'endsAt')
+    ..hasRequiredFields = false;
+
+  @$core.Deprecated('See https://github.com/google/protobuf.dart/issues/998.')
+  BudgetWindow clone() => deepCopy();
+  @$core.Deprecated('See https://github.com/google/protobuf.dart/issues/998.')
+  BudgetWindow copyWith(void Function(BudgetWindow) updates) =>
+      super.copyWith((message) => updates(message as BudgetWindow))
+          as BudgetWindow;
+
+  @$core.override
+  $pb.BuilderInfo get info_ => _i;
+
+  @$core.pragma('dart2js:noInline')
+  @$core.Deprecated('Use BudgetWindow() / BudgetWindow.new instead')
+  static BudgetWindow create() => BudgetWindow._();
+  static $pb.GeneratedMessage $_createMessage() => BudgetWindow._();
+  @$core.override
+  BudgetWindow createEmptyInstance() => BudgetWindow._();
+  @$core.pragma('dart2js:noInline')
+  static BudgetWindow getDefault() =>
+      _defaultInstance ??= $pb.GeneratedMessage.$_defaultFor<BudgetWindow>(
+          BudgetWindow.$_createMessage);
+  static BudgetWindow? _defaultInstance;
+
+  @$pb.TagNumber(1)
+  $core.String get startsAt => $_getSZ(0);
+  @$pb.TagNumber(1)
+  set startsAt($core.String value) => $_setString(0, value);
+  @$pb.TagNumber(1)
+  $core.bool hasStartsAt() => $_has(0);
+  @$pb.TagNumber(1)
+  void clearStartsAt() => $_clearField(1);
+
+  @$pb.TagNumber(2)
+  $core.String get endsAt => $_getSZ(1);
+  @$pb.TagNumber(2)
+  set endsAt($core.String value) => $_setString(1, value);
+  @$pb.TagNumber(2)
+  $core.bool hasEndsAt() => $_has(1);
+  @$pb.TagNumber(2)
+  void clearEndsAt() => $_clearField(2);
+}
+
+class Category extends $pb.GeneratedMessage {
+  factory Category({
+    $core.String? id,
+    $core.String? name,
+    $core.String? kind,
+    $core.bool? isOther,
+  }) {
+    final result = Category._();
+    if (id != null) result.id = id;
+    if (name != null) result.name = name;
+    if (kind != null) result.kind = kind;
+    if (isOther != null) result.isOther = isOther;
+    return result;
+  }
+
+  Category._();
+
+  factory Category.fromBuffer($core.List<$core.int> data,
+          [$pb.ExtensionRegistry registry = $pb.ExtensionRegistry.EMPTY]) =>
+      Category()..mergeFromBuffer(data, registry);
+  factory Category.fromJson($core.String json,
+          [$pb.ExtensionRegistry registry = $pb.ExtensionRegistry.EMPTY]) =>
+      Category()..mergeFromJson(json, registry);
+
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo(
+      _omitMessageNames ? '' : 'Category',
+      package: const $pb.PackageName(_omitMessageNames ? '' : 'config.wallets'),
+      createEmptyInstance: Category.$_createMessage)
+    ..aOS(1, _omitFieldNames ? '' : 'id')
+    ..aOS(2, _omitFieldNames ? '' : 'name')
+    ..aOS(3, _omitFieldNames ? '' : 'kind')
+    ..aOB(4, _omitFieldNames ? '' : 'isOther')
+    ..hasRequiredFields = false;
+
+  @$core.Deprecated('See https://github.com/google/protobuf.dart/issues/998.')
+  Category clone() => deepCopy();
+  @$core.Deprecated('See https://github.com/google/protobuf.dart/issues/998.')
+  Category copyWith(void Function(Category) updates) =>
+      super.copyWith((message) => updates(message as Category)) as Category;
+
+  @$core.override
+  $pb.BuilderInfo get info_ => _i;
+
+  @$core.pragma('dart2js:noInline')
+  @$core.Deprecated('Use Category() / Category.new instead')
+  static Category create() => Category._();
+  static $pb.GeneratedMessage $_createMessage() => Category._();
+  @$core.override
+  Category createEmptyInstance() => Category._();
+  @$core.pragma('dart2js:noInline')
+  static Category getDefault() => _defaultInstance ??=
+      $pb.GeneratedMessage.$_defaultFor<Category>(Category.$_createMessage);
+  static Category? _defaultInstance;
+
+  @$pb.TagNumber(1)
+  $core.String get id => $_getSZ(0);
+  @$pb.TagNumber(1)
+  set id($core.String value) => $_setString(0, value);
+  @$pb.TagNumber(1)
+  $core.bool hasId() => $_has(0);
+  @$pb.TagNumber(1)
+  void clearId() => $_clearField(1);
+
+  @$pb.TagNumber(2)
+  $core.String get name => $_getSZ(1);
+  @$pb.TagNumber(2)
+  set name($core.String value) => $_setString(1, value);
+  @$pb.TagNumber(2)
+  $core.bool hasName() => $_has(1);
+  @$pb.TagNumber(2)
+  void clearName() => $_clearField(2);
+
+  @$pb.TagNumber(3)
+  $core.String get kind => $_getSZ(2);
+  @$pb.TagNumber(3)
+  set kind($core.String value) => $_setString(2, value);
+  @$pb.TagNumber(3)
+  $core.bool hasKind() => $_has(2);
+  @$pb.TagNumber(3)
+  void clearKind() => $_clearField(3);
+
+  @$pb.TagNumber(4)
+  $core.bool get isOther => $_getBF(3);
+  @$pb.TagNumber(4)
+  set isOther($core.bool value) => $_setBool(3, value);
+  @$pb.TagNumber(4)
+  $core.bool hasIsOther() => $_has(3);
+  @$pb.TagNumber(4)
+  void clearIsOther() => $_clearField(4);
+}
+
+class CategoryCreate extends $pb.GeneratedMessage {
+  factory CategoryCreate({
+    $core.String? name,
+    $core.String? kind,
+  }) {
+    final result = CategoryCreate._();
+    if (name != null) result.name = name;
+    if (kind != null) result.kind = kind;
+    return result;
+  }
+
+  CategoryCreate._();
+
+  factory CategoryCreate.fromBuffer($core.List<$core.int> data,
+          [$pb.ExtensionRegistry registry = $pb.ExtensionRegistry.EMPTY]) =>
+      CategoryCreate()..mergeFromBuffer(data, registry);
+  factory CategoryCreate.fromJson($core.String json,
+          [$pb.ExtensionRegistry registry = $pb.ExtensionRegistry.EMPTY]) =>
+      CategoryCreate()..mergeFromJson(json, registry);
+
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo(
+      _omitMessageNames ? '' : 'CategoryCreate',
+      package: const $pb.PackageName(_omitMessageNames ? '' : 'config.wallets'),
+      createEmptyInstance: CategoryCreate.$_createMessage)
+    ..aOS(1, _omitFieldNames ? '' : 'name')
+    ..aOS(2, _omitFieldNames ? '' : 'kind')
+    ..hasRequiredFields = false;
+
+  @$core.Deprecated('See https://github.com/google/protobuf.dart/issues/998.')
+  CategoryCreate clone() => deepCopy();
+  @$core.Deprecated('See https://github.com/google/protobuf.dart/issues/998.')
+  CategoryCreate copyWith(void Function(CategoryCreate) updates) =>
+      super.copyWith((message) => updates(message as CategoryCreate))
+          as CategoryCreate;
+
+  @$core.override
+  $pb.BuilderInfo get info_ => _i;
+
+  @$core.pragma('dart2js:noInline')
+  @$core.Deprecated('Use CategoryCreate() / CategoryCreate.new instead')
+  static CategoryCreate create() => CategoryCreate._();
+  static $pb.GeneratedMessage $_createMessage() => CategoryCreate._();
+  @$core.override
+  CategoryCreate createEmptyInstance() => CategoryCreate._();
+  @$core.pragma('dart2js:noInline')
+  static CategoryCreate getDefault() =>
+      _defaultInstance ??= $pb.GeneratedMessage.$_defaultFor<CategoryCreate>(
+          CategoryCreate.$_createMessage);
+  static CategoryCreate? _defaultInstance;
+
+  @$pb.TagNumber(1)
+  $core.String get name => $_getSZ(0);
+  @$pb.TagNumber(1)
+  set name($core.String value) => $_setString(0, value);
+  @$pb.TagNumber(1)
+  $core.bool hasName() => $_has(0);
+  @$pb.TagNumber(1)
+  void clearName() => $_clearField(1);
+
+  @$pb.TagNumber(2)
+  $core.String get kind => $_getSZ(1);
+  @$pb.TagNumber(2)
+  set kind($core.String value) => $_setString(1, value);
+  @$pb.TagNumber(2)
+  $core.bool hasKind() => $_has(1);
+  @$pb.TagNumber(2)
+  void clearKind() => $_clearField(2);
+}
+
+class CategoryListReply extends $pb.GeneratedMessage {
+  factory CategoryListReply({
+    $core.Iterable<Category>? categories,
+  }) {
+    final result = CategoryListReply._();
+    if (categories != null) result.categories.addAll(categories);
+    return result;
+  }
+
+  CategoryListReply._();
+
+  factory CategoryListReply.fromBuffer($core.List<$core.int> data,
+          [$pb.ExtensionRegistry registry = $pb.ExtensionRegistry.EMPTY]) =>
+      CategoryListReply()..mergeFromBuffer(data, registry);
+  factory CategoryListReply.fromJson($core.String json,
+          [$pb.ExtensionRegistry registry = $pb.ExtensionRegistry.EMPTY]) =>
+      CategoryListReply()..mergeFromJson(json, registry);
+
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo(
+      _omitMessageNames ? '' : 'CategoryListReply',
+      package: const $pb.PackageName(_omitMessageNames ? '' : 'config.wallets'),
+      createEmptyInstance: CategoryListReply.$_createMessage)
+    ..pPM<Category>(1, _omitFieldNames ? '' : 'categories',
+        subBuilder: Category.$_createMessage)
+    ..hasRequiredFields = false;
+
+  @$core.Deprecated('See https://github.com/google/protobuf.dart/issues/998.')
+  CategoryListReply clone() => deepCopy();
+  @$core.Deprecated('See https://github.com/google/protobuf.dart/issues/998.')
+  CategoryListReply copyWith(void Function(CategoryListReply) updates) =>
+      super.copyWith((message) => updates(message as CategoryListReply))
+          as CategoryListReply;
+
+  @$core.override
+  $pb.BuilderInfo get info_ => _i;
+
+  @$core.pragma('dart2js:noInline')
+  @$core.Deprecated('Use CategoryListReply() / CategoryListReply.new instead')
+  static CategoryListReply create() => CategoryListReply._();
+  static $pb.GeneratedMessage $_createMessage() => CategoryListReply._();
+  @$core.override
+  CategoryListReply createEmptyInstance() => CategoryListReply._();
+  @$core.pragma('dart2js:noInline')
+  static CategoryListReply getDefault() =>
+      _defaultInstance ??= $pb.GeneratedMessage.$_defaultFor<CategoryListReply>(
+          CategoryListReply.$_createMessage);
+  static CategoryListReply? _defaultInstance;
+
+  @$pb.TagNumber(1)
+  $pb.PbList<Category> get categories => $_getList(0);
+}
+
+class CategoryRef extends $pb.GeneratedMessage {
+  factory CategoryRef({
+    $core.String? categoryId,
+  }) {
+    final result = CategoryRef._();
+    if (categoryId != null) result.categoryId = categoryId;
+    return result;
+  }
+
+  CategoryRef._();
+
+  factory CategoryRef.fromBuffer($core.List<$core.int> data,
+          [$pb.ExtensionRegistry registry = $pb.ExtensionRegistry.EMPTY]) =>
+      CategoryRef()..mergeFromBuffer(data, registry);
+  factory CategoryRef.fromJson($core.String json,
+          [$pb.ExtensionRegistry registry = $pb.ExtensionRegistry.EMPTY]) =>
+      CategoryRef()..mergeFromJson(json, registry);
+
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo(
+      _omitMessageNames ? '' : 'CategoryRef',
+      package: const $pb.PackageName(_omitMessageNames ? '' : 'config.wallets'),
+      createEmptyInstance: CategoryRef.$_createMessage)
+    ..aOS(1, _omitFieldNames ? '' : 'categoryId')
+    ..hasRequiredFields = false;
+
+  @$core.Deprecated('See https://github.com/google/protobuf.dart/issues/998.')
+  CategoryRef clone() => deepCopy();
+  @$core.Deprecated('See https://github.com/google/protobuf.dart/issues/998.')
+  CategoryRef copyWith(void Function(CategoryRef) updates) =>
+      super.copyWith((message) => updates(message as CategoryRef))
+          as CategoryRef;
+
+  @$core.override
+  $pb.BuilderInfo get info_ => _i;
+
+  @$core.pragma('dart2js:noInline')
+  @$core.Deprecated('Use CategoryRef() / CategoryRef.new instead')
+  static CategoryRef create() => CategoryRef._();
+  static $pb.GeneratedMessage $_createMessage() => CategoryRef._();
+  @$core.override
+  CategoryRef createEmptyInstance() => CategoryRef._();
+  @$core.pragma('dart2js:noInline')
+  static CategoryRef getDefault() =>
+      _defaultInstance ??= $pb.GeneratedMessage.$_defaultFor<CategoryRef>(
+          CategoryRef.$_createMessage);
+  static CategoryRef? _defaultInstance;
+
+  @$pb.TagNumber(1)
+  $core.String get categoryId => $_getSZ(0);
+  @$pb.TagNumber(1)
+  set categoryId($core.String value) => $_setString(0, value);
+  @$pb.TagNumber(1)
+  $core.bool hasCategoryId() => $_has(0);
+  @$pb.TagNumber(1)
+  void clearCategoryId() => $_clearField(1);
+}
+
+class CategoryReply extends $pb.GeneratedMessage {
+  factory CategoryReply({
+    Category? category,
+  }) {
+    final result = CategoryReply._();
+    if (category != null) result.category = category;
+    return result;
+  }
+
+  CategoryReply._();
+
+  factory CategoryReply.fromBuffer($core.List<$core.int> data,
+          [$pb.ExtensionRegistry registry = $pb.ExtensionRegistry.EMPTY]) =>
+      CategoryReply()..mergeFromBuffer(data, registry);
+  factory CategoryReply.fromJson($core.String json,
+          [$pb.ExtensionRegistry registry = $pb.ExtensionRegistry.EMPTY]) =>
+      CategoryReply()..mergeFromJson(json, registry);
+
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo(
+      _omitMessageNames ? '' : 'CategoryReply',
+      package: const $pb.PackageName(_omitMessageNames ? '' : 'config.wallets'),
+      createEmptyInstance: CategoryReply.$_createMessage)
+    ..aOM<Category>(1, _omitFieldNames ? '' : 'category',
+        subBuilder: Category.$_createMessage)
+    ..hasRequiredFields = false;
+
+  @$core.Deprecated('See https://github.com/google/protobuf.dart/issues/998.')
+  CategoryReply clone() => deepCopy();
+  @$core.Deprecated('See https://github.com/google/protobuf.dart/issues/998.')
+  CategoryReply copyWith(void Function(CategoryReply) updates) =>
+      super.copyWith((message) => updates(message as CategoryReply))
+          as CategoryReply;
+
+  @$core.override
+  $pb.BuilderInfo get info_ => _i;
+
+  @$core.pragma('dart2js:noInline')
+  @$core.Deprecated('Use CategoryReply() / CategoryReply.new instead')
+  static CategoryReply create() => CategoryReply._();
+  static $pb.GeneratedMessage $_createMessage() => CategoryReply._();
+  @$core.override
+  CategoryReply createEmptyInstance() => CategoryReply._();
+  @$core.pragma('dart2js:noInline')
+  static CategoryReply getDefault() =>
+      _defaultInstance ??= $pb.GeneratedMessage.$_defaultFor<CategoryReply>(
+          CategoryReply.$_createMessage);
+  static CategoryReply? _defaultInstance;
+
+  @$pb.TagNumber(1)
+  Category get category => $_getN(0);
+  @$pb.TagNumber(1)
+  set category(Category value) => $_setField(1, value);
+  @$pb.TagNumber(1)
+  $core.bool hasCategory() => $_has(0);
+  @$pb.TagNumber(1)
+  void clearCategory() => $_clearField(1);
+  @$pb.TagNumber(1)
+  Category ensureCategory() => $_ensure(0);
+}
+
 class CurrencyTotal extends $pb.GeneratedMessage {
   factory CurrencyTotal({
     $core.String? currency,
@@ -95,6 +727,7 @@ class Entry extends $pb.GeneratedMessage {
     $core.String? currency,
     $core.String? occurredAt,
     $core.String? note,
+    $core.String? categoryId,
   }) {
     final result = Entry._();
     if (id != null) result.id = id;
@@ -104,6 +737,7 @@ class Entry extends $pb.GeneratedMessage {
     if (currency != null) result.currency = currency;
     if (occurredAt != null) result.occurredAt = occurredAt;
     if (note != null) result.note = note;
+    if (categoryId != null) result.categoryId = categoryId;
     return result;
   }
 
@@ -127,6 +761,7 @@ class Entry extends $pb.GeneratedMessage {
     ..aOS(5, _omitFieldNames ? '' : 'currency')
     ..aOS(6, _omitFieldNames ? '' : 'occurredAt')
     ..aOS(7, _omitFieldNames ? '' : 'note')
+    ..aOS(8, _omitFieldNames ? '' : 'categoryId')
     ..hasRequiredFields = false;
 
   @$core.Deprecated('See https://github.com/google/protobuf.dart/issues/998.')
@@ -211,6 +846,15 @@ class Entry extends $pb.GeneratedMessage {
   $core.bool hasNote() => $_has(6);
   @$pb.TagNumber(7)
   void clearNote() => $_clearField(7);
+
+  @$pb.TagNumber(8)
+  $core.String get categoryId => $_getSZ(7);
+  @$pb.TagNumber(8)
+  set categoryId($core.String value) => $_setString(7, value);
+  @$pb.TagNumber(8)
+  $core.bool hasCategoryId() => $_has(7);
+  @$pb.TagNumber(8)
+  void clearCategoryId() => $_clearField(8);
 }
 
 class EntryEdit extends $pb.GeneratedMessage {
@@ -219,12 +863,14 @@ class EntryEdit extends $pb.GeneratedMessage {
     $fixnum.Int64? amountMinor,
     $core.String? occurredAt,
     $core.String? note,
+    $core.String? categoryId,
   }) {
     final result = EntryEdit._();
     if (entryId != null) result.entryId = entryId;
     if (amountMinor != null) result.amountMinor = amountMinor;
     if (occurredAt != null) result.occurredAt = occurredAt;
     if (note != null) result.note = note;
+    if (categoryId != null) result.categoryId = categoryId;
     return result;
   }
 
@@ -245,6 +891,7 @@ class EntryEdit extends $pb.GeneratedMessage {
     ..aInt64(2, _omitFieldNames ? '' : 'amountMinor')
     ..aOS(3, _omitFieldNames ? '' : 'occurredAt')
     ..aOS(4, _omitFieldNames ? '' : 'note')
+    ..aOS(5, _omitFieldNames ? '' : 'categoryId')
     ..hasRequiredFields = false;
 
   @$core.Deprecated('See https://github.com/google/protobuf.dart/issues/998.')
@@ -302,6 +949,15 @@ class EntryEdit extends $pb.GeneratedMessage {
   $core.bool hasNote() => $_has(3);
   @$pb.TagNumber(4)
   void clearNote() => $_clearField(4);
+
+  @$pb.TagNumber(5)
+  $core.String get categoryId => $_getSZ(4);
+  @$pb.TagNumber(5)
+  set categoryId($core.String value) => $_setString(4, value);
+  @$pb.TagNumber(5)
+  $core.bool hasCategoryId() => $_has(4);
+  @$pb.TagNumber(5)
+  void clearCategoryId() => $_clearField(5);
 }
 
 class EntryListReply extends $pb.GeneratedMessage {
@@ -431,6 +1087,7 @@ class EntryRecord extends $pb.GeneratedMessage {
     $core.String? occurredAt,
     $core.String? note,
     $core.String? clientMutationId,
+    $core.String? categoryId,
   }) {
     final result = EntryRecord._();
     if (walletId != null) result.walletId = walletId;
@@ -439,6 +1096,7 @@ class EntryRecord extends $pb.GeneratedMessage {
     if (occurredAt != null) result.occurredAt = occurredAt;
     if (note != null) result.note = note;
     if (clientMutationId != null) result.clientMutationId = clientMutationId;
+    if (categoryId != null) result.categoryId = categoryId;
     return result;
   }
 
@@ -461,6 +1119,7 @@ class EntryRecord extends $pb.GeneratedMessage {
     ..aOS(4, _omitFieldNames ? '' : 'occurredAt')
     ..aOS(5, _omitFieldNames ? '' : 'note')
     ..aOS(6, _omitFieldNames ? '' : 'clientMutationId')
+    ..aOS(7, _omitFieldNames ? '' : 'categoryId')
     ..hasRequiredFields = false;
 
   @$core.Deprecated('See https://github.com/google/protobuf.dart/issues/998.')
@@ -538,6 +1197,15 @@ class EntryRecord extends $pb.GeneratedMessage {
   $core.bool hasClientMutationId() => $_has(5);
   @$pb.TagNumber(6)
   void clearClientMutationId() => $_clearField(6);
+
+  @$pb.TagNumber(7)
+  $core.String get categoryId => $_getSZ(6);
+  @$pb.TagNumber(7)
+  set categoryId($core.String value) => $_setString(6, value);
+  @$pb.TagNumber(7)
+  $core.bool hasCategoryId() => $_has(6);
+  @$pb.TagNumber(7)
+  void clearCategoryId() => $_clearField(7);
 }
 
 class EntryRef extends $pb.GeneratedMessage {

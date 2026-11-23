@@ -7,6 +7,8 @@ import '../../core/ui/tokens/tokens.dart';
 import '../../core/ui/widgets/widgets.dart';
 import '../../l10n/gen/app_localizations.dart';
 import '../auth/auth_models.dart';
+import '../categories/category_controller.dart';
+import '../categories/category_models.dart';
 import 'choices.dart';
 import 'entry_models.dart';
 import 'ledger_controller.dart';
@@ -29,8 +31,26 @@ class _EntryFormScreenState extends ConsumerState<EntryFormScreen> {
   final _mutationId = _newMutationId();
   late Wallet _wallet = widget.wallets.first;
   EntryKind _kind = EntryKind.expense;
+  Category? _category;
+  List<Category> _allCategories = const [];
   bool _saving = false;
   String? _error;
+
+  CategoryKind get _categoryKind =>
+      _kind == EntryKind.income ? CategoryKind.income : CategoryKind.expense;
+
+  /// The categories for the chosen kind; the catch-all "other" is the default.
+  List<Category> get _categories =>
+      _allCategories.where((c) => c.kind == _categoryKind).toList();
+
+  Category? get _chosenCategory {
+    final options = _categories;
+    if (options.isEmpty) return null;
+    if (_category != null && options.any((c) => c.id == _category!.id)) {
+      return _category;
+    }
+    return options.firstWhere((c) => c.isOther, orElse: () => options.first);
+  }
 
   static String _newMutationId() {
     final random = Random.secure();
@@ -68,6 +88,7 @@ class _EntryFormScreenState extends ConsumerState<EntryFormScreen> {
             amountMinor: amount,
             note: _note.text.trim(),
             clientMutationId: _mutationId,
+            categoryId: _chosenCategory?.id ?? '',
           );
       if (mounted) navigator.pop();
     } on WalletException catch (e) {
@@ -90,6 +111,7 @@ class _EntryFormScreenState extends ConsumerState<EntryFormScreen> {
   @override
   Widget build(BuildContext context) {
     final l10n = AppLocalizations.of(context);
+    _allCategories = ref.watch(categoriesControllerProvider).value ?? const [];
     return SmBackground(
       child: SafeArea(
         child: ListView(
@@ -105,6 +127,17 @@ class _EntryFormScreenState extends ConsumerState<EntryFormScreen> {
               onSelected: (k) => setState(() => _kind = k),
             ),
             const SizedBox(height: SmSpace.lg),
+            if (_categories.isNotEmpty) ...[
+              Text(l10n.entryCategoryLabel, style: SmType.caption),
+              const SizedBox(height: SmSpace.sm),
+              Choices<Category>(
+                values: _categories,
+                selected: _chosenCategory!,
+                label: (c) => c.name,
+                onSelected: (c) => setState(() => _category = c),
+              ),
+              const SizedBox(height: SmSpace.lg),
+            ],
             Text(l10n.entryWalletLabel, style: SmType.caption),
             const SizedBox(height: SmSpace.sm),
             Choices<Wallet>(
