@@ -1,0 +1,50 @@
+syntax = "proto3";
+
+package config.reports;
+
+service ReportsController {
+    rpc ExportCsv(ExportRequest) returns (ExportReply) {}
+    rpc Monthly(ReportRequest) returns (ReportReply) {}
+}
+
+message CategoryTotalMsg {
+    string category_id = 1;
+    string name = 2;
+    string kind = 3;
+    int64 total_minor = 4;
+}
+
+message DayTotalMsg {
+    string day = 1;
+    int64 income_minor = 2;
+    int64 expense_minor = 3;
+}
+
+message ExportReply {
+    string filename = 1;
+    bytes content = 2;
+}
+
+message ExportRequest {
+    string starts_at = 1;
+    string ends_at = 2;
+}
+
+message ReportReply {
+    string currency = 1;
+    int64 income_minor = 2;
+    int64 expense_minor = 3;
+    int64 net_minor = 4;
+    int32 entries = 5;
+    repeated CategoryTotalMsg by_category = 6;
+    repeated DayTotalMsg daily = 7;
+    string top_expense_category = 8;
+    repeated string currencies = 9;
+}
+
+message ReportRequest {
+    string starts_at = 1;
+    string ends_at = 2;
+    string currency = 3;
+}
+
