@@ -693,6 +693,60 @@ abstract class AppLocalizations {
   /// In fa, this message translates to:
   /// **'نزدیک سقفی'**
   String get budgetWarning;
+
+  /// No description provided for @chatOpen.
+  ///
+  /// In fa, this message translates to:
+  /// **'دستیار'**
+  String get chatOpen;
+
+  /// No description provided for @chatTitle.
+  ///
+  /// In fa, this message translates to:
+  /// **'دستیار'**
+  String get chatTitle;
+
+  /// No description provided for @chatHint.
+  ///
+  /// In fa, this message translates to:
+  /// **'مثلاً: ۲۵۰ هزار تومن خرید نان'**
+  String get chatHint;
+
+  /// No description provided for @chatSend.
+  ///
+  /// In fa, this message translates to:
+  /// **'ارسال'**
+  String get chatSend;
+
+  /// No description provided for @chatRegister.
+  ///
+  /// In fa, this message translates to:
+  /// **'ثبت'**
+  String get chatRegister;
+
+  /// No description provided for @chatRegistered.
+  ///
+  /// In fa, this message translates to:
+  /// **'ثبت شد'**
+  String get chatRegistered;
+
+  /// No description provided for @chatClear.
+  ///
+  /// In fa, this message translates to:
+  /// **'پاک‌کردن گفتگو'**
+  String get chatClear;
+
+  /// No description provided for @chatChooseWallet.
+  ///
+  /// In fa, this message translates to:
+  /// **'کیف را انتخاب کن'**
+  String get chatChooseWallet;
+
+  /// No description provided for @chatEmpty.
+  ///
+  /// In fa, this message translates to:
+  /// **'جمله‌ای بنویس تا برایت کارت ثبت بسازم.'**
+  String get chatEmpty;
 }
 
 class _AppLocalizationsDelegate

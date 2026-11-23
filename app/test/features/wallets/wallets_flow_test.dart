@@ -17,6 +17,10 @@ import 'fake_wallet_api.dart';
 Future<FakeLedgerApi> _pump(WidgetTester t, FakeWalletApi wallets) async {
   final ledger = FakeLedgerApi(wallets);
   final categories = FakeCategoryApi(ledger);
+  // Tall enough that the whole home list is built.
+  t.view.physicalSize = const Size(800, 4000);
+  t.view.devicePixelRatio = 1;
+  addTearDown(t.view.reset);
   final auth = FakeAuthApi(profileName: 'سارا');
   await t.pumpWidget(
     ProviderScope(

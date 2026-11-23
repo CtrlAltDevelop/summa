@@ -27,6 +27,7 @@ class FakeLedgerApi implements LedgerApi {
     required String note,
     required String clientMutationId,
     String categoryId = '',
+    DateTime? occurredAt,
   }) async {
     if (mutations.contains(clientMutationId)) return entries.first;
     mutations.add(clientMutationId);

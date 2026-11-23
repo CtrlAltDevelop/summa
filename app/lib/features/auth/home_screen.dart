@@ -4,6 +4,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../../core/ui/tokens/tokens.dart';
 import '../../core/ui/widgets/widgets.dart';
 import '../../l10n/gen/app_localizations.dart';
+import '../assistant/chat_screen.dart';
 import '../categories/budgets_panel.dart';
 import '../wallets/entries_panel.dart';
 import '../wallets/wallets_panel.dart';
@@ -25,6 +26,16 @@ class HomeScreen extends ConsumerWidget {
           padding: const EdgeInsets.all(SmSpace.screen),
           children: [
             Text(l10n.homeGreeting(profile.displayName), style: SmType.title),
+            const SizedBox(height: SmSpace.lg),
+            SmButton(
+              label: l10n.chatOpen,
+              icon: SmIcons.bolt,
+              onPressed: () => Navigator.of(context).push(
+                PageRouteBuilder<void>(
+                  pageBuilder: (_, _, _) => const ChatScreen(),
+                ),
+              ),
+            ),
             const SizedBox(height: SmSpace.lg),
             const WalletsPanel(),
             const SizedBox(height: SmSpace.lg),

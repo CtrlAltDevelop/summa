@@ -322,4 +322,31 @@ class AppLocalizationsFa extends AppLocalizations {
 
   @override
   String get budgetWarning => 'نزدیک سقفی';
+
+  @override
+  String get chatOpen => 'دستیار';
+
+  @override
+  String get chatTitle => 'دستیار';
+
+  @override
+  String get chatHint => 'مثلاً: ۲۵۰ هزار تومن خرید نان';
+
+  @override
+  String get chatSend => 'ارسال';
+
+  @override
+  String get chatRegister => 'ثبت';
+
+  @override
+  String get chatRegistered => 'ثبت شد';
+
+  @override
+  String get chatClear => 'پاک‌کردن گفتگو';
+
+  @override
+  String get chatChooseWallet => 'کیف را انتخاب کن';
+
+  @override
+  String get chatEmpty => 'جمله‌ای بنویس تا برایت کارت ثبت بسازم.';
 }
