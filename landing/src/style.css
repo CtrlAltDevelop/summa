@@ -49,6 +49,7 @@ main, footer, .top-inner { max-width: var(--measure); margin-inline: auto; paddi
   color: var(--on-accent);
   background: var(--accent);
 }
+.preview-banner a { color: inherit; font-weight: 800; text-decoration: underline; }
 
 /* Header: sticky, frosted. */
 .top {

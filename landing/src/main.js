@@ -12,7 +12,12 @@ const preview = import.meta.env.VITE_PREVIEW === '1';
 const api = preview ? (await import('./preview.js')).createPreviewApi() : createApi();
 if (preview) {
   document.body.prepend(
-    el('p', { class: 'preview-banner', role: 'note' }, 'نسخهٔ نمایشی ایستا: قیمت‌ها نمونه‌اند و دموی چت به بک‌اند نیاز دارد.'),
+    el(
+      'p',
+      { class: 'preview-banner', role: 'note' },
+      'نسخهٔ نمایشی ایستا: قیمت‌ها نمونه‌اند و دموی چت به بک‌اند نیاز دارد. ',
+      el('a', { href: 'https://github.com/CtrlAltDevelop/summa', rel: 'noopener' }, 'کد روی GitHub'),
+    ),
   );
 }
 const app = document.getElementById('app');
