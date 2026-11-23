@@ -21,6 +21,7 @@
 11. [parsing-spec.md](11-parsing-spec.md): مشخصات پارس جمله و پیامک، اطمینان و تست (پیشنهاد اولیه)
 12. [security-model.md](12-security-model.md): مدل امنیت و حریم؛ تضاد E2E با Ollama (پیشنهاد)
 13. [phases/phase-00-foundation.md](phases/phase-00-foundation.md): سند فاز ۰۰ (آماده برای شروع)
+14. [phases/phase-01b-wallets.md](phases/phase-01b-wallets.md): سند فاز ۰۱b (کیف پول‌ها)
 
 ## محدودیت‌های بررسی
 - همه صفحه‌های عمومی خونده شد، به جز `/disclosure` (دوبار خطای ۵۰۳؛ لیست شریک‌های رفرال و مدل درآمد رفرال مشخص نیست).
