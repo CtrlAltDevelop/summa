@@ -22,6 +22,7 @@
 12. [security-model.md](12-security-model.md): مدل امنیت و حریم؛ تضاد E2E با Ollama (پیشنهاد)
 13. [phases/phase-00-foundation.md](phases/phase-00-foundation.md): سند فاز ۰۰ (آماده برای شروع)
 14. [phases/phase-01b-wallets.md](phases/phase-01b-wallets.md): سند فاز ۰۱b (کیف پول‌ها)
+15. [phases/phase-02-ledger.md](phases/phase-02-ledger.md): سند فاز ۰۲ (دفتر)
 
 ## محدودیت‌های بررسی
 - همه صفحه‌های عمومی خونده شد، به جز `/disclosure` (دوبار خطای ۵۰۳؛ لیست شریک‌های رفرال و مدل درآمد رفرال مشخص نیست).
