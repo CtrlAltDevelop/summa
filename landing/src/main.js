@@ -7,7 +7,14 @@ import { renderPlans, renderRates } from './prices.js';
 import { revealOnScroll } from './reveal.js';
 import { renderTools } from './tools.js';
 
-const api = createApi();
+// The static preview (GitHub Pages) has no backend: it answers from bundled content.
+const preview = import.meta.env.VITE_PREVIEW === '1';
+const api = preview ? (await import('./preview.js')).createPreviewApi() : createApi();
+if (preview) {
+  document.body.prepend(
+    el('p', { class: 'preview-banner', role: 'note' }, 'نسخهٔ نمایشی ایستا: قیمت‌ها نمونه‌اند و دموی چت به بک‌اند نیاز دارد.'),
+  );
+}
 const app = document.getElementById('app');
 
 /** Show a failure in place of a section instead of leaving the page blank. */

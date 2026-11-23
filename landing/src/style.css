@@ -40,6 +40,16 @@ body {
 
 main, footer, .top-inner { max-width: var(--measure); margin-inline: auto; padding-inline: var(--space); }
 
+/* Static-preview notice (GitHub Pages build only). */
+.preview-banner {
+  margin: 0;
+  padding: 8px var(--space);
+  text-align: center;
+  font-size: 0.9rem;
+  color: var(--on-accent);
+  background: var(--accent);
+}
+
 /* Header: sticky, frosted. */
 .top {
   position: sticky;

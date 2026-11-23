@@ -1,0 +1,53 @@
+name: Landing preview
+
+# Publishes a static preview of the landing site to GitHub Pages. It has no
+# backend: content is bundled, prices are samples, and the chat demo explains
+# that it needs the real server.
+
+on:
+  push:
+    branches: [main]
+    paths: ['landing/**', '.github/workflows/landing-preview.yml']
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+concurrency:
+  group: pages
+  cancel-in-progress: true
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: landing
+    steps:
+      - uses: actions/checkout@v6
+      - uses: actions/setup-node@v6
+        with:
+          node-version: 22
+          cache: npm
+          cache-dependency-path: landing/package-lock.json
+      - run: npm ci --no-audit --no-fund
+      - run: npx vitest run
+      - run: npx vite build
+        env:
+          VITE_PREVIEW: '1'
+          VITE_BASE: /summa/
+      - uses: actions/upload-pages-artifact@v4
+        with:
+          path: landing/dist
+
+  deploy:
+    needs: build
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - id: deployment
+        uses: actions/deploy-pages@v4

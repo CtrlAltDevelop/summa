@@ -4,6 +4,8 @@ import { defineConfig } from 'vite';
 // browser sees one origin and no CORS is needed. In production the reverse proxy
 // does the same job for /api.
 export default defineConfig({
+  // GitHub Pages serves a project site under /<repo>/; the workflow sets this.
+  base: process.env.VITE_BASE ?? '/',
   server: {
     proxy: { '/api': process.env.SUMMA_API ?? 'http://localhost:8010' },
   },

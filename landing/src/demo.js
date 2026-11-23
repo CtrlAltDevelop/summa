@@ -4,6 +4,7 @@ import { formatNumber } from './format.js';
 
 export const MESSAGES = {
   offline: 'اتصال برقرار نشد. اینترنت را بررسی کن.',
+  preview: 'این نسخهٔ نمایشی ایستاست؛ دموی زنده به بک‌اند نیاز دارد. پروژه را اجرا کن (make run-lite) تا امتحانش کنی.',
   rate: 'چند بار پشت‌سر هم امتحان کردی؛ کمی صبر کن.',
   generic: 'مشکلی پیش آمد. دوباره امتحان کن.',
   placeholder: 'مثلاً: ۲۵۰ هزار تومن خرید نان',
@@ -16,6 +17,7 @@ export const MESSAGES = {
 
 /** The sentence for an API failure. */
 export function messageFor(error) {
+  if (error?.preview) return MESSAGES.preview;
   if (error?.status === 0) return MESSAGES.offline;
   if (error?.status === 429) return MESSAGES.rate;
   return MESSAGES.generic;

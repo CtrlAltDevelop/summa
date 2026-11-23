@@ -1,7 +1,9 @@
 export class ApiError extends Error {
-  constructor(status, message) {
+  constructor(status, message, { preview = false } = {}) {
     super(message);
     this.status = status;
+    /** True when there is no backend at all (the static preview). */
+    this.preview = preview;
   }
 }
 
