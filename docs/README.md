@@ -30,6 +30,7 @@
 20. [phases/phase-06-split.md](phases/phase-06-split.md): سند فاز ۰۶ (تقسیم و خارج از جمع)
 21. [phases/phase-06b-refunds.md](phases/phase-06b-refunds.md): سند فاز ۰۶b (برگشت و بازپرداخت)
 22. [phases/phase-07-recurring.md](phases/phase-07-recurring.md): سند فاز ۰۷ (تراکنش‌های تکراری)
+23. [phases/phase-07b-salary.md](phases/phase-07b-salary.md): سند فاز ۰۷b (حقوق و یادآور)
 
 ## محدودیت‌های بررسی
 - همه صفحه‌های عمومی خونده شد، به جز `/disclosure` (دوبار خطای ۵۰۳؛ لیست شریک‌های رفرال و مدل درآمد رفرال مشخص نیست).
