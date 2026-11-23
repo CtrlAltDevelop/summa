@@ -24,8 +24,8 @@ export function createScale(canvas) {
   const camera = new THREE.PerspectiveCamera(40, 1, 0.1, 50);
   camera.position.set(0, 0.6, 7);
 
-  const accent = new THREE.MeshStandardMaterial({ color: 0x5eead4, roughness: 0.35, metalness: 0.4 });
-  const body = new THREE.MeshStandardMaterial({ color: 0xa5b0c8, roughness: 0.5, metalness: 0.3 });
+  const accent = new THREE.MeshStandardMaterial({ color: 0xf7c759, roughness: 0.35, metalness: 0.4 });
+  const body = new THREE.MeshStandardMaterial({ color: 0xc9c2b2, roughness: 0.45, metalness: 0.5 });
   scene.add(new THREE.AmbientLight(0xffffff, 0.7));
   const key = new THREE.DirectionalLight(0xffffff, 1.4);
   key.position.set(3, 4, 5);
