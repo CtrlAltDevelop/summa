@@ -24,7 +24,7 @@ _sym_db = _symbol_database.Default()
 
 
 
-DESCRIPTOR = _descriptor_pool.Default().AddSerializedFile(b'\n\x1f\x61pps/reports/grpc/reports.proto\x12\x0e\x63onfig.reports\"X\n\x10\x43\x61tegoryTotalMsg\x12\x13\n\x0b\x63\x61tegory_id\x18\x01 \x01(\t\x12\x0c\n\x04name\x18\x02 \x01(\t\x12\x0c\n\x04kind\x18\x03 \x01(\t\x12\x13\n\x0btotal_minor\x18\x04 \x01(\x03\"G\n\x0b\x44\x61yTotalMsg\x12\x0b\n\x03\x64\x61y\x18\x01 \x01(\t\x12\x14\n\x0cincome_minor\x18\x02 \x01(\x03\x12\x15\n\rexpense_minor\x18\x03 \x01(\x03\"0\n\x0b\x45xportReply\x12\x10\n\x08\x66ilename\x18\x01 \x01(\t\x12\x0f\n\x07\x63ontent\x18\x02 \x01(\x0c\"3\n\rExportRequest\x12\x11\n\tstarts_at\x18\x01 \x01(\t\x12\x0f\n\x07\x65nds_at\x18\x02 \x01(\t\"\x85\x02\n\x0bReportReply\x12\x10\n\x08\x63urrency\x18\x01 \x01(\t\x12\x14\n\x0cincome_minor\x18\x02 \x01(\x03\x12\x15\n\rexpense_minor\x18\x03 \x01(\x03\x12\x11\n\tnet_minor\x18\x04 \x01(\x03\x12\x0f\n\x07\x65ntries\x18\x05 \x01(\x05\x12\x35\n\x0b\x62y_category\x18\x06 \x03(\x0b\x32 .config.reports.CategoryTotalMsg\x12*\n\x05\x64\x61ily\x18\x07 \x03(\x0b\x32\x1b.config.reports.DayTotalMsg\x12\x1c\n\x14top_expense_category\x18\x08 \x01(\t\x12\x12\n\ncurrencies\x18\t \x03(\t\"E\n\rReportRequest\x12\x11\n\tstarts_at\x18\x01 \x01(\t\x12\x0f\n\x07\x65nds_at\x18\x02 \x01(\t\x12\x10\n\x08\x63urrency\x18\x03 \x01(\t2\xa7\x01\n\x11ReportsController\x12I\n\tExportCsv\x12\x1d.config.reports.ExportRequest\x1a\x1b.config.reports.ExportReply\"\x00\x12G\n\x07Monthly\x12\x1d.config.reports.ReportRequest\x1a\x1b.config.reports.ReportReply\"\x00\x62\x06proto3')
+DESCRIPTOR = _descriptor_pool.Default().AddSerializedFile(b'\n\x1f\x61pps/reports/grpc/reports.proto\x12\x0e\x63onfig.reports\"X\n\x10\x43\x61tegoryTotalMsg\x12\x13\n\x0b\x63\x61tegory_id\x18\x01 \x01(\t\x12\x0c\n\x04name\x18\x02 \x01(\t\x12\x0c\n\x04kind\x18\x03 \x01(\t\x12\x13\n\x0btotal_minor\x18\x04 \x01(\x03\"G\n\x0b\x44\x61yTotalMsg\x12\x0b\n\x03\x64\x61y\x18\x01 \x01(\t\x12\x14\n\x0cincome_minor\x18\x02 \x01(\x03\x12\x15\n\rexpense_minor\x18\x03 \x01(\x03\"0\n\x0b\x45xportReply\x12\x10\n\x08\x66ilename\x18\x01 \x01(\t\x12\x0f\n\x07\x63ontent\x18\x02 \x01(\x0c\"3\n\rExportRequest\x12\x11\n\tstarts_at\x18\x01 \x01(\t\x12\x0f\n\x07\x65nds_at\x18\x02 \x01(\t\"/\n\x0eImportErrorMsg\x12\x0c\n\x04line\x18\x01 \x01(\x05\x12\x0f\n\x07message\x18\x02 \x01(\t\"\x82\x01\n\x0bImportReply\x12\x0c\n\x04rows\x18\x01 \x01(\x05\x12\x12\n\nimportable\x18\x02 \x01(\x05\x12\x10\n\x08imported\x18\x03 \x01(\x05\x12\x0f\n\x07skipped\x18\x04 \x01(\x05\x12.\n\x06\x65rrors\x18\x05 \x03(\x0b\x32\x1e.config.reports.ImportErrorMsg\"-\n\rImportRequest\x12\x0c\n\x04text\x18\x01 \x01(\t\x12\x0e\n\x06\x63ommit\x18\x02 \x01(\x08\"\x85\x02\n\x0bReportReply\x12\x10\n\x08\x63urrency\x18\x01 \x01(\t\x12\x14\n\x0cincome_minor\x18\x02 \x01(\x03\x12\x15\n\rexpense_minor\x18\x03 \x01(\x03\x12\x11\n\tnet_minor\x18\x04 \x01(\x03\x12\x0f\n\x07\x65ntries\x18\x05 \x01(\x05\x12\x35\n\x0b\x62y_category\x18\x06 \x03(\x0b\x32 .config.reports.CategoryTotalMsg\x12*\n\x05\x64\x61ily\x18\x07 \x03(\x0b\x32\x1b.config.reports.DayTotalMsg\x12\x1c\n\x14top_expense_category\x18\x08 \x01(\t\x12\x12\n\ncurrencies\x18\t \x03(\t\"E\n\rReportRequest\x12\x11\n\tstarts_at\x18\x01 \x01(\t\x12\x0f\n\x07\x65nds_at\x18\x02 \x01(\t\x12\x10\n\x08\x63urrency\x18\x03 \x01(\t2\xf2\x01\n\x11ReportsController\x12I\n\tExportCsv\x12\x1d.config.reports.ExportRequest\x1a\x1b.config.reports.ExportReply\"\x00\x12I\n\tImportCsv\x12\x1d.config.reports.ImportRequest\x1a\x1b.config.reports.ImportReply\"\x00\x12G\n\x07Monthly\x12\x1d.config.reports.ReportRequest\x1a\x1b.config.reports.ReportReply\"\x00\x62\x06proto3')
 
 _globals = globals()
 _builder.BuildMessageAndEnumDescriptors(DESCRIPTOR, _globals)
@@ -39,10 +39,16 @@ if not _descriptor._USE_C_DESCRIPTORS:
   _globals['_EXPORTREPLY']._serialized_end=262
   _globals['_EXPORTREQUEST']._serialized_start=264
   _globals['_EXPORTREQUEST']._serialized_end=315
-  _globals['_REPORTREPLY']._serialized_start=318
-  _globals['_REPORTREPLY']._serialized_end=579
-  _globals['_REPORTREQUEST']._serialized_start=581
-  _globals['_REPORTREQUEST']._serialized_end=650
-  _globals['_REPORTSCONTROLLER']._serialized_start=653
-  _globals['_REPORTSCONTROLLER']._serialized_end=820
+  _globals['_IMPORTERRORMSG']._serialized_start=317
+  _globals['_IMPORTERRORMSG']._serialized_end=364
+  _globals['_IMPORTREPLY']._serialized_start=367
+  _globals['_IMPORTREPLY']._serialized_end=497
+  _globals['_IMPORTREQUEST']._serialized_start=499
+  _globals['_IMPORTREQUEST']._serialized_end=544
+  _globals['_REPORTREPLY']._serialized_start=547
+  _globals['_REPORTREPLY']._serialized_end=808
+  _globals['_REPORTREQUEST']._serialized_start=810
+  _globals['_REPORTREQUEST']._serialized_end=879
+  _globals['_REPORTSCONTROLLER']._serialized_start=882
+  _globals['_REPORTSCONTROLLER']._serialized_end=1124
 # @@protoc_insertion_point(module_scope)

@@ -39,6 +39,11 @@ class ReportsControllerStub:
                 request_serializer=apps_dot_reports_dot_grpc_dot_reports__pb2.ExportRequest.SerializeToString,
                 response_deserializer=apps_dot_reports_dot_grpc_dot_reports__pb2.ExportReply.FromString,
                 _registered_method=True)
+        self.ImportCsv = channel.unary_unary(
+                '/config.reports.ReportsController/ImportCsv',
+                request_serializer=apps_dot_reports_dot_grpc_dot_reports__pb2.ImportRequest.SerializeToString,
+                response_deserializer=apps_dot_reports_dot_grpc_dot_reports__pb2.ImportReply.FromString,
+                _registered_method=True)
         self.Monthly = channel.unary_unary(
                 '/config.reports.ReportsController/Monthly',
                 request_serializer=apps_dot_reports_dot_grpc_dot_reports__pb2.ReportRequest.SerializeToString,
@@ -50,6 +55,12 @@ class ReportsControllerServicer:
     """Missing associated documentation comment in .proto file."""
 
     def ExportCsv(self, request, context):
+        """Missing associated documentation comment in .proto file."""
+        context.set_code(grpc.StatusCode.UNIMPLEMENTED)
+        context.set_details('Method not implemented!')
+        raise NotImplementedError('Method not implemented!')
+
+    def ImportCsv(self, request, context):
         """Missing associated documentation comment in .proto file."""
         context.set_code(grpc.StatusCode.UNIMPLEMENTED)
         context.set_details('Method not implemented!')
@@ -68,6 +79,11 @@ def add_ReportsControllerServicer_to_server(servicer, server):
                     servicer.ExportCsv,
                     request_deserializer=apps_dot_reports_dot_grpc_dot_reports__pb2.ExportRequest.FromString,
                     response_serializer=apps_dot_reports_dot_grpc_dot_reports__pb2.ExportReply.SerializeToString,
+            ),
+            'ImportCsv': grpc.unary_unary_rpc_method_handler(
+                    servicer.ImportCsv,
+                    request_deserializer=apps_dot_reports_dot_grpc_dot_reports__pb2.ImportRequest.FromString,
+                    response_serializer=apps_dot_reports_dot_grpc_dot_reports__pb2.ImportReply.SerializeToString,
             ),
             'Monthly': grpc.unary_unary_rpc_method_handler(
                     servicer.Monthly,
@@ -102,6 +118,33 @@ class ReportsController:
             '/config.reports.ReportsController/ExportCsv',
             apps_dot_reports_dot_grpc_dot_reports__pb2.ExportRequest.SerializeToString,
             apps_dot_reports_dot_grpc_dot_reports__pb2.ExportReply.FromString,
+            options,
+            channel_credentials,
+            insecure,
+            call_credentials,
+            compression,
+            wait_for_ready,
+            timeout,
+            metadata,
+            _registered_method=True)
+
+    @staticmethod
+    def ImportCsv(request,
+            target,
+            options=(),
+            channel_credentials=None,
+            call_credentials=None,
+            insecure=False,
+            compression=None,
+            wait_for_ready=None,
+            timeout=None,
+            metadata=None):
+        return grpc.experimental.unary_unary(
+            request,
+            target,
+            '/config.reports.ReportsController/ImportCsv',
+            apps_dot_reports_dot_grpc_dot_reports__pb2.ImportRequest.SerializeToString,
+            apps_dot_reports_dot_grpc_dot_reports__pb2.ImportReply.FromString,
             options,
             channel_credentials,
             insecure,

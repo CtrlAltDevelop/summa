@@ -32,12 +32,14 @@ class ReportsControllerStub:
     @_typing.overload
     def __new__(cls, channel: _aio.Channel) -> ReportsControllerAsyncStub: ...
     ExportCsv: _grpc.UnaryUnaryMultiCallable[_reports_pb2.ExportRequest, _reports_pb2.ExportReply]
+    ImportCsv: _grpc.UnaryUnaryMultiCallable[_reports_pb2.ImportRequest, _reports_pb2.ImportReply]
     Monthly: _grpc.UnaryUnaryMultiCallable[_reports_pb2.ReportRequest, _reports_pb2.ReportReply]
 
 @_typing.type_check_only
 class ReportsControllerAsyncStub(ReportsControllerStub):
     def __init__(self, channel: _aio.Channel) -> None: ...
     ExportCsv: _aio.UnaryUnaryMultiCallable[_reports_pb2.ExportRequest, _reports_pb2.ExportReply]  # type: ignore[assignment]
+    ImportCsv: _aio.UnaryUnaryMultiCallable[_reports_pb2.ImportRequest, _reports_pb2.ImportReply]  # type: ignore[assignment]
     Monthly: _aio.UnaryUnaryMultiCallable[_reports_pb2.ReportRequest, _reports_pb2.ReportReply]  # type: ignore[assignment]
 
 class ReportsControllerServicer(metaclass=_abc_1.ABCMeta):
@@ -47,6 +49,13 @@ class ReportsControllerServicer(metaclass=_abc_1.ABCMeta):
         request: _reports_pb2.ExportRequest,
         context: _ServicerContext,
     ) -> _typing.Union[_reports_pb2.ExportReply, _abc.Awaitable[_reports_pb2.ExportReply]]: ...
+
+    @_abc_1.abstractmethod
+    def ImportCsv(
+        self,
+        request: _reports_pb2.ImportRequest,
+        context: _ServicerContext,
+    ) -> _typing.Union[_reports_pb2.ImportReply, _abc.Awaitable[_reports_pb2.ImportReply]]: ...
 
     @_abc_1.abstractmethod
     def Monthly(

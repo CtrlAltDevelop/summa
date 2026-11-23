@@ -137,3 +137,65 @@ def test_no_credential_is_unauthenticated(
         grpc_call(Stub, "ExportCsv", reports_pb2.ExportRequest())
 
     assert refusal.value.code() is grpc.StatusCode.UNAUTHENTICATED
+
+
+CSV = "date,kind,amount,wallet\r\n2026-11-22,expense,1000,ملی\r\n2026-11-23,income,500,ملی\r\n"
+
+
+def test_import_preview_then_commit_over_the_wire(
+    transactional_db: None, grpc_call: Callable[..., Any]
+) -> None:
+    token = sign_up("zoe")
+    wallet = grpc_call(
+        wallets_pb2_grpc.WalletsControllerStub,
+        "Create",
+        wallets_pb2.WalletCreate(
+            name="ملی", kind="bank", currency="IRT", opening_balance_minor=0, client_mutation_id="w"
+        ),
+        token=token,
+    ).wallet
+
+    preview = grpc_call(Stub, "ImportCsv", reports_pb2.ImportRequest(text=CSV), token=token)
+    done = grpc_call(
+        Stub, "ImportCsv", reports_pb2.ImportRequest(text=CSV, commit=True), token=token
+    )
+    entries = grpc_call(
+        wallets_pb2_grpc.LedgerControllerStub, "List", wallets_pb2.EntryQuery(), token=token
+    ).entries
+
+    assert (preview.rows, preview.importable, preview.imported) == (2, 2, 0)
+    assert (done.imported, list(done.errors)) == (2, [])
+    assert sorted(e.amount_minor for e in entries) == [500, 1000]
+    assert {e.wallet_id for e in entries} == {wallet.id}
+
+
+def test_import_errors_come_back_with_their_lines(
+    transactional_db: None, grpc_call: Callable[..., Any]
+) -> None:
+    token = sign_up("zoe")
+
+    reply = grpc_call(
+        Stub,
+        "ImportCsv",
+        reports_pb2.ImportRequest(
+            text="date,kind,amount,wallet\r\n2026-11-22,expense,x,نیست\r\n", commit=True
+        ),
+        token=token,
+    )
+
+    assert reply.imported == 0
+    assert [(e.line, "wallet" in e.message) for e in reply.errors] == [(2, True)]
+
+
+def test_an_import_without_the_columns_is_invalid_argument(
+    transactional_db: None, grpc_call: Callable[..., Any]
+) -> None:
+    with pytest.raises(grpc.aio.AioRpcError) as refusal:
+        grpc_call(
+            Stub,
+            "ImportCsv",
+            reports_pb2.ImportRequest(text="a,b\r\n1,2\r\n"),
+            token=sign_up("zoe"),
+        )
+
+    assert refusal.value.code() is grpc.StatusCode.INVALID_ARGUMENT
