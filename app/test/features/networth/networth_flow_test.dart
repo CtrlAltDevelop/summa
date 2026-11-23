@@ -3,6 +3,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:summa/app.dart';
 import 'package:summa/features/assets/asset_controller.dart';
+import 'package:summa/features/billing/billing_controller.dart';
 import 'package:summa/features/auth/auth_controller.dart';
 import 'package:summa/features/auth/token_store.dart';
 import 'package:summa/features/categories/category_controller.dart';
@@ -17,6 +18,7 @@ import '../auth/fake_auth_api.dart';
 import '../categories/fake_category_api.dart';
 import '../wallets/fake_ledger_api.dart';
 import '../wallets/fake_wallet_api.dart';
+import '../billing/fake_billing_api.dart';
 import 'fake_networth_api.dart';
 
 Future<FakeNetWorthApi> _pump(
@@ -62,6 +64,7 @@ Future<FakeNetWorthApi> _pump(
         tokenStoreProvider.overrideWithValue(
           MemoryTokenStore(auth.currentTokens),
         ),
+        billingApiProvider.overrideWithValue(FakeBillingApi()),
         walletApiProvider.overrideWithValue(wallets),
         ledgerApiProvider.overrideWithValue(ledger),
         categoryApiProvider.overrideWithValue(FakeCategoryApi(ledger)),

@@ -871,4 +871,59 @@ class AppLocalizationsFa extends AppLocalizations {
 
   @override
   String get outboxQueued => 'در انتظار ارسال';
+
+  @override
+  String get billingOpen => 'اشتراک';
+
+  @override
+  String get billingTitle => 'اشتراک';
+
+  @override
+  String get billingStatusNone => 'هنوز اشتراکی نداری.';
+
+  @override
+  String billingStatusTrial(String days) {
+    return 'دوره آزمایشی؛ $days روز مانده';
+  }
+
+  @override
+  String billingStatusActive(String days) {
+    return 'اشتراک فعال؛ $days روز مانده';
+  }
+
+  @override
+  String get billingStatusExpired => 'اشتراکت تمام شده است.';
+
+  @override
+  String get billingStartTrial => 'شروع دوره آزمایشی';
+
+  @override
+  String get billingBuy => 'خرید';
+
+  @override
+  String get billingNoPlans => 'فعلاً پلنی برای خرید نیست.';
+
+  @override
+  String billingPlanLine(String price, String days) {
+    return '$price تومان · $days روز';
+  }
+
+  @override
+  String get billingPayAt => 'پرداخت را اینجا انجام بده:';
+
+  @override
+  String get billingCheckPayment => 'بررسی پرداخت';
+
+  @override
+  String get billingNotConfirmed => 'پرداخت هنوز تأیید نشده.';
+
+  @override
+  String get billingFailed => 'انجام نشد. دوباره امتحان کن.';
+
+  @override
+  String get readOnlyBanner =>
+      'اشتراکت تمام شده؛ فعلاً فقط می‌توانی داده‌ات را ببینی.';
+
+  @override
+  String get readOnlyRenew => 'تمدید';
 }
