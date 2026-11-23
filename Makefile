@@ -1,5 +1,5 @@
 SHELL := /bin/bash
-.PHONY: setup dev down serve grpc migrate run-lite macos proto proto-lint check test
+.PHONY: landing landing-test setup dev down serve grpc migrate run-lite macos proto proto-lint check test
 
 PATH := $(PATH):$(HOME)/.pub-cache/bin
 VENV := $(CURDIR)/backend/.venv/bin
@@ -81,3 +81,10 @@ check:
 test:
 	cd backend && $(VENV)/pytest --cov
 	cd app && flutter test --coverage
+
+# The public site: `make landing` serves it (proxying /api to the Django server on :8010).
+landing:
+	cd landing && npm install --no-audit --no-fund && npx vite
+
+landing-test:
+	cd landing && npm install --no-audit --no-fund && npx vitest run
