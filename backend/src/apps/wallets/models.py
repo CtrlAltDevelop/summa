@@ -77,6 +77,7 @@ class EventKind(models.TextChoices):
     EXPENSE = "expense"
     TRANSFER_OUT = "transfer_out"
     TRANSFER_IN = "transfer_in"
+    REFUND = "refund"
 
 
 class Direction(models.TextChoices):
@@ -111,6 +112,10 @@ class LedgerEvent(models.Model):
     outside_totals = models.BooleanField(default=False)
     # Parts of one split expense share this id.
     split_id = models.UUIDField(null=True, blank=True, db_index=True)
+    # A refund points at the expense it gives money back for.
+    refund_of = models.ForeignKey(
+        "self", null=True, blank=True, on_delete=models.SET_NULL, related_name="refunds"
+    )
     # Legs of one transfer (out, in, optional fee) share this id.
     transfer_id = models.UUIDField(null=True, blank=True, db_index=True)
     # The user-entered rate of a cross-currency transfer, kept as typed.

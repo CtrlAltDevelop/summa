@@ -31,6 +31,8 @@ class Entry(serializers.Serializer[dict[str, object]]):
     category_id = serializers.CharField()
     outside_totals = serializers.BooleanField()
     split_id = serializers.CharField()
+    refund_of = serializers.CharField()
+    refunded_minor = serializers.IntegerField(min_value=BIG_MIN, max_value=BIG_MAX)
 
 
 class SplitPartMsg(serializers.Serializer[dict[str, object]]):

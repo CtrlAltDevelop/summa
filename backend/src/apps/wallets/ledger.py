@@ -11,6 +11,8 @@ from typing import Any
 from uuid import UUID, uuid4
 
 from django.db import IntegrityError, transaction
+from django.db.models import OuterRef, Subquery, Sum
+from django.db.models.functions import Coalesce
 from django.utils import timezone
 
 from apps.wallets.categories import resolve_category
@@ -26,7 +28,7 @@ DEFAULT_LIMIT = 50
 MAX_LIMIT = 200
 _DIRECTION = {EventKind.INCOME: Direction.IN, EventKind.EXPENSE: Direction.OUT}
 # What the list shows and delete may void; only income/expense can be recorded or edited.
-_LISTED = [*_DIRECTION, EventKind.TRANSFER_OUT, EventKind.TRANSFER_IN]
+_LISTED = [*_DIRECTION, EventKind.TRANSFER_OUT, EventKind.TRANSFER_IN, EventKind.REFUND]
 
 
 @dataclass(frozen=True, slots=True)
@@ -41,6 +43,8 @@ class Entry:
     category_id: str
     outside_totals: bool = False
     split_id: str = ""
+    refund_of: str = ""
+    refunded_minor: int = 0
 
 
 @dataclass(frozen=True, slots=True)
@@ -64,6 +68,8 @@ def _entry(event: LedgerEvent) -> Entry:
         category_id=str(event.category_id or ""),
         outside_totals=event.outside_totals,
         split_id=str(event.split_id or ""),
+        refund_of=str(event.refund_of_id or ""),
+        refunded_minor=getattr(event, "refunded", 0) or 0,
     )
 
 
@@ -164,6 +170,85 @@ class LedgerService:
         return [_entry(event) for event in events]
 
     @staticmethod
+    def _require_no_refunds(event: LedgerEvent) -> None:
+        if LedgerEvent.objects.filter(refund_of=event, voided=False).exists():
+            raise _refuse("This expense has refunds. Delete them first.")
+
+    def refund(
+        self,
+        user: Any,
+        entry_id: str,
+        *,
+        wallet_id: str | None,
+        amount_minor: int,
+        occurred_at: datetime | None,
+        note: str,
+        client_mutation_id: str,
+    ) -> Entry:
+        """Give money back for an expense: all of what is left (amount 0) or part."""
+        if not client_mutation_id or len(client_mutation_id) > 64:
+            raise _refuse("client_mutation_id is required (at most 64 characters).")
+        if amount_minor < 0:
+            raise _refuse("The amount cannot be negative.")
+        note = note.strip()
+        if len(note) > NOTE_MAX_LENGTH:
+            raise _refuse(f"The note is at most {NOTE_MAX_LENGTH} characters.")
+        existing = LedgerEvent.objects.filter(user=user, client_mutation_id=client_mutation_id)
+        if existing.exists():
+            return _entry(existing.select_related("wallet").get())
+        key = _uuid(entry_id, "Entry")
+        with transaction.atomic():
+            original = (
+                LedgerEvent.objects.select_for_update()
+                .select_related("wallet")
+                .filter(user=user, id=key, voided=False, kind__in=_LISTED)
+                .first()
+            )
+            if original is None:
+                raise _not_found("Entry")
+            if original.kind != EventKind.EXPENSE:
+                raise _refuse("Only an expense can be refunded.")
+            target = (
+                self._open_wallet(user, wallet_id) if wallet_id else self._open(original.wallet)
+            )
+            if target.currency != original.wallet.currency:
+                raise _refuse("A refund goes to a wallet of the same currency.")
+            done = (
+                LedgerEvent.objects.filter(refund_of=original, voided=False).aggregate(
+                    total=Sum("amount_minor")
+                )["total"]
+                or 0
+            )
+            remaining = original.amount_minor - done
+            amount = amount_minor or remaining
+            if amount <= 0 or amount > remaining:
+                raise _refuse(f"At most {remaining} can still be refunded.")
+            try:
+                with transaction.atomic():
+                    event = LedgerEvent.objects.create(
+                        user=user,
+                        wallet=target,
+                        kind=EventKind.REFUND,
+                        direction=Direction.IN,
+                        amount_minor=amount,
+                        occurred_at=occurred_at or timezone.now(),
+                        note=note,
+                        category=original.category,
+                        outside_totals=original.outside_totals,
+                        refund_of=original,
+                        client_mutation_id=client_mutation_id,
+                    )
+            except IntegrityError:
+                event = LedgerEvent.objects.get(user=user, client_mutation_id=client_mutation_id)
+        return _entry(event)
+
+    @staticmethod
+    def _open(wallet: Wallet) -> Wallet:
+        if wallet.archived:
+            raise _refuse("The wallet is archived; choose another wallet for the refund.")
+        return wallet
+
+    @staticmethod
     def _open_wallet(user: Any, wallet_id: str) -> Wallet:
         wallet = Wallet.objects.filter(user=user, id=_uuid(wallet_id, "Wallet")).first()
         if wallet is None:
@@ -184,6 +269,14 @@ class LedgerService:
             except ValueError:
                 return []
         size = min(limit, MAX_LIMIT) if limit > 0 else DEFAULT_LIMIT
+        refunded = (
+            LedgerEvent.objects.filter(refund_of=OuterRef("pk"), voided=False)
+            .order_by()
+            .values("refund_of")
+            .annotate(total=Sum("amount_minor"))
+            .values("total")
+        )
+        query = query.annotate(refunded=Coalesce(Subquery(refunded), 0))
         rows = query.order_by("-occurred_at", "-created_at")[:size]
         return [_entry(row) for row in rows]
 
@@ -203,8 +296,11 @@ class LedgerService:
         def replace(old: LedgerEvent) -> LedgerEvent:
             if old.transfer_id is not None:
                 raise _refuse("A transfer cannot be edited. Delete it and make a new one.")
+            if old.kind == EventKind.REFUND:
+                raise _refuse("A refund cannot be edited. Delete it and record it again.")
             if old.split_id is not None:
                 raise _refuse("A split cannot be edited. Delete it and record it again.")
+            self._require_no_refunds(old)
             outside = old.outside_totals if outside_totals is None else outside_totals
             if outside and old.kind != EventKind.EXPENSE:
                 raise _refuse("Only an expense can be outside the totals.")
@@ -232,6 +328,7 @@ class LedgerService:
 
     def delete(self, user: Any, entry_id: str) -> None:
         def void(old: LedgerEvent) -> LedgerEvent:
+            self._require_no_refunds(old)
             if old.transfer_id is not None:
                 # One transfer is one thing to the user: void every leg together.
                 LedgerEvent.objects.filter(user=user, transfer_id=old.transfer_id).update(

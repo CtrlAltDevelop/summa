@@ -18,6 +18,7 @@ service LedgerController {
     rpc List(EntryQuery) returns (EntryListReply) {}
     rpc Record(EntryRecord) returns (EntryReply) {}
     rpc RecordSplit(SplitRequest) returns (EntryListReply) {}
+    rpc Refund(RefundRequest) returns (EntryReply) {}
     rpc Transfer(TransferRequest) returns (EntryListReply) {}
 }
 
@@ -90,6 +91,8 @@ message Entry {
     string category_id = 8;
     bool outside_totals = 9;
     string split_id = 10;
+    string refund_of = 11;
+    int64 refunded_minor = 12;
 }
 
 message EntryEdit {
@@ -127,6 +130,15 @@ message EntryRef {
 
 message EntryReply {
     Entry entry = 1;
+}
+
+message RefundRequest {
+    string entry_id = 1;
+    string wallet_id = 2;
+    int64 amount_minor = 3;
+    string occurred_at = 4;
+    string note = 5;
+    string client_mutation_id = 6;
 }
 
 message SplitPartMsg {
