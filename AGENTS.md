@@ -11,7 +11,7 @@ reference app taraznama.com. Docs are Persian (`docs/`): reference research plus
 `docs/05-open-questions.md`, the client questions answered flow by flow starting
 at section zero (what "different" means, audience, platform, revenue).
 
-## Stack (modelled on `/Users/m.zarif/GitHub/taskforge`)
+## Stack (modelled on the sibling `taskforge` repo)
 
 | Part | Choice |
 |------|--------|
@@ -51,4 +51,4 @@ Details: `docs/06-architecture.md`; phases: `docs/07-roadmap.md`. No bot. Iran a
 | `test-writer` | agent | Write backend and Flutter tests |
 | `proto-regen` | agent | Regenerate and check gRPC stubs |
 
-Ported and generalized from `/Users/m.zarif/GitHub/taskforge/.agents`. Not ported: `start-phase` and `phase-auditor` (need phase docs and a roadmap; add them when Summa gets `docs/phases/`).
+Ported and generalized from taskforge's `.agents`. Not ported: `start-phase` and `phase-auditor` (need phase docs and a roadmap; add them when Summa gets `docs/phases/`).

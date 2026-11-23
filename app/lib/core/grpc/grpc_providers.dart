@@ -9,7 +9,11 @@ final grpcChannelProvider = Provider<ClientChannel>((ref) {
   final channel = ClientChannel(
     AppConfig.grpcHost,
     port: AppConfig.grpcPort,
-    options: const ChannelOptions(credentials: ChannelCredentials.insecure()),
+    options: ChannelOptions(
+      credentials: AppConfig.useTls
+          ? const ChannelCredentials.secure()
+          : const ChannelCredentials.insecure(),
+    ),
   );
   ref.onDispose(channel.shutdown);
   return channel;

@@ -4,11 +4,24 @@ from django.core.exceptions import ImproperlyConfigured
 
 from config.settings.base import *  # noqa: F403
 
+MIN_SECRET_KEY_LENGTH = 32  # HS256 signs with it; shorter keys are brute-forceable
+
 if SECRET_KEY == "unsafe-development-key":  # noqa: F405
     raise ImproperlyConfigured("DJANGO_SECRET_KEY must be set in production")
 
+if len(SECRET_KEY) < MIN_SECRET_KEY_LENGTH:  # noqa: F405
+    raise ImproperlyConfigured(
+        f"DJANGO_SECRET_KEY must be at least {MIN_SECRET_KEY_LENGTH} characters in production"
+    )
+
 if not ALLOWED_HOSTS:  # noqa: F405
     raise ImproperlyConfigured("DJANGO_ALLOWED_HOSTS must be set in production")
+
+if AUTH_SMS_BACKEND.endswith("ConsoleSmsBackend"):  # noqa: F405
+    raise ImproperlyConfigured(
+        "DJANGO_AUTH_SMS_BACKEND is the console backend: it prints sign-in codes to "
+        "the log instead of sending them. Set a real SMS backend in production."
+    )
 
 SECURE_CONTENT_TYPE_NOSNIFF = True
 SECURE_REFERRER_POLICY = "same-origin"
