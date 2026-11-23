@@ -1,0 +1,49 @@
+syntax = "proto3";
+
+package config.wallets;
+
+import "google/protobuf/empty.proto";
+
+service WalletsController {
+    rpc Archive(WalletRef) returns (WalletReply) {}
+    rpc Create(WalletCreate) returns (WalletReply) {}
+    rpc List(google.protobuf.Empty) returns (WalletListReply) {}
+}
+
+message CurrencyTotal {
+    string currency = 1;
+    int64 balance_minor = 2;
+}
+
+message Wallet {
+    string id = 1;
+    string name = 2;
+    string kind = 3;
+    string currency = 4;
+    string bank = 5;
+    bool archived = 6;
+    int64 balance_minor = 7;
+}
+
+message WalletCreate {
+    string name = 1;
+    string kind = 2;
+    string currency = 3;
+    string bank = 4;
+    int64 opening_balance_minor = 5;
+    string client_mutation_id = 6;
+}
+
+message WalletListReply {
+    repeated Wallet wallets = 1;
+    repeated CurrencyTotal totals = 2;
+}
+
+message WalletRef {
+    string wallet_id = 1;
+}
+
+message WalletReply {
+    Wallet wallet = 1;
+}
+

@@ -14,6 +14,7 @@ ALL_APPS := DJANGO_CMS_ENABLED=true DJANGO_NOTIFICATIONS_ENABLED=true DJANGO_SHO
 # Dart stubs are generated for these protos (paths under backend/src). Add new ones here.
 DART_PROTOS := infrastructure/common/grpc/common.proto \
 	infrastructure/accounts/grpc/accounts.proto \
+	apps/wallets/grpc/wallets.proto \
 	infrastructure/auth/sms_code/grpc/auth_sms_code.proto \
 	infrastructure/oauth/rotation/grpc/oauth_rotation.proto
 
