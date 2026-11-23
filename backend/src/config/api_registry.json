@@ -28,6 +28,13 @@
         "prefix": "/recurring",
         "router": "apps.recurring.rest.v1.router",
         "tag": "Recurring"
+      },
+      {
+        "app_config": "apps.debts.apps.DebtsConfig",
+        "description": "Endpoints published by the debts app.",
+        "prefix": "/debts",
+        "router": "apps.debts.rest.v1.router",
+        "tag": "Debts"
       }
     ]
   }

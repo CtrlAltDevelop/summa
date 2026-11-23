@@ -17,6 +17,7 @@ DART_PROTOS := infrastructure/common/grpc/common.proto \
 	apps/wallets/grpc/wallets.proto \
 	apps/assistant/grpc/assistant.proto \
 	apps/recurring/grpc/recurring.proto \
+	apps/debts/grpc/debts.proto \
 	infrastructure/auth/sms_code/grpc/auth_sms_code.proto \
 	infrastructure/oauth/rotation/grpc/oauth_rotation.proto
 
