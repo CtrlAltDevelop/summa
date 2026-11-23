@@ -2,13 +2,14 @@ enum EntryKind {
   income('income'),
   expense('expense'),
   transferOut('transfer_out'),
-  transferIn('transfer_in');
+  transferIn('transfer_in'),
+  refund('refund');
 
   const EntryKind(this.wire);
   final String wire;
 
   /// Money arriving in the wallet (income, or the incoming leg of a transfer).
-  bool get isCredit => this == income || this == transferIn;
+  bool get isCredit => this == income || this == transferIn || this == refund;
 
   /// The kinds a person can record by hand.
   static const recordable = [expense, income];
@@ -30,6 +31,8 @@ class Entry {
     this.categoryId = '',
     this.outsideTotals = false,
     this.splitId = '',
+    this.refundOf = '',
+    this.refundedMinor = 0,
   });
 
   final String id;
@@ -48,6 +51,15 @@ class Entry {
 
   /// Shared by all parts of one split expense; empty otherwise.
   final String splitId;
+
+  /// For a refund: the expense it gives money back for.
+  final String refundOf;
+
+  /// For an expense: how much has been refunded so far.
+  final int refundedMinor;
+
+  int get refundableMinor =>
+      kind == EntryKind.expense ? amountMinor - refundedMinor : 0;
 }
 
 /// One share of a split expense.

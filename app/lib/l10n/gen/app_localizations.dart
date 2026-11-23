@@ -897,6 +897,54 @@ abstract class AppLocalizations {
   /// In fa, this message translates to:
   /// **'حداقل دو بخش با مبلغ درست لازم است.'**
   String get splitNeedsTwo;
+
+  /// No description provided for @entryRefund.
+  ///
+  /// In fa, this message translates to:
+  /// **'برگشت وجه'**
+  String get entryRefund;
+
+  /// No description provided for @refundOpen.
+  ///
+  /// In fa, this message translates to:
+  /// **'برگشت'**
+  String get refundOpen;
+
+  /// No description provided for @refundTitle.
+  ///
+  /// In fa, this message translates to:
+  /// **'برگشت وجه'**
+  String get refundTitle;
+
+  /// No description provided for @refundAmountLabel.
+  ///
+  /// In fa, this message translates to:
+  /// **'مبلغ (خالی = همه باقی‌مانده)'**
+  String get refundAmountLabel;
+
+  /// No description provided for @refundRemaining.
+  ///
+  /// In fa, this message translates to:
+  /// **'قابل برگشت'**
+  String get refundRemaining;
+
+  /// No description provided for @entryRefundedTag.
+  ///
+  /// In fa, this message translates to:
+  /// **'برگشت‌خورده'**
+  String get entryRefundedTag;
+
+  /// No description provided for @entryDeleteBlocked.
+  ///
+  /// In fa, this message translates to:
+  /// **'این خرج برگشت دارد؛ اول برگشت‌ها را حذف کن.'**
+  String get entryDeleteBlocked;
+
+  /// No description provided for @refundInvalid.
+  ///
+  /// In fa, this message translates to:
+  /// **'مبلغ برگشت درست نیست یا بیشتر از باقی‌مانده است.'**
+  String get refundInvalid;
 }
 
 class _AppLocalizationsDelegate

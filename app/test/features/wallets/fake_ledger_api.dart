@@ -141,6 +141,53 @@ class FakeLedgerApi implements LedgerApi {
       ? List.filled(n, 10).fold(1, (a, b) => a * b)
       : 1 / List.filled(-n, 10).fold(1, (a, b) => a * b);
 
+  final List<String> refundErrors = [];
+
+  @override
+  Future<void> refund(
+    String access, {
+    required String entryId,
+    required String walletId,
+    required int amountMinor,
+    required String note,
+    required String clientMutationId,
+  }) async {
+    final i = entries.indexWhere((e) => e.id == entryId);
+    final original = entries[i];
+    final amount = amountMinor == 0 ? original.refundableMinor : amountMinor;
+    if (amount <= 0 || amount > original.refundableMinor) {
+      refundErrors.add('over');
+      throw const WalletException(WalletFailure.invalid);
+    }
+    final wallet = wallets.wallets.firstWhere((w) => w.id == walletId);
+    entries[i] = Entry(
+      id: original.id,
+      walletId: original.walletId,
+      kind: original.kind,
+      amountMinor: original.amountMinor,
+      currency: original.currency,
+      occurredAt: original.occurredAt,
+      note: original.note,
+      categoryId: original.categoryId,
+      outsideTotals: original.outsideTotals,
+      refundedMinor: original.refundedMinor + amount,
+    );
+    entries.add(
+      Entry(
+        id: 'e${entries.length + 1}',
+        walletId: walletId,
+        kind: EntryKind.refund,
+        amountMinor: amount,
+        currency: wallet.currency,
+        occurredAt: DateTime.utc(2026, 11, 1),
+        note: note,
+        categoryId: original.categoryId,
+        refundOf: entryId,
+      ),
+    );
+    wallets.shift(walletId, amount);
+  }
+
   @override
   Future<void> delete(String access, String entryId) async {
     final entry = entries.firstWhere((e) => e.id == entryId);

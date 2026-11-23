@@ -35,6 +35,16 @@ abstract interface class LedgerApi {
     required String note,
     required String clientMutationId,
   });
+
+  /// An [amountMinor] of zero refunds everything still refundable.
+  Future<void> refund(
+    String access, {
+    required String entryId,
+    required String walletId,
+    required int amountMinor,
+    required String note,
+    required String clientMutationId,
+  });
   Future<void> delete(String access, String entryId);
 }
 
@@ -133,6 +143,27 @@ class GrpcLedgerApi implements LedgerApi {
   });
 
   @override
+  Future<void> refund(
+    String access, {
+    required String entryId,
+    required String walletId,
+    required int amountMinor,
+    required String note,
+    required String clientMutationId,
+  }) => guardGrpc(() async {
+    await _client.refund(
+      pb.RefundRequest(
+        entryId: entryId,
+        walletId: walletId,
+        amountMinor: Int64(amountMinor),
+        note: note,
+        clientMutationId: clientMutationId,
+      ),
+      options: _bearer(access),
+    );
+  });
+
+  @override
   Future<void> delete(String access, String entryId) => guardGrpc(() async {
     await _client.delete(
       pb.EntryRef(entryId: entryId),
@@ -151,5 +182,7 @@ class GrpcLedgerApi implements LedgerApi {
     categoryId: e.categoryId,
     outsideTotals: e.outsideTotals,
     splitId: e.splitId,
+    refundOf: e.refundOf,
+    refundedMinor: e.refundedMinor.toInt(),
   );
 }

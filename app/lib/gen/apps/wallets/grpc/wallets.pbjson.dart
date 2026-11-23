@@ -193,6 +193,8 @@ const Entry$json = {
     {'1': 'category_id', '3': 8, '4': 1, '5': 9, '10': 'categoryId'},
     {'1': 'outside_totals', '3': 9, '4': 1, '5': 8, '10': 'outsideTotals'},
     {'1': 'split_id', '3': 10, '4': 1, '5': 9, '10': 'splitId'},
+    {'1': 'refund_of', '3': 11, '4': 1, '5': 9, '10': 'refundOf'},
+    {'1': 'refunded_minor', '3': 12, '4': 1, '5': 3, '10': 'refundedMinor'},
   ],
 };
 
@@ -203,7 +205,8 @@ final $typed_data.Uint8List entryDescriptor = $convert.base64Decode(
     'Y3VycmVuY3kYBSABKAlSCGN1cnJlbmN5Eh8KC29jY3VycmVkX2F0GAYgASgJUgpvY2N1cnJlZE'
     'F0EhIKBG5vdGUYByABKAlSBG5vdGUSHwoLY2F0ZWdvcnlfaWQYCCABKAlSCmNhdGVnb3J5SWQS'
     'JQoOb3V0c2lkZV90b3RhbHMYCSABKAhSDW91dHNpZGVUb3RhbHMSGQoIc3BsaXRfaWQYCiABKA'
-    'lSB3NwbGl0SWQ=');
+    'lSB3NwbGl0SWQSGwoJcmVmdW5kX29mGAsgASgJUghyZWZ1bmRPZhIlCg5yZWZ1bmRlZF9taW5v'
+    'chgMIAEoA1INcmVmdW5kZWRNaW5vcg==');
 
 @$core.Deprecated('Use entryEditDescriptor instead')
 const EntryEdit$json = {
@@ -330,6 +333,32 @@ const EntryReply$json = {
 final $typed_data.Uint8List entryReplyDescriptor = $convert.base64Decode(
     'CgpFbnRyeVJlcGx5EisKBWVudHJ5GAEgASgLMhUuY29uZmlnLndhbGxldHMuRW50cnlSBWVudH'
     'J5');
+
+@$core.Deprecated('Use refundRequestDescriptor instead')
+const RefundRequest$json = {
+  '1': 'RefundRequest',
+  '2': [
+    {'1': 'entry_id', '3': 1, '4': 1, '5': 9, '10': 'entryId'},
+    {'1': 'wallet_id', '3': 2, '4': 1, '5': 9, '10': 'walletId'},
+    {'1': 'amount_minor', '3': 3, '4': 1, '5': 3, '10': 'amountMinor'},
+    {'1': 'occurred_at', '3': 4, '4': 1, '5': 9, '10': 'occurredAt'},
+    {'1': 'note', '3': 5, '4': 1, '5': 9, '10': 'note'},
+    {
+      '1': 'client_mutation_id',
+      '3': 6,
+      '4': 1,
+      '5': 9,
+      '10': 'clientMutationId'
+    },
+  ],
+};
+
+/// Descriptor for `RefundRequest`. Decode as a `google.protobuf.DescriptorProto`.
+final $typed_data.Uint8List refundRequestDescriptor = $convert.base64Decode(
+    'Cg1SZWZ1bmRSZXF1ZXN0EhkKCGVudHJ5X2lkGAEgASgJUgdlbnRyeUlkEhsKCXdhbGxldF9pZB'
+    'gCIAEoCVIId2FsbGV0SWQSIQoMYW1vdW50X21pbm9yGAMgASgDUgthbW91bnRNaW5vchIfCgtv'
+    'Y2N1cnJlZF9hdBgEIAEoCVIKb2NjdXJyZWRBdBISCgRub3RlGAUgASgJUgRub3RlEiwKEmNsaW'
+    'VudF9tdXRhdGlvbl9pZBgGIAEoCVIQY2xpZW50TXV0YXRpb25JZA==');
 
 @$core.Deprecated('Use splitPartMsgDescriptor instead')
 const SplitPartMsg$json = {
