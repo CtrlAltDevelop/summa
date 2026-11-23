@@ -17,6 +17,64 @@ import 'package:protobuf/protobuf.dart' as $pb;
 
 export 'package:protobuf/protobuf.dart' show GeneratedMessageGenericExtensions;
 
+class AccountingHour extends $pb.GeneratedMessage {
+  factory AccountingHour({
+    $core.int? hour,
+  }) {
+    final result = AccountingHour._();
+    if (hour != null) result.hour = hour;
+    return result;
+  }
+
+  AccountingHour._();
+
+  factory AccountingHour.fromBuffer($core.List<$core.int> data,
+          [$pb.ExtensionRegistry registry = $pb.ExtensionRegistry.EMPTY]) =>
+      AccountingHour()..mergeFromBuffer(data, registry);
+  factory AccountingHour.fromJson($core.String json,
+          [$pb.ExtensionRegistry registry = $pb.ExtensionRegistry.EMPTY]) =>
+      AccountingHour()..mergeFromJson(json, registry);
+
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo(
+      _omitMessageNames ? '' : 'AccountingHour',
+      package:
+          const $pb.PackageName(_omitMessageNames ? '' : 'config.assistant'),
+      createEmptyInstance: AccountingHour.$_createMessage)
+    ..aI(1, _omitFieldNames ? '' : 'hour')
+    ..hasRequiredFields = false;
+
+  @$core.Deprecated('See https://github.com/google/protobuf.dart/issues/998.')
+  AccountingHour clone() => deepCopy();
+  @$core.Deprecated('See https://github.com/google/protobuf.dart/issues/998.')
+  AccountingHour copyWith(void Function(AccountingHour) updates) =>
+      super.copyWith((message) => updates(message as AccountingHour))
+          as AccountingHour;
+
+  @$core.override
+  $pb.BuilderInfo get info_ => _i;
+
+  @$core.pragma('dart2js:noInline')
+  @$core.Deprecated('Use AccountingHour() / AccountingHour.new instead')
+  static AccountingHour create() => AccountingHour._();
+  static $pb.GeneratedMessage $_createMessage() => AccountingHour._();
+  @$core.override
+  AccountingHour createEmptyInstance() => AccountingHour._();
+  @$core.pragma('dart2js:noInline')
+  static AccountingHour getDefault() =>
+      _defaultInstance ??= $pb.GeneratedMessage.$_defaultFor<AccountingHour>(
+          AccountingHour.$_createMessage);
+  static AccountingHour? _defaultInstance;
+
+  @$pb.TagNumber(1)
+  $core.int get hour => $_getIZ(0);
+  @$pb.TagNumber(1)
+  set hour($core.int value) => $_setSignedInt32(0, value);
+  @$pb.TagNumber(1)
+  $core.bool hasHour() => $_has(0);
+  @$pb.TagNumber(1)
+  void clearHour() => $_clearField(1);
+}
+
 class Card extends $pb.GeneratedMessage {
   factory Card({
     $core.String? kind,
@@ -274,6 +332,126 @@ class ChatReply extends $pb.GeneratedMessage {
 
   @$pb.TagNumber(1)
   $pb.PbList<Message> get messages => $_getList(0);
+}
+
+class DigestReply extends $pb.GeneratedMessage {
+  factory DigestReply({
+    $core.int? accountingHour,
+    $core.int? entriesToday,
+    $core.int? uncategorizedToday,
+    $core.int? dueQuestions,
+    $core.int? lowBalanceWarnings,
+    $core.bool? shouldRemind,
+  }) {
+    final result = DigestReply._();
+    if (accountingHour != null) result.accountingHour = accountingHour;
+    if (entriesToday != null) result.entriesToday = entriesToday;
+    if (uncategorizedToday != null)
+      result.uncategorizedToday = uncategorizedToday;
+    if (dueQuestions != null) result.dueQuestions = dueQuestions;
+    if (lowBalanceWarnings != null)
+      result.lowBalanceWarnings = lowBalanceWarnings;
+    if (shouldRemind != null) result.shouldRemind = shouldRemind;
+    return result;
+  }
+
+  DigestReply._();
+
+  factory DigestReply.fromBuffer($core.List<$core.int> data,
+          [$pb.ExtensionRegistry registry = $pb.ExtensionRegistry.EMPTY]) =>
+      DigestReply()..mergeFromBuffer(data, registry);
+  factory DigestReply.fromJson($core.String json,
+          [$pb.ExtensionRegistry registry = $pb.ExtensionRegistry.EMPTY]) =>
+      DigestReply()..mergeFromJson(json, registry);
+
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo(
+      _omitMessageNames ? '' : 'DigestReply',
+      package:
+          const $pb.PackageName(_omitMessageNames ? '' : 'config.assistant'),
+      createEmptyInstance: DigestReply.$_createMessage)
+    ..aI(1, _omitFieldNames ? '' : 'accountingHour')
+    ..aI(2, _omitFieldNames ? '' : 'entriesToday')
+    ..aI(3, _omitFieldNames ? '' : 'uncategorizedToday')
+    ..aI(4, _omitFieldNames ? '' : 'dueQuestions')
+    ..aI(5, _omitFieldNames ? '' : 'lowBalanceWarnings')
+    ..aOB(6, _omitFieldNames ? '' : 'shouldRemind')
+    ..hasRequiredFields = false;
+
+  @$core.Deprecated('See https://github.com/google/protobuf.dart/issues/998.')
+  DigestReply clone() => deepCopy();
+  @$core.Deprecated('See https://github.com/google/protobuf.dart/issues/998.')
+  DigestReply copyWith(void Function(DigestReply) updates) =>
+      super.copyWith((message) => updates(message as DigestReply))
+          as DigestReply;
+
+  @$core.override
+  $pb.BuilderInfo get info_ => _i;
+
+  @$core.pragma('dart2js:noInline')
+  @$core.Deprecated('Use DigestReply() / DigestReply.new instead')
+  static DigestReply create() => DigestReply._();
+  static $pb.GeneratedMessage $_createMessage() => DigestReply._();
+  @$core.override
+  DigestReply createEmptyInstance() => DigestReply._();
+  @$core.pragma('dart2js:noInline')
+  static DigestReply getDefault() =>
+      _defaultInstance ??= $pb.GeneratedMessage.$_defaultFor<DigestReply>(
+          DigestReply.$_createMessage);
+  static DigestReply? _defaultInstance;
+
+  @$pb.TagNumber(1)
+  $core.int get accountingHour => $_getIZ(0);
+  @$pb.TagNumber(1)
+  set accountingHour($core.int value) => $_setSignedInt32(0, value);
+  @$pb.TagNumber(1)
+  $core.bool hasAccountingHour() => $_has(0);
+  @$pb.TagNumber(1)
+  void clearAccountingHour() => $_clearField(1);
+
+  @$pb.TagNumber(2)
+  $core.int get entriesToday => $_getIZ(1);
+  @$pb.TagNumber(2)
+  set entriesToday($core.int value) => $_setSignedInt32(1, value);
+  @$pb.TagNumber(2)
+  $core.bool hasEntriesToday() => $_has(1);
+  @$pb.TagNumber(2)
+  void clearEntriesToday() => $_clearField(2);
+
+  @$pb.TagNumber(3)
+  $core.int get uncategorizedToday => $_getIZ(2);
+  @$pb.TagNumber(3)
+  set uncategorizedToday($core.int value) => $_setSignedInt32(2, value);
+  @$pb.TagNumber(3)
+  $core.bool hasUncategorizedToday() => $_has(2);
+  @$pb.TagNumber(3)
+  void clearUncategorizedToday() => $_clearField(3);
+
+  @$pb.TagNumber(4)
+  $core.int get dueQuestions => $_getIZ(3);
+  @$pb.TagNumber(4)
+  set dueQuestions($core.int value) => $_setSignedInt32(3, value);
+  @$pb.TagNumber(4)
+  $core.bool hasDueQuestions() => $_has(3);
+  @$pb.TagNumber(4)
+  void clearDueQuestions() => $_clearField(4);
+
+  @$pb.TagNumber(5)
+  $core.int get lowBalanceWarnings => $_getIZ(4);
+  @$pb.TagNumber(5)
+  set lowBalanceWarnings($core.int value) => $_setSignedInt32(4, value);
+  @$pb.TagNumber(5)
+  $core.bool hasLowBalanceWarnings() => $_has(4);
+  @$pb.TagNumber(5)
+  void clearLowBalanceWarnings() => $_clearField(5);
+
+  @$pb.TagNumber(6)
+  $core.bool get shouldRemind => $_getBF(5);
+  @$pb.TagNumber(6)
+  set shouldRemind($core.bool value) => $_setBool(5, value);
+  @$pb.TagNumber(6)
+  $core.bool hasShouldRemind() => $_has(5);
+  @$pb.TagNumber(6)
+  void clearShouldRemind() => $_clearField(6);
 }
 
 class HistoryQuery extends $pb.GeneratedMessage {

@@ -40,6 +40,13 @@ class AssistantControllerClient extends $grpc.Client {
     return $createUnaryCall(_$clear, request, options: options);
   }
 
+  $grpc.ResponseFuture<$1.DigestReply> digest(
+    $0.Empty request, {
+    $grpc.CallOptions? options,
+  }) {
+    return $createUnaryCall(_$digest, request, options: options);
+  }
+
   $grpc.ResponseFuture<$1.ChatReply> history(
     $1.HistoryQuery request, {
     $grpc.CallOptions? options,
@@ -68,12 +75,23 @@ class AssistantControllerClient extends $grpc.Client {
     return $createUnaryCall(_$send, request, options: options);
   }
 
+  $grpc.ResponseFuture<$0.Empty> setAccountingHour(
+    $1.AccountingHour request, {
+    $grpc.CallOptions? options,
+  }) {
+    return $createUnaryCall(_$setAccountingHour, request, options: options);
+  }
+
   // method descriptors
 
   static final _$clear = $grpc.ClientMethod<$0.Empty, $0.Empty>(
       '/config.assistant.AssistantController/Clear',
       ($0.Empty value) => value.writeToBuffer(),
       $0.Empty.fromBuffer);
+  static final _$digest = $grpc.ClientMethod<$0.Empty, $1.DigestReply>(
+      '/config.assistant.AssistantController/Digest',
+      ($0.Empty value) => value.writeToBuffer(),
+      $1.DigestReply.fromBuffer);
   static final _$history = $grpc.ClientMethod<$1.HistoryQuery, $1.ChatReply>(
       '/config.assistant.AssistantController/History',
       ($1.HistoryQuery value) => value.writeToBuffer(),
@@ -90,6 +108,11 @@ class AssistantControllerClient extends $grpc.Client {
       '/config.assistant.AssistantController/Send',
       ($1.MessageSend value) => value.writeToBuffer(),
       $1.ChatReply.fromBuffer);
+  static final _$setAccountingHour =
+      $grpc.ClientMethod<$1.AccountingHour, $0.Empty>(
+          '/config.assistant.AssistantController/SetAccountingHour',
+          ($1.AccountingHour value) => value.writeToBuffer(),
+          $0.Empty.fromBuffer);
 }
 
 @$pb.GrpcServiceName('config.assistant.AssistantController')
@@ -104,6 +127,13 @@ abstract class AssistantControllerServiceBase extends $grpc.Service {
         false,
         ($core.List<$core.int> value) => $0.Empty.fromBuffer(value),
         ($0.Empty value) => value.writeToBuffer()));
+    $addMethod($grpc.ServiceMethod<$0.Empty, $1.DigestReply>(
+        'Digest',
+        digest_Pre,
+        false,
+        false,
+        ($core.List<$core.int> value) => $0.Empty.fromBuffer(value),
+        ($1.DigestReply value) => value.writeToBuffer()));
     $addMethod($grpc.ServiceMethod<$1.HistoryQuery, $1.ChatReply>(
         'History',
         history_Pre,
@@ -132,6 +162,13 @@ abstract class AssistantControllerServiceBase extends $grpc.Service {
         false,
         ($core.List<$core.int> value) => $1.MessageSend.fromBuffer(value),
         ($1.ChatReply value) => value.writeToBuffer()));
+    $addMethod($grpc.ServiceMethod<$1.AccountingHour, $0.Empty>(
+        'SetAccountingHour',
+        setAccountingHour_Pre,
+        false,
+        false,
+        ($core.List<$core.int> value) => $1.AccountingHour.fromBuffer(value),
+        ($0.Empty value) => value.writeToBuffer()));
   }
 
   $async.Future<$0.Empty> clear_Pre(
@@ -140,6 +177,14 @@ abstract class AssistantControllerServiceBase extends $grpc.Service {
   }
 
   $async.Future<$0.Empty> clear($grpc.ServiceCall call, $0.Empty request);
+
+  $async.Future<$1.DigestReply> digest_Pre(
+      $grpc.ServiceCall $call, $async.Future<$0.Empty> $request) async {
+    return digest($call, await $request);
+  }
+
+  $async.Future<$1.DigestReply> digest(
+      $grpc.ServiceCall call, $0.Empty request);
 
   $async.Future<$1.ChatReply> history_Pre(
       $grpc.ServiceCall $call, $async.Future<$1.HistoryQuery> $request) async {
@@ -171,4 +216,12 @@ abstract class AssistantControllerServiceBase extends $grpc.Service {
 
   $async.Future<$1.ChatReply> send(
       $grpc.ServiceCall call, $1.MessageSend request);
+
+  $async.Future<$0.Empty> setAccountingHour_Pre($grpc.ServiceCall $call,
+      $async.Future<$1.AccountingHour> $request) async {
+    return setAccountingHour($call, await $request);
+  }
+
+  $async.Future<$0.Empty> setAccountingHour(
+      $grpc.ServiceCall call, $1.AccountingHour request);
 }

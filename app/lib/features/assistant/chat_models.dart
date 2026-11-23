@@ -75,3 +75,23 @@ class SmsCard {
   final List<String> suggestedCategoryIds;
   final String duplicateEntryId;
 }
+
+/// What today looks like, and whether to remind. [accountingHour] is the
+/// Tehran hour the person chose, or -1 when the reminder is off.
+class Digest {
+  const Digest({
+    required this.accountingHour,
+    required this.entriesToday,
+    required this.uncategorizedToday,
+    required this.dueQuestions,
+    required this.lowBalanceWarnings,
+    required this.shouldRemind,
+  });
+
+  final int accountingHour;
+  final int entriesToday;
+  final int uncategorizedToday;
+  final int dueQuestions;
+  final int lowBalanceWarnings;
+  final bool shouldRemind;
+}

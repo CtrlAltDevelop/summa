@@ -3,6 +3,7 @@ import 'dart:math';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../core/grpc/grpc_providers.dart';
+import '../../core/reminders/reminder_scheduler.dart';
 import '../auth/auth_controller.dart';
 import 'assistant_api.dart';
 import 'chat_models.dart';
@@ -16,6 +17,26 @@ final assistantControllerProvider =
       AssistantController.new,
       retry: (_, _) => null,
     );
+
+/// Today's digest and the chosen accounting hour.
+final digestProvider = FutureProvider<Digest>(
+  (ref) => ref
+      .read(authControllerProvider.notifier)
+      .withAccess((access) => ref.read(assistantApiProvider).digest(access)),
+);
+
+/// Saves the accounting hour and (re)schedules the device reminder.
+Future<void> setAccountingHour(WidgetRef ref, int hour) async {
+  await ref
+      .read(authControllerProvider.notifier)
+      .withAccess(
+        (access) =>
+            ref.read(assistantApiProvider).setAccountingHour(access, hour),
+      );
+  final scheduler = ref.read(reminderSchedulerProvider);
+  await (hour < 0 ? scheduler.cancel() : scheduler.scheduleDaily(hour));
+  ref.invalidate(digestProvider);
+}
 
 /// Card ids (the assistant message ids) already registered in this session.
 final registeredCardsProvider = NotifierProvider<RegisteredCards, Set<String>>(

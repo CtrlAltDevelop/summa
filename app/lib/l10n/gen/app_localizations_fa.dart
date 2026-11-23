@@ -564,4 +564,31 @@ class AppLocalizationsFa extends AppLocalizations {
 
   @override
   String get recurringCategoryLabel => 'دسته';
+
+  @override
+  String get digestTitle => 'حساب‌وکتاب امروز';
+
+  @override
+  String digestEntries(String count) {
+    return 'تراکنش ثبت‌شده امروز: $count';
+  }
+
+  @override
+  String digestUncategorized(String count) {
+    return 'بدون دسته: $count';
+  }
+
+  @override
+  String digestDue(String count) {
+    return 'سررسید منتظر پاسخ: $count';
+  }
+
+  @override
+  String get digestNothingYet => 'امروز هنوز چیزی ثبت نکرده‌ای.';
+
+  @override
+  String get accountingHourTitle => 'ساعت حساب‌وکتاب روزانه';
+
+  @override
+  String get accountingHourOff => 'خاموش';
 }

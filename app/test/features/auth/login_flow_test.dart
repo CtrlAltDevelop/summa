@@ -7,6 +7,7 @@ import 'package:summa/features/auth/auth_models.dart';
 import 'package:summa/features/auth/token_store.dart';
 import 'package:summa/features/categories/category_controller.dart';
 import 'package:summa/features/recurring/recurring_controller.dart';
+import 'package:summa/features/assistant/assistant_controller.dart';
 import 'package:summa/features/wallets/ledger_controller.dart';
 import 'package:summa/features/wallets/wallets_controller.dart';
 
@@ -14,6 +15,7 @@ import '../categories/fake_category_api.dart';
 import '../wallets/fake_ledger_api.dart';
 import '../wallets/fake_wallet_api.dart';
 import '../recurring/fake_recurring_api.dart';
+import '../assistant/fake_assistant_api.dart';
 import 'fake_auth_api.dart';
 
 Future<MemoryTokenStore> _pump(
@@ -21,6 +23,10 @@ Future<MemoryTokenStore> _pump(
   FakeAuthApi api, {
   Tokens? stored,
 }) async {
+  // Tall enough that the whole home list (and its sign-out button) is built.
+  tester.view.physicalSize = const Size(800, 8000);
+  tester.view.devicePixelRatio = 1;
+  addTearDown(tester.view.reset);
   final store = MemoryTokenStore(stored);
   final wallets = FakeWalletApi();
   final ledger = FakeLedgerApi(wallets);
@@ -30,6 +36,7 @@ Future<MemoryTokenStore> _pump(
         authApiProvider.overrideWithValue(api),
         tokenStoreProvider.overrideWithValue(store),
         recurringApiProvider.overrideWithValue(FakeRecurringApi()),
+        assistantApiProvider.overrideWithValue(FakeAssistantApi()),
         walletApiProvider.overrideWithValue(wallets),
         ledgerApiProvider.overrideWithValue(ledger),
         categoryApiProvider.overrideWithValue(FakeCategoryApi(ledger)),
