@@ -831,6 +831,72 @@ abstract class AppLocalizations {
   /// In fa, this message translates to:
   /// **'این کارت (۴ رقم آخر {last4}) برای دفعه بعد به همین کیف وصل می‌شود.'**
   String smsCardNote(String last4);
+
+  /// No description provided for @entryOutsideLabel.
+  ///
+  /// In fa, this message translates to:
+  /// **'حساب‌وکتاب'**
+  String get entryOutsideLabel;
+
+  /// No description provided for @entryCounted.
+  ///
+  /// In fa, this message translates to:
+  /// **'در جمع‌ها'**
+  String get entryCounted;
+
+  /// No description provided for @entryOutside.
+  ///
+  /// In fa, this message translates to:
+  /// **'بیرون از جمع'**
+  String get entryOutside;
+
+  /// No description provided for @entryOutsideTag.
+  ///
+  /// In fa, this message translates to:
+  /// **'بیرون از جمع'**
+  String get entryOutsideTag;
+
+  /// No description provided for @entrySplitTag.
+  ///
+  /// In fa, this message translates to:
+  /// **'تقسیم‌شده'**
+  String get entrySplitTag;
+
+  /// No description provided for @splitOpen.
+  ///
+  /// In fa, this message translates to:
+  /// **'تقسیم خرج'**
+  String get splitOpen;
+
+  /// No description provided for @splitTitle.
+  ///
+  /// In fa, this message translates to:
+  /// **'تقسیم خرج'**
+  String get splitTitle;
+
+  /// No description provided for @splitPart.
+  ///
+  /// In fa, this message translates to:
+  /// **'بخش'**
+  String get splitPart;
+
+  /// No description provided for @splitAddPart.
+  ///
+  /// In fa, this message translates to:
+  /// **'افزودن بخش'**
+  String get splitAddPart;
+
+  /// No description provided for @splitTotal.
+  ///
+  /// In fa, this message translates to:
+  /// **'جمع'**
+  String get splitTotal;
+
+  /// No description provided for @splitNeedsTwo.
+  ///
+  /// In fa, this message translates to:
+  /// **'حداقل دو بخش با مبلغ درست لازم است.'**
+  String get splitNeedsTwo;
 }
 
 class _AppLocalizationsDelegate

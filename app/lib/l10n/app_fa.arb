@@ -157,5 +157,16 @@
         "type": "String"
       }
     }
-  }
+  },
+  "entryOutsideLabel": "حساب‌وکتاب",
+  "entryCounted": "در جمع‌ها",
+  "entryOutside": "بیرون از جمع",
+  "entryOutsideTag": "بیرون از جمع",
+  "entrySplitTag": "تقسیم‌شده",
+  "splitOpen": "تقسیم خرج",
+  "splitTitle": "تقسیم خرج",
+  "splitPart": "بخش",
+  "splitAddPart": "افزودن بخش",
+  "splitTotal": "جمع",
+  "splitNeedsTwo": "حداقل دو بخش با مبلغ درست لازم است."
 }

@@ -32,6 +32,7 @@ class _EntryFormScreenState extends ConsumerState<EntryFormScreen> {
   late Wallet _wallet = widget.wallets.first;
   EntryKind _kind = EntryKind.expense;
   Category? _category;
+  bool _outside = false;
   List<Category> _allCategories = const [];
   bool _saving = false;
   String? _error;
@@ -89,6 +90,7 @@ class _EntryFormScreenState extends ConsumerState<EntryFormScreen> {
             note: _note.text.trim(),
             clientMutationId: _mutationId,
             categoryId: _chosenCategory?.id ?? '',
+            outsideTotals: _kind == EntryKind.expense && _outside,
           );
       if (mounted) navigator.pop();
     } on WalletException catch (e) {
@@ -147,6 +149,17 @@ class _EntryFormScreenState extends ConsumerState<EntryFormScreen> {
               onSelected: (w) => setState(() => _wallet = w),
             ),
             const SizedBox(height: SmSpace.lg),
+            if (_kind == EntryKind.expense) ...[
+              Text(l10n.entryOutsideLabel, style: SmType.caption),
+              const SizedBox(height: SmSpace.sm),
+              Choices<bool>(
+                values: const [false, true],
+                selected: _outside,
+                label: (v) => v ? l10n.entryOutside : l10n.entryCounted,
+                onSelected: (v) => setState(() => _outside = v),
+              ),
+              const SizedBox(height: SmSpace.lg),
+            ],
             SmTextField(
               controller: _amount,
               label: l10n.entryAmountLabel,

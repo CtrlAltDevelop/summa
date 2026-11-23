@@ -191,6 +191,8 @@ const Entry$json = {
     {'1': 'occurred_at', '3': 6, '4': 1, '5': 9, '10': 'occurredAt'},
     {'1': 'note', '3': 7, '4': 1, '5': 9, '10': 'note'},
     {'1': 'category_id', '3': 8, '4': 1, '5': 9, '10': 'categoryId'},
+    {'1': 'outside_totals', '3': 9, '4': 1, '5': 8, '10': 'outsideTotals'},
+    {'1': 'split_id', '3': 10, '4': 1, '5': 9, '10': 'splitId'},
   ],
 };
 
@@ -199,7 +201,9 @@ final $typed_data.Uint8List entryDescriptor = $convert.base64Decode(
     'CgVFbnRyeRIOCgJpZBgBIAEoCVICaWQSGwoJd2FsbGV0X2lkGAIgASgJUgh3YWxsZXRJZBISCg'
     'RraW5kGAMgASgJUgRraW5kEiEKDGFtb3VudF9taW5vchgEIAEoA1ILYW1vdW50TWlub3ISGgoI'
     'Y3VycmVuY3kYBSABKAlSCGN1cnJlbmN5Eh8KC29jY3VycmVkX2F0GAYgASgJUgpvY2N1cnJlZE'
-    'F0EhIKBG5vdGUYByABKAlSBG5vdGUSHwoLY2F0ZWdvcnlfaWQYCCABKAlSCmNhdGVnb3J5SWQ=');
+    'F0EhIKBG5vdGUYByABKAlSBG5vdGUSHwoLY2F0ZWdvcnlfaWQYCCABKAlSCmNhdGVnb3J5SWQS'
+    'JQoOb3V0c2lkZV90b3RhbHMYCSABKAhSDW91dHNpZGVUb3RhbHMSGQoIc3BsaXRfaWQYCiABKA'
+    'lSB3NwbGl0SWQ=');
 
 @$core.Deprecated('Use entryEditDescriptor instead')
 const EntryEdit$json = {
@@ -210,6 +214,18 @@ const EntryEdit$json = {
     {'1': 'occurred_at', '3': 3, '4': 1, '5': 9, '10': 'occurredAt'},
     {'1': 'note', '3': 4, '4': 1, '5': 9, '10': 'note'},
     {'1': 'category_id', '3': 5, '4': 1, '5': 9, '10': 'categoryId'},
+    {
+      '1': 'outside_totals',
+      '3': 6,
+      '4': 1,
+      '5': 8,
+      '9': 0,
+      '10': 'outsideTotals',
+      '17': true
+    },
+  ],
+  '8': [
+    {'1': '_outside_totals'},
   ],
 };
 
@@ -217,7 +233,8 @@ const EntryEdit$json = {
 final $typed_data.Uint8List entryEditDescriptor = $convert.base64Decode(
     'CglFbnRyeUVkaXQSGQoIZW50cnlfaWQYASABKAlSB2VudHJ5SWQSIQoMYW1vdW50X21pbm9yGA'
     'IgASgDUgthbW91bnRNaW5vchIfCgtvY2N1cnJlZF9hdBgDIAEoCVIKb2NjdXJyZWRBdBISCgRu'
-    'b3RlGAQgASgJUgRub3RlEh8KC2NhdGVnb3J5X2lkGAUgASgJUgpjYXRlZ29yeUlk');
+    'b3RlGAQgASgJUgRub3RlEh8KC2NhdGVnb3J5X2lkGAUgASgJUgpjYXRlZ29yeUlkEioKDm91dH'
+    'NpZGVfdG90YWxzGAYgASgISABSDW91dHNpZGVUb3RhbHOIAQFCEQoPX291dHNpZGVfdG90YWxz');
 
 @$core.Deprecated('Use entryListReplyDescriptor instead')
 const EntryListReply$json = {
@@ -270,6 +287,7 @@ const EntryRecord$json = {
       '10': 'clientMutationId'
     },
     {'1': 'category_id', '3': 7, '4': 1, '5': 9, '10': 'categoryId'},
+    {'1': 'outside_totals', '3': 8, '4': 1, '5': 8, '10': 'outsideTotals'},
   ],
 };
 
@@ -279,7 +297,7 @@ final $typed_data.Uint8List entryRecordDescriptor = $convert.base64Decode(
     'lSBGtpbmQSIQoMYW1vdW50X21pbm9yGAMgASgDUgthbW91bnRNaW5vchIfCgtvY2N1cnJlZF9h'
     'dBgEIAEoCVIKb2NjdXJyZWRBdBISCgRub3RlGAUgASgJUgRub3RlEiwKEmNsaWVudF9tdXRhdG'
     'lvbl9pZBgGIAEoCVIQY2xpZW50TXV0YXRpb25JZBIfCgtjYXRlZ29yeV9pZBgHIAEoCVIKY2F0'
-    'ZWdvcnlJZA==');
+    'ZWdvcnlJZBIlCg5vdXRzaWRlX3RvdGFscxgIIAEoCFINb3V0c2lkZVRvdGFscw==');
 
 @$core.Deprecated('Use entryRefDescriptor instead')
 const EntryRef$json = {
@@ -312,6 +330,54 @@ const EntryReply$json = {
 final $typed_data.Uint8List entryReplyDescriptor = $convert.base64Decode(
     'CgpFbnRyeVJlcGx5EisKBWVudHJ5GAEgASgLMhUuY29uZmlnLndhbGxldHMuRW50cnlSBWVudH'
     'J5');
+
+@$core.Deprecated('Use splitPartMsgDescriptor instead')
+const SplitPartMsg$json = {
+  '1': 'SplitPartMsg',
+  '2': [
+    {'1': 'category_id', '3': 1, '4': 1, '5': 9, '10': 'categoryId'},
+    {'1': 'amount_minor', '3': 2, '4': 1, '5': 3, '10': 'amountMinor'},
+    {'1': 'outside_totals', '3': 3, '4': 1, '5': 8, '10': 'outsideTotals'},
+  ],
+};
+
+/// Descriptor for `SplitPartMsg`. Decode as a `google.protobuf.DescriptorProto`.
+final $typed_data.Uint8List splitPartMsgDescriptor = $convert.base64Decode(
+    'CgxTcGxpdFBhcnRNc2cSHwoLY2F0ZWdvcnlfaWQYASABKAlSCmNhdGVnb3J5SWQSIQoMYW1vdW'
+    '50X21pbm9yGAIgASgDUgthbW91bnRNaW5vchIlCg5vdXRzaWRlX3RvdGFscxgDIAEoCFINb3V0'
+    'c2lkZVRvdGFscw==');
+
+@$core.Deprecated('Use splitRequestDescriptor instead')
+const SplitRequest$json = {
+  '1': 'SplitRequest',
+  '2': [
+    {'1': 'wallet_id', '3': 1, '4': 1, '5': 9, '10': 'walletId'},
+    {
+      '1': 'parts',
+      '3': 2,
+      '4': 3,
+      '5': 11,
+      '6': '.config.wallets.SplitPartMsg',
+      '10': 'parts'
+    },
+    {'1': 'occurred_at', '3': 3, '4': 1, '5': 9, '10': 'occurredAt'},
+    {'1': 'note', '3': 4, '4': 1, '5': 9, '10': 'note'},
+    {
+      '1': 'client_mutation_id',
+      '3': 5,
+      '4': 1,
+      '5': 9,
+      '10': 'clientMutationId'
+    },
+  ],
+};
+
+/// Descriptor for `SplitRequest`. Decode as a `google.protobuf.DescriptorProto`.
+final $typed_data.Uint8List splitRequestDescriptor = $convert.base64Decode(
+    'CgxTcGxpdFJlcXVlc3QSGwoJd2FsbGV0X2lkGAEgASgJUgh3YWxsZXRJZBIyCgVwYXJ0cxgCIA'
+    'MoCzIcLmNvbmZpZy53YWxsZXRzLlNwbGl0UGFydE1zZ1IFcGFydHMSHwoLb2NjdXJyZWRfYXQY'
+    'AyABKAlSCm9jY3VycmVkQXQSEgoEbm90ZRgEIAEoCVIEbm90ZRIsChJjbGllbnRfbXV0YXRpb2'
+    '5faWQYBSABKAlSEGNsaWVudE11dGF0aW9uSWQ=');
 
 @$core.Deprecated('Use transferRequestDescriptor instead')
 const TransferRequest$json = {

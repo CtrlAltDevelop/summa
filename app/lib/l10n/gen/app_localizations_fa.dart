@@ -394,4 +394,37 @@ class AppLocalizationsFa extends AppLocalizations {
   String smsCardNote(String last4) {
     return 'این کارت (۴ رقم آخر $last4) برای دفعه بعد به همین کیف وصل می‌شود.';
   }
+
+  @override
+  String get entryOutsideLabel => 'حساب‌وکتاب';
+
+  @override
+  String get entryCounted => 'در جمع‌ها';
+
+  @override
+  String get entryOutside => 'بیرون از جمع';
+
+  @override
+  String get entryOutsideTag => 'بیرون از جمع';
+
+  @override
+  String get entrySplitTag => 'تقسیم‌شده';
+
+  @override
+  String get splitOpen => 'تقسیم خرج';
+
+  @override
+  String get splitTitle => 'تقسیم خرج';
+
+  @override
+  String get splitPart => 'بخش';
+
+  @override
+  String get splitAddPart => 'افزودن بخش';
+
+  @override
+  String get splitTotal => 'جمع';
+
+  @override
+  String get splitNeedsTwo => 'حداقل دو بخش با مبلغ درست لازم است.';
 }

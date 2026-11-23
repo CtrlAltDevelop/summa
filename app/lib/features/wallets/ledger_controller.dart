@@ -33,6 +33,7 @@ class LedgerController extends AsyncNotifier<List<Entry>> {
     required String clientMutationId,
     String categoryId = '',
     DateTime? occurredAt,
+    bool outsideTotals = false,
   }) async {
     await _auth.withAccess(
       (access) => _api.record(
@@ -44,6 +45,25 @@ class LedgerController extends AsyncNotifier<List<Entry>> {
         clientMutationId: clientMutationId,
         categoryId: categoryId,
         occurredAt: occurredAt,
+        outsideTotals: outsideTotals,
+      ),
+    );
+    await _refresh();
+  }
+
+  Future<void> recordSplit({
+    required String walletId,
+    required List<SplitPart> parts,
+    required String note,
+    required String clientMutationId,
+  }) async {
+    await _auth.withAccess(
+      (access) => _api.recordSplit(
+        access,
+        walletId: walletId,
+        parts: parts,
+        note: note,
+        clientMutationId: clientMutationId,
       ),
     );
     await _refresh();

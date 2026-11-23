@@ -16,6 +16,14 @@ abstract interface class LedgerApi {
     required String clientMutationId,
     String categoryId = '',
     DateTime? occurredAt,
+    bool outsideTotals = false,
+  });
+  Future<void> recordSplit(
+    String access, {
+    required String walletId,
+    required List<SplitPart> parts,
+    required String note,
+    required String clientMutationId,
   });
   Future<void> transfer(
     String access, {
@@ -55,6 +63,7 @@ class GrpcLedgerApi implements LedgerApi {
     required String clientMutationId,
     String categoryId = '',
     DateTime? occurredAt,
+    bool outsideTotals = false,
   }) => guardGrpc(() async {
     final r = await _client.record(
       pb.EntryRecord(
@@ -65,10 +74,37 @@ class GrpcLedgerApi implements LedgerApi {
         clientMutationId: clientMutationId,
         categoryId: categoryId,
         occurredAt: occurredAt?.toUtc().toIso8601String() ?? '',
+        outsideTotals: outsideTotals,
       ),
       options: _bearer(access),
     );
     return _entry(r.entry);
+  });
+
+  @override
+  Future<void> recordSplit(
+    String access, {
+    required String walletId,
+    required List<SplitPart> parts,
+    required String note,
+    required String clientMutationId,
+  }) => guardGrpc(() async {
+    await _client.recordSplit(
+      pb.SplitRequest(
+        walletId: walletId,
+        parts: [
+          for (final p in parts)
+            pb.SplitPartMsg(
+              categoryId: p.categoryId,
+              amountMinor: Int64(p.amountMinor),
+              outsideTotals: p.outsideTotals,
+            ),
+        ],
+        note: note,
+        clientMutationId: clientMutationId,
+      ),
+      options: _bearer(access),
+    );
   });
 
   @override
@@ -113,5 +149,7 @@ class GrpcLedgerApi implements LedgerApi {
     occurredAt: DateTime.parse(e.occurredAt),
     note: e.note,
     categoryId: e.categoryId,
+    outsideTotals: e.outsideTotals,
+    splitId: e.splitId,
   );
 }
