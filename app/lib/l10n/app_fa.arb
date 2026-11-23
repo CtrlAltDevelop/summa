@@ -293,5 +293,43 @@
   "pricesTitle": "قیمت‌ها",
   "priceUnknown": "نامشخص",
   "priceStaleSuffix": "کهنه",
-  "priceSourcePrefix": "منبع"
+  "priceSourcePrefix": "منبع",
+  "netWorthTitle": "خالص دارایی",
+  "netWorthWallets": "کیف‌ها",
+  "netWorthAssets": "دارایی‌ها",
+  "netWorthDebts": "بدهی‌ها",
+  "netWorthGold": "گرم طلای ۱۸ عیار",
+  "netWorthStale": "بعضی نرخ‌ها کهنه‌اند؛ عدد تقریبی است.",
+  "netWorthUnconverted": "ارزهای بدون نرخ (کنار گذاشته شد): {codes}",
+  "@netWorthUnconverted": {
+    "placeholders": {
+      "codes": {
+        "type": "String"
+      }
+    }
+  },
+  "netWorthUnpriced": "دارایی بدون قیمت: {count}",
+  "@netWorthUnpriced": {
+    "placeholders": {
+      "count": {
+        "type": "String"
+      }
+    }
+  },
+  "basketsTitle": "سبدهای هدف",
+  "basketAdd": "سبد هدف جدید",
+  "basketFormTitle": "سبد هدف",
+  "basketNameLabel": "نام هدف (مثلاً پیش‌پرداخت خانه)",
+  "basketTargetLabel": "مبلغ هدف (تومان)",
+  "basketItemsLabel": "چه چیزهایی به این هدف حساب شود؟",
+  "basketTargetInvalid": "مبلغ هدف درست نیست.",
+  "basketDelete": "حذف سبد",
+  "basketProgress": "{percent}٪ از هدف",
+  "@basketProgress": {
+    "placeholders": {
+      "percent": {
+        "type": "String"
+      }
+    }
+  }
 }

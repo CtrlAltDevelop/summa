@@ -1521,6 +1521,108 @@ abstract class AppLocalizations {
   /// In fa, this message translates to:
   /// **'منبع'**
   String get priceSourcePrefix;
+
+  /// No description provided for @netWorthTitle.
+  ///
+  /// In fa, this message translates to:
+  /// **'خالص دارایی'**
+  String get netWorthTitle;
+
+  /// No description provided for @netWorthWallets.
+  ///
+  /// In fa, this message translates to:
+  /// **'کیف‌ها'**
+  String get netWorthWallets;
+
+  /// No description provided for @netWorthAssets.
+  ///
+  /// In fa, this message translates to:
+  /// **'دارایی‌ها'**
+  String get netWorthAssets;
+
+  /// No description provided for @netWorthDebts.
+  ///
+  /// In fa, this message translates to:
+  /// **'بدهی‌ها'**
+  String get netWorthDebts;
+
+  /// No description provided for @netWorthGold.
+  ///
+  /// In fa, this message translates to:
+  /// **'گرم طلای ۱۸ عیار'**
+  String get netWorthGold;
+
+  /// No description provided for @netWorthStale.
+  ///
+  /// In fa, this message translates to:
+  /// **'بعضی نرخ‌ها کهنه‌اند؛ عدد تقریبی است.'**
+  String get netWorthStale;
+
+  /// No description provided for @netWorthUnconverted.
+  ///
+  /// In fa, this message translates to:
+  /// **'ارزهای بدون نرخ (کنار گذاشته شد): {codes}'**
+  String netWorthUnconverted(String codes);
+
+  /// No description provided for @netWorthUnpriced.
+  ///
+  /// In fa, this message translates to:
+  /// **'دارایی بدون قیمت: {count}'**
+  String netWorthUnpriced(String count);
+
+  /// No description provided for @basketsTitle.
+  ///
+  /// In fa, this message translates to:
+  /// **'سبدهای هدف'**
+  String get basketsTitle;
+
+  /// No description provided for @basketAdd.
+  ///
+  /// In fa, this message translates to:
+  /// **'سبد هدف جدید'**
+  String get basketAdd;
+
+  /// No description provided for @basketFormTitle.
+  ///
+  /// In fa, this message translates to:
+  /// **'سبد هدف'**
+  String get basketFormTitle;
+
+  /// No description provided for @basketNameLabel.
+  ///
+  /// In fa, this message translates to:
+  /// **'نام هدف (مثلاً پیش‌پرداخت خانه)'**
+  String get basketNameLabel;
+
+  /// No description provided for @basketTargetLabel.
+  ///
+  /// In fa, this message translates to:
+  /// **'مبلغ هدف (تومان)'**
+  String get basketTargetLabel;
+
+  /// No description provided for @basketItemsLabel.
+  ///
+  /// In fa, this message translates to:
+  /// **'چه چیزهایی به این هدف حساب شود؟'**
+  String get basketItemsLabel;
+
+  /// No description provided for @basketTargetInvalid.
+  ///
+  /// In fa, this message translates to:
+  /// **'مبلغ هدف درست نیست.'**
+  String get basketTargetInvalid;
+
+  /// No description provided for @basketDelete.
+  ///
+  /// In fa, this message translates to:
+  /// **'حذف سبد'**
+  String get basketDelete;
+
+  /// No description provided for @basketProgress.
+  ///
+  /// In fa, this message translates to:
+  /// **'{percent}٪ از هدف'**
+  String basketProgress(String percent);
 }
 
 class _AppLocalizationsDelegate
