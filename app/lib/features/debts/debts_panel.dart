@@ -32,6 +32,7 @@ class DebtsPanel extends ConsumerWidget {
           ),
         SmButton(
           label: l10n.debtAdd,
+          secondary: true,
           onPressed: () => Navigator.of(context).push(
             PageRouteBuilder<void>(
               pageBuilder: (_, _, _) => DebtFormScreen(wallets: wallets),

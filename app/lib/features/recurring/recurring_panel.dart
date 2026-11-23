@@ -40,6 +40,7 @@ class RecurringPanel extends ConsumerWidget {
         if (wallets.isNotEmpty)
           SmButton(
             label: l10n.recurringAdd,
+            secondary: true,
             onPressed: () => Navigator.of(context).push(
               PageRouteBuilder<void>(
                 pageBuilder: (_, _, _) => RecurringFormScreen(wallets: wallets),
@@ -163,12 +164,14 @@ class _OccurrenceCardState extends ConsumerState<_OccurrenceCard> {
             const SizedBox(height: SmSpace.sm),
             SmButton(
               label: l10n.occurrenceNotYet,
+              secondary: true,
               onPressed: _busy ? null : () => _answer('postpone'),
             ),
             if (others.isNotEmpty) ...[
               const SizedBox(height: SmSpace.sm),
               SmButton(
                 label: l10n.occurrenceOtherWallet,
+                secondary: true,
                 onPressed: _busy
                     ? null
                     : () => setState(() => _picking = !_picking),
@@ -186,6 +189,7 @@ class _OccurrenceCardState extends ConsumerState<_OccurrenceCard> {
             const SizedBox(height: SmSpace.sm),
             SmButton(
               label: l10n.occurrenceCancelled,
+              secondary: true,
               onPressed: _busy ? null : () => _answer('cancel'),
             ),
           ],

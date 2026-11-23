@@ -54,6 +54,7 @@ class AssetsPanel extends ConsumerWidget {
         ],
         SmButton(
           label: l10n.assetAdd,
+          secondary: true,
           onPressed: () => Navigator.of(context).push(
             PageRouteBuilder<void>(
               pageBuilder: (_, _, _) => const AssetFormScreen(),
@@ -63,6 +64,7 @@ class AssetsPanel extends ConsumerWidget {
         const SizedBox(height: SmSpace.sm),
         SmButton(
           label: l10n.pricesOpen,
+          secondary: true,
           onPressed: () => Navigator.of(context).push(
             PageRouteBuilder<void>(
               pageBuilder: (_, _, _) => const PricesScreen(),

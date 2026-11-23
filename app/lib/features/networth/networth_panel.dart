@@ -239,6 +239,7 @@ class BasketsPanel extends ConsumerWidget {
           ),
         SmButton(
           label: l10n.basketAdd,
+          secondary: true,
           onPressed: () => Navigator.of(context).push(
             PageRouteBuilder<void>(
               pageBuilder: (_, _, _) => const BasketFormScreen(),

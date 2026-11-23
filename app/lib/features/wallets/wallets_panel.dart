@@ -83,6 +83,7 @@ class _Loaded extends StatelessWidget {
         const SizedBox(height: SmSpace.md),
         SmButton(
           label: l10n.walletAdd,
+          secondary: true,
           icon: SmIcons.wallet,
           onPressed: () => Navigator.of(context).push(
             PageRouteBuilder<void>(
