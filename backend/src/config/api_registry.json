@@ -35,6 +35,13 @@
         "prefix": "/debts",
         "router": "apps.debts.rest.v1.router",
         "tag": "Debts"
+      },
+      {
+        "app_config": "apps.assets.apps.AssetsConfig",
+        "description": "Endpoints published by the assets app.",
+        "prefix": "/assets",
+        "router": "apps.assets.rest.v1.router",
+        "tag": "Assets"
       }
     ]
   }

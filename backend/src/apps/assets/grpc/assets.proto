@@ -1,0 +1,101 @@
+syntax = "proto3";
+
+package config.assets;
+
+import "google/protobuf/empty.proto";
+
+service AssetsController {
+    rpc AddLot(LotAdd) returns (google.protobuf.Empty) {}
+    rpc Create(AssetCreate) returns (AssetReply) {}
+    rpc Delete(AssetRef) returns (google.protobuf.Empty) {}
+    rpc List(google.protobuf.Empty) returns (AssetListReply) {}
+    rpc Sell(AssetSell) returns (google.protobuf.Empty) {}
+}
+
+service RatesController {
+    rpc Convert(ConvertRequest) returns (ConvertReply) {}
+    rpc List(google.protobuf.Empty) returns (RateListReply) {}
+}
+
+message AssetCreate {
+    string symbol = 1;
+    string name = 2;
+    string quantity = 3;
+    int64 unit_price_minor = 4;
+    int64 manual_price_minor = 5;
+    string bought_on = 6;
+    string client_mutation_id = 7;
+}
+
+message AssetListReply {
+    repeated AssetMsg assets = 1;
+    int64 value_minor = 2;
+    int64 cost_minor = 3;
+    int64 profit_minor = 4;
+    int64 realized_minor = 5;
+}
+
+message AssetMsg {
+    string id = 1;
+    string symbol = 2;
+    string name = 3;
+    string unit = 4;
+    string quantity = 5;
+    int64 cost_minor = 6;
+    int64 value_minor = 7;
+    int64 profit_minor = 8;
+    int64 realized_minor = 9;
+    string price = 10;
+    bool price_known = 11;
+    bool stale = 12;
+}
+
+message AssetRef {
+    string asset_id = 1;
+}
+
+message AssetReply {
+    AssetMsg asset = 1;
+}
+
+message AssetSell {
+    string asset_id = 1;
+    string quantity = 2;
+    int64 unit_price_minor = 3;
+}
+
+message ConvertReply {
+    int64 amount_minor = 1;
+    bool stale = 2;
+}
+
+message ConvertRequest {
+    int64 amount_minor = 1;
+    string from_currency = 2;
+    string to_currency = 3;
+}
+
+message LotAdd {
+    string asset_id = 1;
+    string quantity = 2;
+    int64 unit_price_minor = 3;
+    string bought_on = 4;
+}
+
+message RateListReply {
+    repeated RateMsg rates = 1;
+}
+
+message RateMsg {
+    string symbol = 1;
+    string name = 2;
+    string unit = 3;
+    string group = 4;
+    string price = 5;
+    bool known = 6;
+    string source = 7;
+    string fetched_at = 8;
+    int64 age_seconds = 9;
+    bool stale = 10;
+}
+
