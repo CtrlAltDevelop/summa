@@ -1941,6 +1941,222 @@ abstract class AppLocalizations {
   /// In fa, this message translates to:
   /// **'پیام جدید'**
   String get supportUnread;
+
+  /// No description provided for @lockTitle.
+  ///
+  /// In fa, this message translates to:
+  /// **'Summa قفل است'**
+  String get lockTitle;
+
+  /// No description provided for @lockPasscodeLabel.
+  ///
+  /// In fa, this message translates to:
+  /// **'رمز اپ'**
+  String get lockPasscodeLabel;
+
+  /// No description provided for @lockUnlock.
+  ///
+  /// In fa, this message translates to:
+  /// **'باز کردن'**
+  String get lockUnlock;
+
+  /// No description provided for @lockBiometric.
+  ///
+  /// In fa, this message translates to:
+  /// **'باز کردن با بیومتریک'**
+  String get lockBiometric;
+
+  /// No description provided for @lockWrong.
+  ///
+  /// In fa, this message translates to:
+  /// **'رمز درست نیست.'**
+  String get lockWrong;
+
+  /// No description provided for @lockWait.
+  ///
+  /// In fa, this message translates to:
+  /// **'تلاش‌ها زیاد بود؛ کمی صبر کن و دوباره امتحان کن.'**
+  String get lockWait;
+
+  /// No description provided for @privacyOpen.
+  ///
+  /// In fa, this message translates to:
+  /// **'حریم و امنیت'**
+  String get privacyOpen;
+
+  /// No description provided for @privacyTitle.
+  ///
+  /// In fa, this message translates to:
+  /// **'حریم و امنیت'**
+  String get privacyTitle;
+
+  /// No description provided for @lockEnable.
+  ///
+  /// In fa, this message translates to:
+  /// **'فعال‌کردن قفل اپ'**
+  String get lockEnable;
+
+  /// No description provided for @lockDisable.
+  ///
+  /// In fa, this message translates to:
+  /// **'خاموش‌کردن قفل'**
+  String get lockDisable;
+
+  /// No description provided for @lockChange.
+  ///
+  /// In fa, this message translates to:
+  /// **'تغییر رمز'**
+  String get lockChange;
+
+  /// No description provided for @lockNewPasscode.
+  ///
+  /// In fa, this message translates to:
+  /// **'رمز جدید (۴ تا ۸ رقم)'**
+  String get lockNewPasscode;
+
+  /// No description provided for @lockConfirmPasscode.
+  ///
+  /// In fa, this message translates to:
+  /// **'تکرار رمز'**
+  String get lockConfirmPasscode;
+
+  /// No description provided for @lockMismatch.
+  ///
+  /// In fa, this message translates to:
+  /// **'دو رمز یکی نیست.'**
+  String get lockMismatch;
+
+  /// No description provided for @lockInvalid.
+  ///
+  /// In fa, this message translates to:
+  /// **'رمز باید ۴ تا ۸ رقم باشد.'**
+  String get lockInvalid;
+
+  /// No description provided for @lockCurrentPasscode.
+  ///
+  /// In fa, this message translates to:
+  /// **'رمز فعلی'**
+  String get lockCurrentPasscode;
+
+  /// No description provided for @lockBiometricToggle.
+  ///
+  /// In fa, this message translates to:
+  /// **'بیومتریک'**
+  String get lockBiometricToggle;
+
+  /// No description provided for @lockOn.
+  ///
+  /// In fa, this message translates to:
+  /// **'روشن'**
+  String get lockOn;
+
+  /// No description provided for @lockOff.
+  ///
+  /// In fa, this message translates to:
+  /// **'خاموش'**
+  String get lockOff;
+
+  /// No description provided for @lockDelayLabel.
+  ///
+  /// In fa, this message translates to:
+  /// **'قفل خودکار بعد از'**
+  String get lockDelayLabel;
+
+  /// No description provided for @lockDelayNow.
+  ///
+  /// In fa, this message translates to:
+  /// **'فوری'**
+  String get lockDelayNow;
+
+  /// No description provided for @lockDelaySeconds.
+  ///
+  /// In fa, this message translates to:
+  /// **'{count} ثانیه'**
+  String lockDelaySeconds(String count);
+
+  /// No description provided for @lockDelayMinutes.
+  ///
+  /// In fa, this message translates to:
+  /// **'{count} دقیقه'**
+  String lockDelayMinutes(String count);
+
+  /// No description provided for @lockSave.
+  ///
+  /// In fa, this message translates to:
+  /// **'ذخیره'**
+  String get lockSave;
+
+  /// No description provided for @strongAuthReason.
+  ///
+  /// In fa, this message translates to:
+  /// **'برای ادامه هویتت را تأیید کن'**
+  String get strongAuthReason;
+
+  /// No description provided for @strongAuthNeedPasscode.
+  ///
+  /// In fa, this message translates to:
+  /// **'این کار حساس است. اول یک رمز برای اپ تعیین کن.'**
+  String get strongAuthNeedPasscode;
+
+  /// No description provided for @strongAuthPrompt.
+  ///
+  /// In fa, this message translates to:
+  /// **'رمز اپ را وارد کن'**
+  String get strongAuthPrompt;
+
+  /// No description provided for @strongAuthDenied.
+  ///
+  /// In fa, this message translates to:
+  /// **'تأیید نشد.'**
+  String get strongAuthDenied;
+
+  /// No description provided for @retentionTitle.
+  ///
+  /// In fa, this message translates to:
+  /// **'نگه‌داری چت'**
+  String get retentionTitle;
+
+  /// No description provided for @retentionForever.
+  ///
+  /// In fa, this message translates to:
+  /// **'همیشه'**
+  String get retentionForever;
+
+  /// No description provided for @retentionDays.
+  ///
+  /// In fa, this message translates to:
+  /// **'{count} روز'**
+  String retentionDays(String count);
+
+  /// No description provided for @deleteAccountOpen.
+  ///
+  /// In fa, this message translates to:
+  /// **'حذف حساب'**
+  String get deleteAccountOpen;
+
+  /// No description provided for @deleteAccountWarning.
+  ///
+  /// In fa, this message translates to:
+  /// **'همه داده‌هایت برای همیشه پاک می‌شود و برگشتی ندارد. برای تأیید DELETE را بنویس.'**
+  String get deleteAccountWarning;
+
+  /// No description provided for @deleteAccountConfirmLabel.
+  ///
+  /// In fa, this message translates to:
+  /// **'عبارت تأیید'**
+  String get deleteAccountConfirmLabel;
+
+  /// No description provided for @deleteAccountButton.
+  ///
+  /// In fa, this message translates to:
+  /// **'حذف همیشگی حساب'**
+  String get deleteAccountButton;
+
+  /// No description provided for @deleteAccountFailed.
+  ///
+  /// In fa, this message translates to:
+  /// **'حذف انجام نشد. عبارت را درست بنویس یا دوباره امتحان کن.'**
+  String get deleteAccountFailed;
 }
 
 class _AppLocalizationsDelegate

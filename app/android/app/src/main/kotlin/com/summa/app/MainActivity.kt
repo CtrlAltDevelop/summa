@@ -1,5 +1,6 @@
 package com.summa.app
 
-import io.flutter.embedding.android.FlutterActivity
+import io.flutter.embedding.android.FlutterFragmentActivity
 
-class MainActivity : FlutterActivity()
+// local_auth shows its biometric prompt from a FragmentActivity.
+class MainActivity : FlutterFragmentActivity()

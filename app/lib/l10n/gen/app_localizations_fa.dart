@@ -977,4 +977,121 @@ class AppLocalizationsFa extends AppLocalizations {
 
   @override
   String get supportUnread => 'پیام جدید';
+
+  @override
+  String get lockTitle => 'Summa قفل است';
+
+  @override
+  String get lockPasscodeLabel => 'رمز اپ';
+
+  @override
+  String get lockUnlock => 'باز کردن';
+
+  @override
+  String get lockBiometric => 'باز کردن با بیومتریک';
+
+  @override
+  String get lockWrong => 'رمز درست نیست.';
+
+  @override
+  String get lockWait => 'تلاش‌ها زیاد بود؛ کمی صبر کن و دوباره امتحان کن.';
+
+  @override
+  String get privacyOpen => 'حریم و امنیت';
+
+  @override
+  String get privacyTitle => 'حریم و امنیت';
+
+  @override
+  String get lockEnable => 'فعال‌کردن قفل اپ';
+
+  @override
+  String get lockDisable => 'خاموش‌کردن قفل';
+
+  @override
+  String get lockChange => 'تغییر رمز';
+
+  @override
+  String get lockNewPasscode => 'رمز جدید (۴ تا ۸ رقم)';
+
+  @override
+  String get lockConfirmPasscode => 'تکرار رمز';
+
+  @override
+  String get lockMismatch => 'دو رمز یکی نیست.';
+
+  @override
+  String get lockInvalid => 'رمز باید ۴ تا ۸ رقم باشد.';
+
+  @override
+  String get lockCurrentPasscode => 'رمز فعلی';
+
+  @override
+  String get lockBiometricToggle => 'بیومتریک';
+
+  @override
+  String get lockOn => 'روشن';
+
+  @override
+  String get lockOff => 'خاموش';
+
+  @override
+  String get lockDelayLabel => 'قفل خودکار بعد از';
+
+  @override
+  String get lockDelayNow => 'فوری';
+
+  @override
+  String lockDelaySeconds(String count) {
+    return '$count ثانیه';
+  }
+
+  @override
+  String lockDelayMinutes(String count) {
+    return '$count دقیقه';
+  }
+
+  @override
+  String get lockSave => 'ذخیره';
+
+  @override
+  String get strongAuthReason => 'برای ادامه هویتت را تأیید کن';
+
+  @override
+  String get strongAuthNeedPasscode =>
+      'این کار حساس است. اول یک رمز برای اپ تعیین کن.';
+
+  @override
+  String get strongAuthPrompt => 'رمز اپ را وارد کن';
+
+  @override
+  String get strongAuthDenied => 'تأیید نشد.';
+
+  @override
+  String get retentionTitle => 'نگه‌داری چت';
+
+  @override
+  String get retentionForever => 'همیشه';
+
+  @override
+  String retentionDays(String count) {
+    return '$count روز';
+  }
+
+  @override
+  String get deleteAccountOpen => 'حذف حساب';
+
+  @override
+  String get deleteAccountWarning =>
+      'همه داده‌هایت برای همیشه پاک می‌شود و برگشتی ندارد. برای تأیید DELETE را بنویس.';
+
+  @override
+  String get deleteAccountConfirmLabel => 'عبارت تأیید';
+
+  @override
+  String get deleteAccountButton => 'حذف همیشگی حساب';
+
+  @override
+  String get deleteAccountFailed =>
+      'حذف انجام نشد. عبارت را درست بنویس یا دوباره امتحان کن.';
 }
