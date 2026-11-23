@@ -1,2 +1,4 @@
 .DS_Store
 .idea/
+landing/node_modules/
+landing/dist/
