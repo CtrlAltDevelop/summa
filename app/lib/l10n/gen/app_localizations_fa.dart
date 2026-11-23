@@ -663,4 +663,88 @@ class AppLocalizationsFa extends AppLocalizations {
 
   @override
   String get debtPayFailed => 'پرداخت انجام نشد؛ کیف و مبلغ را بررسی کن.';
+
+  @override
+  String get assetsTitle => 'دارایی‌ها';
+
+  @override
+  String get assetAdd => 'دارایی جدید';
+
+  @override
+  String get assetsValue => 'ارزش دارایی‌ها';
+
+  @override
+  String get assetsProfit => 'سود و زیان';
+
+  @override
+  String get assetsRealized => 'سود تحقق‌یافته';
+
+  @override
+  String get assetFormTitle => 'دارایی جدید';
+
+  @override
+  String get assetCustom => 'دلخواه';
+
+  @override
+  String get assetNameLabel => 'نام دارایی';
+
+  @override
+  String get assetQuantityLabel => 'مقدار';
+
+  @override
+  String get assetBuyPriceLabel => 'قیمت خرید هر واحد (تومان)';
+
+  @override
+  String get assetManualPriceLabel => 'قیمت امروز هر واحد (تومان)';
+
+  @override
+  String get assetBuyMore => 'خرید جدید';
+
+  @override
+  String get assetSell => 'فروش';
+
+  @override
+  String get assetSellPriceLabel => 'قیمت فروش هر واحد (تومان)';
+
+  @override
+  String get assetDelete => 'حذف دارایی';
+
+  @override
+  String get assetUnknownPrice => 'قیمت این دارایی هنوز معلوم نیست.';
+
+  @override
+  String get assetStale => 'قیمت کهنه';
+
+  @override
+  String get assetQuantityInvalid => 'مقدار درست نیست.';
+
+  @override
+  String get assetPriceInvalid => 'قیمت درست نیست.';
+
+  @override
+  String get assetNameInvalid => 'نام و قیمت امروز لازم است.';
+
+  @override
+  String get assetFailed => 'انجام نشد؛ مقدار و قیمت را بررسی کن.';
+
+  @override
+  String get assetCost => 'هزینه خرید';
+
+  @override
+  String get assetHeld => 'مقدار فعلی';
+
+  @override
+  String get pricesOpen => 'قیمت‌ها';
+
+  @override
+  String get pricesTitle => 'قیمت‌ها';
+
+  @override
+  String get priceUnknown => 'نامشخص';
+
+  @override
+  String get priceStaleSuffix => 'کهنه';
+
+  @override
+  String get priceSourcePrefix => 'منبع';
 }
