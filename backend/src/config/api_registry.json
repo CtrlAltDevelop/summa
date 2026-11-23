@@ -42,6 +42,13 @@
         "prefix": "/assets",
         "router": "apps.assets.rest.v1.router",
         "tag": "Assets"
+      },
+      {
+        "app_config": "apps.networth.apps.NetworthConfig",
+        "description": "Endpoints published by the networth app.",
+        "prefix": "/networth",
+        "router": "apps.networth.rest.v1.router",
+        "tag": "Networth"
       }
     ]
   }
