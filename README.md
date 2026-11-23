@@ -26,6 +26,22 @@ Flutter · Django · gRPC · PostgreSQL · Redis · Celery
   <img src="docs/screenshots/tablet.png" alt="خانه روی تبلت کوچک" width="38%">
 </p>
 
+### سایت معرفی
+
+سایت عمومی در `landing/` (Vite و Three.js) با دموی چت زنده، قیمت‌های روز از API بک‌اند و قسط‌سنج و ابزارهای رایگان. متن و قیمت‌ها در ادمین ویرایش می‌شود. با `make landing` (در کنار `make run-lite`) روی `http://localhost:5173` بالا می‌آید. اعداد قیمت در این تصویر نمونه‌اند.
+
+<p align="center">
+  <img src="docs/screenshots/landing-full.png" alt="سایت معرفی" width="60%">
+</p>
+
+### مستندات API
+
+بک‌اند Swagger دارد: بعد از `make run-lite` روی `http://127.0.0.1:8010/api/docs` (و ReDoc روی `/api/redoc`) و پنل ادمین روی `/admin/`. اپ از gRPC استفاده می‌کند و Swagger فقط REST را نشان می‌دهد.
+
+<p align="center">
+  <img src="docs/screenshots/swagger.png" alt="Swagger" width="80%">
+</p>
+
 ## چه کار می‌کند
 
 - **کیف پول‌ها:** هر تعداد کیف پول با ارز و بانک دلخواه (نقد، حساب بانکی، کارت اعتباری، خرید اقساطی، هدیه‌کارت، رمزارز، طلا). موجودی از رویدادها ساخته می‌شود و موجودی اولیه هنگام ساخت پرسیده می‌شود.
