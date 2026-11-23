@@ -1707,6 +1707,42 @@ abstract class AppLocalizations {
   /// In fa, this message translates to:
   /// **'گزارش گرفته نشد. دوباره امتحان کن.'**
   String get reportFailed;
+
+  /// No description provided for @outboxPending.
+  ///
+  /// In fa, this message translates to:
+  /// **'تراکنش در انتظار ارسال: {count}'**
+  String outboxPending(String count);
+
+  /// No description provided for @outboxRetry.
+  ///
+  /// In fa, this message translates to:
+  /// **'ارسال دوباره'**
+  String get outboxRetry;
+
+  /// No description provided for @outboxSavedOffline.
+  ///
+  /// In fa, this message translates to:
+  /// **'اینترنت نیست؛ ذخیره شد و با اتصال فرستاده می‌شود.'**
+  String get outboxSavedOffline;
+
+  /// No description provided for @outboxFailedTitle.
+  ///
+  /// In fa, this message translates to:
+  /// **'این تراکنش‌ها ثبت نشدند'**
+  String get outboxFailedTitle;
+
+  /// No description provided for @outboxFailedDismiss.
+  ///
+  /// In fa, this message translates to:
+  /// **'حذف'**
+  String get outboxFailedDismiss;
+
+  /// No description provided for @outboxQueued.
+  ///
+  /// In fa, this message translates to:
+  /// **'در انتظار ارسال'**
+  String get outboxQueued;
 }
 
 class _AppLocalizationsDelegate

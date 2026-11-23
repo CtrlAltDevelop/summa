@@ -17,6 +17,7 @@ dependencies:
   grpc: ^5.2.0
   intl: ^0.20.3
   material_ui: ^1.1.0
+  path_provider: ^2.1.6
   protobuf: ^6.1.0
   shamsi_date: ^1.1.1
 

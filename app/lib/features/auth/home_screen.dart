@@ -11,6 +11,7 @@ import '../assistant/sms_screen.dart';
 import '../categories/budgets_panel.dart';
 import '../debts/debts_panel.dart';
 import '../networth/networth_panel.dart';
+import '../outbox/outbox_panel.dart';
 import '../recurring/recurring_panel.dart';
 import '../reports/report_screen.dart';
 import '../wallets/entries_panel.dart';
@@ -53,6 +54,7 @@ class HomeScreen extends ConsumerWidget {
               ),
             ),
             const SizedBox(height: SmSpace.lg),
+            const OutboxPanel(),
             const NetWorthCard(),
             const SizedBox(height: SmSpace.lg),
             const WalletsPanel(),

@@ -6,9 +6,13 @@ class FakeWalletApi implements WalletApi {
   final List<Wallet> wallets = [];
   final List<String> mutations = [];
   WalletFailure? createFailure;
+  bool offline = false;
+  WalletFailure? listFailure;
 
   @override
   Future<WalletList> list(String access) async {
+    if (offline) throw const WalletException(WalletFailure.offline);
+    if (listFailure != null) throw WalletException(listFailure!);
     final totals = <String, int>{};
     for (final w in wallets.where((w) => !w.archived)) {
       totals[w.currency] = (totals[w.currency] ?? 0) + w.balanceMinor;

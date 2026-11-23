@@ -1,6 +1,7 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../core/grpc/grpc_providers.dart';
+import '../../core/storage/key_value_store.dart';
 import 'auth_api.dart';
 import 'auth_models.dart';
 import 'token_store.dart';
@@ -127,8 +128,16 @@ class AuthController extends AsyncNotifier<AuthState> {
     await _endSession();
   }
 
+  /// What is kept on the device for the signed-in person. It must never
+  /// outlive the session: the next person to sign in would see it.
+  static const localDataKeys = ['wallets', 'entries', 'categories', 'outbox'];
+
   Future<void> _endSession() async {
     await _store.clear();
+    final local = ref.read(keyValueStoreProvider);
+    for (final key in localDataKeys) {
+      await local.delete(key);
+    }
     state = const AsyncData(SignedOut());
   }
 }

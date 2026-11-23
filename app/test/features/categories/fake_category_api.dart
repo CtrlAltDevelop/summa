@@ -1,6 +1,7 @@
 import 'package:summa/features/categories/category_api.dart';
 import 'package:summa/features/categories/category_models.dart';
 import 'package:summa/features/wallets/entry_models.dart';
+import 'package:summa/features/wallets/wallet_models.dart';
 
 import '../wallets/fake_ledger_api.dart';
 
@@ -37,9 +38,13 @@ class FakeCategoryApi implements CategoryApi {
     ),
   ];
   final Map<String, (String currency, int limit)> limits = {};
+  bool offline = false;
 
   @override
-  Future<List<Category>> list(String access) async => List.of(categories);
+  Future<List<Category>> list(String access) async {
+    if (offline) throw const WalletException(WalletFailure.offline);
+    return List.of(categories);
+  }
 
   @override
   Future<Category> create(

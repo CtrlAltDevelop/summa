@@ -2,6 +2,8 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../core/format/persian.dart';
 import '../../core/grpc/grpc_providers.dart';
+import '../../core/storage/snapshot.dart';
+import '../../core/storage/snapshot_codecs.dart';
 import '../auth/auth_controller.dart';
 import 'category_api.dart';
 import 'category_models.dart';
@@ -33,7 +35,13 @@ class CategoriesController extends AsyncNotifier<List<Category>> {
   AuthController get _auth => ref.read(authControllerProvider.notifier);
 
   @override
-  Future<List<Category>> build() => _auth.withAccess(_api.list);
+  Future<List<Category>> build() => withSnapshot(
+    ref,
+    'categories',
+    load: () => _auth.withAccess(_api.list),
+    encode: categoriesToJson,
+    decode: categoriesFromJson,
+  );
 
   Future<void> create(String name, CategoryKind kind) async {
     await _auth.withAccess((a) => _api.create(a, name: name, kind: kind));

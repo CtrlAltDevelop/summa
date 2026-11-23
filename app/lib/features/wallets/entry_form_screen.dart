@@ -9,6 +9,7 @@ import '../../l10n/gen/app_localizations.dart';
 import '../auth/auth_models.dart';
 import '../categories/category_controller.dart';
 import '../categories/category_models.dart';
+import '../outbox/outbox.dart';
 import 'choices.dart';
 import 'entry_models.dart';
 import 'ledger_controller.dart';
@@ -94,9 +95,28 @@ class _EntryFormScreenState extends ConsumerState<EntryFormScreen> {
           );
       if (mounted) navigator.pop();
     } on WalletException catch (e) {
-      _fail(
-        e.failure == WalletFailure.offline ? l10n.errOffline : l10n.errUnknown,
-      );
+      if (e.failure == WalletFailure.offline) {
+        // No connection: keep it on the device and send it later. The same
+        // mutation id goes with it, so it can only ever be recorded once.
+        await ref
+            .read(outboxProvider.notifier)
+            .enqueue(
+              QueuedEntry(
+                mutationId: _mutationId,
+                walletId: _wallet.id,
+                kind: _kind,
+                amountMinor: amount,
+                currency: _wallet.currency,
+                note: _note.text.trim(),
+                categoryId: _chosenCategory?.id ?? '',
+                outsideTotals: _kind == EntryKind.expense && _outside,
+                createdAt: DateTime.now(),
+              ),
+            );
+        if (mounted) navigator.pop();
+        return;
+      }
+      _fail(l10n.errUnknown);
     } on AuthException {
       _fail(l10n.errUnknown);
     }
