@@ -3,6 +3,7 @@ import { renderFaq, renderHero, renderHomeSections, renderMenu, renderTextPage }
 import { createDemo } from './demo.js';
 import { el } from './dom.js';
 import { renderPlans, renderRates } from './prices.js';
+import { renderTools } from './tools.js';
 
 const api = createApi();
 const app = document.getElementById('app');
@@ -34,6 +35,7 @@ async function home() {
     el('section', { id: 'demo' }, demo.root),
     ...(await safe(page, (p) => renderHomeSections(p)).then((r) => (Array.isArray(r) ? r : [r]))),
     await safe(rates, renderRates),
+    await safe(rates.catch(() => []), renderTools),
     await safe(plans, renderPlans),
     await safe(faq, renderFaq),
   );
