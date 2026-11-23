@@ -1,0 +1,75 @@
+syntax = "proto3";
+
+package config.debts;
+
+import "google/protobuf/empty.proto";
+
+service DebtsController {
+    rpc Create(DebtCreate) returns (DebtReply) {}
+    rpc Delete(DebtRef) returns (google.protobuf.Empty) {}
+    rpc List(google.protobuf.Empty) returns (DebtListReply) {}
+    rpc Pay(InstallmentPay) returns (google.protobuf.Empty) {}
+    rpc Unpay(InstallmentRef) returns (google.protobuf.Empty) {}
+}
+
+message DebtCreate {
+    string kind = 1;
+    string title = 2;
+    string currency = 3;
+    int64 installment_minor = 4;
+    int32 count = 5;
+    string first_due = 6;
+    int64 principal_minor = 7;
+    string wallet_id = 8;
+    string category_id = 9;
+    string client_mutation_id = 10;
+}
+
+message DebtListReply {
+    repeated DebtMsg debts = 1;
+}
+
+message DebtMsg {
+    string id = 1;
+    string kind = 2;
+    string title = 3;
+    string currency = 4;
+    int64 installment_minor = 5;
+    int32 count = 6;
+    int64 principal_minor = 7;
+    string wallet_id = 8;
+    string category_id = 9;
+    int32 paid_count = 10;
+    int64 remaining_minor = 11;
+    string next_due = 12;
+    bool closed = 13;
+    repeated InstallmentMsg installments = 14;
+}
+
+message DebtRef {
+    string debt_id = 1;
+}
+
+message DebtReply {
+    DebtMsg debt = 1;
+}
+
+message InstallmentMsg {
+    string id = 1;
+    int32 number = 2;
+    string due_date = 3;
+    int64 amount_minor = 4;
+    bool paid = 5;
+    bool overdue = 6;
+}
+
+message InstallmentPay {
+    string installment_id = 1;
+    string wallet_id = 2;
+    int64 amount_minor = 3;
+}
+
+message InstallmentRef {
+    string installment_id = 1;
+}
+
