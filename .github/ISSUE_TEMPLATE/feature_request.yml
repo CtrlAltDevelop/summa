@@ -1,0 +1,18 @@
+name: Feature request
+description: Suggest an improvement
+labels: [enhancement]
+body:
+  - type: textarea
+    id: need
+    attributes:
+      label: The problem
+      description: What are you trying to do that is hard today?
+    validations:
+      required: true
+  - type: textarea
+    id: idea
+    attributes:
+      label: Your idea
+  - type: markdown
+    attributes:
+      value: Features are planned one phase at a time (see docs/07-roadmap.md).
