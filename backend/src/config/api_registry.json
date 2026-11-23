@@ -49,6 +49,13 @@
         "prefix": "/networth",
         "router": "apps.networth.rest.v1.router",
         "tag": "Networth"
+      },
+      {
+        "app_config": "apps.reports.apps.ReportsConfig",
+        "description": "Endpoints published by the reports app.",
+        "prefix": "/reports",
+        "router": "apps.reports.rest.v1.router",
+        "tag": "Reports"
       }
     ]
   }
