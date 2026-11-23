@@ -48,7 +48,12 @@ class Payment(models.Model):
     PENDING, PAID, FAILED = "pending", "paid", "failed"
 
     id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
-    user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name="+")
+    # A receipt outlives the account: deleting the user keeps the payment, with
+    # the user cleared and ``user_ref`` left as the only trace.
+    user = models.ForeignKey(
+        settings.AUTH_USER_MODEL, null=True, on_delete=models.SET_NULL, related_name="+"
+    )
+    user_ref = models.CharField(max_length=64, blank=True)
     plan = models.ForeignKey(Plan, on_delete=models.PROTECT, related_name="+")
     amount_minor = models.BigIntegerField()
     period_days = models.PositiveIntegerField()

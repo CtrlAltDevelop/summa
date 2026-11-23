@@ -112,6 +112,7 @@ class BillingService:
             raise refuse("This plan is not for sale.")
         payment = Payment.objects.create(
             user=user,
+            user_ref=str(user.pk),
             plan=plan,
             amount_minor=plan.price_minor,
             period_days=plan.period_days,

@@ -24,6 +24,7 @@ DART_PROTOS := infrastructure/common/grpc/common.proto \
 	apps/sync/grpc/sync.proto \
 	apps/billing/grpc/billing.proto \
 	apps/support/grpc/support.proto \
+	apps/privacy/grpc/privacy.proto \
 	infrastructure/auth/sms_code/grpc/auth_sms_code.proto \
 	infrastructure/oauth/rotation/grpc/oauth_rotation.proto
 
