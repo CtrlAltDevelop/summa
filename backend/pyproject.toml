@@ -51,6 +51,9 @@ all = ["backend[oauth,redis,totp,asgi]"]
 dev = [
   "backend[all]",
   "fakeredis>=2.26,<3.0",
+  # fakeredis 2.40 cannot read redis-py 8.2's `deprecated_args` wrapper and every
+  # fake client then fails to build. Lift this once fakeredis supports 8.2.
+  "redis<8.2",
   "mypy>=1.15",
   # Type stubs for the generated protobuf messages, so a misspelled field is a
   # type error rather than an AttributeError raised while answering a call.
