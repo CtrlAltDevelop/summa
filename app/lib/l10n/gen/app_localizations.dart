@@ -537,6 +537,72 @@ abstract class AppLocalizations {
   /// In fa, this message translates to:
   /// **'حذف'**
   String get entryDelete;
+
+  /// No description provided for @transferAdd.
+  ///
+  /// In fa, this message translates to:
+  /// **'انتقال بین کیف‌ها'**
+  String get transferAdd;
+
+  /// No description provided for @transferFormTitle.
+  ///
+  /// In fa, this message translates to:
+  /// **'انتقال پول'**
+  String get transferFormTitle;
+
+  /// No description provided for @transferFrom.
+  ///
+  /// In fa, this message translates to:
+  /// **'از کیف'**
+  String get transferFrom;
+
+  /// No description provided for @transferTo.
+  ///
+  /// In fa, this message translates to:
+  /// **'به کیف'**
+  String get transferTo;
+
+  /// No description provided for @transferRateLabel.
+  ///
+  /// In fa, this message translates to:
+  /// **'نرخ (هر یک واحد مبدأ چند واحد مقصد)'**
+  String get transferRateLabel;
+
+  /// No description provided for @transferFeeLabel.
+  ///
+  /// In fa, this message translates to:
+  /// **'کارمزد (اختیاری)'**
+  String get transferFeeLabel;
+
+  /// No description provided for @transferOut.
+  ///
+  /// In fa, this message translates to:
+  /// **'انتقال (برداشت)'**
+  String get transferOut;
+
+  /// No description provided for @transferIn.
+  ///
+  /// In fa, this message translates to:
+  /// **'انتقال (دریافت)'**
+  String get transferIn;
+
+  /// No description provided for @transferSameWallet.
+  ///
+  /// In fa, this message translates to:
+  /// **'مبدأ و مقصد باید دو کیف پول متفاوت باشند.'**
+  String get transferSameWallet;
+
+  /// No description provided for @transferRateInvalid.
+  ///
+  /// In fa, this message translates to:
+  /// **'نرخ درست نیست. یک عدد بزرگ‌تر از صفر بنویس.'**
+  String get transferRateInvalid;
+
+  /// No description provided for @transferFeeInvalid.
+  ///
+  /// In fa, this message translates to:
+  /// **'کارمزد درست نیست.'**
+  String get transferFeeInvalid;
 }
 
 class _AppLocalizationsDelegate

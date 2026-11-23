@@ -34,6 +34,7 @@ Future<FakeLedgerApi> _pump(WidgetTester t, FakeWalletApi wallets) async {
 
 void main() {
   ledgerTests();
+  transferTests();
   testWidgets('no wallets: shows the empty hint and an add button', (t) async {
     await _pump(t, FakeWalletApi());
 
@@ -119,6 +120,87 @@ void _seed(FakeWalletApi api) => api.wallets.add(
     balanceMinor: 1000000,
   ),
 );
+
+void _seedSecond(FakeWalletApi api, {String currency = 'IRT'}) =>
+    api.wallets.add(
+      Wallet(
+        id: 'w2',
+        name: 'نقد من',
+        kind: WalletKind.cash,
+        currency: currency,
+        bank: '',
+        archived: false,
+        balanceMinor: 0,
+      ),
+    );
+
+void transferTests() {
+  testWidgets('same-currency transfer moves money and lists both legs', (
+    t,
+  ) async {
+    final wallets = FakeWalletApi();
+    _seed(wallets);
+    _seedSecond(wallets);
+    final ledger = await _pump(t, wallets);
+
+    await t.tap(find.text('انتقال بین کیف‌ها'));
+    await t.pumpAndSettle();
+    expect(find.text('نرخ (هر یک واحد مبدأ چند واحد مقصد)'), findsNothing);
+    await t.enterText(find.byType(TextField).at(0), '۲۰۰٬۰۰۰');
+    await t.tap(find.text('ذخیره'));
+    await t.pumpAndSettle();
+
+    expect(ledger.transferRates, ['']);
+    expect(find.text('-۲۰۰٬۰۰۰ تومان'), findsOneWidget);
+    expect(find.text('+۲۰۰٬۰۰۰ تومان'), findsOneWidget);
+    expect(wallets.wallets.map((w) => w.balanceMinor), [800000, 200000]);
+  });
+
+  testWidgets('cross-currency transfer asks for the rate and sends it', (
+    t,
+  ) async {
+    final wallets = FakeWalletApi();
+    _seed(wallets);
+    _seedSecond(wallets, currency: 'USD');
+    final ledger = await _pump(t, wallets);
+
+    await t.tap(find.text('انتقال بین کیف‌ها'));
+    await t.pumpAndSettle();
+    expect(find.text('نرخ (هر یک واحد مبدأ چند واحد مقصد)'), findsOneWidget);
+    await t.enterText(find.byType(TextField).at(0), '۱٬۰۰۰٬۰۰۰');
+    await t.enterText(find.byType(TextField).at(1), '۰٫۰۰۰۰۱۶');
+    await t.tap(find.text('ذخیره'));
+    await t.pumpAndSettle();
+
+    expect(ledger.transferRates, ['0.000016']);
+  });
+
+  testWidgets('a missing rate is refused without calling the server', (
+    t,
+  ) async {
+    final wallets = FakeWalletApi();
+    _seed(wallets);
+    _seedSecond(wallets, currency: 'USD');
+    final ledger = await _pump(t, wallets);
+
+    await t.tap(find.text('انتقال بین کیف‌ها'));
+    await t.pumpAndSettle();
+    await t.enterText(find.byType(TextField).at(0), '۱۰۰');
+    await t.tap(find.text('ذخیره'));
+    await t.pumpAndSettle();
+
+    expect(find.textContaining('نرخ درست نیست'), findsOneWidget);
+    expect(ledger.transferRates, isEmpty);
+  });
+
+  testWidgets('no transfer button with a single wallet', (t) async {
+    final wallets = FakeWalletApi();
+    _seed(wallets);
+    await _pump(t, wallets);
+
+    expect(find.text('انتقال بین کیف‌ها'), findsNothing);
+  });
+}
 
 void ledgerTests() {
   testWidgets('recording an expense lists it and lowers the balance', (

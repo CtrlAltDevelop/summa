@@ -1,9 +1,17 @@
 enum EntryKind {
   income('income'),
-  expense('expense');
+  expense('expense'),
+  transferOut('transfer_out'),
+  transferIn('transfer_in');
 
   const EntryKind(this.wire);
   final String wire;
+
+  /// Money arriving in the wallet (income, or the incoming leg of a transfer).
+  bool get isCredit => this == income || this == transferIn;
+
+  /// The kinds a person can record by hand.
+  static const recordable = [expense, income];
 
   static EntryKind fromWire(String wire) =>
       values.firstWhere((k) => k.wire == wire, orElse: () => expense);

@@ -243,4 +243,38 @@ class AppLocalizationsFa extends AppLocalizations {
 
   @override
   String get entryDelete => 'حذف';
+
+  @override
+  String get transferAdd => 'انتقال بین کیف‌ها';
+
+  @override
+  String get transferFormTitle => 'انتقال پول';
+
+  @override
+  String get transferFrom => 'از کیف';
+
+  @override
+  String get transferTo => 'به کیف';
+
+  @override
+  String get transferRateLabel => 'نرخ (هر یک واحد مبدأ چند واحد مقصد)';
+
+  @override
+  String get transferFeeLabel => 'کارمزد (اختیاری)';
+
+  @override
+  String get transferOut => 'انتقال (برداشت)';
+
+  @override
+  String get transferIn => 'انتقال (دریافت)';
+
+  @override
+  String get transferSameWallet => 'مبدأ و مقصد باید دو کیف پول متفاوت باشند.';
+
+  @override
+  String get transferRateInvalid =>
+      'نرخ درست نیست. یک عدد بزرگ‌تر از صفر بنویس.';
+
+  @override
+  String get transferFeeInvalid => 'کارمزد درست نیست.';
 }

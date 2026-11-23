@@ -7,6 +7,7 @@ import '../../core/ui/widgets/widgets.dart';
 import '../../l10n/gen/app_localizations.dart';
 import 'entry_form_screen.dart';
 import 'entry_models.dart';
+import 'transfer_form_screen.dart';
 import 'ledger_controller.dart';
 import 'wallet_labels.dart';
 import 'wallet_models.dart';
@@ -34,8 +35,20 @@ class EntriesPanel extends ConsumerWidget {
               ),
             ),
           ),
-          const SizedBox(height: SmSpace.lg),
+          const SizedBox(height: SmSpace.sm),
         ],
+        if (wallets.length >= 2) ...[
+          SmButton(
+            label: l10n.transferAdd,
+            icon: SmIcons.refresh,
+            onPressed: () => Navigator.of(context).push(
+              PageRouteBuilder<void>(
+                pageBuilder: (_, _, _) => TransferFormScreen(wallets: wallets),
+              ),
+            ),
+          ),
+        ],
+        if (wallets.isNotEmpty) const SizedBox(height: SmSpace.lg),
         for (final e in entries)
           Padding(
             padding: const EdgeInsets.only(bottom: SmSpace.sm),
@@ -54,7 +67,7 @@ class _EntryTile extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final l10n = AppLocalizations.of(context);
-    final income = entry.kind == EntryKind.income;
+    final income = entry.kind.isCredit;
     final amount = formatMinor(entry.amountMinor, entry.currency);
     return SmGlassCard(
       padding: const EdgeInsets.all(SmSpace.lg),
@@ -66,7 +79,7 @@ class _EntryTile extends ConsumerWidget {
               children: [
                 Text(
                   entry.note.isEmpty
-                      ? (income ? l10n.entryIncome : l10n.entryExpense)
+                      ? _kindLabel(l10n, entry.kind)
                       : entry.note,
                   style: SmType.body,
                 ),
@@ -101,3 +114,10 @@ class _EntryTile extends ConsumerWidget {
     );
   }
 }
+
+String _kindLabel(AppLocalizations l10n, EntryKind kind) => switch (kind) {
+  EntryKind.income => l10n.entryIncome,
+  EntryKind.expense => l10n.entryExpense,
+  EntryKind.transferOut => l10n.transferOut,
+  EntryKind.transferIn => l10n.transferIn,
+};
