@@ -2,7 +2,7 @@
 
 from collections import defaultdict
 from dataclasses import dataclass
-from datetime import datetime
+from datetime import datetime, timedelta
 from decimal import ROUND_HALF_UP, Decimal
 from typing import Any, Final
 
@@ -12,7 +12,7 @@ from apps.assets.models import Asset
 from apps.assets.rates import rate_service
 from apps.assets.service import AssetView, asset_service
 from apps.debts.service import debt_service
-from apps.networth.models import Basket, BasketItem
+from apps.networth.models import Basket, BasketItem, NetWorthSnapshot
 from apps.wallets.models import Wallet
 from apps.wallets.services import wallets_service
 from apps.wallets.validation import not_found, parse_uuid, refuse
@@ -20,6 +20,7 @@ from infrastructure.common.errors import ApiError
 
 BASE: Final = "IRT"
 MAX_BASKETS: Final = 20
+MAX_HISTORY_DAYS: Final = 365
 NAME_MAX_LENGTH: Final = 60
 _GRAM_PLACES: Final = Decimal("0.001")
 
@@ -112,6 +113,9 @@ class NetWorthService:
             for currency, minor in _sum_by_currency(debt_rows).items()
         )
         total = wallets_minor + listing.value_minor - debts_minor
+        NetWorthSnapshot.objects.update_or_create(
+            user=user, day=now.date(), defaults={"total_minor": total}
+        )
         usd = self._in_usd(total, converter, now)
         return NetWorth(
             total_minor=total,
@@ -124,6 +128,14 @@ class NetWorthService:
             unconverted=sorted(converter.missing),
             unpriced_assets=len(listing.assets) - len(priced),
         )
+
+    def history(self, user: Any, days: int, now: datetime) -> list[tuple[str, int]]:
+        """The last `days` days of recorded totals, oldest first (no backfill)."""
+        if not 1 <= days <= MAX_HISTORY_DAYS:
+            raise refuse(f"days must be between 1 and {MAX_HISTORY_DAYS}")
+        since = now.date() - timedelta(days=days - 1)
+        rows = NetWorthSnapshot.objects.filter(user=user, day__gte=since)
+        return [(r.day.isoformat(), r.total_minor) for r in rows]
 
     @staticmethod
     def _in_usd(total: int, converter: _Converter, now: datetime) -> int | None:

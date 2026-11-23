@@ -8,7 +8,7 @@ from django_socio_grpc import generics
 from django_socio_grpc.decorators import grpc_action
 from google.protobuf.empty_pb2 import Empty
 
-from apps.networth.grpc.serializers import BasketItemRefMsg, BasketMsg
+from apps.networth.grpc.serializers import BasketItemRefMsg, BasketMsg, HistoryPointMsg
 from apps.networth.service import BasketItemRef, BasketView, networth_service
 from infrastructure.common.grpc.errors import action, require_caller
 from infrastructure.common.identity import grpc_caller
@@ -70,6 +70,22 @@ class NetWorthService(generics.GenericService):
             stale=view.stale,
             unconverted=view.unconverted,
             unpriced_assets=view.unpriced_assets,
+        )
+
+    @grpc_action(
+        request=[{"name": "days", "type": "int32"}],
+        request_name="HistoryRequest",
+        response=[{"name": "points", "type": HistoryPointMsg, "cardinality": "repeated"}],
+        response_name="HistoryReply",
+    )
+    @action
+    async def History(self, request: Any, context: Any) -> Any:
+        from apps.networth.grpc import networth_pb2
+
+        user = require_caller(await grpc_caller(context))
+        rows = await sync_to_async(networth_service.history)(user, request.days, timezone.now())
+        return networth_pb2.HistoryReply(
+            points=[networth_pb2.HistoryPointMsg(date=d, total_minor=t) for d, t in rows]
         )
 
     @grpc_action(

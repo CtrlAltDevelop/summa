@@ -46,3 +46,21 @@ class BasketItem(models.Model):
 
     def __str__(self) -> str:
         return f"{self.kind}:{self.ref_id}"
+
+
+class NetWorthSnapshot(models.Model):
+    """The day's last-seen net worth in toman; the chart reads these."""
+
+    id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
+    user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name="+")
+    day = models.DateField()
+    total_minor = models.BigIntegerField()
+
+    class Meta:
+        ordering = ["day"]
+        constraints = [
+            models.UniqueConstraint(fields=["user", "day"], name="networth_snapshot_once_per_day"),
+        ]
+
+    def __str__(self) -> str:
+        return f"{self.day}: {self.total_minor}"

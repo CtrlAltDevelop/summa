@@ -50,6 +50,11 @@ class NetWorthControllerStub:
                 request_serializer=google_dot_protobuf_dot_empty__pb2.Empty.SerializeToString,
                 response_deserializer=apps_dot_networth_dot_grpc_dot_networth__pb2.NetWorthReply.FromString,
                 _registered_method=True)
+        self.History = channel.unary_unary(
+                '/config.networth.NetWorthController/History',
+                request_serializer=apps_dot_networth_dot_grpc_dot_networth__pb2.HistoryRequest.SerializeToString,
+                response_deserializer=apps_dot_networth_dot_grpc_dot_networth__pb2.HistoryReply.FromString,
+                _registered_method=True)
         self.ListBaskets = channel.unary_unary(
                 '/config.networth.NetWorthController/ListBaskets',
                 request_serializer=google_dot_protobuf_dot_empty__pb2.Empty.SerializeToString,
@@ -78,6 +83,12 @@ class NetWorthControllerServicer:
         context.set_details('Method not implemented!')
         raise NotImplementedError('Method not implemented!')
 
+    def History(self, request, context):
+        """Missing associated documentation comment in .proto file."""
+        context.set_code(grpc.StatusCode.UNIMPLEMENTED)
+        context.set_details('Method not implemented!')
+        raise NotImplementedError('Method not implemented!')
+
     def ListBaskets(self, request, context):
         """Missing associated documentation comment in .proto file."""
         context.set_code(grpc.StatusCode.UNIMPLEMENTED)
@@ -101,6 +112,11 @@ def add_NetWorthControllerServicer_to_server(servicer, server):
                     servicer.Get,
                     request_deserializer=google_dot_protobuf_dot_empty__pb2.Empty.FromString,
                     response_serializer=apps_dot_networth_dot_grpc_dot_networth__pb2.NetWorthReply.SerializeToString,
+            ),
+            'History': grpc.unary_unary_rpc_method_handler(
+                    servicer.History,
+                    request_deserializer=apps_dot_networth_dot_grpc_dot_networth__pb2.HistoryRequest.FromString,
+                    response_serializer=apps_dot_networth_dot_grpc_dot_networth__pb2.HistoryReply.SerializeToString,
             ),
             'ListBaskets': grpc.unary_unary_rpc_method_handler(
                     servicer.ListBaskets,
@@ -189,6 +205,33 @@ class NetWorthController:
             '/config.networth.NetWorthController/Get',
             google_dot_protobuf_dot_empty__pb2.Empty.SerializeToString,
             apps_dot_networth_dot_grpc_dot_networth__pb2.NetWorthReply.FromString,
+            options,
+            channel_credentials,
+            insecure,
+            call_credentials,
+            compression,
+            wait_for_ready,
+            timeout,
+            metadata,
+            _registered_method=True)
+
+    @staticmethod
+    def History(request,
+            target,
+            options=(),
+            channel_credentials=None,
+            call_credentials=None,
+            insecure=False,
+            compression=None,
+            wait_for_ready=None,
+            timeout=None,
+            metadata=None):
+        return grpc.experimental.unary_unary(
+            request,
+            target,
+            '/config.networth.NetWorthController/History',
+            apps_dot_networth_dot_grpc_dot_networth__pb2.HistoryRequest.SerializeToString,
+            apps_dot_networth_dot_grpc_dot_networth__pb2.HistoryReply.FromString,
             options,
             channel_credentials,
             insecure,

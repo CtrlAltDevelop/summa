@@ -26,3 +26,8 @@ class BasketMsg(serializers.Serializer[dict[str, object]]):
     value_minor = serializers.IntegerField(min_value=BIG_MIN, max_value=BIG_MAX)
     percent = serializers.IntegerField(min_value=BIG_MIN, max_value=BIG_MAX)
     items = BasketItemMsg(many=True)
+
+
+class HistoryPointMsg(serializers.Serializer[dict[str, object]]):
+    date = serializers.CharField()
+    total_minor = serializers.IntegerField(min_value=BIG_MIN, max_value=BIG_MAX)

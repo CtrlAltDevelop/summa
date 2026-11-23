@@ -192,6 +192,67 @@ class BasketReply(_message.Message):
 Global___BasketReply: _TypeAlias = BasketReply  # noqa: Y015
 
 @_typing.final
+class HistoryPointMsg(_message.Message):
+    DESCRIPTOR: _descriptor.Descriptor
+
+    DATE_FIELD_NUMBER: _builtins.int
+    TOTAL_MINOR_FIELD_NUMBER: _builtins.int
+    date: _builtins.str
+    total_minor: _builtins.int
+    def __init__(
+        self,
+        *,
+        date: _builtins.str = ...,
+        total_minor: _builtins.int = ...,
+    ) -> None: ...
+    _HasFieldArgType: _TypeAlias = _Never  # noqa: Y015
+    def HasField(self, field_name: _HasFieldArgType) -> _builtins.bool: ...
+    _ClearFieldArgType: _TypeAlias = _typing.Literal["date", b"date", "total_minor", b"total_minor"]  # noqa: Y015
+    def ClearField(self, field_name: _ClearFieldArgType) -> None: ...
+    def WhichOneof(self, oneof_group: _Never) -> None: ...
+
+Global___HistoryPointMsg: _TypeAlias = HistoryPointMsg  # noqa: Y015
+
+@_typing.final
+class HistoryReply(_message.Message):
+    DESCRIPTOR: _descriptor.Descriptor
+
+    POINTS_FIELD_NUMBER: _builtins.int
+    @_builtins.property
+    def points(self) -> _containers.RepeatedCompositeFieldContainer[Global___HistoryPointMsg]: ...
+    def __init__(
+        self,
+        *,
+        points: _abc.Iterable[Global___HistoryPointMsg] | None = ...,
+    ) -> None: ...
+    _HasFieldArgType: _TypeAlias = _Never  # noqa: Y015
+    def HasField(self, field_name: _HasFieldArgType) -> _builtins.bool: ...
+    _ClearFieldArgType: _TypeAlias = _typing.Literal["points", b"points"]  # noqa: Y015
+    def ClearField(self, field_name: _ClearFieldArgType) -> None: ...
+    def WhichOneof(self, oneof_group: _Never) -> None: ...
+
+Global___HistoryReply: _TypeAlias = HistoryReply  # noqa: Y015
+
+@_typing.final
+class HistoryRequest(_message.Message):
+    DESCRIPTOR: _descriptor.Descriptor
+
+    DAYS_FIELD_NUMBER: _builtins.int
+    days: _builtins.int
+    def __init__(
+        self,
+        *,
+        days: _builtins.int = ...,
+    ) -> None: ...
+    _HasFieldArgType: _TypeAlias = _Never  # noqa: Y015
+    def HasField(self, field_name: _HasFieldArgType) -> _builtins.bool: ...
+    _ClearFieldArgType: _TypeAlias = _typing.Literal["days", b"days"]  # noqa: Y015
+    def ClearField(self, field_name: _ClearFieldArgType) -> None: ...
+    def WhichOneof(self, oneof_group: _Never) -> None: ...
+
+Global___HistoryRequest: _TypeAlias = HistoryRequest  # noqa: Y015
+
+@_typing.final
 class NetWorthReply(_message.Message):
     DESCRIPTOR: _descriptor.Descriptor
 

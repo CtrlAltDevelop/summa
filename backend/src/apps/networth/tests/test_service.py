@@ -388,3 +388,30 @@ def test_a_deleted_asset_simply_leaves_the_basket() -> None:
 
     [only] = networth_service.list_baskets(user, NOW)
     assert only.items == [] and only.value_minor == 0
+
+
+def test_history_records_one_point_per_day_and_stays_per_user() -> None:
+    zoe, ann = make_user("zoe"), make_user("ann")
+    wallet(zoe, "cash", 1_000)
+    wallet(ann, "cash", 9_000)
+    networth_service.net_worth(zoe, NOW)
+    wallet(zoe, "bank", 500)
+    networth_service.net_worth(zoe, NOW)
+    networth_service.net_worth(zoe, NOW + timedelta(days=1))
+
+    points = networth_service.history(zoe, 30, NOW + timedelta(days=1))
+
+    assert points == [("2026-11-22", 1_500), ("2026-11-23", 1_500)]
+    assert networth_service.history(ann, 30, NOW) == []
+
+
+def test_history_window_and_bounds() -> None:
+    user = make_user()
+    wallet(user, "cash", 100)
+    networth_service.net_worth(user, NOW)
+
+    assert networth_service.history(user, 1, NOW + timedelta(days=2)) == []
+    with pytest.raises(ApiError):
+        networth_service.history(user, 0, NOW)
+    with pytest.raises(ApiError):
+        networth_service.history(user, 366, NOW)

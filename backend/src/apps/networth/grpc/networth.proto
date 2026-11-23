@@ -8,6 +8,7 @@ service NetWorthController {
     rpc CreateBasket(BasketCreate) returns (BasketReply) {}
     rpc DeleteBasket(BasketRef) returns (google.protobuf.Empty) {}
     rpc Get(google.protobuf.Empty) returns (NetWorthReply) {}
+    rpc History(HistoryRequest) returns (HistoryReply) {}
     rpc ListBaskets(google.protobuf.Empty) returns (BasketListReply) {}
 }
 
@@ -49,6 +50,19 @@ message BasketRef {
 
 message BasketReply {
     BasketMsg basket = 1;
+}
+
+message HistoryPointMsg {
+    string date = 1;
+    int64 total_minor = 2;
+}
+
+message HistoryReply {
+    repeated HistoryPointMsg points = 1;
+}
+
+message HistoryRequest {
+    int32 days = 1;
 }
 
 message NetWorthReply {

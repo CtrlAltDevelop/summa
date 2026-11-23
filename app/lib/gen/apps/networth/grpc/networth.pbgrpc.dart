@@ -54,6 +54,13 @@ class NetWorthControllerClient extends $grpc.Client {
     return $createUnaryCall(_$get, request, options: options);
   }
 
+  $grpc.ResponseFuture<$0.HistoryReply> history(
+    $0.HistoryRequest request, {
+    $grpc.CallOptions? options,
+  }) {
+    return $createUnaryCall(_$history, request, options: options);
+  }
+
   $grpc.ResponseFuture<$0.BasketListReply> listBaskets(
     $1.Empty request, {
     $grpc.CallOptions? options,
@@ -76,6 +83,11 @@ class NetWorthControllerClient extends $grpc.Client {
       '/config.networth.NetWorthController/Get',
       ($1.Empty value) => value.writeToBuffer(),
       $0.NetWorthReply.fromBuffer);
+  static final _$history =
+      $grpc.ClientMethod<$0.HistoryRequest, $0.HistoryReply>(
+          '/config.networth.NetWorthController/History',
+          ($0.HistoryRequest value) => value.writeToBuffer(),
+          $0.HistoryReply.fromBuffer);
   static final _$listBaskets = $grpc.ClientMethod<$1.Empty, $0.BasketListReply>(
       '/config.networth.NetWorthController/ListBaskets',
       ($1.Empty value) => value.writeToBuffer(),
@@ -108,6 +120,13 @@ abstract class NetWorthControllerServiceBase extends $grpc.Service {
         false,
         ($core.List<$core.int> value) => $1.Empty.fromBuffer(value),
         ($0.NetWorthReply value) => value.writeToBuffer()));
+    $addMethod($grpc.ServiceMethod<$0.HistoryRequest, $0.HistoryReply>(
+        'History',
+        history_Pre,
+        false,
+        false,
+        ($core.List<$core.int> value) => $0.HistoryRequest.fromBuffer(value),
+        ($0.HistoryReply value) => value.writeToBuffer()));
     $addMethod($grpc.ServiceMethod<$1.Empty, $0.BasketListReply>(
         'ListBaskets',
         listBaskets_Pre,
@@ -139,6 +158,14 @@ abstract class NetWorthControllerServiceBase extends $grpc.Service {
   }
 
   $async.Future<$0.NetWorthReply> get($grpc.ServiceCall call, $1.Empty request);
+
+  $async.Future<$0.HistoryReply> history_Pre($grpc.ServiceCall $call,
+      $async.Future<$0.HistoryRequest> $request) async {
+    return history($call, await $request);
+  }
+
+  $async.Future<$0.HistoryReply> history(
+      $grpc.ServiceCall call, $0.HistoryRequest request);
 
   $async.Future<$0.BasketListReply> listBaskets_Pre(
       $grpc.ServiceCall $call, $async.Future<$1.Empty> $request) async {
