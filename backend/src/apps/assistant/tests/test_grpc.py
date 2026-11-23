@@ -92,3 +92,81 @@ def test_bad_input_and_missing_credential(
 
     assert bad.value.code() is grpc.StatusCode.INVALID_ARGUMENT
     assert anonymous.value.code() is grpc.StatusCode.UNAUTHENTICATED
+
+
+def test_parse_sms_link_card_and_register_over_the_wire(
+    transactional_db: None, grpc_call: Callable[..., Any]
+) -> None:
+    token = sign_up("zoe")
+    wallet = grpc_call(
+        wallets_pb2_grpc.WalletsControllerStub,
+        "Create",
+        wallets_pb2.WalletCreate(
+            name="ملی", kind="bank", currency="IRT", opening_balance_minor=0, client_mutation_id="w"
+        ),
+        token=token,
+    ).wallet
+    sms = "برداشت 500,000 ریال\nکارت 1234****\nمانده 2,500,000 ریال"
+
+    first = grpc_call(Stub, "ParseSms", assistant_pb2.SmsText(text=sms), token=token)
+    grpc_call(
+        Stub, "LinkCard", assistant_pb2.CardLink(last4="1234", wallet_id=wallet.id), token=token
+    )
+    linked = grpc_call(Stub, "ParseSms", assistant_pb2.SmsText(text=sms), token=token)
+
+    assert (first.wallet_id, first.confidence) == ("", "medium")
+    assert (linked.kind, linked.amount_minor, linked.currency) == ("expense", 50_000, "IRT")
+    assert linked.wallet_id == wallet.id and linked.balance_present
+    assert linked.balance_minor == 250_000
+    assert len(linked.suggested_category_ids) == 3
+    # the app registers it with the ordinary record request
+    entry = grpc_call(
+        wallets_pb2_grpc.LedgerControllerStub,
+        "Record",
+        wallets_pb2.EntryRecord(
+            wallet_id=linked.wallet_id,
+            kind=linked.kind,
+            amount_minor=linked.amount_minor,
+            category_id=linked.suggested_category_ids[0],
+            occurred_at=linked.occurred_at,
+            client_mutation_id="reg",
+        ),
+        token=token,
+    ).entry
+    assert entry.amount_minor == 50_000
+
+
+def test_an_otp_sms_is_reported_as_ignored(
+    transactional_db: None, grpc_call: Callable[..., Any]
+) -> None:
+    reply = grpc_call(
+        Stub, "ParseSms", assistant_pb2.SmsText(text="رمز پویا 123456"), token=sign_up("zoe")
+    )
+
+    assert reply.ignored == "otp" and reply.amount_minor == 0
+
+
+def test_link_card_is_private_and_validated(
+    transactional_db: None, grpc_call: Callable[..., Any]
+) -> None:
+    zoe, ali = sign_up("zoe"), sign_up("ali")
+    wallet = grpc_call(
+        wallets_pb2_grpc.WalletsControllerStub,
+        "Create",
+        wallets_pb2.WalletCreate(
+            name="ملی", kind="bank", currency="IRT", opening_balance_minor=0, client_mutation_id="w"
+        ),
+        token=zoe,
+    ).wallet
+
+    with pytest.raises(grpc.aio.AioRpcError) as foreign:
+        grpc_call(
+            Stub, "LinkCard", assistant_pb2.CardLink(last4="1234", wallet_id=wallet.id), token=ali
+        )
+    with pytest.raises(grpc.aio.AioRpcError) as bad:
+        grpc_call(
+            Stub, "LinkCard", assistant_pb2.CardLink(last4="12", wallet_id=wallet.id), token=zoe
+        )
+
+    assert foreign.value.code() is grpc.StatusCode.NOT_FOUND
+    assert bad.value.code() is grpc.StatusCode.INVALID_ARGUMENT

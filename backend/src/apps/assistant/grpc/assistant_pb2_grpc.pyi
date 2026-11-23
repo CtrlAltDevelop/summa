@@ -34,6 +34,8 @@ class AssistantControllerStub:
     def __new__(cls, channel: _aio.Channel) -> AssistantControllerAsyncStub: ...
     Clear: _grpc.UnaryUnaryMultiCallable[_empty_pb2.Empty, _empty_pb2.Empty]
     History: _grpc.UnaryUnaryMultiCallable[_assistant_pb2.HistoryQuery, _assistant_pb2.ChatReply]
+    LinkCard: _grpc.UnaryUnaryMultiCallable[_assistant_pb2.CardLink, _empty_pb2.Empty]
+    ParseSms: _grpc.UnaryUnaryMultiCallable[_assistant_pb2.SmsText, _assistant_pb2.SmsCard]
     Send: _grpc.UnaryUnaryMultiCallable[_assistant_pb2.MessageSend, _assistant_pb2.ChatReply]
 
 @_typing.type_check_only
@@ -41,6 +43,8 @@ class AssistantControllerAsyncStub(AssistantControllerStub):
     def __init__(self, channel: _aio.Channel) -> None: ...
     Clear: _aio.UnaryUnaryMultiCallable[_empty_pb2.Empty, _empty_pb2.Empty]  # type: ignore[assignment]
     History: _aio.UnaryUnaryMultiCallable[_assistant_pb2.HistoryQuery, _assistant_pb2.ChatReply]  # type: ignore[assignment]
+    LinkCard: _aio.UnaryUnaryMultiCallable[_assistant_pb2.CardLink, _empty_pb2.Empty]  # type: ignore[assignment]
+    ParseSms: _aio.UnaryUnaryMultiCallable[_assistant_pb2.SmsText, _assistant_pb2.SmsCard]  # type: ignore[assignment]
     Send: _aio.UnaryUnaryMultiCallable[_assistant_pb2.MessageSend, _assistant_pb2.ChatReply]  # type: ignore[assignment]
 
 class AssistantControllerServicer(metaclass=_abc_1.ABCMeta):
@@ -57,6 +61,20 @@ class AssistantControllerServicer(metaclass=_abc_1.ABCMeta):
         request: _assistant_pb2.HistoryQuery,
         context: _ServicerContext,
     ) -> _typing.Union[_assistant_pb2.ChatReply, _abc.Awaitable[_assistant_pb2.ChatReply]]: ...
+
+    @_abc_1.abstractmethod
+    def LinkCard(
+        self,
+        request: _assistant_pb2.CardLink,
+        context: _ServicerContext,
+    ) -> _typing.Union[_empty_pb2.Empty, _abc.Awaitable[_empty_pb2.Empty]]: ...
+
+    @_abc_1.abstractmethod
+    def ParseSms(
+        self,
+        request: _assistant_pb2.SmsText,
+        context: _ServicerContext,
+    ) -> _typing.Union[_assistant_pb2.SmsCard, _abc.Awaitable[_assistant_pb2.SmsCard]]: ...
 
     @_abc_1.abstractmethod
     def Send(

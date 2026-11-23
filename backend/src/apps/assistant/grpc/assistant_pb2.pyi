@@ -59,6 +59,28 @@ class Card(_message.Message):
 Global___Card: _TypeAlias = Card  # noqa: Y015
 
 @_typing.final
+class CardLink(_message.Message):
+    DESCRIPTOR: _descriptor.Descriptor
+
+    LAST4_FIELD_NUMBER: _builtins.int
+    WALLET_ID_FIELD_NUMBER: _builtins.int
+    last4: _builtins.str
+    wallet_id: _builtins.str
+    def __init__(
+        self,
+        *,
+        last4: _builtins.str = ...,
+        wallet_id: _builtins.str = ...,
+    ) -> None: ...
+    _HasFieldArgType: _TypeAlias = _Never  # noqa: Y015
+    def HasField(self, field_name: _HasFieldArgType) -> _builtins.bool: ...
+    _ClearFieldArgType: _TypeAlias = _typing.Literal["last4", b"last4", "wallet_id", b"wallet_id"]  # noqa: Y015
+    def ClearField(self, field_name: _ClearFieldArgType) -> None: ...
+    def WhichOneof(self, oneof_group: _Never) -> None: ...
+
+Global___CardLink: _TypeAlias = CardLink  # noqa: Y015
+
+@_typing.final
 class ChatReply(_message.Message):
     DESCRIPTOR: _descriptor.Descriptor
 
@@ -153,3 +175,78 @@ class MessageSend(_message.Message):
     def WhichOneof(self, oneof_group: _Never) -> None: ...
 
 Global___MessageSend: _TypeAlias = MessageSend  # noqa: Y015
+
+@_typing.final
+class SmsCard(_message.Message):
+    DESCRIPTOR: _descriptor.Descriptor
+
+    IGNORED_FIELD_NUMBER: _builtins.int
+    KIND_FIELD_NUMBER: _builtins.int
+    AMOUNT_MINOR_FIELD_NUMBER: _builtins.int
+    CURRENCY_FIELD_NUMBER: _builtins.int
+    WALLET_ID_FIELD_NUMBER: _builtins.int
+    CONFIDENCE_FIELD_NUMBER: _builtins.int
+    OCCURRED_AT_FIELD_NUMBER: _builtins.int
+    BALANCE_PRESENT_FIELD_NUMBER: _builtins.int
+    BALANCE_MINOR_FIELD_NUMBER: _builtins.int
+    LAST4_FIELD_NUMBER: _builtins.int
+    CATEGORY_ID_FIELD_NUMBER: _builtins.int
+    SUGGESTED_CATEGORY_IDS_FIELD_NUMBER: _builtins.int
+    DUPLICATE_ENTRY_ID_FIELD_NUMBER: _builtins.int
+    ignored: _builtins.str
+    kind: _builtins.str
+    amount_minor: _builtins.int
+    currency: _builtins.str
+    wallet_id: _builtins.str
+    confidence: _builtins.str
+    occurred_at: _builtins.str
+    balance_present: _builtins.bool
+    balance_minor: _builtins.int
+    last4: _builtins.str
+    category_id: _builtins.str
+    duplicate_entry_id: _builtins.str
+    @_builtins.property
+    def suggested_category_ids(self) -> _containers.RepeatedScalarFieldContainer[_builtins.str]: ...
+    def __init__(
+        self,
+        *,
+        ignored: _builtins.str = ...,
+        kind: _builtins.str = ...,
+        amount_minor: _builtins.int = ...,
+        currency: _builtins.str = ...,
+        wallet_id: _builtins.str = ...,
+        confidence: _builtins.str = ...,
+        occurred_at: _builtins.str = ...,
+        balance_present: _builtins.bool = ...,
+        balance_minor: _builtins.int = ...,
+        last4: _builtins.str = ...,
+        category_id: _builtins.str = ...,
+        suggested_category_ids: _abc.Iterable[_builtins.str] | None = ...,
+        duplicate_entry_id: _builtins.str = ...,
+    ) -> None: ...
+    _HasFieldArgType: _TypeAlias = _Never  # noqa: Y015
+    def HasField(self, field_name: _HasFieldArgType) -> _builtins.bool: ...
+    _ClearFieldArgType: _TypeAlias = _typing.Literal["amount_minor", b"amount_minor", "balance_minor", b"balance_minor", "balance_present", b"balance_present", "category_id", b"category_id", "confidence", b"confidence", "currency", b"currency", "duplicate_entry_id", b"duplicate_entry_id", "ignored", b"ignored", "kind", b"kind", "last4", b"last4", "occurred_at", b"occurred_at", "suggested_category_ids", b"suggested_category_ids", "wallet_id", b"wallet_id"]  # noqa: Y015
+    def ClearField(self, field_name: _ClearFieldArgType) -> None: ...
+    def WhichOneof(self, oneof_group: _Never) -> None: ...
+
+Global___SmsCard: _TypeAlias = SmsCard  # noqa: Y015
+
+@_typing.final
+class SmsText(_message.Message):
+    DESCRIPTOR: _descriptor.Descriptor
+
+    TEXT_FIELD_NUMBER: _builtins.int
+    text: _builtins.str
+    def __init__(
+        self,
+        *,
+        text: _builtins.str = ...,
+    ) -> None: ...
+    _HasFieldArgType: _TypeAlias = _Never  # noqa: Y015
+    def HasField(self, field_name: _HasFieldArgType) -> _builtins.bool: ...
+    _ClearFieldArgType: _TypeAlias = _typing.Literal["text", b"text"]  # noqa: Y015
+    def ClearField(self, field_name: _ClearFieldArgType) -> None: ...
+    def WhichOneof(self, oneof_group: _Never) -> None: ...
+
+Global___SmsText: _TypeAlias = SmsText  # noqa: Y015
