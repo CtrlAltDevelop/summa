@@ -259,6 +259,8 @@ class Entry(_message.Message):
     OCCURRED_AT_FIELD_NUMBER: _builtins.int
     NOTE_FIELD_NUMBER: _builtins.int
     CATEGORY_ID_FIELD_NUMBER: _builtins.int
+    OUTSIDE_TOTALS_FIELD_NUMBER: _builtins.int
+    SPLIT_ID_FIELD_NUMBER: _builtins.int
     id: _builtins.str
     wallet_id: _builtins.str
     kind: _builtins.str
@@ -267,6 +269,8 @@ class Entry(_message.Message):
     occurred_at: _builtins.str
     note: _builtins.str
     category_id: _builtins.str
+    outside_totals: _builtins.bool
+    split_id: _builtins.str
     def __init__(
         self,
         *,
@@ -278,10 +282,12 @@ class Entry(_message.Message):
         occurred_at: _builtins.str = ...,
         note: _builtins.str = ...,
         category_id: _builtins.str = ...,
+        outside_totals: _builtins.bool = ...,
+        split_id: _builtins.str = ...,
     ) -> None: ...
     _HasFieldArgType: _TypeAlias = _Never  # noqa: Y015
     def HasField(self, field_name: _HasFieldArgType) -> _builtins.bool: ...
-    _ClearFieldArgType: _TypeAlias = _typing.Literal["amount_minor", b"amount_minor", "category_id", b"category_id", "currency", b"currency", "id", b"id", "kind", b"kind", "note", b"note", "occurred_at", b"occurred_at", "wallet_id", b"wallet_id"]  # noqa: Y015
+    _ClearFieldArgType: _TypeAlias = _typing.Literal["amount_minor", b"amount_minor", "category_id", b"category_id", "currency", b"currency", "id", b"id", "kind", b"kind", "note", b"note", "occurred_at", b"occurred_at", "outside_totals", b"outside_totals", "split_id", b"split_id", "wallet_id", b"wallet_id"]  # noqa: Y015
     def ClearField(self, field_name: _ClearFieldArgType) -> None: ...
     def WhichOneof(self, oneof_group: _Never) -> None: ...
 
@@ -296,11 +302,13 @@ class EntryEdit(_message.Message):
     OCCURRED_AT_FIELD_NUMBER: _builtins.int
     NOTE_FIELD_NUMBER: _builtins.int
     CATEGORY_ID_FIELD_NUMBER: _builtins.int
+    OUTSIDE_TOTALS_FIELD_NUMBER: _builtins.int
     entry_id: _builtins.str
     amount_minor: _builtins.int
     occurred_at: _builtins.str
     note: _builtins.str
     category_id: _builtins.str
+    outside_totals: _builtins.bool
     def __init__(
         self,
         *,
@@ -309,12 +317,15 @@ class EntryEdit(_message.Message):
         occurred_at: _builtins.str = ...,
         note: _builtins.str = ...,
         category_id: _builtins.str = ...,
+        outside_totals: _builtins.bool | None = ...,
     ) -> None: ...
-    _HasFieldArgType: _TypeAlias = _Never  # noqa: Y015
+    _HasFieldArgType: _TypeAlias = _typing.Literal["_outside_totals", b"_outside_totals", "outside_totals", b"outside_totals"]  # noqa: Y015
     def HasField(self, field_name: _HasFieldArgType) -> _builtins.bool: ...
-    _ClearFieldArgType: _TypeAlias = _typing.Literal["amount_minor", b"amount_minor", "category_id", b"category_id", "entry_id", b"entry_id", "note", b"note", "occurred_at", b"occurred_at"]  # noqa: Y015
+    _ClearFieldArgType: _TypeAlias = _typing.Literal["_outside_totals", b"_outside_totals", "amount_minor", b"amount_minor", "category_id", b"category_id", "entry_id", b"entry_id", "note", b"note", "occurred_at", b"occurred_at", "outside_totals", b"outside_totals"]  # noqa: Y015
     def ClearField(self, field_name: _ClearFieldArgType) -> None: ...
-    def WhichOneof(self, oneof_group: _Never) -> None: ...
+    _WhichOneofReturnType__outside_totals: _TypeAlias = _typing.Literal["outside_totals"]  # noqa: Y015
+    _WhichOneofArgType__outside_totals: _TypeAlias = _typing.Literal["_outside_totals", b"_outside_totals"]  # noqa: Y015
+    def WhichOneof(self, oneof_group: _WhichOneofArgType__outside_totals) -> _WhichOneofReturnType__outside_totals | None: ...
 
 Global___EntryEdit: _TypeAlias = EntryEdit  # noqa: Y015
 
@@ -371,6 +382,7 @@ class EntryRecord(_message.Message):
     NOTE_FIELD_NUMBER: _builtins.int
     CLIENT_MUTATION_ID_FIELD_NUMBER: _builtins.int
     CATEGORY_ID_FIELD_NUMBER: _builtins.int
+    OUTSIDE_TOTALS_FIELD_NUMBER: _builtins.int
     wallet_id: _builtins.str
     kind: _builtins.str
     amount_minor: _builtins.int
@@ -378,6 +390,7 @@ class EntryRecord(_message.Message):
     note: _builtins.str
     client_mutation_id: _builtins.str
     category_id: _builtins.str
+    outside_totals: _builtins.bool
     def __init__(
         self,
         *,
@@ -388,10 +401,11 @@ class EntryRecord(_message.Message):
         note: _builtins.str = ...,
         client_mutation_id: _builtins.str = ...,
         category_id: _builtins.str = ...,
+        outside_totals: _builtins.bool = ...,
     ) -> None: ...
     _HasFieldArgType: _TypeAlias = _Never  # noqa: Y015
     def HasField(self, field_name: _HasFieldArgType) -> _builtins.bool: ...
-    _ClearFieldArgType: _TypeAlias = _typing.Literal["amount_minor", b"amount_minor", "category_id", b"category_id", "client_mutation_id", b"client_mutation_id", "kind", b"kind", "note", b"note", "occurred_at", b"occurred_at", "wallet_id", b"wallet_id"]  # noqa: Y015
+    _ClearFieldArgType: _TypeAlias = _typing.Literal["amount_minor", b"amount_minor", "category_id", b"category_id", "client_mutation_id", b"client_mutation_id", "kind", b"kind", "note", b"note", "occurred_at", b"occurred_at", "outside_totals", b"outside_totals", "wallet_id", b"wallet_id"]  # noqa: Y015
     def ClearField(self, field_name: _ClearFieldArgType) -> None: ...
     def WhichOneof(self, oneof_group: _Never) -> None: ...
 
@@ -435,6 +449,63 @@ class EntryReply(_message.Message):
     def WhichOneof(self, oneof_group: _Never) -> None: ...
 
 Global___EntryReply: _TypeAlias = EntryReply  # noqa: Y015
+
+@_typing.final
+class SplitPartMsg(_message.Message):
+    DESCRIPTOR: _descriptor.Descriptor
+
+    CATEGORY_ID_FIELD_NUMBER: _builtins.int
+    AMOUNT_MINOR_FIELD_NUMBER: _builtins.int
+    OUTSIDE_TOTALS_FIELD_NUMBER: _builtins.int
+    category_id: _builtins.str
+    amount_minor: _builtins.int
+    outside_totals: _builtins.bool
+    def __init__(
+        self,
+        *,
+        category_id: _builtins.str = ...,
+        amount_minor: _builtins.int = ...,
+        outside_totals: _builtins.bool = ...,
+    ) -> None: ...
+    _HasFieldArgType: _TypeAlias = _Never  # noqa: Y015
+    def HasField(self, field_name: _HasFieldArgType) -> _builtins.bool: ...
+    _ClearFieldArgType: _TypeAlias = _typing.Literal["amount_minor", b"amount_minor", "category_id", b"category_id", "outside_totals", b"outside_totals"]  # noqa: Y015
+    def ClearField(self, field_name: _ClearFieldArgType) -> None: ...
+    def WhichOneof(self, oneof_group: _Never) -> None: ...
+
+Global___SplitPartMsg: _TypeAlias = SplitPartMsg  # noqa: Y015
+
+@_typing.final
+class SplitRequest(_message.Message):
+    DESCRIPTOR: _descriptor.Descriptor
+
+    WALLET_ID_FIELD_NUMBER: _builtins.int
+    PARTS_FIELD_NUMBER: _builtins.int
+    OCCURRED_AT_FIELD_NUMBER: _builtins.int
+    NOTE_FIELD_NUMBER: _builtins.int
+    CLIENT_MUTATION_ID_FIELD_NUMBER: _builtins.int
+    wallet_id: _builtins.str
+    occurred_at: _builtins.str
+    note: _builtins.str
+    client_mutation_id: _builtins.str
+    @_builtins.property
+    def parts(self) -> _containers.RepeatedCompositeFieldContainer[Global___SplitPartMsg]: ...
+    def __init__(
+        self,
+        *,
+        wallet_id: _builtins.str = ...,
+        parts: _abc.Iterable[Global___SplitPartMsg] | None = ...,
+        occurred_at: _builtins.str = ...,
+        note: _builtins.str = ...,
+        client_mutation_id: _builtins.str = ...,
+    ) -> None: ...
+    _HasFieldArgType: _TypeAlias = _Never  # noqa: Y015
+    def HasField(self, field_name: _HasFieldArgType) -> _builtins.bool: ...
+    _ClearFieldArgType: _TypeAlias = _typing.Literal["client_mutation_id", b"client_mutation_id", "note", b"note", "occurred_at", b"occurred_at", "parts", b"parts", "wallet_id", b"wallet_id"]  # noqa: Y015
+    def ClearField(self, field_name: _ClearFieldArgType) -> None: ...
+    def WhichOneof(self, oneof_group: _Never) -> None: ...
+
+Global___SplitRequest: _TypeAlias = SplitRequest  # noqa: Y015
 
 @_typing.final
 class TransferRequest(_message.Message):

@@ -9,9 +9,16 @@ from django_socio_grpc.decorators import grpc_action
 from google.protobuf.empty_pb2 import Empty
 
 from apps.wallets.categories import category_service
-from apps.wallets.grpc.serializers import BudgetRow, Category, CurrencyTotal, Entry, Wallet
+from apps.wallets.grpc.serializers import (
+    BudgetRow,
+    Category,
+    CurrencyTotal,
+    Entry,
+    SplitPartMsg,
+    Wallet,
+)
 from apps.wallets.ledger import Entry as EntryView
-from apps.wallets.ledger import ledger_service
+from apps.wallets.ledger import SplitPart, ledger_service
 from apps.wallets.services import WalletList, WalletView, wallets_service
 from apps.wallets.transfers import transfer_service
 from infrastructure.common.errors import ApiError
@@ -117,6 +124,8 @@ def _entry(view: EntryView) -> Any:
         occurred_at=view.occurred_at.isoformat(),
         note=view.note,
         category_id=view.category_id,
+        outside_totals=view.outside_totals,
+        split_id=view.split_id,
     )
 
 
@@ -136,6 +145,7 @@ class LedgerService(generics.GenericService):
             *ENTRY_FIELDS,
             {"name": "client_mutation_id", "type": "string"},
             {"name": "category_id", "type": "string"},
+            {"name": "outside_totals", "type": "bool"},
         ],
         request_name="EntryRecord",
         response=ENTRY_REPLY,
@@ -155,6 +165,7 @@ class LedgerService(generics.GenericService):
             note=request.note,
             client_mutation_id=request.client_mutation_id,
             category_id=request.category_id or None,
+            outside_totals=request.outside_totals,
         )
         return wallets_pb2.EntryReply(entry=_entry(view))
 
@@ -171,6 +182,35 @@ class LedgerService(generics.GenericService):
         user = require_caller(await grpc_caller(context))
         views = await sync_to_async(ledger_service.list)(
             user, wallet_id=request.wallet_id or None, limit=request.limit
+        )
+        return wallets_pb2.EntryListReply(entries=[_entry(v) for v in views])
+
+    @grpc_action(
+        request=[
+            {"name": "wallet_id", "type": "string"},
+            {"name": "parts", "type": SplitPartMsg, "cardinality": "repeated"},
+            {"name": "occurred_at", "type": "string"},
+            {"name": "note", "type": "string"},
+            {"name": "client_mutation_id", "type": "string"},
+        ],
+        request_name="SplitRequest",
+        response=[{"name": "entries", "type": Entry, "cardinality": "repeated"}],
+        response_name="EntryListReply",
+    )
+    @action
+    async def RecordSplit(self, request: Any, context: Any) -> Any:
+        from apps.wallets.grpc import wallets_pb2
+
+        user = require_caller(await grpc_caller(context))
+        views = await sync_to_async(ledger_service.record_split)(
+            user,
+            wallet_id=request.wallet_id,
+            parts=[
+                SplitPart(p.category_id, p.amount_minor, p.outside_totals) for p in request.parts
+            ],
+            occurred_at=_when(request.occurred_at),
+            note=request.note,
+            client_mutation_id=request.client_mutation_id,
         )
         return wallets_pb2.EntryListReply(entries=[_entry(v) for v in views])
 
@@ -214,6 +254,8 @@ class LedgerService(generics.GenericService):
             {"name": "entry_id", "type": "string"},
             *ENTRY_FIELDS,
             {"name": "category_id", "type": "string"},
+            # Unset keeps the flag as it is.
+            {"name": "outside_totals", "type": "bool", "cardinality": "optional"},
         ],
         request_name="EntryEdit",
         response=ENTRY_REPLY,
@@ -231,6 +273,7 @@ class LedgerService(generics.GenericService):
             occurred_at=_when(request.occurred_at),
             note=request.note,
             category_id=request.category_id or None,
+            outside_totals=(request.outside_totals if request.HasField("outside_totals") else None),
         )
         return wallets_pb2.EntryReply(entry=_entry(view))
 
