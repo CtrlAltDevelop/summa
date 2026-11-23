@@ -11,7 +11,8 @@ import 'basket_form_screen.dart';
 import 'networth_controller.dart';
 import 'networth_models.dart';
 
-/// The big number: net worth in toman, dollars and grams of gold.
+/// The hero: net worth as one big animated number, the dollar and gold
+/// equivalents as chips, and a bar showing what it is made of.
 class NetWorthCard extends ConsumerWidget {
   const NetWorthCard({super.key});
 
@@ -21,53 +22,201 @@ class NetWorthCard extends ConsumerWidget {
     final worth = ref.watch(netWorthProvider).value;
     if (worth == null) return const SizedBox.shrink();
     final toman = currencyLabel(l10n, 'IRT');
+    final warnings = [
+      if (worth.stale) l10n.netWorthStale,
+      if (worth.unconverted.isNotEmpty)
+        l10n.netWorthUnconverted(worth.unconverted.join('، ')),
+      if (worth.unpricedAssets > 0)
+        l10n.netWorthUnpriced(toPersianDigits('${worth.unpricedAssets}')),
+    ];
     return SmGlassCard(
-      padding: const EdgeInsets.all(SmSpace.lg),
+      strong: true,
+      padding: const EdgeInsets.all(SmSpace.xl),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Text(l10n.netWorthTitle, style: SmType.caption),
-          Text('${formatNumber(worth.totalMinor)} $toman', style: SmType.title),
-          if (worth.usdMinor != null)
-            Text(
-              '${formatMinor(worth.usdMinor!, 'USD')} ${currencyLabel(l10n, 'USD')}',
-              style: SmType.body,
-            ),
-          if (worth.goldGrams.isNotEmpty)
-            Text(
-              '${formatQuantity(worth.goldGrams)} ${l10n.netWorthGold}',
-              style: SmType.body,
-            ),
-          const SizedBox(height: SmSpace.sm),
-          Text(
-            '${l10n.netWorthWallets}: ${formatNumber(worth.walletsMinor)}',
-            style: SmType.caption,
+          const SizedBox(height: SmSpace.xs),
+          Wrap(
+            crossAxisAlignment: WrapCrossAlignment.end,
+            spacing: SmSpace.sm,
+            children: [
+              SmCountUp(
+                value: worth.totalMinor,
+                format: (v) => formatNumber(v.round()),
+                style: SmType.hero,
+              ),
+              Padding(
+                padding: const EdgeInsets.only(bottom: SmSpace.sm),
+                child: Text(toman, style: SmType.title),
+              ),
+            ],
           ),
-          Text(
-            '${l10n.netWorthAssets}: ${formatNumber(worth.assetsMinor)}',
-            style: SmType.caption,
+          const SizedBox(height: SmSpace.md),
+          Wrap(
+            spacing: SmSpace.sm,
+            runSpacing: SmSpace.sm,
+            children: [
+              if (worth.usdMinor != null)
+                SmChip(
+                  '${formatMinor(worth.usdMinor!, 'USD')} '
+                  '${currencyLabel(l10n, 'USD')}',
+                ),
+              if (worth.goldGrams.isNotEmpty)
+                SmChip(
+                  '${formatQuantity(worth.goldGrams)} ${l10n.netWorthGold}',
+                ),
+            ],
           ),
-          Text(
-            '${l10n.netWorthDebts}: ${formatNumber(worth.debtsMinor)}',
-            style: SmType.caption,
+          const SizedBox(height: SmSpace.xl),
+          const _HistoryChart(),
+          const SizedBox(height: SmSpace.xl),
+          _CompositionBar(
+            parts: [
+              _Part(l10n.netWorthWallets, worth.walletsMinor, SmColors.accent),
+              _Part(l10n.netWorthAssets, worth.assetsMinor, SmColors.success),
+              _Part(l10n.netWorthDebts, worth.debtsMinor, SmColors.danger),
+            ],
           ),
-          if (worth.stale)
-            Text(
-              l10n.netWorthStale,
-              style: SmType.caption.copyWith(color: SmColors.warning),
-            ),
-          if (worth.unconverted.isNotEmpty)
-            Text(
-              l10n.netWorthUnconverted(worth.unconverted.join('، ')),
-              style: SmType.caption.copyWith(color: SmColors.warning),
-            ),
-          if (worth.unpricedAssets > 0)
-            Text(
-              l10n.netWorthUnpriced(toPersianDigits('${worth.unpricedAssets}')),
-              style: SmType.caption.copyWith(color: SmColors.warning),
-            ),
+          for (final w in warnings) ...[
+            const SizedBox(height: SmSpace.sm),
+            Text(w, style: SmType.caption.copyWith(color: SmColors.warning)),
+          ],
         ],
       ),
+    );
+  }
+}
+
+class _Part {
+  const _Part(this.label, this.minor, this.color);
+
+  final String label;
+  final int minor;
+  final Color color;
+}
+
+/// A segmented bar (grows in on first show) with a legend under it.
+class _CompositionBar extends StatelessWidget {
+  const _CompositionBar({required this.parts});
+
+  final List<_Part> parts;
+
+  static const double _height = 10;
+  static const int _minFlex = 1;
+
+  @override
+  Widget build(BuildContext context) {
+    final shown = parts.where((p) => p.minor > 0).toList();
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.stretch,
+      children: [
+        if (shown.isNotEmpty)
+          TweenAnimationBuilder<double>(
+            tween: Tween<double>(begin: 0, end: 1),
+            duration: SmMotion.of(context, SmMotion.slow),
+            curve: SmMotion.emphasis,
+            builder: (context, t, _) => ClipRRect(
+              borderRadius: SmRadius.pill,
+              child: FractionallySizedBox(
+                alignment: AlignmentDirectional.centerStart,
+                widthFactor: t,
+                child: Row(
+                  children: [
+                    for (final p in shown)
+                      Expanded(
+                        flex: p.minor < _minFlex ? _minFlex : p.minor,
+                        child: SizedBox(
+                          height: _height,
+                          child: ColoredBox(color: p.color),
+                        ),
+                      ),
+                  ],
+                ),
+              ),
+            ),
+          ),
+        const SizedBox(height: SmSpace.md),
+        Wrap(
+          spacing: SmSpace.xl,
+          runSpacing: SmSpace.sm,
+          children: [for (final p in parts) _Legend(part: p)],
+        ),
+      ],
+    );
+  }
+}
+
+class _Legend extends StatelessWidget {
+  const _Legend({required this.part});
+
+  final _Part part;
+
+  static const double _dot = 8;
+
+  @override
+  Widget build(BuildContext context) {
+    return Row(
+      mainAxisSize: MainAxisSize.min,
+      children: [
+        DecoratedBox(
+          decoration: BoxDecoration(color: part.color, shape: BoxShape.circle),
+          child: const SizedBox(width: _dot, height: _dot),
+        ),
+        const SizedBox(width: SmSpace.sm),
+        Text(
+          '${part.label}: ${formatNumber(part.minor)}',
+          style: SmType.caption,
+        ),
+      ],
+    );
+  }
+}
+
+const _rangeDays = [7, 30, 90];
+
+/// The net-worth line with a 7 / 30 / 90 day switch.
+class _HistoryChart extends ConsumerStatefulWidget {
+  const _HistoryChart();
+
+  @override
+  ConsumerState<_HistoryChart> createState() => _HistoryChartState();
+}
+
+class _HistoryChartState extends ConsumerState<_HistoryChart> {
+  int _days = _rangeDays[1];
+
+  @override
+  Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context);
+    final points = ref.watch(netWorthHistoryProvider(_days)).value ?? const [];
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.stretch,
+      children: [
+        Wrap(
+          spacing: SmSpace.sm,
+          children: [
+            for (final d in _rangeDays)
+              GestureDetector(
+                onTap: () => setState(() => _days = d),
+                child: SmChip(
+                  l10n.netWorthRange(toPersianDigits('$d')),
+                  selected: d == _days,
+                ),
+              ),
+          ],
+        ),
+        const SizedBox(height: SmSpace.md),
+        if (points.length < 2)
+          Text(l10n.netWorthHistoryEmpty, style: SmType.caption)
+        else
+          SmLineChart(
+            values: [for (final p in points) p.totalMinor.toDouble()],
+            label: (i) =>
+                '${formatNumber(points[i].totalMinor)} · '
+                '${formatJalaliDate(points[i].day)}',
+          ),
+      ],
     );
   }
 }

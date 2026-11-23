@@ -1145,4 +1145,19 @@ class AppLocalizationsFa extends AppLocalizations {
 
   @override
   String get dataImportFailed => 'ورود انجام نشد. فایل را بررسی کن.';
+
+  @override
+  String get netWorthHistoryEmpty =>
+      'نمودار با گذشت چند روز ساخته می‌شود؛ هر روز یک نقطه ثبت می‌شود.';
+
+  @override
+  String netWorthRange(String days) {
+    return '$days روز';
+  }
+
+  @override
+  String get setupTitle => 'حساب‌ات را کامل کن';
+
+  @override
+  String get setupLater => 'بعداً';
 }

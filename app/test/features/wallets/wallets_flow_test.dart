@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:summa/features/auth/setup_prompt.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:summa/app.dart';
 import 'package:summa/features/assets/asset_controller.dart';
@@ -20,13 +21,20 @@ import '../recurring/fake_recurring_api.dart';
 import '../debts/fake_debt_api.dart';
 import '../assistant/fake_assistant_api.dart';
 import '../categories/fake_category_api.dart';
+
+import 'package:summa/features/wallets/wallet_form_screen.dart';
+
 import 'fake_ledger_api.dart';
 import 'fake_wallet_api.dart';
 import '../billing/fake_billing_api.dart';
 import '../networth/fake_networth_api.dart';
 import '../assets/fake_asset_api.dart';
 
-Future<FakeLedgerApi> _pump(WidgetTester t, FakeWalletApi wallets) async {
+Future<FakeLedgerApi> _pump(
+  WidgetTester t,
+  FakeWalletApi wallets, {
+  bool prompt = false,
+}) async {
   final ledger = FakeLedgerApi(wallets);
   final categories = FakeCategoryApi(ledger);
   // Tall enough that the whole home list is built.
@@ -37,6 +45,7 @@ Future<FakeLedgerApi> _pump(WidgetTester t, FakeWalletApi wallets) async {
   await t.pumpWidget(
     ProviderScope(
       overrides: [
+        setupPromptEnabledProvider.overrideWithValue(prompt),
         authApiProvider.overrideWithValue(auth),
         tokenStoreProvider.overrideWithValue(
           MemoryTokenStore(auth.currentTokens),
@@ -59,6 +68,27 @@ Future<FakeLedgerApi> _pump(WidgetTester t, FakeWalletApi wallets) async {
 }
 
 void main() {
+  testWidgets(
+    'no wallets: a modal offers to finish setup, and can be skipped',
+    (t) async {
+      await _pump(t, FakeWalletApi(), prompt: true);
+
+      expect(find.text('حساب‌ات را کامل کن'), findsOneWidget);
+      await t.tap(find.text('بعداً'));
+      await t.pumpAndSettle();
+      expect(find.text('حساب‌ات را کامل کن'), findsNothing);
+    },
+  );
+
+  testWidgets('the modal leads to the new-wallet form', (t) async {
+    await _pump(t, FakeWalletApi(), prompt: true);
+
+    await t.tap(find.text('کیف پول جدید').last);
+    await t.pumpAndSettle();
+
+    expect(find.byType(WalletFormScreen), findsOneWidget);
+  });
+
   ledgerTests();
   transferTests();
   testWidgets('no wallets: shows the empty hint and an add button', (t) async {

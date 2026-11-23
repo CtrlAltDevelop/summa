@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:summa/features/auth/setup_prompt.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:summa/app.dart';
 import 'package:summa/features/assets/asset_controller.dart';
@@ -41,6 +42,7 @@ Future<FakeLedgerApi> _pump(WidgetTester t) async {
   await t.pumpWidget(
     ProviderScope(
       overrides: [
+        setupPromptEnabledProvider.overrideWithValue(false),
         authApiProvider.overrideWithValue(auth),
         tokenStoreProvider.overrideWithValue(
           MemoryTokenStore(auth.currentTokens),

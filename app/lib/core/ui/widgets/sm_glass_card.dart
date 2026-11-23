@@ -27,7 +27,14 @@ class SmGlassCard extends StatelessWidget {
         filter: ImageFilter.blur(sigmaX: _blur, sigmaY: _blur),
         child: DecoratedBox(
           decoration: BoxDecoration(
-            color: strong ? SmColors.glassFillStrong : SmColors.glassFill,
+            color: strong ? SmColors.glassFillStrong : null,
+            gradient: strong
+                ? null
+                : const LinearGradient(
+                    begin: AlignmentDirectional.topStart,
+                    end: AlignmentDirectional.bottomEnd,
+                    colors: [SmColors.glassGlow, SmColors.glassFill],
+                  ),
             borderRadius: SmRadius.lg,
             border: Border.all(color: SmColors.glassBorder),
           ),

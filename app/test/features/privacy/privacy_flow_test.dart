@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:summa/features/auth/setup_prompt.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:summa/app.dart';
 import 'package:summa/core/storage/key_value_store.dart';
@@ -68,6 +69,7 @@ Future<_Rig> _pump(WidgetTester t, {bool biometrics = true}) async {
   await t.pumpWidget(
     ProviderScope(
       overrides: [
+        setupPromptEnabledProvider.overrideWithValue(false),
         authApiProvider.overrideWithValue(authApi),
         tokenStoreProvider.overrideWithValue(
           MemoryTokenStore(authApi.currentTokens),

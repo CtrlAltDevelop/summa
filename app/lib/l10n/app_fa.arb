@@ -537,5 +537,16 @@
       }
     }
   },
-  "dataImportFailed": "ورود انجام نشد. فایل را بررسی کن."
+  "dataImportFailed": "ورود انجام نشد. فایل را بررسی کن.",
+  "netWorthHistoryEmpty": "نمودار با گذشت چند روز ساخته می‌شود؛ هر روز یک نقطه ثبت می‌شود.",
+  "netWorthRange": "{days} روز",
+  "@netWorthRange": {
+    "placeholders": {
+      "days": {
+        "type": "String"
+      }
+    }
+  },
+  "setupTitle": "حساب‌ات را کامل کن",
+  "setupLater": "بعداً"
 }

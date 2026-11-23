@@ -41,112 +41,104 @@ class _BillingScreenState extends ConsumerState<BillingScreen> {
     final l10n = AppLocalizations.of(context);
     final status = ref.watch(subscriptionStatusProvider).value;
     final plans = ref.watch(plansProvider).value ?? const <PlanInfo>[];
-    return SmBackground(
-      child: SafeArea(
-        child: ListView(
-          padding: const EdgeInsets.all(SmSpace.screen),
-          children: [
-            Text(l10n.billingTitle, style: SmType.title),
-            const SizedBox(height: SmSpace.lg),
-            if (status != null)
-              SmGlassCard(
-                padding: const EdgeInsets.all(SmSpace.lg),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.stretch,
-                  children: [
-                    Text(_statusText(l10n, status), style: SmType.body),
-                    if (status.trialAvailable) ...[
-                      const SizedBox(height: SmSpace.md),
-                      SmButton(
-                        label: l10n.billingStartTrial,
-                        onPressed: _busy
-                            ? null
-                            : () => _run(() => startTrial(ref)),
-                      ),
-                    ],
-                  ],
-                ),
-              ),
-            const SizedBox(height: SmSpace.lg),
-            if (plans.isEmpty)
-              Text(l10n.billingNoPlans, style: SmType.caption)
-            else
-              for (final p in plans)
-                Padding(
-                  padding: const EdgeInsets.only(bottom: SmSpace.sm),
-                  child: SmGlassCard(
-                    padding: const EdgeInsets.all(SmSpace.lg),
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.stretch,
-                      children: [
-                        Text(p.name, style: SmType.body),
-                        Text(
-                          l10n.billingPlanLine(
-                            formatNumber(p.priceMinor),
-                            toPersianDigits('${p.periodDays}'),
-                          ),
-                          style: SmType.caption,
-                        ),
-                        if (p.description.isNotEmpty)
-                          Text(p.description, style: SmType.caption),
-                        const SizedBox(height: SmSpace.md),
-                        SmButton(
-                          label: l10n.billingBuy,
-                          onPressed: _busy
-                              ? null
-                              : () => _run(() async {
-                                  final c = await checkout(ref, p.code);
-                                  if (mounted) setState(() => _pending = c);
-                                }),
-                        ),
-                      ],
-                    ),
+    return SmScreen(
+      title: l10n.billingTitle,
+      children: [
+        if (status != null)
+          SmGlassCard(
+            padding: const EdgeInsets.all(SmSpace.lg),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.stretch,
+              children: [
+                Text(_statusText(l10n, status), style: SmType.body),
+                if (status.trialAvailable) ...[
+                  const SizedBox(height: SmSpace.md),
+                  SmButton(
+                    label: l10n.billingStartTrial,
+                    onPressed: _busy ? null : () => _run(() => startTrial(ref)),
                   ),
-                ),
-            if (_pending != null) ...[
-              const SizedBox(height: SmSpace.lg),
-              SmGlassCard(
+                ],
+              ],
+            ),
+          ),
+        const SizedBox(height: SmSpace.lg),
+        if (plans.isEmpty)
+          Text(l10n.billingNoPlans, style: SmType.caption)
+        else
+          for (final p in plans)
+            Padding(
+              padding: const EdgeInsets.only(bottom: SmSpace.sm),
+              child: SmGlassCard(
                 padding: const EdgeInsets.all(SmSpace.lg),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.stretch,
                   children: [
-                    Text(l10n.billingPayAt, style: SmType.caption),
+                    Text(p.name, style: SmType.body),
                     Text(
-                      _pending!.payUrl,
-                      style: SmType.body,
-                      textDirection: TextDirection.ltr,
+                      l10n.billingPlanLine(
+                        formatNumber(p.priceMinor),
+                        toPersianDigits('${p.periodDays}'),
+                      ),
+                      style: SmType.caption,
                     ),
+                    if (p.description.isNotEmpty)
+                      Text(p.description, style: SmType.caption),
                     const SizedBox(height: SmSpace.md),
                     SmButton(
-                      label: l10n.billingCheckPayment,
+                      label: l10n.billingBuy,
                       onPressed: _busy
                           ? null
                           : () => _run(() async {
-                              final s = await verify(ref, _pending!.reference);
-                              if (!mounted) return;
-                              setState(() {
-                                if (s.status == 'active') {
-                                  _pending = null;
-                                } else {
-                                  _message = l10n.billingNotConfirmed;
-                                }
-                              });
+                              final c = await checkout(ref, p.code);
+                              if (mounted) setState(() => _pending = c);
                             }),
                     ),
                   ],
                 ),
               ),
-            ],
-            if (_message != null) ...[
-              const SizedBox(height: SmSpace.md),
-              Text(
-                _message!,
-                style: SmType.caption.copyWith(color: SmColors.warning),
-              ),
-            ],
-          ],
-        ),
-      ),
+            ),
+        if (_pending != null) ...[
+          const SizedBox(height: SmSpace.lg),
+          SmGlassCard(
+            padding: const EdgeInsets.all(SmSpace.lg),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.stretch,
+              children: [
+                Text(l10n.billingPayAt, style: SmType.caption),
+                Text(
+                  _pending!.payUrl,
+                  style: SmType.body,
+                  textDirection: TextDirection.ltr,
+                ),
+                const SizedBox(height: SmSpace.md),
+                SmButton(
+                  label: l10n.billingCheckPayment,
+                  onPressed: _busy
+                      ? null
+                      : () => _run(() async {
+                          final s = await verify(ref, _pending!.reference);
+                          if (!mounted) return;
+                          setState(() {
+                            if (s.status == 'active') {
+                              _pending = null;
+                            } else {
+                              _message = l10n.billingNotConfirmed;
+                            }
+                          });
+                        }),
+                ),
+              ],
+            ),
+          ),
+        ],
+        if (_message != null) ...[
+          const SizedBox(height: SmSpace.md),
+          Text(
+            _message!,
+            style: SmType.caption.copyWith(color: SmColors.warning),
+          ),
+        ],
+      ],
     );
   }
 

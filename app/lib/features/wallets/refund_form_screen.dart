@@ -106,55 +106,44 @@ class _RefundFormScreenState extends ConsumerState<RefundFormScreen> {
   Widget build(BuildContext context) {
     final l10n = AppLocalizations.of(context);
     final entry = widget.entry;
-    return SmBackground(
-      child: SafeArea(
-        child: ListView(
-          padding: const EdgeInsets.all(SmSpace.screen),
-          children: [
-            Text(l10n.refundTitle, style: SmType.title),
-            const SizedBox(height: SmSpace.sm),
-            Text(
-              '${l10n.refundRemaining}: '
-              '${formatMinor(entry.refundableMinor, entry.currency)} '
-              '${currencyLabel(l10n, entry.currency)}',
-              style: SmType.caption,
-            ),
-            const SizedBox(height: SmSpace.lg),
-            Text(l10n.entryWalletLabel, style: SmType.caption),
-            const SizedBox(height: SmSpace.sm),
-            Choices<Wallet>(
-              values: widget.wallets,
-              selected: _wallet,
-              label: (w) => w.name,
-              onSelected: (w) => setState(() => _wallet = w),
-            ),
-            const SizedBox(height: SmSpace.lg),
-            SmTextField(
-              controller: _amount,
-              label: l10n.refundAmountLabel,
-              keyboardType: const TextInputType.numberWithOptions(
-                decimal: true,
-              ),
-              textDirection: TextDirection.ltr,
-            ),
-            const SizedBox(height: SmSpace.lg),
-            SmTextField(
-              controller: _note,
-              label: l10n.entryNoteLabel,
-              maxLength: 200,
-            ),
-            if (_error != null) ...[
-              const SizedBox(height: SmSpace.md),
-              Text(
-                _error!,
-                style: SmType.caption.copyWith(color: SmColors.danger),
-              ),
-            ],
-            const SizedBox(height: SmSpace.xl),
-            SmButton(label: l10n.walletSave, onPressed: _saving ? null : _save),
-          ],
+    return SmScreen(
+      title: l10n.refundTitle,
+      children: [
+        Text(
+          '${l10n.refundRemaining}: '
+          '${formatMinor(entry.refundableMinor, entry.currency)} '
+          '${currencyLabel(l10n, entry.currency)}',
+          style: SmType.caption,
         ),
-      ),
+        const SizedBox(height: SmSpace.lg),
+        Text(l10n.entryWalletLabel, style: SmType.caption),
+        const SizedBox(height: SmSpace.sm),
+        Choices<Wallet>(
+          values: widget.wallets,
+          selected: _wallet,
+          label: (w) => w.name,
+          onSelected: (w) => setState(() => _wallet = w),
+        ),
+        const SizedBox(height: SmSpace.lg),
+        SmTextField(
+          controller: _amount,
+          label: l10n.refundAmountLabel,
+          keyboardType: const TextInputType.numberWithOptions(decimal: true),
+          textDirection: TextDirection.ltr,
+        ),
+        const SizedBox(height: SmSpace.lg),
+        SmTextField(
+          controller: _note,
+          label: l10n.entryNoteLabel,
+          maxLength: 200,
+        ),
+        if (_error != null) ...[
+          const SizedBox(height: SmSpace.md),
+          Text(_error!, style: SmType.caption.copyWith(color: SmColors.danger)),
+        ],
+        const SizedBox(height: SmSpace.xl),
+        SmButton(label: l10n.walletSave, onPressed: _saving ? null : _save),
+      ],
     );
   }
 }

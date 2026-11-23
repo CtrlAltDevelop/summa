@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:summa/features/auth/setup_prompt.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:summa/app.dart';
 import 'package:summa/features/assistant/assistant_controller.dart';
@@ -50,6 +51,7 @@ Future<({FakeLedgerApi ledger, FakeAssistantApi assistant})> _pump(
   await t.pumpWidget(
     ProviderScope(
       overrides: [
+        setupPromptEnabledProvider.overrideWithValue(false),
         authApiProvider.overrideWithValue(auth),
         tokenStoreProvider.overrideWithValue(
           MemoryTokenStore(auth.currentTokens),

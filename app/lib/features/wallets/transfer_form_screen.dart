@@ -118,77 +118,62 @@ class _TransferFormScreenState extends ConsumerState<TransferFormScreen> {
   @override
   Widget build(BuildContext context) {
     final l10n = AppLocalizations.of(context);
-    return SmBackground(
-      child: SafeArea(
-        child: ListView(
-          padding: const EdgeInsets.all(SmSpace.screen),
-          children: [
-            Text(l10n.transferFormTitle, style: SmType.title),
-            const SizedBox(height: SmSpace.lg),
-            Text(l10n.transferFrom, style: SmType.caption),
-            const SizedBox(height: SmSpace.sm),
-            Choices<Wallet>(
-              values: widget.wallets,
-              selected: _from,
-              label: (w) => w.name,
-              onSelected: (w) => setState(() => _from = w),
-            ),
-            const SizedBox(height: SmSpace.lg),
-            Text(l10n.transferTo, style: SmType.caption),
-            const SizedBox(height: SmSpace.sm),
-            Choices<Wallet>(
-              values: widget.wallets,
-              selected: _to,
-              label: (w) => w.name,
-              onSelected: (w) => setState(() => _to = w),
-            ),
-            const SizedBox(height: SmSpace.lg),
-            SmTextField(
-              controller: _amount,
-              label: l10n.entryAmountLabel,
-              keyboardType: const TextInputType.numberWithOptions(
-                decimal: true,
-              ),
-              textDirection: TextDirection.ltr,
-            ),
-            if (_crossCurrency) ...[
-              const SizedBox(height: SmSpace.lg),
-              SmTextField(
-                controller: _rate,
-                label: l10n.transferRateLabel,
-                keyboardType: const TextInputType.numberWithOptions(
-                  decimal: true,
-                ),
-                textDirection: TextDirection.ltr,
-              ),
-            ],
-            const SizedBox(height: SmSpace.lg),
-            SmTextField(
-              controller: _fee,
-              label: l10n.transferFeeLabel,
-              keyboardType: const TextInputType.numberWithOptions(
-                decimal: true,
-              ),
-              textDirection: TextDirection.ltr,
-            ),
-            const SizedBox(height: SmSpace.lg),
-            SmTextField(
-              controller: _note,
-              label: l10n.entryNoteLabel,
-              maxLength: 200,
-            ),
-            if (_error != null) ...[
-              const SizedBox(height: SmSpace.md),
-              Text(
-                _error!,
-                style: SmType.caption.copyWith(color: SmColors.danger),
-              ),
-            ],
-            const SizedBox(height: SmSpace.xl),
-            SmButton(label: l10n.walletSave, onPressed: _saving ? null : _save),
-          ],
+    return SmScreen(
+      title: l10n.transferFormTitle,
+      children: [
+        Text(l10n.transferFrom, style: SmType.caption),
+        const SizedBox(height: SmSpace.sm),
+        Choices<Wallet>(
+          values: widget.wallets,
+          selected: _from,
+          label: (w) => w.name,
+          onSelected: (w) => setState(() => _from = w),
         ),
-      ),
+        const SizedBox(height: SmSpace.lg),
+        Text(l10n.transferTo, style: SmType.caption),
+        const SizedBox(height: SmSpace.sm),
+        Choices<Wallet>(
+          values: widget.wallets,
+          selected: _to,
+          label: (w) => w.name,
+          onSelected: (w) => setState(() => _to = w),
+        ),
+        const SizedBox(height: SmSpace.lg),
+        SmTextField(
+          controller: _amount,
+          label: l10n.entryAmountLabel,
+          keyboardType: const TextInputType.numberWithOptions(decimal: true),
+          textDirection: TextDirection.ltr,
+        ),
+        if (_crossCurrency) ...[
+          const SizedBox(height: SmSpace.lg),
+          SmTextField(
+            controller: _rate,
+            label: l10n.transferRateLabel,
+            keyboardType: const TextInputType.numberWithOptions(decimal: true),
+            textDirection: TextDirection.ltr,
+          ),
+        ],
+        const SizedBox(height: SmSpace.lg),
+        SmTextField(
+          controller: _fee,
+          label: l10n.transferFeeLabel,
+          keyboardType: const TextInputType.numberWithOptions(decimal: true),
+          textDirection: TextDirection.ltr,
+        ),
+        const SizedBox(height: SmSpace.lg),
+        SmTextField(
+          controller: _note,
+          label: l10n.entryNoteLabel,
+          maxLength: 200,
+        ),
+        if (_error != null) ...[
+          const SizedBox(height: SmSpace.md),
+          Text(_error!, style: SmType.caption.copyWith(color: SmColors.danger)),
+        ],
+        const SizedBox(height: SmSpace.xl),
+        SmButton(label: l10n.walletSave, onPressed: _saving ? null : _save),
+      ],
     );
   }
 }

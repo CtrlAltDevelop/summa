@@ -27,6 +27,16 @@ final netWorthProvider = FutureProvider<NetWorth>((ref) {
       .withAccess((a) => ref.read(networthApiProvider).get(a));
 });
 
+/// The last [days] days of totals; waits for today's reading to be recorded.
+final netWorthHistoryProvider = FutureProvider.family<List<NetWorthPoint>, int>(
+  (ref, days) async {
+    await ref.watch(netWorthProvider.future);
+    return ref
+        .read(authControllerProvider.notifier)
+        .withAccess((a) => ref.read(networthApiProvider).history(a, days));
+  },
+);
+
 final basketsProvider = FutureProvider<List<Basket>>((ref) {
   _watchSources(ref);
   return ref
