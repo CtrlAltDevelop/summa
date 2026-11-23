@@ -747,6 +747,90 @@ abstract class AppLocalizations {
   /// In fa, this message translates to:
   /// **'جمله‌ای بنویس تا برایت کارت ثبت بسازم.'**
   String get chatEmpty;
+
+  /// No description provided for @smsOpen.
+  ///
+  /// In fa, this message translates to:
+  /// **'پیامک بانک'**
+  String get smsOpen;
+
+  /// No description provided for @smsTitle.
+  ///
+  /// In fa, this message translates to:
+  /// **'پیامک بانک'**
+  String get smsTitle;
+
+  /// No description provided for @smsPasteLabel.
+  ///
+  /// In fa, this message translates to:
+  /// **'متن پیامک را اینجا بچسبان'**
+  String get smsPasteLabel;
+
+  /// No description provided for @smsAnalyze.
+  ///
+  /// In fa, this message translates to:
+  /// **'بررسی پیامک'**
+  String get smsAnalyze;
+
+  /// No description provided for @smsIgnoredOtp.
+  ///
+  /// In fa, this message translates to:
+  /// **'این پیامک رمز یکبارمصرف است؛ ثبت نمی‌شود.'**
+  String get smsIgnoredOtp;
+
+  /// No description provided for @smsIgnoredFailed.
+  ///
+  /// In fa, this message translates to:
+  /// **'این تراکنش ناموفق بوده؛ ثبت نمی‌شود.'**
+  String get smsIgnoredFailed;
+
+  /// No description provided for @smsIgnoredAd.
+  ///
+  /// In fa, this message translates to:
+  /// **'این پیامک تبلیغاتی است؛ ثبت نمی‌شود.'**
+  String get smsIgnoredAd;
+
+  /// No description provided for @smsIgnoredNoAmount.
+  ///
+  /// In fa, this message translates to:
+  /// **'مبلغی در این پیامک پیدا نکردم.'**
+  String get smsIgnoredNoAmount;
+
+  /// No description provided for @smsKindLabel.
+  ///
+  /// In fa, this message translates to:
+  /// **'نوع تراکنش'**
+  String get smsKindLabel;
+
+  /// No description provided for @smsWhatFor.
+  ///
+  /// In fa, this message translates to:
+  /// **'برای چه بود؟'**
+  String get smsWhatFor;
+
+  /// No description provided for @smsBalance.
+  ///
+  /// In fa, this message translates to:
+  /// **'مانده پس از تراکنش'**
+  String get smsBalance;
+
+  /// No description provided for @smsLowConfidence.
+  ///
+  /// In fa, this message translates to:
+  /// **'مطمئن نیستم؛ لطفاً قبل از ثبت بررسی کن.'**
+  String get smsLowConfidence;
+
+  /// No description provided for @smsDuplicate.
+  ///
+  /// In fa, this message translates to:
+  /// **'شبیه همین تراکنش قبلاً ثبت شده است. باز هم ثبت شود؟'**
+  String get smsDuplicate;
+
+  /// No description provided for @smsCardNote.
+  ///
+  /// In fa, this message translates to:
+  /// **'این کارت (۴ رقم آخر {last4}) برای دفعه بعد به همین کیف وصل می‌شود.'**
+  String smsCardNote(String last4);
 }
 
 class _AppLocalizationsDelegate

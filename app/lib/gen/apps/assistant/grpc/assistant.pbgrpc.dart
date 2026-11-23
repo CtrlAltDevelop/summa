@@ -47,6 +47,20 @@ class AssistantControllerClient extends $grpc.Client {
     return $createUnaryCall(_$history, request, options: options);
   }
 
+  $grpc.ResponseFuture<$0.Empty> linkCard(
+    $1.CardLink request, {
+    $grpc.CallOptions? options,
+  }) {
+    return $createUnaryCall(_$linkCard, request, options: options);
+  }
+
+  $grpc.ResponseFuture<$1.SmsCard> parseSms(
+    $1.SmsText request, {
+    $grpc.CallOptions? options,
+  }) {
+    return $createUnaryCall(_$parseSms, request, options: options);
+  }
+
   $grpc.ResponseFuture<$1.ChatReply> send(
     $1.MessageSend request, {
     $grpc.CallOptions? options,
@@ -64,6 +78,14 @@ class AssistantControllerClient extends $grpc.Client {
       '/config.assistant.AssistantController/History',
       ($1.HistoryQuery value) => value.writeToBuffer(),
       $1.ChatReply.fromBuffer);
+  static final _$linkCard = $grpc.ClientMethod<$1.CardLink, $0.Empty>(
+      '/config.assistant.AssistantController/LinkCard',
+      ($1.CardLink value) => value.writeToBuffer(),
+      $0.Empty.fromBuffer);
+  static final _$parseSms = $grpc.ClientMethod<$1.SmsText, $1.SmsCard>(
+      '/config.assistant.AssistantController/ParseSms',
+      ($1.SmsText value) => value.writeToBuffer(),
+      $1.SmsCard.fromBuffer);
   static final _$send = $grpc.ClientMethod<$1.MessageSend, $1.ChatReply>(
       '/config.assistant.AssistantController/Send',
       ($1.MessageSend value) => value.writeToBuffer(),
@@ -89,6 +111,20 @@ abstract class AssistantControllerServiceBase extends $grpc.Service {
         false,
         ($core.List<$core.int> value) => $1.HistoryQuery.fromBuffer(value),
         ($1.ChatReply value) => value.writeToBuffer()));
+    $addMethod($grpc.ServiceMethod<$1.CardLink, $0.Empty>(
+        'LinkCard',
+        linkCard_Pre,
+        false,
+        false,
+        ($core.List<$core.int> value) => $1.CardLink.fromBuffer(value),
+        ($0.Empty value) => value.writeToBuffer()));
+    $addMethod($grpc.ServiceMethod<$1.SmsText, $1.SmsCard>(
+        'ParseSms',
+        parseSms_Pre,
+        false,
+        false,
+        ($core.List<$core.int> value) => $1.SmsText.fromBuffer(value),
+        ($1.SmsCard value) => value.writeToBuffer()));
     $addMethod($grpc.ServiceMethod<$1.MessageSend, $1.ChatReply>(
         'Send',
         send_Pre,
@@ -112,6 +148,21 @@ abstract class AssistantControllerServiceBase extends $grpc.Service {
 
   $async.Future<$1.ChatReply> history(
       $grpc.ServiceCall call, $1.HistoryQuery request);
+
+  $async.Future<$0.Empty> linkCard_Pre(
+      $grpc.ServiceCall $call, $async.Future<$1.CardLink> $request) async {
+    return linkCard($call, await $request);
+  }
+
+  $async.Future<$0.Empty> linkCard($grpc.ServiceCall call, $1.CardLink request);
+
+  $async.Future<$1.SmsCard> parseSms_Pre(
+      $grpc.ServiceCall $call, $async.Future<$1.SmsText> $request) async {
+    return parseSms($call, await $request);
+  }
+
+  $async.Future<$1.SmsCard> parseSms(
+      $grpc.ServiceCall call, $1.SmsText request);
 
   $async.Future<$1.ChatReply> send_Pre(
       $grpc.ServiceCall $call, $async.Future<$1.MessageSend> $request) async {

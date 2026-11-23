@@ -157,6 +157,74 @@ class Card extends $pb.GeneratedMessage {
   void clearOccurredAt() => $_clearField(8);
 }
 
+class CardLink extends $pb.GeneratedMessage {
+  factory CardLink({
+    $core.String? last4,
+    $core.String? walletId,
+  }) {
+    final result = CardLink._();
+    if (last4 != null) result.last4 = last4;
+    if (walletId != null) result.walletId = walletId;
+    return result;
+  }
+
+  CardLink._();
+
+  factory CardLink.fromBuffer($core.List<$core.int> data,
+          [$pb.ExtensionRegistry registry = $pb.ExtensionRegistry.EMPTY]) =>
+      CardLink()..mergeFromBuffer(data, registry);
+  factory CardLink.fromJson($core.String json,
+          [$pb.ExtensionRegistry registry = $pb.ExtensionRegistry.EMPTY]) =>
+      CardLink()..mergeFromJson(json, registry);
+
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo(
+      _omitMessageNames ? '' : 'CardLink',
+      package:
+          const $pb.PackageName(_omitMessageNames ? '' : 'config.assistant'),
+      createEmptyInstance: CardLink.$_createMessage)
+    ..aOS(1, _omitFieldNames ? '' : 'last4')
+    ..aOS(2, _omitFieldNames ? '' : 'walletId')
+    ..hasRequiredFields = false;
+
+  @$core.Deprecated('See https://github.com/google/protobuf.dart/issues/998.')
+  CardLink clone() => deepCopy();
+  @$core.Deprecated('See https://github.com/google/protobuf.dart/issues/998.')
+  CardLink copyWith(void Function(CardLink) updates) =>
+      super.copyWith((message) => updates(message as CardLink)) as CardLink;
+
+  @$core.override
+  $pb.BuilderInfo get info_ => _i;
+
+  @$core.pragma('dart2js:noInline')
+  @$core.Deprecated('Use CardLink() / CardLink.new instead')
+  static CardLink create() => CardLink._();
+  static $pb.GeneratedMessage $_createMessage() => CardLink._();
+  @$core.override
+  CardLink createEmptyInstance() => CardLink._();
+  @$core.pragma('dart2js:noInline')
+  static CardLink getDefault() => _defaultInstance ??=
+      $pb.GeneratedMessage.$_defaultFor<CardLink>(CardLink.$_createMessage);
+  static CardLink? _defaultInstance;
+
+  @$pb.TagNumber(1)
+  $core.String get last4 => $_getSZ(0);
+  @$pb.TagNumber(1)
+  set last4($core.String value) => $_setString(0, value);
+  @$pb.TagNumber(1)
+  $core.bool hasLast4() => $_has(0);
+  @$pb.TagNumber(1)
+  void clearLast4() => $_clearField(1);
+
+  @$pb.TagNumber(2)
+  $core.String get walletId => $_getSZ(1);
+  @$pb.TagNumber(2)
+  set walletId($core.String value) => $_setString(1, value);
+  @$pb.TagNumber(2)
+  $core.bool hasWalletId() => $_has(1);
+  @$pb.TagNumber(2)
+  void clearWalletId() => $_clearField(2);
+}
+
 class ChatReply extends $pb.GeneratedMessage {
   factory ChatReply({
     $core.Iterable<Message>? messages,
@@ -453,6 +521,257 @@ class MessageSend extends $pb.GeneratedMessage {
   $core.bool hasClientMutationId() => $_has(1);
   @$pb.TagNumber(2)
   void clearClientMutationId() => $_clearField(2);
+}
+
+class SmsCard extends $pb.GeneratedMessage {
+  factory SmsCard({
+    $core.String? ignored,
+    $core.String? kind,
+    $fixnum.Int64? amountMinor,
+    $core.String? currency,
+    $core.String? walletId,
+    $core.String? confidence,
+    $core.String? occurredAt,
+    $core.bool? balancePresent,
+    $fixnum.Int64? balanceMinor,
+    $core.String? last4,
+    $core.String? categoryId,
+    $core.Iterable<$core.String>? suggestedCategoryIds,
+    $core.String? duplicateEntryId,
+  }) {
+    final result = SmsCard._();
+    if (ignored != null) result.ignored = ignored;
+    if (kind != null) result.kind = kind;
+    if (amountMinor != null) result.amountMinor = amountMinor;
+    if (currency != null) result.currency = currency;
+    if (walletId != null) result.walletId = walletId;
+    if (confidence != null) result.confidence = confidence;
+    if (occurredAt != null) result.occurredAt = occurredAt;
+    if (balancePresent != null) result.balancePresent = balancePresent;
+    if (balanceMinor != null) result.balanceMinor = balanceMinor;
+    if (last4 != null) result.last4 = last4;
+    if (categoryId != null) result.categoryId = categoryId;
+    if (suggestedCategoryIds != null)
+      result.suggestedCategoryIds.addAll(suggestedCategoryIds);
+    if (duplicateEntryId != null) result.duplicateEntryId = duplicateEntryId;
+    return result;
+  }
+
+  SmsCard._();
+
+  factory SmsCard.fromBuffer($core.List<$core.int> data,
+          [$pb.ExtensionRegistry registry = $pb.ExtensionRegistry.EMPTY]) =>
+      SmsCard()..mergeFromBuffer(data, registry);
+  factory SmsCard.fromJson($core.String json,
+          [$pb.ExtensionRegistry registry = $pb.ExtensionRegistry.EMPTY]) =>
+      SmsCard()..mergeFromJson(json, registry);
+
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo(
+      _omitMessageNames ? '' : 'SmsCard',
+      package:
+          const $pb.PackageName(_omitMessageNames ? '' : 'config.assistant'),
+      createEmptyInstance: SmsCard.$_createMessage)
+    ..aOS(1, _omitFieldNames ? '' : 'ignored')
+    ..aOS(2, _omitFieldNames ? '' : 'kind')
+    ..aInt64(3, _omitFieldNames ? '' : 'amountMinor')
+    ..aOS(4, _omitFieldNames ? '' : 'currency')
+    ..aOS(5, _omitFieldNames ? '' : 'walletId')
+    ..aOS(6, _omitFieldNames ? '' : 'confidence')
+    ..aOS(7, _omitFieldNames ? '' : 'occurredAt')
+    ..aOB(8, _omitFieldNames ? '' : 'balancePresent')
+    ..aInt64(9, _omitFieldNames ? '' : 'balanceMinor')
+    ..aOS(10, _omitFieldNames ? '' : 'last4')
+    ..aOS(11, _omitFieldNames ? '' : 'categoryId')
+    ..pPS(12, _omitFieldNames ? '' : 'suggestedCategoryIds')
+    ..aOS(13, _omitFieldNames ? '' : 'duplicateEntryId')
+    ..hasRequiredFields = false;
+
+  @$core.Deprecated('See https://github.com/google/protobuf.dart/issues/998.')
+  SmsCard clone() => deepCopy();
+  @$core.Deprecated('See https://github.com/google/protobuf.dart/issues/998.')
+  SmsCard copyWith(void Function(SmsCard) updates) =>
+      super.copyWith((message) => updates(message as SmsCard)) as SmsCard;
+
+  @$core.override
+  $pb.BuilderInfo get info_ => _i;
+
+  @$core.pragma('dart2js:noInline')
+  @$core.Deprecated('Use SmsCard() / SmsCard.new instead')
+  static SmsCard create() => SmsCard._();
+  static $pb.GeneratedMessage $_createMessage() => SmsCard._();
+  @$core.override
+  SmsCard createEmptyInstance() => SmsCard._();
+  @$core.pragma('dart2js:noInline')
+  static SmsCard getDefault() => _defaultInstance ??=
+      $pb.GeneratedMessage.$_defaultFor<SmsCard>(SmsCard.$_createMessage);
+  static SmsCard? _defaultInstance;
+
+  @$pb.TagNumber(1)
+  $core.String get ignored => $_getSZ(0);
+  @$pb.TagNumber(1)
+  set ignored($core.String value) => $_setString(0, value);
+  @$pb.TagNumber(1)
+  $core.bool hasIgnored() => $_has(0);
+  @$pb.TagNumber(1)
+  void clearIgnored() => $_clearField(1);
+
+  @$pb.TagNumber(2)
+  $core.String get kind => $_getSZ(1);
+  @$pb.TagNumber(2)
+  set kind($core.String value) => $_setString(1, value);
+  @$pb.TagNumber(2)
+  $core.bool hasKind() => $_has(1);
+  @$pb.TagNumber(2)
+  void clearKind() => $_clearField(2);
+
+  @$pb.TagNumber(3)
+  $fixnum.Int64 get amountMinor => $_getI64(2);
+  @$pb.TagNumber(3)
+  set amountMinor($fixnum.Int64 value) => $_setInt64(2, value);
+  @$pb.TagNumber(3)
+  $core.bool hasAmountMinor() => $_has(2);
+  @$pb.TagNumber(3)
+  void clearAmountMinor() => $_clearField(3);
+
+  @$pb.TagNumber(4)
+  $core.String get currency => $_getSZ(3);
+  @$pb.TagNumber(4)
+  set currency($core.String value) => $_setString(3, value);
+  @$pb.TagNumber(4)
+  $core.bool hasCurrency() => $_has(3);
+  @$pb.TagNumber(4)
+  void clearCurrency() => $_clearField(4);
+
+  @$pb.TagNumber(5)
+  $core.String get walletId => $_getSZ(4);
+  @$pb.TagNumber(5)
+  set walletId($core.String value) => $_setString(4, value);
+  @$pb.TagNumber(5)
+  $core.bool hasWalletId() => $_has(4);
+  @$pb.TagNumber(5)
+  void clearWalletId() => $_clearField(5);
+
+  @$pb.TagNumber(6)
+  $core.String get confidence => $_getSZ(5);
+  @$pb.TagNumber(6)
+  set confidence($core.String value) => $_setString(5, value);
+  @$pb.TagNumber(6)
+  $core.bool hasConfidence() => $_has(5);
+  @$pb.TagNumber(6)
+  void clearConfidence() => $_clearField(6);
+
+  @$pb.TagNumber(7)
+  $core.String get occurredAt => $_getSZ(6);
+  @$pb.TagNumber(7)
+  set occurredAt($core.String value) => $_setString(6, value);
+  @$pb.TagNumber(7)
+  $core.bool hasOccurredAt() => $_has(6);
+  @$pb.TagNumber(7)
+  void clearOccurredAt() => $_clearField(7);
+
+  @$pb.TagNumber(8)
+  $core.bool get balancePresent => $_getBF(7);
+  @$pb.TagNumber(8)
+  set balancePresent($core.bool value) => $_setBool(7, value);
+  @$pb.TagNumber(8)
+  $core.bool hasBalancePresent() => $_has(7);
+  @$pb.TagNumber(8)
+  void clearBalancePresent() => $_clearField(8);
+
+  @$pb.TagNumber(9)
+  $fixnum.Int64 get balanceMinor => $_getI64(8);
+  @$pb.TagNumber(9)
+  set balanceMinor($fixnum.Int64 value) => $_setInt64(8, value);
+  @$pb.TagNumber(9)
+  $core.bool hasBalanceMinor() => $_has(8);
+  @$pb.TagNumber(9)
+  void clearBalanceMinor() => $_clearField(9);
+
+  @$pb.TagNumber(10)
+  $core.String get last4 => $_getSZ(9);
+  @$pb.TagNumber(10)
+  set last4($core.String value) => $_setString(9, value);
+  @$pb.TagNumber(10)
+  $core.bool hasLast4() => $_has(9);
+  @$pb.TagNumber(10)
+  void clearLast4() => $_clearField(10);
+
+  @$pb.TagNumber(11)
+  $core.String get categoryId => $_getSZ(10);
+  @$pb.TagNumber(11)
+  set categoryId($core.String value) => $_setString(10, value);
+  @$pb.TagNumber(11)
+  $core.bool hasCategoryId() => $_has(10);
+  @$pb.TagNumber(11)
+  void clearCategoryId() => $_clearField(11);
+
+  @$pb.TagNumber(12)
+  $pb.PbList<$core.String> get suggestedCategoryIds => $_getList(11);
+
+  @$pb.TagNumber(13)
+  $core.String get duplicateEntryId => $_getSZ(12);
+  @$pb.TagNumber(13)
+  set duplicateEntryId($core.String value) => $_setString(12, value);
+  @$pb.TagNumber(13)
+  $core.bool hasDuplicateEntryId() => $_has(12);
+  @$pb.TagNumber(13)
+  void clearDuplicateEntryId() => $_clearField(13);
+}
+
+class SmsText extends $pb.GeneratedMessage {
+  factory SmsText({
+    $core.String? text,
+  }) {
+    final result = SmsText._();
+    if (text != null) result.text = text;
+    return result;
+  }
+
+  SmsText._();
+
+  factory SmsText.fromBuffer($core.List<$core.int> data,
+          [$pb.ExtensionRegistry registry = $pb.ExtensionRegistry.EMPTY]) =>
+      SmsText()..mergeFromBuffer(data, registry);
+  factory SmsText.fromJson($core.String json,
+          [$pb.ExtensionRegistry registry = $pb.ExtensionRegistry.EMPTY]) =>
+      SmsText()..mergeFromJson(json, registry);
+
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo(
+      _omitMessageNames ? '' : 'SmsText',
+      package:
+          const $pb.PackageName(_omitMessageNames ? '' : 'config.assistant'),
+      createEmptyInstance: SmsText.$_createMessage)
+    ..aOS(1, _omitFieldNames ? '' : 'text')
+    ..hasRequiredFields = false;
+
+  @$core.Deprecated('See https://github.com/google/protobuf.dart/issues/998.')
+  SmsText clone() => deepCopy();
+  @$core.Deprecated('See https://github.com/google/protobuf.dart/issues/998.')
+  SmsText copyWith(void Function(SmsText) updates) =>
+      super.copyWith((message) => updates(message as SmsText)) as SmsText;
+
+  @$core.override
+  $pb.BuilderInfo get info_ => _i;
+
+  @$core.pragma('dart2js:noInline')
+  @$core.Deprecated('Use SmsText() / SmsText.new instead')
+  static SmsText create() => SmsText._();
+  static $pb.GeneratedMessage $_createMessage() => SmsText._();
+  @$core.override
+  SmsText createEmptyInstance() => SmsText._();
+  @$core.pragma('dart2js:noInline')
+  static SmsText getDefault() => _defaultInstance ??=
+      $pb.GeneratedMessage.$_defaultFor<SmsText>(SmsText.$_createMessage);
+  static SmsText? _defaultInstance;
+
+  @$pb.TagNumber(1)
+  $core.String get text => $_getSZ(0);
+  @$pb.TagNumber(1)
+  set text($core.String value) => $_setString(0, value);
+  @$pb.TagNumber(1)
+  $core.bool hasText() => $_has(0);
+  @$pb.TagNumber(1)
+  void clearText() => $_clearField(1);
 }
 
 const $core.bool _omitFieldNames =

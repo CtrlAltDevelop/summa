@@ -5,6 +5,7 @@ import '../../core/ui/tokens/tokens.dart';
 import '../../core/ui/widgets/widgets.dart';
 import '../../l10n/gen/app_localizations.dart';
 import '../assistant/chat_screen.dart';
+import '../assistant/sms_screen.dart';
 import '../categories/budgets_panel.dart';
 import '../wallets/entries_panel.dart';
 import '../wallets/wallets_panel.dart';
@@ -33,6 +34,15 @@ class HomeScreen extends ConsumerWidget {
               onPressed: () => Navigator.of(context).push(
                 PageRouteBuilder<void>(
                   pageBuilder: (_, _, _) => const ChatScreen(),
+                ),
+              ),
+            ),
+            const SizedBox(height: SmSpace.sm),
+            SmButton(
+              label: l10n.smsOpen,
+              onPressed: () => Navigator.of(context).push(
+                PageRouteBuilder<void>(
+                  pageBuilder: (_, _, _) => const SmsScreen(),
                 ),
               ),
             ),

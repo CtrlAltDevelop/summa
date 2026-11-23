@@ -12,6 +12,7 @@ class SmTextField extends StatelessWidget {
     this.textAlign = TextAlign.start,
     this.textDirection,
     this.maxLength,
+    this.maxLines = 1,
     this.autofocus = false,
     this.onChanged,
     this.onSubmitted,
@@ -25,6 +26,7 @@ class SmTextField extends StatelessWidget {
   final TextAlign textAlign;
   final TextDirection? textDirection;
   final int? maxLength;
+  final int? maxLines;
   final bool autofocus;
   final ValueChanged<String>? onChanged;
   final ValueChanged<String>? onSubmitted;
@@ -37,6 +39,7 @@ class SmTextField extends StatelessWidget {
       textAlign: textAlign,
       textDirection: textDirection,
       maxLength: maxLength,
+      maxLines: maxLines,
       autofocus: autofocus,
       onChanged: onChanged,
       onSubmitted: onSubmitted,

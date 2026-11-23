@@ -349,4 +349,49 @@ class AppLocalizationsFa extends AppLocalizations {
 
   @override
   String get chatEmpty => 'جمله‌ای بنویس تا برایت کارت ثبت بسازم.';
+
+  @override
+  String get smsOpen => 'پیامک بانک';
+
+  @override
+  String get smsTitle => 'پیامک بانک';
+
+  @override
+  String get smsPasteLabel => 'متن پیامک را اینجا بچسبان';
+
+  @override
+  String get smsAnalyze => 'بررسی پیامک';
+
+  @override
+  String get smsIgnoredOtp => 'این پیامک رمز یکبارمصرف است؛ ثبت نمی‌شود.';
+
+  @override
+  String get smsIgnoredFailed => 'این تراکنش ناموفق بوده؛ ثبت نمی‌شود.';
+
+  @override
+  String get smsIgnoredAd => 'این پیامک تبلیغاتی است؛ ثبت نمی‌شود.';
+
+  @override
+  String get smsIgnoredNoAmount => 'مبلغی در این پیامک پیدا نکردم.';
+
+  @override
+  String get smsKindLabel => 'نوع تراکنش';
+
+  @override
+  String get smsWhatFor => 'برای چه بود؟';
+
+  @override
+  String get smsBalance => 'مانده پس از تراکنش';
+
+  @override
+  String get smsLowConfidence => 'مطمئن نیستم؛ لطفاً قبل از ثبت بررسی کن.';
+
+  @override
+  String get smsDuplicate =>
+      'شبیه همین تراکنش قبلاً ثبت شده است. باز هم ثبت شود؟';
+
+  @override
+  String smsCardNote(String last4) {
+    return 'این کارت (۴ رقم آخر $last4) برای دفعه بعد به همین کیف وصل می‌شود.';
+  }
 }
