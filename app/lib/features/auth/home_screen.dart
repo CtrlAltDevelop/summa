@@ -8,6 +8,7 @@ import '../assets/assets_panel.dart';
 import '../assistant/chat_screen.dart';
 import '../assistant/digest_panel.dart';
 import '../assistant/sms_screen.dart';
+import '../billing/billing_screen.dart';
 import '../categories/budgets_panel.dart';
 import '../debts/debts_panel.dart';
 import '../networth/networth_panel.dart';
@@ -54,6 +55,7 @@ class HomeScreen extends ConsumerWidget {
               ),
             ),
             const SizedBox(height: SmSpace.lg),
+            const ReadOnlyBanner(),
             const OutboxPanel(),
             const NetWorthCard(),
             const SizedBox(height: SmSpace.lg),
@@ -82,6 +84,15 @@ class HomeScreen extends ConsumerWidget {
             const SizedBox(height: SmSpace.lg),
             const EntriesPanel(),
             const SizedBox(height: SmSpace.xl),
+            SmButton(
+              label: l10n.billingOpen,
+              onPressed: () => Navigator.of(context).push(
+                PageRouteBuilder<void>(
+                  pageBuilder: (_, _, _) => const BillingScreen(),
+                ),
+              ),
+            ),
+            const SizedBox(height: SmSpace.sm),
             SmButton(
               label: l10n.signOut,
               onPressed: () =>

@@ -1743,6 +1743,102 @@ abstract class AppLocalizations {
   /// In fa, this message translates to:
   /// **'در انتظار ارسال'**
   String get outboxQueued;
+
+  /// No description provided for @billingOpen.
+  ///
+  /// In fa, this message translates to:
+  /// **'اشتراک'**
+  String get billingOpen;
+
+  /// No description provided for @billingTitle.
+  ///
+  /// In fa, this message translates to:
+  /// **'اشتراک'**
+  String get billingTitle;
+
+  /// No description provided for @billingStatusNone.
+  ///
+  /// In fa, this message translates to:
+  /// **'هنوز اشتراکی نداری.'**
+  String get billingStatusNone;
+
+  /// No description provided for @billingStatusTrial.
+  ///
+  /// In fa, this message translates to:
+  /// **'دوره آزمایشی؛ {days} روز مانده'**
+  String billingStatusTrial(String days);
+
+  /// No description provided for @billingStatusActive.
+  ///
+  /// In fa, this message translates to:
+  /// **'اشتراک فعال؛ {days} روز مانده'**
+  String billingStatusActive(String days);
+
+  /// No description provided for @billingStatusExpired.
+  ///
+  /// In fa, this message translates to:
+  /// **'اشتراکت تمام شده است.'**
+  String get billingStatusExpired;
+
+  /// No description provided for @billingStartTrial.
+  ///
+  /// In fa, this message translates to:
+  /// **'شروع دوره آزمایشی'**
+  String get billingStartTrial;
+
+  /// No description provided for @billingBuy.
+  ///
+  /// In fa, this message translates to:
+  /// **'خرید'**
+  String get billingBuy;
+
+  /// No description provided for @billingNoPlans.
+  ///
+  /// In fa, this message translates to:
+  /// **'فعلاً پلنی برای خرید نیست.'**
+  String get billingNoPlans;
+
+  /// No description provided for @billingPlanLine.
+  ///
+  /// In fa, this message translates to:
+  /// **'{price} تومان · {days} روز'**
+  String billingPlanLine(String price, String days);
+
+  /// No description provided for @billingPayAt.
+  ///
+  /// In fa, this message translates to:
+  /// **'پرداخت را اینجا انجام بده:'**
+  String get billingPayAt;
+
+  /// No description provided for @billingCheckPayment.
+  ///
+  /// In fa, this message translates to:
+  /// **'بررسی پرداخت'**
+  String get billingCheckPayment;
+
+  /// No description provided for @billingNotConfirmed.
+  ///
+  /// In fa, this message translates to:
+  /// **'پرداخت هنوز تأیید نشده.'**
+  String get billingNotConfirmed;
+
+  /// No description provided for @billingFailed.
+  ///
+  /// In fa, this message translates to:
+  /// **'انجام نشد. دوباره امتحان کن.'**
+  String get billingFailed;
+
+  /// No description provided for @readOnlyBanner.
+  ///
+  /// In fa, this message translates to:
+  /// **'اشتراکت تمام شده؛ فعلاً فقط می‌توانی داده‌ات را ببینی.'**
+  String get readOnlyBanner;
+
+  /// No description provided for @readOnlyRenew.
+  ///
+  /// In fa, this message translates to:
+  /// **'تمدید'**
+  String get readOnlyRenew;
 }
 
 class _AppLocalizationsDelegate

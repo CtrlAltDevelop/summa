@@ -372,5 +372,45 @@
   "outboxSavedOffline": "اینترنت نیست؛ ذخیره شد و با اتصال فرستاده می‌شود.",
   "outboxFailedTitle": "این تراکنش‌ها ثبت نشدند",
   "outboxFailedDismiss": "حذف",
-  "outboxQueued": "در انتظار ارسال"
+  "outboxQueued": "در انتظار ارسال",
+  "billingOpen": "اشتراک",
+  "billingTitle": "اشتراک",
+  "billingStatusNone": "هنوز اشتراکی نداری.",
+  "billingStatusTrial": "دوره آزمایشی؛ {days} روز مانده",
+  "@billingStatusTrial": {
+    "placeholders": {
+      "days": {
+        "type": "String"
+      }
+    }
+  },
+  "billingStatusActive": "اشتراک فعال؛ {days} روز مانده",
+  "@billingStatusActive": {
+    "placeholders": {
+      "days": {
+        "type": "String"
+      }
+    }
+  },
+  "billingStatusExpired": "اشتراکت تمام شده است.",
+  "billingStartTrial": "شروع دوره آزمایشی",
+  "billingBuy": "خرید",
+  "billingNoPlans": "فعلاً پلنی برای خرید نیست.",
+  "billingPlanLine": "{price} تومان · {days} روز",
+  "@billingPlanLine": {
+    "placeholders": {
+      "price": {
+        "type": "String"
+      },
+      "days": {
+        "type": "String"
+      }
+    }
+  },
+  "billingPayAt": "پرداخت را اینجا انجام بده:",
+  "billingCheckPayment": "بررسی پرداخت",
+  "billingNotConfirmed": "پرداخت هنوز تأیید نشده.",
+  "billingFailed": "انجام نشد. دوباره امتحان کن.",
+  "readOnlyBanner": "اشتراکت تمام شده؛ فعلاً فقط می‌توانی داده‌ات را ببینی.",
+  "readOnlyRenew": "تمدید"
 }

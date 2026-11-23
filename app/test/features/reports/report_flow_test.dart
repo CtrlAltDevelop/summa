@@ -5,6 +5,7 @@ import 'package:shamsi_date/shamsi_date.dart';
 import 'package:summa/app.dart';
 import 'package:summa/core/format/persian.dart';
 import 'package:summa/features/assets/asset_controller.dart';
+import 'package:summa/features/billing/billing_controller.dart';
 import 'package:summa/features/auth/auth_controller.dart';
 import 'package:summa/features/auth/token_store.dart';
 import 'package:summa/features/categories/category_controller.dart';
@@ -21,6 +22,7 @@ import '../categories/fake_category_api.dart';
 import '../networth/fake_networth_api.dart';
 import '../wallets/fake_ledger_api.dart';
 import '../wallets/fake_wallet_api.dart';
+import '../billing/fake_billing_api.dart';
 
 class _FakeReportApi implements ReportApi {
   final Map<String, Report> byCurrency = {};
@@ -99,6 +101,7 @@ Future<_FakeReportApi> _pump(WidgetTester t) async {
         tokenStoreProvider.overrideWithValue(
           MemoryTokenStore(auth.currentTokens),
         ),
+        billingApiProvider.overrideWithValue(FakeBillingApi()),
         walletApiProvider.overrideWithValue(wallets),
         ledgerApiProvider.overrideWithValue(ledger),
         categoryApiProvider.overrideWithValue(FakeCategoryApi(ledger)),

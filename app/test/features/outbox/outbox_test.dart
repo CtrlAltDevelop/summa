@@ -3,6 +3,7 @@ import 'dart:convert';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:summa/core/storage/key_value_store.dart';
+import 'package:summa/features/billing/billing_controller.dart';
 import 'package:summa/features/auth/auth_controller.dart';
 import 'package:summa/features/auth/token_store.dart';
 import 'package:summa/features/categories/category_controller.dart';
@@ -16,6 +17,7 @@ import '../auth/fake_auth_api.dart';
 import '../categories/fake_category_api.dart';
 import '../wallets/fake_ledger_api.dart';
 import '../wallets/fake_wallet_api.dart';
+import '../billing/fake_billing_api.dart';
 
 QueuedEntry _entry(String id, {int amount = 1000}) => QueuedEntry(
   mutationId: id,
@@ -51,6 +53,7 @@ class _Rig {
           MemoryTokenStore(auth.currentTokens),
         ),
         ledgerApiProvider.overrideWithValue(ledger),
+        billingApiProvider.overrideWithValue(FakeBillingApi()),
         walletApiProvider.overrideWithValue(wallets),
         categoryApiProvider.overrideWithValue(FakeCategoryApi(ledger)),
       ],
