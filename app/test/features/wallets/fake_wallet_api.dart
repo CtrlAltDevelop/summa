@@ -64,4 +64,19 @@ class FakeWalletApi implements WalletApi {
     );
     return wallets[i];
   }
+
+  /// Moves a wallet's balance, as ledger entries do on the server.
+  void shift(String walletId, int deltaMinor) {
+    final i = wallets.indexWhere((w) => w.id == walletId);
+    final old = wallets[i];
+    wallets[i] = Wallet(
+      id: old.id,
+      name: old.name,
+      kind: old.kind,
+      currency: old.currency,
+      bank: old.bank,
+      archived: old.archived,
+      balanceMinor: old.balanceMinor + deltaMinor,
+    );
+  }
 }

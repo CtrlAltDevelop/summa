@@ -3,7 +3,7 @@ import 'package:grpc/grpc.dart';
 import 'package:protobuf/well_known_types/google/protobuf/empty.pb.dart';
 
 import '../../gen/apps/wallets/grpc/wallets.pbgrpc.dart' as pb;
-import '../auth/auth_models.dart';
+import 'grpc_guard.dart';
 import 'wallet_models.dart';
 
 abstract interface class WalletApi {
@@ -32,7 +32,7 @@ class GrpcWalletApi implements WalletApi {
       CallOptions(metadata: {'authorization': 'Bearer $token'});
 
   @override
-  Future<WalletList> list(String access) => _guard(() async {
+  Future<WalletList> list(String access) => guardGrpc(() async {
     final r = await _client.list(Empty(), options: _bearer(access));
     return WalletList(
       wallets: r.wallets.map(_wallet).toList(),
@@ -56,7 +56,7 @@ class GrpcWalletApi implements WalletApi {
     required String bank,
     required int openingBalanceMinor,
     required String clientMutationId,
-  }) => _guard(() async {
+  }) => guardGrpc(() async {
     final r = await _client.create(
       pb.WalletCreate(
         name: name,
@@ -72,7 +72,7 @@ class GrpcWalletApi implements WalletApi {
   });
 
   @override
-  Future<Wallet> archive(String access, String walletId) => _guard(() async {
+  Future<Wallet> archive(String access, String walletId) => guardGrpc(() async {
     final r = await _client.archive(
       pb.WalletRef(walletId: walletId),
       options: _bearer(access),
@@ -89,23 +89,4 @@ class GrpcWalletApi implements WalletApi {
     archived: w.archived,
     balanceMinor: w.balanceMinor.toInt(),
   );
-
-  Future<T> _guard<T>(Future<T> Function() call) async {
-    try {
-      return await call();
-    } on GrpcError catch (e) {
-      throw switch (e.code) {
-        StatusCode.unauthenticated => const AuthException(
-          AuthFailure.unauthorized,
-        ),
-        StatusCode.unavailable || StatusCode.deadlineExceeded =>
-          const WalletException(WalletFailure.offline),
-        StatusCode.invalidArgument => const WalletException(
-          WalletFailure.invalid,
-        ),
-        StatusCode.notFound => const WalletException(WalletFailure.notFound),
-        _ => const WalletException(WalletFailure.unknown),
-      };
-    }
-  }
 }

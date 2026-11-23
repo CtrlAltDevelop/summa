@@ -92,5 +92,14 @@
   "currencyEUR": "یورو",
   "currencyAED": "درهم",
   "currencyTRY": "لیر",
-  "currencyUSDT": "تتر"
+  "currencyUSDT": "تتر",
+  "entryAdd": "ثبت خرج یا درآمد",
+  "entryFormTitle": "ثبت جدید",
+  "entryExpense": "خرج",
+  "entryIncome": "درآمد",
+  "entryWalletLabel": "کیف پول",
+  "entryAmountLabel": "مبلغ",
+  "entryNoteLabel": "یادداشت (اختیاری)",
+  "entryAmountInvalid": "مبلغ درست نیست. یک عدد بزرگ‌تر از صفر بنویس.",
+  "entryDelete": "حذف"
 }

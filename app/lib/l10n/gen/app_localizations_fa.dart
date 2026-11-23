@@ -215,4 +215,32 @@ class AppLocalizationsFa extends AppLocalizations {
 
   @override
   String get currencyUSDT => 'تتر';
+
+  @override
+  String get entryAdd => 'ثبت خرج یا درآمد';
+
+  @override
+  String get entryFormTitle => 'ثبت جدید';
+
+  @override
+  String get entryExpense => 'خرج';
+
+  @override
+  String get entryIncome => 'درآمد';
+
+  @override
+  String get entryWalletLabel => 'کیف پول';
+
+  @override
+  String get entryAmountLabel => 'مبلغ';
+
+  @override
+  String get entryNoteLabel => 'یادداشت (اختیاری)';
+
+  @override
+  String get entryAmountInvalid =>
+      'مبلغ درست نیست. یک عدد بزرگ‌تر از صفر بنویس.';
+
+  @override
+  String get entryDelete => 'حذف';
 }

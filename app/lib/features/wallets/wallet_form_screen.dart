@@ -7,6 +7,7 @@ import '../../core/ui/tokens/tokens.dart';
 import '../../core/ui/widgets/widgets.dart';
 import '../../l10n/gen/app_localizations.dart';
 import '../auth/auth_models.dart';
+import 'choices.dart';
 import 'wallet_labels.dart';
 import 'wallet_models.dart';
 import 'wallets_controller.dart';
@@ -112,7 +113,7 @@ class _WalletFormScreenState extends ConsumerState<WalletFormScreen> {
             const SizedBox(height: SmSpace.lg),
             Text(l10n.walletKindLabel, style: SmType.caption),
             const SizedBox(height: SmSpace.sm),
-            _Choices<WalletKind>(
+            Choices<WalletKind>(
               values: WalletKind.values,
               selected: _kind,
               label: (k) => walletKindLabel(l10n, k),
@@ -121,7 +122,7 @@ class _WalletFormScreenState extends ConsumerState<WalletFormScreen> {
             const SizedBox(height: SmSpace.lg),
             Text(l10n.walletCurrencyLabel, style: SmType.caption),
             const SizedBox(height: SmSpace.sm),
-            _Choices<String>(
+            Choices<String>(
               values: currencyDecimals.keys.toList(),
               selected: _currency,
               label: (c) => currencyLabel(l10n, c),
@@ -151,60 +152,6 @@ class _WalletFormScreenState extends ConsumerState<WalletFormScreen> {
           ],
         ),
       ),
-    );
-  }
-}
-
-class _Choices<T> extends StatelessWidget {
-  const _Choices({
-    required this.values,
-    required this.selected,
-    required this.label,
-    required this.onSelected,
-  });
-
-  final List<T> values;
-  final T selected;
-  final String Function(T) label;
-  final ValueChanged<T> onSelected;
-
-  @override
-  Widget build(BuildContext context) {
-    return Wrap(
-      spacing: SmSpace.sm,
-      runSpacing: SmSpace.sm,
-      children: [
-        for (final v in values)
-          Semantics(
-            button: true,
-            selected: v == selected,
-            label: label(v),
-            child: GestureDetector(
-              onTap: () => onSelected(v),
-              child: DecoratedBox(
-                decoration: BoxDecoration(
-                  color: v == selected ? SmColors.accent : SmColors.glassFill,
-                  borderRadius: SmRadius.pill,
-                  border: Border.all(color: SmColors.glassBorder),
-                ),
-                child: Padding(
-                  padding: const EdgeInsets.symmetric(
-                    horizontal: SmSpace.lg,
-                    vertical: SmSpace.sm,
-                  ),
-                  child: Text(
-                    label(v),
-                    style: SmType.caption.copyWith(
-                      color: v == selected
-                          ? SmColors.onAccent
-                          : SmColors.textPrimary,
-                    ),
-                  ),
-                ),
-              ),
-            ),
-          ),
-      ],
     );
   }
 }
