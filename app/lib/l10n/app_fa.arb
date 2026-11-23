@@ -412,5 +412,22 @@
   "billingNotConfirmed": "پرداخت هنوز تأیید نشده.",
   "billingFailed": "انجام نشد. دوباره امتحان کن.",
   "readOnlyBanner": "اشتراکت تمام شده؛ فعلاً فقط می‌توانی داده‌ات را ببینی.",
-  "readOnlyRenew": "تمدید"
+  "readOnlyRenew": "تمدید",
+  "supportOpen": "پشتیبانی",
+  "supportTitle": "پشتیبانی",
+  "supportNew": "تیکت جدید",
+  "supportEmpty": "هنوز تیکتی نداری.",
+  "supportSubjectLabel": "موضوع",
+  "supportBodyLabel": "مشکل یا سؤالت را بنویس",
+  "supportSend": "ارسال",
+  "supportReplyHint": "پیامت را بنویس",
+  "supportSubjectRequired": "موضوع و متن را بنویس.",
+  "supportFailed": "ارسال نشد. دوباره امتحان کن.",
+  "supportStatusOpen": "باز",
+  "supportStatusPending": "در انتظار پاسخ",
+  "supportStatusResolved": "حل شد",
+  "supportStatusClosed": "بسته",
+  "supportFromTeam": "پشتیبان",
+  "supportFromYou": "تو",
+  "supportUnread": "پیام جدید"
 }
