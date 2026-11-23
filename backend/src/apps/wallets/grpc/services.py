@@ -1,13 +1,18 @@
 """Wallets over gRPC. Scoped to the caller by the service layer: no call takes a user id."""
 
+from datetime import datetime
 from typing import Any
 
 from asgiref.sync import sync_to_async
 from django_socio_grpc import generics
 from django_socio_grpc.decorators import grpc_action
+from google.protobuf.empty_pb2 import Empty
 
-from apps.wallets.grpc.serializers import CurrencyTotal, Wallet
+from apps.wallets.grpc.serializers import CurrencyTotal, Entry, Wallet
+from apps.wallets.ledger import Entry as EntryView
+from apps.wallets.ledger import ledger_service
 from apps.wallets.services import WalletList, WalletView, wallets_service
+from infrastructure.common.errors import ApiError
 from infrastructure.common.grpc.errors import action, require_caller
 from infrastructure.common.identity import grpc_caller
 
@@ -85,4 +90,115 @@ class WalletsService(generics.GenericService):
         return wallets_pb2.WalletReply(wallet=_wallet(view))
 
 
-GRPC_SERVICES = [WalletsService]
+def _when(text: str) -> datetime | None:
+    """ISO-8601 from the client; empty means "now" (record) or "keep" (edit)."""
+    if not text:
+        return None
+    try:
+        parsed = datetime.fromisoformat(text)
+    except ValueError:
+        raise ApiError("occurred_at is not an ISO-8601 time.", 400) from None
+    if parsed.tzinfo is None:
+        raise ApiError("occurred_at needs a time zone offset.", 400)
+    return parsed
+
+
+def _entry(view: EntryView) -> Any:
+    from apps.wallets.grpc import wallets_pb2
+
+    return wallets_pb2.Entry(
+        id=view.id,
+        wallet_id=view.wallet_id,
+        kind=view.kind,
+        amount_minor=view.amount_minor,
+        currency=view.currency,
+        occurred_at=view.occurred_at.isoformat(),
+        note=view.note,
+    )
+
+
+ENTRY_REPLY = [{"name": "entry", "type": Entry}]
+ENTRY_FIELDS = [
+    {"name": "amount_minor", "type": "int64"},
+    {"name": "occurred_at", "type": "string"},
+    {"name": "note", "type": "string"},
+]
+
+
+class LedgerService(generics.GenericService):
+    @grpc_action(
+        request=[
+            {"name": "wallet_id", "type": "string"},
+            {"name": "kind", "type": "string"},
+            *ENTRY_FIELDS,
+            {"name": "client_mutation_id", "type": "string"},
+        ],
+        request_name="EntryRecord",
+        response=ENTRY_REPLY,
+        response_name="EntryReply",
+    )
+    @action
+    async def Record(self, request: Any, context: Any) -> Any:
+        from apps.wallets.grpc import wallets_pb2
+
+        user = require_caller(await grpc_caller(context))
+        view = await sync_to_async(ledger_service.record)(
+            user,
+            wallet_id=request.wallet_id,
+            kind=request.kind,
+            amount_minor=request.amount_minor,
+            occurred_at=_when(request.occurred_at),
+            note=request.note,
+            client_mutation_id=request.client_mutation_id,
+        )
+        return wallets_pb2.EntryReply(entry=_entry(view))
+
+    @grpc_action(
+        request=[{"name": "wallet_id", "type": "string"}, {"name": "limit", "type": "int32"}],
+        request_name="EntryQuery",
+        response=[{"name": "entries", "type": Entry, "cardinality": "repeated"}],
+        response_name="EntryListReply",
+    )
+    @action
+    async def List(self, request: Any, context: Any) -> Any:
+        from apps.wallets.grpc import wallets_pb2
+
+        user = require_caller(await grpc_caller(context))
+        views = await sync_to_async(ledger_service.list)(
+            user, wallet_id=request.wallet_id or None, limit=request.limit
+        )
+        return wallets_pb2.EntryListReply(entries=[_entry(v) for v in views])
+
+    @grpc_action(
+        request=[{"name": "entry_id", "type": "string"}, *ENTRY_FIELDS],
+        request_name="EntryEdit",
+        response=ENTRY_REPLY,
+        response_name="EntryReply",
+    )
+    @action
+    async def Edit(self, request: Any, context: Any) -> Any:
+        from apps.wallets.grpc import wallets_pb2
+
+        user = require_caller(await grpc_caller(context))
+        view = await sync_to_async(ledger_service.edit)(
+            user,
+            request.entry_id,
+            amount_minor=request.amount_minor,
+            occurred_at=_when(request.occurred_at),
+            note=request.note,
+        )
+        return wallets_pb2.EntryReply(entry=_entry(view))
+
+    @grpc_action(
+        request=[{"name": "entry_id", "type": "string"}],
+        request_name="EntryRef",
+        response=[],
+    )
+    @action
+    async def Delete(self, request: Any, context: Any) -> Any:
+        user = require_caller(await grpc_caller(context))
+        await sync_to_async(ledger_service.delete)(user, request.entry_id)
+        return Empty()
+
+
+GRPC_SERVICES = [WalletsService, LedgerService]

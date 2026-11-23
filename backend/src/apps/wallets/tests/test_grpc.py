@@ -81,3 +81,87 @@ def test_balances_beyond_32_bits_survive(
     grpc_call(Stub, "Create", new_wallet(balance=big), token=token)
 
     assert grpc_call(Stub, "List", Empty(), token=token).wallets[0].balance_minor == big
+
+
+LedgerStub = wallets_pb2_grpc.LedgerControllerStub
+
+
+def test_record_edit_list_delete_round_trip(
+    transactional_db: None, grpc_call: Callable[..., Any]
+) -> None:
+    token = sign_up("zoe")
+    wallet = grpc_call(Stub, "Create", new_wallet(), token=token).wallet
+
+    entry = grpc_call(
+        LedgerStub,
+        "Record",
+        wallets_pb2.EntryRecord(
+            wallet_id=wallet.id,
+            kind="expense",
+            amount_minor=300,
+            occurred_at="2026-11-01T08:30:00+00:00",
+            note="نان",
+            client_mutation_id="e1",
+        ),
+        token=token,
+    ).entry
+    assert (entry.currency, entry.amount_minor, entry.note) == ("IRT", 300, "نان")
+    assert grpc_call(Stub, "List", Empty(), token=token).wallets[0].balance_minor == 700
+
+    edited = grpc_call(
+        LedgerStub,
+        "Edit",
+        wallets_pb2.EntryEdit(entry_id=entry.id, amount_minor=100),
+        token=token,
+    ).entry
+    assert edited.occurred_at.startswith("2026-11-01T08:30")
+    listed = grpc_call(LedgerStub, "List", wallets_pb2.EntryQuery(), token=token)
+    assert [e.amount_minor for e in listed.entries] == [100]
+
+    grpc_call(LedgerStub, "Delete", wallets_pb2.EntryRef(entry_id=edited.id), token=token)
+    assert list(grpc_call(LedgerStub, "List", wallets_pb2.EntryQuery(), token=token).entries) == []
+    assert grpc_call(Stub, "List", Empty(), token=token).wallets[0].balance_minor == 1_000
+
+
+def test_another_user_cannot_touch_an_entry(
+    transactional_db: None, grpc_call: Callable[..., Any]
+) -> None:
+    zoe, ali = sign_up("zoe"), sign_up("ali")
+    wallet = grpc_call(Stub, "Create", new_wallet(), token=zoe).wallet
+    entry = grpc_call(
+        LedgerStub,
+        "Record",
+        wallets_pb2.EntryRecord(
+            wallet_id=wallet.id, kind="income", amount_minor=5, client_mutation_id="e1"
+        ),
+        token=zoe,
+    ).entry
+
+    with pytest.raises(grpc.aio.AioRpcError) as refusal:
+        grpc_call(LedgerStub, "Delete", wallets_pb2.EntryRef(entry_id=entry.id), token=ali)
+
+    assert refusal.value.code() is grpc.StatusCode.NOT_FOUND
+
+
+@pytest.mark.parametrize("when", ["yesterday", "2026-11-01T08:30:00"])
+def test_a_bad_time_is_invalid_argument(
+    transactional_db: None, grpc_call: Callable[..., Any], when: str
+) -> None:
+    token = sign_up("zoe")
+    wallet = grpc_call(Stub, "Create", new_wallet(), token=token).wallet
+
+    with pytest.raises(grpc.aio.AioRpcError) as refusal:
+        grpc_call(
+            LedgerStub,
+            "Record",
+            wallets_pb2.EntryRecord(
+                wallet_id=wallet.id,
+                kind="expense",
+                amount_minor=1,
+                occurred_at=when,
+                client_mutation_id="e1",
+            ),
+            token=token,
+        )
+
+    assert refusal.value.code() is grpc.StatusCode.INVALID_ARGUMENT

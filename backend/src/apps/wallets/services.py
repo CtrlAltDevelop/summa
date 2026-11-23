@@ -9,7 +9,7 @@ from typing import Any
 from uuid import UUID
 
 from django.db import IntegrityError, transaction
-from django.db.models import Case, F, IntegerField, Sum, When
+from django.db.models import Case, F, IntegerField, Q, Sum, When
 
 from apps.wallets.models import Direction, EventKind, LedgerEvent, Wallet
 from apps.wallets.profile import BANK_MAX_LENGTH, CURRENCIES, DEBT_KINDS, KINDS, NAME_MAX_LENGTH
@@ -43,13 +43,12 @@ class WalletList:
 
 def _signed_sum() -> Sum:
     amount = F("events__amount_minor")
-    return Sum(
-        Case(
-            When(events__direction=Direction.IN, then=amount),
-            default=-amount,
-            output_field=IntegerField(),
-        )
+    signed = Case(
+        When(events__direction=Direction.IN, then=amount),
+        default=-amount,
+        output_field=IntegerField(),
     )
+    return Sum(signed, filter=Q(events__voided=False))
 
 
 def _view(wallet: Wallet, balance: int | None) -> WalletView:

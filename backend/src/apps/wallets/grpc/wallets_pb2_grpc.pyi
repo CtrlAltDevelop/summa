@@ -27,6 +27,55 @@ class _ServicerContext(_grpc.ServicerContext, _aio.ServicerContext):  # type: ig
 GRPC_GENERATED_VERSION: str
 GRPC_VERSION: str
 
+class LedgerControllerStub:
+    @_typing.overload
+    def __new__(cls, channel: _grpc.Channel) -> _Self: ...
+    @_typing.overload
+    def __new__(cls, channel: _aio.Channel) -> LedgerControllerAsyncStub: ...
+    Delete: _grpc.UnaryUnaryMultiCallable[_wallets_pb2.EntryRef, _empty_pb2.Empty]
+    Edit: _grpc.UnaryUnaryMultiCallable[_wallets_pb2.EntryEdit, _wallets_pb2.EntryReply]
+    List: _grpc.UnaryUnaryMultiCallable[_wallets_pb2.EntryQuery, _wallets_pb2.EntryListReply]
+    Record: _grpc.UnaryUnaryMultiCallable[_wallets_pb2.EntryRecord, _wallets_pb2.EntryReply]
+
+@_typing.type_check_only
+class LedgerControllerAsyncStub(LedgerControllerStub):
+    def __init__(self, channel: _aio.Channel) -> None: ...
+    Delete: _aio.UnaryUnaryMultiCallable[_wallets_pb2.EntryRef, _empty_pb2.Empty]  # type: ignore[assignment]
+    Edit: _aio.UnaryUnaryMultiCallable[_wallets_pb2.EntryEdit, _wallets_pb2.EntryReply]  # type: ignore[assignment]
+    List: _aio.UnaryUnaryMultiCallable[_wallets_pb2.EntryQuery, _wallets_pb2.EntryListReply]  # type: ignore[assignment]
+    Record: _aio.UnaryUnaryMultiCallable[_wallets_pb2.EntryRecord, _wallets_pb2.EntryReply]  # type: ignore[assignment]
+
+class LedgerControllerServicer(metaclass=_abc_1.ABCMeta):
+    @_abc_1.abstractmethod
+    def Delete(
+        self,
+        request: _wallets_pb2.EntryRef,
+        context: _ServicerContext,
+    ) -> _typing.Union[_empty_pb2.Empty, _abc.Awaitable[_empty_pb2.Empty]]: ...
+
+    @_abc_1.abstractmethod
+    def Edit(
+        self,
+        request: _wallets_pb2.EntryEdit,
+        context: _ServicerContext,
+    ) -> _typing.Union[_wallets_pb2.EntryReply, _abc.Awaitable[_wallets_pb2.EntryReply]]: ...
+
+    @_abc_1.abstractmethod
+    def List(
+        self,
+        request: _wallets_pb2.EntryQuery,
+        context: _ServicerContext,
+    ) -> _typing.Union[_wallets_pb2.EntryListReply, _abc.Awaitable[_wallets_pb2.EntryListReply]]: ...
+
+    @_abc_1.abstractmethod
+    def Record(
+        self,
+        request: _wallets_pb2.EntryRecord,
+        context: _ServicerContext,
+    ) -> _typing.Union[_wallets_pb2.EntryReply, _abc.Awaitable[_wallets_pb2.EntryReply]]: ...
+
+def add_LedgerControllerServicer_to_server(servicer: LedgerControllerServicer, server: _typing.Union[_grpc.Server, _aio.Server]) -> None: ...
+
 class WalletsControllerStub:
     @_typing.overload
     def __new__(cls, channel: _grpc.Channel) -> _Self: ...

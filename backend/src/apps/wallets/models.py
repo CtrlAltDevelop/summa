@@ -3,6 +3,7 @@ import uuid
 from django.conf import settings
 from django.db import models
 from django.db.models import Q
+from django.utils import timezone
 
 from apps.wallets.profile import KINDS
 
@@ -34,6 +35,8 @@ class Wallet(models.Model):
 
 class EventKind(models.TextChoices):
     OPENING_BALANCE = "opening_balance"
+    INCOME = "income"
+    EXPENSE = "expense"
 
 
 class Direction(models.TextChoices):
@@ -42,7 +45,11 @@ class Direction(models.TextChoices):
 
 
 class LedgerEvent(models.Model):
-    """One append-only movement. Only the opening balance exists until phase 02."""
+    """One append-only movement.
+
+    An edit adds a replacement (``replaces``) and voids the old row; a delete only
+    voids. Balances ignore voided rows, so history stays and totals stay right.
+    """
 
     id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
     user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name="+")
@@ -50,12 +57,24 @@ class LedgerEvent(models.Model):
     kind = models.CharField(max_length=20, choices=EventKind.choices)
     direction = models.CharField(max_length=3, choices=Direction.choices)
     amount_minor = models.BigIntegerField()
+    occurred_at = models.DateTimeField(default=timezone.now)
+    note = models.CharField(max_length=200, blank=True)
+    voided = models.BooleanField(default=False)
+    replaces = models.ForeignKey(
+        "self", null=True, blank=True, on_delete=models.SET_NULL, related_name="+"
+    )
+    client_mutation_id = models.CharField(max_length=64, blank=True)
     created_at = models.DateTimeField(auto_now_add=True)
 
     class Meta:
         ordering = ["created_at", "id"]
         constraints = [
-            models.CheckConstraint(condition=Q(amount_minor__gt=0), name="event_amount_positive")
+            models.CheckConstraint(condition=Q(amount_minor__gt=0), name="event_amount_positive"),
+            models.UniqueConstraint(
+                fields=["user", "client_mutation_id"],
+                condition=~Q(client_mutation_id=""),
+                name="event_mutation_once_per_user",
+            ),
         ]
 
     def __str__(self) -> str:
