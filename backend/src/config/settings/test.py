@@ -1,6 +1,8 @@
 import os
 
 os.environ.setdefault("DJANGO_CMS_ENABLED", "true")
+# The CMS suite writes English and Persian; a developer's .env must not narrow that.
+os.environ.setdefault("DJANGO_CMS_LANGUAGES", "en-us,fa")
 os.environ.setdefault("DJANGO_NOTIFICATIONS_ENABLED", "true")
 os.environ.setdefault("DJANGO_SHOP_ENABLED", "true")
 os.environ.setdefault("DJANGO_SUPPORT_ENABLED", "true")

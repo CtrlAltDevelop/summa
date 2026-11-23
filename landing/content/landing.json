@@ -1,0 +1,618 @@
+{
+  "version": 1,
+  "site": {
+    "name": {
+      "fa": "Summa"
+    },
+    "tagline": {
+      "fa": "خرج، قسط و دارایی، یک‌جا"
+    },
+    "description": {
+      "fa": "اپ حسابداری شخصی برای ایران"
+    }
+  },
+  "pages": [
+    {
+      "slug": "home",
+      "name": "خانه",
+      "status": "published",
+      "title": {
+        "fa": "Summa | حساب‌وکتاب شخصی برای خرج، قسط و دارایی"
+      },
+      "description": {
+        "fa": "همه خرج‌ها، اقساط و دارایی‌هایت یک‌جا. جمله یا پیامک بانک را بفرست، بقیه‌اش با Summa."
+      },
+      "sections": [
+        {
+          "slug": "hero",
+          "name": "قهرمان",
+          "order": 0,
+          "fields": [
+            {
+              "slug": "headline",
+              "name": "تیتر",
+              "field_type": "text",
+              "order": 0,
+              "values": {
+                "fa": "خرجت را بنویس؛ حسابش را Summa نگه می‌دارد."
+              }
+            },
+            {
+              "slug": "subtitle",
+              "name": "زیرتیتر",
+              "field_type": "text",
+              "order": 1,
+              "values": {
+                "fa": "یک جمله یا متن پیامک بانکی بفرست. Summa مبلغ و دسته را می‌فهمد و فقط وقتی تو بگویی «ثبت» ثبت می‌کند."
+              }
+            },
+            {
+              "slug": "cta",
+              "name": "دکمه",
+              "field_type": "text",
+              "order": 2,
+              "values": {
+                "fa": "همین حالا امتحان کن"
+              }
+            }
+          ]
+        },
+        {
+          "slug": "how",
+          "name": "سه قدم",
+          "order": 1,
+          "fields": [
+            {
+              "slug": "title",
+              "name": "عنوان",
+              "field_type": "text",
+              "order": 0,
+              "values": {
+                "fa": "چطور کار می‌کند؟"
+              }
+            }
+          ],
+          "children": [
+            {
+              "slug": "step-1",
+              "name": "قدم اول",
+              "order": 0,
+              "fields": [
+                {
+                  "slug": "title",
+                  "name": "عنوان",
+                  "field_type": "text",
+                  "order": 0,
+                  "values": {
+                    "fa": "بنویس یا بچسبان"
+                  }
+                },
+                {
+                  "slug": "body",
+                  "name": "متن",
+                  "field_type": "textarea",
+                  "order": 1,
+                  "values": {
+                    "fa": "«۲۵۰ هزار تومن خرید نان» یا متن پیامک بانک را در چت بنویس."
+                  }
+                }
+              ]
+            },
+            {
+              "slug": "step-2",
+              "name": "قدم دوم",
+              "order": 1,
+              "fields": [
+                {
+                  "slug": "title",
+                  "name": "عنوان",
+                  "field_type": "text",
+                  "order": 0,
+                  "values": {
+                    "fa": "کارت را ببین"
+                  }
+                },
+                {
+                  "slug": "body",
+                  "name": "متن",
+                  "field_type": "textarea",
+                  "order": 1,
+                  "values": {
+                    "fa": "Summa مبلغ، دسته و کیف پول را حدس می‌زند و یک کارت پیشنهاد می‌دهد."
+                  }
+                }
+              ]
+            },
+            {
+              "slug": "step-3",
+              "name": "قدم سوم",
+              "order": 2,
+              "fields": [
+                {
+                  "slug": "title",
+                  "name": "عنوان",
+                  "field_type": "text",
+                  "order": 0,
+                  "values": {
+                    "fa": "ثبت کن"
+                  }
+                },
+                {
+                  "slug": "body",
+                  "name": "متن",
+                  "field_type": "textarea",
+                  "order": 1,
+                  "values": {
+                    "fa": "با یک لمس ثبت می‌شود؛ بدون تأیید تو هیچ چیزی ثبت نمی‌شود."
+                  }
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "slug": "features",
+          "name": "ویژگی‌ها",
+          "order": 2,
+          "fields": [
+            {
+              "slug": "title",
+              "name": "عنوان",
+              "field_type": "text",
+              "order": 0,
+              "values": {
+                "fa": "هرچه برای حساب‌وکتاب لازم است"
+              }
+            }
+          ],
+          "children": [
+            {
+              "slug": "wallets",
+              "name": "کیف پول‌ها",
+              "order": 0,
+              "fields": [
+                {
+                  "slug": "title",
+                  "name": "عنوان",
+                  "field_type": "text",
+                  "order": 0,
+                  "values": {
+                    "fa": "کیف پول‌های متعدد"
+                  }
+                },
+                {
+                  "slug": "body",
+                  "name": "متن",
+                  "field_type": "textarea",
+                  "order": 1,
+                  "values": {
+                    "fa": "نقد، بانک، ارز و تتر؛ هر کدام با موجودی خودش و انتقال بین‌شان با کارمزد و نرخ دلخواه."
+                  }
+                }
+              ]
+            },
+            {
+              "slug": "budgets",
+              "name": "سقف ماهانه",
+              "order": 1,
+              "fields": [
+                {
+                  "slug": "title",
+                  "name": "عنوان",
+                  "field_type": "text",
+                  "order": 0,
+                  "values": {
+                    "fa": "سقف برای هر دسته"
+                  }
+                },
+                {
+                  "slug": "body",
+                  "name": "متن",
+                  "field_type": "textarea",
+                  "order": 1,
+                  "values": {
+                    "fa": "برای هر دسته سقف ماهانه بگذار و هرچه نزدیک شدی ببین، با ماه شمسی."
+                  }
+                }
+              ]
+            },
+            {
+              "slug": "debts",
+              "name": "اقساط",
+              "order": 2,
+              "fields": [
+                {
+                  "slug": "title",
+                  "name": "عنوان",
+                  "field_type": "text",
+                  "order": 0,
+                  "values": {
+                    "fa": "وام و قسط"
+                  }
+                },
+                {
+                  "slug": "body",
+                  "name": "متن",
+                  "field_type": "textarea",
+                  "order": 1,
+                  "values": {
+                    "fa": "جدول اقساط، سررسید نزدیک و «پرداخت شد» با یک لمس."
+                  }
+                }
+              ]
+            },
+            {
+              "slug": "assets",
+              "name": "دارایی",
+              "order": 3,
+              "fields": [
+                {
+                  "slug": "title",
+                  "name": "عنوان",
+                  "field_type": "text",
+                  "order": 0,
+                  "values": {
+                    "fa": "دارایی و سود و زیان"
+                  }
+                },
+                {
+                  "slug": "body",
+                  "name": "متن",
+                  "field_type": "textarea",
+                  "order": 1,
+                  "values": {
+                    "fa": "طلا، سکه، ارز و رمزارز با قیمت روز و خالص دارایی به تومان، دلار و گرم طلا."
+                  }
+                }
+              ]
+            },
+            {
+              "slug": "offline",
+              "name": "آفلاین",
+              "order": 4,
+              "fields": [
+                {
+                  "slug": "title",
+                  "name": "عنوان",
+                  "field_type": "text",
+                  "order": 0,
+                  "values": {
+                    "fa": "بدون اینترنت هم"
+                  }
+                },
+                {
+                  "slug": "body",
+                  "name": "متن",
+                  "field_type": "textarea",
+                  "order": 1,
+                  "values": {
+                    "fa": "تراکنش‌هایت در صف می‌ماند و با اتصال، دقیقاً یک بار ثبت می‌شود."
+                  }
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "slug": "privacy",
+          "name": "حریم خصوصی",
+          "order": 3,
+          "fields": [
+            {
+              "slug": "title",
+              "name": "عنوان",
+              "field_type": "text",
+              "order": 0,
+              "values": {
+                "fa": "داده‌ات مال خودت است"
+              }
+            },
+            {
+              "slug": "body",
+              "name": "متن",
+              "field_type": "textarea",
+              "order": 1,
+              "values": {
+                "fa": "متن پیامک بعد از پردازش ذخیره نمی‌شود. اپ با رمز یا بیومتریک قفل می‌شود، خروجی و حذف حساب فقط بعد از تأیید هویت ممکن است، و حذف حساب واقعاً همه چیز را پاک می‌کند."
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "slug": "faq",
+      "name": "سؤالات پرتکرار",
+      "status": "published",
+      "title": {
+        "fa": "سؤالات پرتکرار | Summa"
+      },
+      "description": {
+        "fa": "جواب سؤال‌های رایج درباره Summa"
+      },
+      "sections": [
+        {
+          "slug": "questions",
+          "name": "سؤال‌ها",
+          "order": 0,
+          "fields": [
+            {
+              "slug": "title",
+              "name": "عنوان",
+              "field_type": "text",
+              "order": 0,
+              "values": {
+                "fa": "سؤالات پرتکرار"
+              }
+            }
+          ],
+          "children": [
+            {
+              "slug": "q1",
+              "name": "سؤال 1",
+              "order": 0,
+              "fields": [
+                {
+                  "slug": "title",
+                  "name": "عنوان",
+                  "field_type": "text",
+                  "order": 0,
+                  "values": {
+                    "fa": "آیا به حساب بانکی من وصل می‌شود؟"
+                  }
+                },
+                {
+                  "slug": "body",
+                  "name": "متن",
+                  "field_type": "textarea",
+                  "order": 1,
+                  "values": {
+                    "fa": "نه. Summa رمز و اطلاعات بانکی نمی‌گیرد؛ فقط متنی را که خودت می‌فرستی می‌خواند."
+                  }
+                }
+              ]
+            },
+            {
+              "slug": "q2",
+              "name": "سؤال 2",
+              "order": 1,
+              "fields": [
+                {
+                  "slug": "title",
+                  "name": "عنوان",
+                  "field_type": "text",
+                  "order": 0,
+                  "values": {
+                    "fa": "خودش بدون اجازه من چیزی ثبت می‌کند؟"
+                  }
+                },
+                {
+                  "slug": "body",
+                  "name": "متن",
+                  "field_type": "textarea",
+                  "order": 1,
+                  "values": {
+                    "fa": "نه. هر پیشنهاد یک کارت است و ثبت فقط با زدن «ثبت» توسط خودت انجام می‌شود."
+                  }
+                }
+              ]
+            },
+            {
+              "slug": "q3",
+              "name": "سؤال 3",
+              "order": 2,
+              "fields": [
+                {
+                  "slug": "title",
+                  "name": "عنوان",
+                  "field_type": "text",
+                  "order": 0,
+                  "values": {
+                    "fa": "قیمت‌ها دقیق‌اند؟"
+                  }
+                },
+                {
+                  "slug": "body",
+                  "name": "متن",
+                  "field_type": "textarea",
+                  "order": 1,
+                  "values": {
+                    "fa": "نه، تقریبی‌اند. Summa صرافی نیست و توصیه خرید و فروش نمی‌دهد."
+                  }
+                }
+              ]
+            },
+            {
+              "slug": "q4",
+              "name": "سؤال 4",
+              "order": 3,
+              "fields": [
+                {
+                  "slug": "title",
+                  "name": "عنوان",
+                  "field_type": "text",
+                  "order": 0,
+                  "values": {
+                    "fa": "با تغییر گوشی داده‌ام می‌ماند؟"
+                  }
+                },
+                {
+                  "slug": "body",
+                  "name": "متن",
+                  "field_type": "textarea",
+                  "order": 1,
+                  "values": {
+                    "fa": "بله. داده روی سرور نگه‌داری می‌شود و با ورود دوباره برمی‌گردد."
+                  }
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "slug": "about",
+      "name": "درباره",
+      "status": "published",
+      "title": {
+        "fa": "درباره Summa | Summa"
+      },
+      "description": {
+        "fa": "درباره Summa"
+      },
+      "sections": [
+        {
+          "slug": "content",
+          "name": "محتوا",
+          "order": 0,
+          "fields": [
+            {
+              "slug": "title",
+              "name": "عنوان",
+              "field_type": "text",
+              "order": 0,
+              "values": {
+                "fa": "درباره Summa"
+              }
+            },
+            {
+              "slug": "body",
+              "name": "متن",
+              "field_type": "textarea",
+              "order": 1,
+              "values": {
+                "fa": "Summa برای کسانی ساخته شده که می‌خواهند بدانند پولشان کجا می‌رود، بدون اینکه ساعت‌ها جدول پر کنند."
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "slug": "privacy",
+      "name": "حریم خصوصی",
+      "status": "published",
+      "title": {
+        "fa": "حریم خصوصی | Summa"
+      },
+      "description": {
+        "fa": "حریم خصوصی"
+      },
+      "sections": [
+        {
+          "slug": "content",
+          "name": "محتوا",
+          "order": 0,
+          "fields": [
+            {
+              "slug": "title",
+              "name": "عنوان",
+              "field_type": "text",
+              "order": 0,
+              "values": {
+                "fa": "حریم خصوصی"
+              }
+            },
+            {
+              "slug": "body",
+              "name": "متن",
+              "field_type": "textarea",
+              "order": 1,
+              "values": {
+                "fa": "این صفحه پیش‌نویس است و پیش از انتشار عمومی باید بازبینی حقوقی شود. داده‌های مالی فقط برای خود کاربر در دسترس است و متن پیامک پس از پردازش ذخیره نمی‌شود."
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "slug": "terms",
+      "name": "شرایط استفاده",
+      "status": "published",
+      "title": {
+        "fa": "شرایط استفاده | Summa"
+      },
+      "description": {
+        "fa": "شرایط استفاده"
+      },
+      "sections": [
+        {
+          "slug": "content",
+          "name": "محتوا",
+          "order": 0,
+          "fields": [
+            {
+              "slug": "title",
+              "name": "عنوان",
+              "field_type": "text",
+              "order": 0,
+              "values": {
+                "fa": "شرایط استفاده"
+              }
+            },
+            {
+              "slug": "body",
+              "name": "متن",
+              "field_type": "textarea",
+              "order": 1,
+              "values": {
+                "fa": "این صفحه پیش‌نویس است و پیش از انتشار عمومی باید بازبینی حقوقی شود. Summa صرافی، کیف پول یا مشاور سرمایه‌گذاری نیست و قیمت‌ها تقریبی‌اند."
+              }
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "menus": [
+    {
+      "slug": "main",
+      "name": "منوی اصلی",
+      "items": [
+        {
+          "label": {
+            "fa": "خانه"
+          },
+          "page": "home",
+          "order": 0
+        },
+        {
+          "label": {
+            "fa": "سؤالات پرتکرار"
+          },
+          "page": "faq",
+          "order": 1
+        },
+        {
+          "label": {
+            "fa": "درباره"
+          },
+          "page": "about",
+          "order": 2
+        }
+      ]
+    },
+    {
+      "slug": "footer",
+      "name": "پایین صفحه",
+      "items": [
+        {
+          "label": {
+            "fa": "حریم خصوصی"
+          },
+          "page": "privacy",
+          "order": 0
+        },
+        {
+          "label": {
+            "fa": "شرایط استفاده"
+          },
+          "page": "terms",
+          "order": 1
+        }
+      ]
+    }
+  ]
+}
