@@ -37,6 +37,8 @@ class EventKind(models.TextChoices):
     OPENING_BALANCE = "opening_balance"
     INCOME = "income"
     EXPENSE = "expense"
+    TRANSFER_OUT = "transfer_out"
+    TRANSFER_IN = "transfer_in"
 
 
 class Direction(models.TextChoices):
@@ -63,6 +65,10 @@ class LedgerEvent(models.Model):
     replaces = models.ForeignKey(
         "self", null=True, blank=True, on_delete=models.SET_NULL, related_name="+"
     )
+    # Legs of one transfer (out, in, optional fee) share this id.
+    transfer_id = models.UUIDField(null=True, blank=True, db_index=True)
+    # The user-entered rate of a cross-currency transfer, kept as typed.
+    rate = models.CharField(max_length=32, blank=True)
     client_mutation_id = models.CharField(max_length=64, blank=True)
     created_at = models.DateTimeField(auto_now_add=True)
 

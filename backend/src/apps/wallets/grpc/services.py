@@ -12,6 +12,7 @@ from apps.wallets.grpc.serializers import CurrencyTotal, Entry, Wallet
 from apps.wallets.ledger import Entry as EntryView
 from apps.wallets.ledger import ledger_service
 from apps.wallets.services import WalletList, WalletView, wallets_service
+from apps.wallets.transfers import transfer_service
 from infrastructure.common.errors import ApiError
 from infrastructure.common.grpc.errors import action, require_caller
 from infrastructure.common.identity import grpc_caller
@@ -166,6 +167,40 @@ class LedgerService(generics.GenericService):
         user = require_caller(await grpc_caller(context))
         views = await sync_to_async(ledger_service.list)(
             user, wallet_id=request.wallet_id or None, limit=request.limit
+        )
+        return wallets_pb2.EntryListReply(entries=[_entry(v) for v in views])
+
+    @grpc_action(
+        request=[
+            {"name": "from_wallet_id", "type": "string"},
+            {"name": "to_wallet_id", "type": "string"},
+            {"name": "amount_minor", "type": "int64"},
+            # Destination units per one source unit, as typed; empty for one currency.
+            {"name": "rate", "type": "string"},
+            {"name": "fee_minor", "type": "int64"},
+            {"name": "occurred_at", "type": "string"},
+            {"name": "note", "type": "string"},
+            {"name": "client_mutation_id", "type": "string"},
+        ],
+        request_name="TransferRequest",
+        response=[{"name": "entries", "type": Entry, "cardinality": "repeated"}],
+        response_name="EntryListReply",
+    )
+    @action
+    async def Transfer(self, request: Any, context: Any) -> Any:
+        from apps.wallets.grpc import wallets_pb2
+
+        user = require_caller(await grpc_caller(context))
+        views = await sync_to_async(transfer_service.transfer)(
+            user,
+            from_wallet_id=request.from_wallet_id,
+            to_wallet_id=request.to_wallet_id,
+            amount_minor=request.amount_minor,
+            rate=request.rate,
+            fee_minor=request.fee_minor,
+            occurred_at=_when(request.occurred_at),
+            note=request.note,
+            client_mutation_id=request.client_mutation_id,
         )
         return wallets_pb2.EntryListReply(entries=[_entry(v) for v in views])
 

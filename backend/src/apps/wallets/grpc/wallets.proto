@@ -9,6 +9,7 @@ service LedgerController {
     rpc Edit(EntryEdit) returns (EntryReply) {}
     rpc List(EntryQuery) returns (EntryListReply) {}
     rpc Record(EntryRecord) returns (EntryReply) {}
+    rpc Transfer(TransferRequest) returns (EntryListReply) {}
 }
 
 service WalletsController {
@@ -63,6 +64,17 @@ message EntryRef {
 
 message EntryReply {
     Entry entry = 1;
+}
+
+message TransferRequest {
+    string from_wallet_id = 1;
+    string to_wallet_id = 2;
+    int64 amount_minor = 3;
+    string rate = 4;
+    int64 fee_minor = 5;
+    string occurred_at = 6;
+    string note = 7;
+    string client_mutation_id = 8;
 }
 
 message Wallet {

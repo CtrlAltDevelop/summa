@@ -221,6 +221,46 @@ class EntryReply(_message.Message):
 Global___EntryReply: _TypeAlias = EntryReply  # noqa: Y015
 
 @_typing.final
+class TransferRequest(_message.Message):
+    DESCRIPTOR: _descriptor.Descriptor
+
+    FROM_WALLET_ID_FIELD_NUMBER: _builtins.int
+    TO_WALLET_ID_FIELD_NUMBER: _builtins.int
+    AMOUNT_MINOR_FIELD_NUMBER: _builtins.int
+    RATE_FIELD_NUMBER: _builtins.int
+    FEE_MINOR_FIELD_NUMBER: _builtins.int
+    OCCURRED_AT_FIELD_NUMBER: _builtins.int
+    NOTE_FIELD_NUMBER: _builtins.int
+    CLIENT_MUTATION_ID_FIELD_NUMBER: _builtins.int
+    from_wallet_id: _builtins.str
+    to_wallet_id: _builtins.str
+    amount_minor: _builtins.int
+    rate: _builtins.str
+    fee_minor: _builtins.int
+    occurred_at: _builtins.str
+    note: _builtins.str
+    client_mutation_id: _builtins.str
+    def __init__(
+        self,
+        *,
+        from_wallet_id: _builtins.str = ...,
+        to_wallet_id: _builtins.str = ...,
+        amount_minor: _builtins.int = ...,
+        rate: _builtins.str = ...,
+        fee_minor: _builtins.int = ...,
+        occurred_at: _builtins.str = ...,
+        note: _builtins.str = ...,
+        client_mutation_id: _builtins.str = ...,
+    ) -> None: ...
+    _HasFieldArgType: _TypeAlias = _Never  # noqa: Y015
+    def HasField(self, field_name: _HasFieldArgType) -> _builtins.bool: ...
+    _ClearFieldArgType: _TypeAlias = _typing.Literal["amount_minor", b"amount_minor", "client_mutation_id", b"client_mutation_id", "fee_minor", b"fee_minor", "from_wallet_id", b"from_wallet_id", "note", b"note", "occurred_at", b"occurred_at", "rate", b"rate", "to_wallet_id", b"to_wallet_id"]  # noqa: Y015
+    def ClearField(self, field_name: _ClearFieldArgType) -> None: ...
+    def WhichOneof(self, oneof_group: _Never) -> None: ...
+
+Global___TransferRequest: _TypeAlias = TransferRequest  # noqa: Y015
+
+@_typing.final
 class Wallet(_message.Message):
     DESCRIPTOR: _descriptor.Descriptor
 
