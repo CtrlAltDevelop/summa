@@ -32,6 +32,7 @@
 22. [phases/phase-07-recurring.md](phases/phase-07-recurring.md): سند فاز ۰۷ (تراکنش‌های تکراری)
 23. [phases/phase-07b-salary.md](phases/phase-07b-salary.md): سند فاز ۰۷b (حقوق و یادآور)
 24. [phases/phase-07c-accounting-hour.md](phases/phase-07c-accounting-hour.md): سند فاز ۰۷c (ساعت حساب‌وکتاب)
+25. [phases/phase-08-debts.md](phases/phase-08-debts.md): سند فاز ۰۸ (وام و قسط)
 
 ## محدودیت‌های بررسی
 - همه صفحه‌های عمومی خونده شد، به جز `/disclosure` (دوبار خطای ۵۰۳؛ لیست شریک‌های رفرال و مدل درآمد رفرال مشخص نیست).
