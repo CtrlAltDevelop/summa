@@ -19,6 +19,213 @@ else:
 DESCRIPTOR: _descriptor.FileDescriptor
 
 @_typing.final
+class BudgetRow(_message.Message):
+    DESCRIPTOR: _descriptor.Descriptor
+
+    CATEGORY_ID_FIELD_NUMBER: _builtins.int
+    CATEGORY_NAME_FIELD_NUMBER: _builtins.int
+    CURRENCY_FIELD_NUMBER: _builtins.int
+    LIMIT_MINOR_FIELD_NUMBER: _builtins.int
+    SPENT_MINOR_FIELD_NUMBER: _builtins.int
+    category_id: _builtins.str
+    category_name: _builtins.str
+    currency: _builtins.str
+    limit_minor: _builtins.int
+    spent_minor: _builtins.int
+    def __init__(
+        self,
+        *,
+        category_id: _builtins.str = ...,
+        category_name: _builtins.str = ...,
+        currency: _builtins.str = ...,
+        limit_minor: _builtins.int = ...,
+        spent_minor: _builtins.int = ...,
+    ) -> None: ...
+    _HasFieldArgType: _TypeAlias = _Never  # noqa: Y015
+    def HasField(self, field_name: _HasFieldArgType) -> _builtins.bool: ...
+    _ClearFieldArgType: _TypeAlias = _typing.Literal["category_id", b"category_id", "category_name", b"category_name", "currency", b"currency", "limit_minor", b"limit_minor", "spent_minor", b"spent_minor"]  # noqa: Y015
+    def ClearField(self, field_name: _ClearFieldArgType) -> None: ...
+    def WhichOneof(self, oneof_group: _Never) -> None: ...
+
+Global___BudgetRow: _TypeAlias = BudgetRow  # noqa: Y015
+
+@_typing.final
+class BudgetSet(_message.Message):
+    DESCRIPTOR: _descriptor.Descriptor
+
+    CATEGORY_ID_FIELD_NUMBER: _builtins.int
+    CURRENCY_FIELD_NUMBER: _builtins.int
+    LIMIT_MINOR_FIELD_NUMBER: _builtins.int
+    category_id: _builtins.str
+    currency: _builtins.str
+    limit_minor: _builtins.int
+    def __init__(
+        self,
+        *,
+        category_id: _builtins.str = ...,
+        currency: _builtins.str = ...,
+        limit_minor: _builtins.int = ...,
+    ) -> None: ...
+    _HasFieldArgType: _TypeAlias = _Never  # noqa: Y015
+    def HasField(self, field_name: _HasFieldArgType) -> _builtins.bool: ...
+    _ClearFieldArgType: _TypeAlias = _typing.Literal["category_id", b"category_id", "currency", b"currency", "limit_minor", b"limit_minor"]  # noqa: Y015
+    def ClearField(self, field_name: _ClearFieldArgType) -> None: ...
+    def WhichOneof(self, oneof_group: _Never) -> None: ...
+
+Global___BudgetSet: _TypeAlias = BudgetSet  # noqa: Y015
+
+@_typing.final
+class BudgetStatusReply(_message.Message):
+    DESCRIPTOR: _descriptor.Descriptor
+
+    BUDGETS_FIELD_NUMBER: _builtins.int
+    @_builtins.property
+    def budgets(self) -> _containers.RepeatedCompositeFieldContainer[Global___BudgetRow]: ...
+    def __init__(
+        self,
+        *,
+        budgets: _abc.Iterable[Global___BudgetRow] | None = ...,
+    ) -> None: ...
+    _HasFieldArgType: _TypeAlias = _Never  # noqa: Y015
+    def HasField(self, field_name: _HasFieldArgType) -> _builtins.bool: ...
+    _ClearFieldArgType: _TypeAlias = _typing.Literal["budgets", b"budgets"]  # noqa: Y015
+    def ClearField(self, field_name: _ClearFieldArgType) -> None: ...
+    def WhichOneof(self, oneof_group: _Never) -> None: ...
+
+Global___BudgetStatusReply: _TypeAlias = BudgetStatusReply  # noqa: Y015
+
+@_typing.final
+class BudgetWindow(_message.Message):
+    DESCRIPTOR: _descriptor.Descriptor
+
+    STARTS_AT_FIELD_NUMBER: _builtins.int
+    ENDS_AT_FIELD_NUMBER: _builtins.int
+    starts_at: _builtins.str
+    ends_at: _builtins.str
+    def __init__(
+        self,
+        *,
+        starts_at: _builtins.str = ...,
+        ends_at: _builtins.str = ...,
+    ) -> None: ...
+    _HasFieldArgType: _TypeAlias = _Never  # noqa: Y015
+    def HasField(self, field_name: _HasFieldArgType) -> _builtins.bool: ...
+    _ClearFieldArgType: _TypeAlias = _typing.Literal["ends_at", b"ends_at", "starts_at", b"starts_at"]  # noqa: Y015
+    def ClearField(self, field_name: _ClearFieldArgType) -> None: ...
+    def WhichOneof(self, oneof_group: _Never) -> None: ...
+
+Global___BudgetWindow: _TypeAlias = BudgetWindow  # noqa: Y015
+
+@_typing.final
+class Category(_message.Message):
+    DESCRIPTOR: _descriptor.Descriptor
+
+    ID_FIELD_NUMBER: _builtins.int
+    NAME_FIELD_NUMBER: _builtins.int
+    KIND_FIELD_NUMBER: _builtins.int
+    IS_OTHER_FIELD_NUMBER: _builtins.int
+    id: _builtins.str
+    name: _builtins.str
+    kind: _builtins.str
+    is_other: _builtins.bool
+    def __init__(
+        self,
+        *,
+        id: _builtins.str = ...,
+        name: _builtins.str = ...,
+        kind: _builtins.str = ...,
+        is_other: _builtins.bool = ...,
+    ) -> None: ...
+    _HasFieldArgType: _TypeAlias = _Never  # noqa: Y015
+    def HasField(self, field_name: _HasFieldArgType) -> _builtins.bool: ...
+    _ClearFieldArgType: _TypeAlias = _typing.Literal["id", b"id", "is_other", b"is_other", "kind", b"kind", "name", b"name"]  # noqa: Y015
+    def ClearField(self, field_name: _ClearFieldArgType) -> None: ...
+    def WhichOneof(self, oneof_group: _Never) -> None: ...
+
+Global___Category: _TypeAlias = Category  # noqa: Y015
+
+@_typing.final
+class CategoryCreate(_message.Message):
+    DESCRIPTOR: _descriptor.Descriptor
+
+    NAME_FIELD_NUMBER: _builtins.int
+    KIND_FIELD_NUMBER: _builtins.int
+    name: _builtins.str
+    kind: _builtins.str
+    def __init__(
+        self,
+        *,
+        name: _builtins.str = ...,
+        kind: _builtins.str = ...,
+    ) -> None: ...
+    _HasFieldArgType: _TypeAlias = _Never  # noqa: Y015
+    def HasField(self, field_name: _HasFieldArgType) -> _builtins.bool: ...
+    _ClearFieldArgType: _TypeAlias = _typing.Literal["kind", b"kind", "name", b"name"]  # noqa: Y015
+    def ClearField(self, field_name: _ClearFieldArgType) -> None: ...
+    def WhichOneof(self, oneof_group: _Never) -> None: ...
+
+Global___CategoryCreate: _TypeAlias = CategoryCreate  # noqa: Y015
+
+@_typing.final
+class CategoryListReply(_message.Message):
+    DESCRIPTOR: _descriptor.Descriptor
+
+    CATEGORIES_FIELD_NUMBER: _builtins.int
+    @_builtins.property
+    def categories(self) -> _containers.RepeatedCompositeFieldContainer[Global___Category]: ...
+    def __init__(
+        self,
+        *,
+        categories: _abc.Iterable[Global___Category] | None = ...,
+    ) -> None: ...
+    _HasFieldArgType: _TypeAlias = _Never  # noqa: Y015
+    def HasField(self, field_name: _HasFieldArgType) -> _builtins.bool: ...
+    _ClearFieldArgType: _TypeAlias = _typing.Literal["categories", b"categories"]  # noqa: Y015
+    def ClearField(self, field_name: _ClearFieldArgType) -> None: ...
+    def WhichOneof(self, oneof_group: _Never) -> None: ...
+
+Global___CategoryListReply: _TypeAlias = CategoryListReply  # noqa: Y015
+
+@_typing.final
+class CategoryRef(_message.Message):
+    DESCRIPTOR: _descriptor.Descriptor
+
+    CATEGORY_ID_FIELD_NUMBER: _builtins.int
+    category_id: _builtins.str
+    def __init__(
+        self,
+        *,
+        category_id: _builtins.str = ...,
+    ) -> None: ...
+    _HasFieldArgType: _TypeAlias = _Never  # noqa: Y015
+    def HasField(self, field_name: _HasFieldArgType) -> _builtins.bool: ...
+    _ClearFieldArgType: _TypeAlias = _typing.Literal["category_id", b"category_id"]  # noqa: Y015
+    def ClearField(self, field_name: _ClearFieldArgType) -> None: ...
+    def WhichOneof(self, oneof_group: _Never) -> None: ...
+
+Global___CategoryRef: _TypeAlias = CategoryRef  # noqa: Y015
+
+@_typing.final
+class CategoryReply(_message.Message):
+    DESCRIPTOR: _descriptor.Descriptor
+
+    CATEGORY_FIELD_NUMBER: _builtins.int
+    @_builtins.property
+    def category(self) -> Global___Category: ...
+    def __init__(
+        self,
+        *,
+        category: Global___Category | None = ...,
+    ) -> None: ...
+    _HasFieldArgType: _TypeAlias = _typing.Literal["category", b"category"]  # noqa: Y015
+    def HasField(self, field_name: _HasFieldArgType) -> _builtins.bool: ...
+    _ClearFieldArgType: _TypeAlias = _typing.Literal["category", b"category"]  # noqa: Y015
+    def ClearField(self, field_name: _ClearFieldArgType) -> None: ...
+    def WhichOneof(self, oneof_group: _Never) -> None: ...
+
+Global___CategoryReply: _TypeAlias = CategoryReply  # noqa: Y015
+
+@_typing.final
 class CurrencyTotal(_message.Message):
     DESCRIPTOR: _descriptor.Descriptor
 
@@ -51,6 +258,7 @@ class Entry(_message.Message):
     CURRENCY_FIELD_NUMBER: _builtins.int
     OCCURRED_AT_FIELD_NUMBER: _builtins.int
     NOTE_FIELD_NUMBER: _builtins.int
+    CATEGORY_ID_FIELD_NUMBER: _builtins.int
     id: _builtins.str
     wallet_id: _builtins.str
     kind: _builtins.str
@@ -58,6 +266,7 @@ class Entry(_message.Message):
     currency: _builtins.str
     occurred_at: _builtins.str
     note: _builtins.str
+    category_id: _builtins.str
     def __init__(
         self,
         *,
@@ -68,10 +277,11 @@ class Entry(_message.Message):
         currency: _builtins.str = ...,
         occurred_at: _builtins.str = ...,
         note: _builtins.str = ...,
+        category_id: _builtins.str = ...,
     ) -> None: ...
     _HasFieldArgType: _TypeAlias = _Never  # noqa: Y015
     def HasField(self, field_name: _HasFieldArgType) -> _builtins.bool: ...
-    _ClearFieldArgType: _TypeAlias = _typing.Literal["amount_minor", b"amount_minor", "currency", b"currency", "id", b"id", "kind", b"kind", "note", b"note", "occurred_at", b"occurred_at", "wallet_id", b"wallet_id"]  # noqa: Y015
+    _ClearFieldArgType: _TypeAlias = _typing.Literal["amount_minor", b"amount_minor", "category_id", b"category_id", "currency", b"currency", "id", b"id", "kind", b"kind", "note", b"note", "occurred_at", b"occurred_at", "wallet_id", b"wallet_id"]  # noqa: Y015
     def ClearField(self, field_name: _ClearFieldArgType) -> None: ...
     def WhichOneof(self, oneof_group: _Never) -> None: ...
 
@@ -85,10 +295,12 @@ class EntryEdit(_message.Message):
     AMOUNT_MINOR_FIELD_NUMBER: _builtins.int
     OCCURRED_AT_FIELD_NUMBER: _builtins.int
     NOTE_FIELD_NUMBER: _builtins.int
+    CATEGORY_ID_FIELD_NUMBER: _builtins.int
     entry_id: _builtins.str
     amount_minor: _builtins.int
     occurred_at: _builtins.str
     note: _builtins.str
+    category_id: _builtins.str
     def __init__(
         self,
         *,
@@ -96,10 +308,11 @@ class EntryEdit(_message.Message):
         amount_minor: _builtins.int = ...,
         occurred_at: _builtins.str = ...,
         note: _builtins.str = ...,
+        category_id: _builtins.str = ...,
     ) -> None: ...
     _HasFieldArgType: _TypeAlias = _Never  # noqa: Y015
     def HasField(self, field_name: _HasFieldArgType) -> _builtins.bool: ...
-    _ClearFieldArgType: _TypeAlias = _typing.Literal["amount_minor", b"amount_minor", "entry_id", b"entry_id", "note", b"note", "occurred_at", b"occurred_at"]  # noqa: Y015
+    _ClearFieldArgType: _TypeAlias = _typing.Literal["amount_minor", b"amount_minor", "category_id", b"category_id", "entry_id", b"entry_id", "note", b"note", "occurred_at", b"occurred_at"]  # noqa: Y015
     def ClearField(self, field_name: _ClearFieldArgType) -> None: ...
     def WhichOneof(self, oneof_group: _Never) -> None: ...
 
@@ -157,12 +370,14 @@ class EntryRecord(_message.Message):
     OCCURRED_AT_FIELD_NUMBER: _builtins.int
     NOTE_FIELD_NUMBER: _builtins.int
     CLIENT_MUTATION_ID_FIELD_NUMBER: _builtins.int
+    CATEGORY_ID_FIELD_NUMBER: _builtins.int
     wallet_id: _builtins.str
     kind: _builtins.str
     amount_minor: _builtins.int
     occurred_at: _builtins.str
     note: _builtins.str
     client_mutation_id: _builtins.str
+    category_id: _builtins.str
     def __init__(
         self,
         *,
@@ -172,10 +387,11 @@ class EntryRecord(_message.Message):
         occurred_at: _builtins.str = ...,
         note: _builtins.str = ...,
         client_mutation_id: _builtins.str = ...,
+        category_id: _builtins.str = ...,
     ) -> None: ...
     _HasFieldArgType: _TypeAlias = _Never  # noqa: Y015
     def HasField(self, field_name: _HasFieldArgType) -> _builtins.bool: ...
-    _ClearFieldArgType: _TypeAlias = _typing.Literal["amount_minor", b"amount_minor", "client_mutation_id", b"client_mutation_id", "kind", b"kind", "note", b"note", "occurred_at", b"occurred_at", "wallet_id", b"wallet_id"]  # noqa: Y015
+    _ClearFieldArgType: _TypeAlias = _typing.Literal["amount_minor", b"amount_minor", "category_id", b"category_id", "client_mutation_id", b"client_mutation_id", "kind", b"kind", "note", b"note", "occurred_at", b"occurred_at", "wallet_id", b"wallet_id"]  # noqa: Y015
     def ClearField(self, field_name: _ClearFieldArgType) -> None: ...
     def WhichOneof(self, oneof_group: _Never) -> None: ...
 

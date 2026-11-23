@@ -15,16 +15,12 @@ from typing import Any
 from django.db import IntegrityError, transaction
 from django.utils import timezone
 
-from apps.wallets.ledger import (
-    NOTE_MAX_LENGTH,
-    Entry,
-    _entry,
-    _not_found,
-    _refuse,
-    _uuid,
-)
+from apps.wallets.ledger import NOTE_MAX_LENGTH, Entry, _entry
 from apps.wallets.models import Direction, EventKind, LedgerEvent, Wallet
 from apps.wallets.profile import CURRENCIES
+from apps.wallets.validation import not_found as _not_found
+from apps.wallets.validation import parse_uuid as _uuid
+from apps.wallets.validation import refuse as _refuse
 
 _RATE = re.compile(r"\d{1,15}(\.\d{1,15})?")
 _MAX_MINOR = 2**63 - 1

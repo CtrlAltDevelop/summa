@@ -26,6 +26,250 @@ if _version_not_supported:
     )
 
 
+class CategoryControllerStub:
+    """Missing associated documentation comment in .proto file."""
+
+    def __init__(self, channel):
+        """Constructor.
+
+        Args:
+            channel: A grpc.Channel.
+        """
+        self.BudgetStatus = channel.unary_unary(
+                '/config.wallets.CategoryController/BudgetStatus',
+                request_serializer=apps_dot_wallets_dot_grpc_dot_wallets__pb2.BudgetWindow.SerializeToString,
+                response_deserializer=apps_dot_wallets_dot_grpc_dot_wallets__pb2.BudgetStatusReply.FromString,
+                _registered_method=True)
+        self.Create = channel.unary_unary(
+                '/config.wallets.CategoryController/Create',
+                request_serializer=apps_dot_wallets_dot_grpc_dot_wallets__pb2.CategoryCreate.SerializeToString,
+                response_deserializer=apps_dot_wallets_dot_grpc_dot_wallets__pb2.CategoryReply.FromString,
+                _registered_method=True)
+        self.Delete = channel.unary_unary(
+                '/config.wallets.CategoryController/Delete',
+                request_serializer=apps_dot_wallets_dot_grpc_dot_wallets__pb2.CategoryRef.SerializeToString,
+                response_deserializer=google_dot_protobuf_dot_empty__pb2.Empty.FromString,
+                _registered_method=True)
+        self.List = channel.unary_unary(
+                '/config.wallets.CategoryController/List',
+                request_serializer=google_dot_protobuf_dot_empty__pb2.Empty.SerializeToString,
+                response_deserializer=apps_dot_wallets_dot_grpc_dot_wallets__pb2.CategoryListReply.FromString,
+                _registered_method=True)
+        self.SetBudget = channel.unary_unary(
+                '/config.wallets.CategoryController/SetBudget',
+                request_serializer=apps_dot_wallets_dot_grpc_dot_wallets__pb2.BudgetSet.SerializeToString,
+                response_deserializer=google_dot_protobuf_dot_empty__pb2.Empty.FromString,
+                _registered_method=True)
+
+
+class CategoryControllerServicer:
+    """Missing associated documentation comment in .proto file."""
+
+    def BudgetStatus(self, request, context):
+        """Missing associated documentation comment in .proto file."""
+        context.set_code(grpc.StatusCode.UNIMPLEMENTED)
+        context.set_details('Method not implemented!')
+        raise NotImplementedError('Method not implemented!')
+
+    def Create(self, request, context):
+        """Missing associated documentation comment in .proto file."""
+        context.set_code(grpc.StatusCode.UNIMPLEMENTED)
+        context.set_details('Method not implemented!')
+        raise NotImplementedError('Method not implemented!')
+
+    def Delete(self, request, context):
+        """Missing associated documentation comment in .proto file."""
+        context.set_code(grpc.StatusCode.UNIMPLEMENTED)
+        context.set_details('Method not implemented!')
+        raise NotImplementedError('Method not implemented!')
+
+    def List(self, request, context):
+        """Missing associated documentation comment in .proto file."""
+        context.set_code(grpc.StatusCode.UNIMPLEMENTED)
+        context.set_details('Method not implemented!')
+        raise NotImplementedError('Method not implemented!')
+
+    def SetBudget(self, request, context):
+        """Missing associated documentation comment in .proto file."""
+        context.set_code(grpc.StatusCode.UNIMPLEMENTED)
+        context.set_details('Method not implemented!')
+        raise NotImplementedError('Method not implemented!')
+
+
+def add_CategoryControllerServicer_to_server(servicer, server):
+    rpc_method_handlers = {
+            'BudgetStatus': grpc.unary_unary_rpc_method_handler(
+                    servicer.BudgetStatus,
+                    request_deserializer=apps_dot_wallets_dot_grpc_dot_wallets__pb2.BudgetWindow.FromString,
+                    response_serializer=apps_dot_wallets_dot_grpc_dot_wallets__pb2.BudgetStatusReply.SerializeToString,
+            ),
+            'Create': grpc.unary_unary_rpc_method_handler(
+                    servicer.Create,
+                    request_deserializer=apps_dot_wallets_dot_grpc_dot_wallets__pb2.CategoryCreate.FromString,
+                    response_serializer=apps_dot_wallets_dot_grpc_dot_wallets__pb2.CategoryReply.SerializeToString,
+            ),
+            'Delete': grpc.unary_unary_rpc_method_handler(
+                    servicer.Delete,
+                    request_deserializer=apps_dot_wallets_dot_grpc_dot_wallets__pb2.CategoryRef.FromString,
+                    response_serializer=google_dot_protobuf_dot_empty__pb2.Empty.SerializeToString,
+            ),
+            'List': grpc.unary_unary_rpc_method_handler(
+                    servicer.List,
+                    request_deserializer=google_dot_protobuf_dot_empty__pb2.Empty.FromString,
+                    response_serializer=apps_dot_wallets_dot_grpc_dot_wallets__pb2.CategoryListReply.SerializeToString,
+            ),
+            'SetBudget': grpc.unary_unary_rpc_method_handler(
+                    servicer.SetBudget,
+                    request_deserializer=apps_dot_wallets_dot_grpc_dot_wallets__pb2.BudgetSet.FromString,
+                    response_serializer=google_dot_protobuf_dot_empty__pb2.Empty.SerializeToString,
+            ),
+    }
+    generic_handler = grpc.method_handlers_generic_handler(
+            'config.wallets.CategoryController', rpc_method_handlers)
+    server.add_generic_rpc_handlers((generic_handler,))
+    server.add_registered_method_handlers('config.wallets.CategoryController', rpc_method_handlers)
+
+
+ # This class is part of an EXPERIMENTAL API.
+class CategoryController:
+    """Missing associated documentation comment in .proto file."""
+
+    @staticmethod
+    def BudgetStatus(request,
+            target,
+            options=(),
+            channel_credentials=None,
+            call_credentials=None,
+            insecure=False,
+            compression=None,
+            wait_for_ready=None,
+            timeout=None,
+            metadata=None):
+        return grpc.experimental.unary_unary(
+            request,
+            target,
+            '/config.wallets.CategoryController/BudgetStatus',
+            apps_dot_wallets_dot_grpc_dot_wallets__pb2.BudgetWindow.SerializeToString,
+            apps_dot_wallets_dot_grpc_dot_wallets__pb2.BudgetStatusReply.FromString,
+            options,
+            channel_credentials,
+            insecure,
+            call_credentials,
+            compression,
+            wait_for_ready,
+            timeout,
+            metadata,
+            _registered_method=True)
+
+    @staticmethod
+    def Create(request,
+            target,
+            options=(),
+            channel_credentials=None,
+            call_credentials=None,
+            insecure=False,
+            compression=None,
+            wait_for_ready=None,
+            timeout=None,
+            metadata=None):
+        return grpc.experimental.unary_unary(
+            request,
+            target,
+            '/config.wallets.CategoryController/Create',
+            apps_dot_wallets_dot_grpc_dot_wallets__pb2.CategoryCreate.SerializeToString,
+            apps_dot_wallets_dot_grpc_dot_wallets__pb2.CategoryReply.FromString,
+            options,
+            channel_credentials,
+            insecure,
+            call_credentials,
+            compression,
+            wait_for_ready,
+            timeout,
+            metadata,
+            _registered_method=True)
+
+    @staticmethod
+    def Delete(request,
+            target,
+            options=(),
+            channel_credentials=None,
+            call_credentials=None,
+            insecure=False,
+            compression=None,
+            wait_for_ready=None,
+            timeout=None,
+            metadata=None):
+        return grpc.experimental.unary_unary(
+            request,
+            target,
+            '/config.wallets.CategoryController/Delete',
+            apps_dot_wallets_dot_grpc_dot_wallets__pb2.CategoryRef.SerializeToString,
+            google_dot_protobuf_dot_empty__pb2.Empty.FromString,
+            options,
+            channel_credentials,
+            insecure,
+            call_credentials,
+            compression,
+            wait_for_ready,
+            timeout,
+            metadata,
+            _registered_method=True)
+
+    @staticmethod
+    def List(request,
+            target,
+            options=(),
+            channel_credentials=None,
+            call_credentials=None,
+            insecure=False,
+            compression=None,
+            wait_for_ready=None,
+            timeout=None,
+            metadata=None):
+        return grpc.experimental.unary_unary(
+            request,
+            target,
+            '/config.wallets.CategoryController/List',
+            google_dot_protobuf_dot_empty__pb2.Empty.SerializeToString,
+            apps_dot_wallets_dot_grpc_dot_wallets__pb2.CategoryListReply.FromString,
+            options,
+            channel_credentials,
+            insecure,
+            call_credentials,
+            compression,
+            wait_for_ready,
+            timeout,
+            metadata,
+            _registered_method=True)
+
+    @staticmethod
+    def SetBudget(request,
+            target,
+            options=(),
+            channel_credentials=None,
+            call_credentials=None,
+            insecure=False,
+            compression=None,
+            wait_for_ready=None,
+            timeout=None,
+            metadata=None):
+        return grpc.experimental.unary_unary(
+            request,
+            target,
+            '/config.wallets.CategoryController/SetBudget',
+            apps_dot_wallets_dot_grpc_dot_wallets__pb2.BudgetSet.SerializeToString,
+            google_dot_protobuf_dot_empty__pb2.Empty.FromString,
+            options,
+            channel_credentials,
+            insecure,
+            call_credentials,
+            compression,
+            wait_for_ready,
+            timeout,
+            metadata,
+            _registered_method=True)
+
+
 class LedgerControllerStub:
     """Missing associated documentation comment in .proto file."""
 

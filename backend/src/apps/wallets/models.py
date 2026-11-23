@@ -33,6 +33,44 @@ class Wallet(models.Model):
         return f"{self.name} ({self.currency})"
 
 
+class Category(models.Model):
+    """What an income or expense was for. Per user; each kind has one undeletable "other"."""
+
+    id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
+    user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name="+")
+    name = models.CharField(max_length=40)
+    kind = models.CharField(max_length=10, choices=[("expense", "expense"), ("income", "income")])
+    is_other = models.BooleanField(default=False)
+    created_at = models.DateTimeField(auto_now_add=True)
+
+    class Meta:
+        ordering = ["created_at", "name"]
+        constraints = [
+            models.UniqueConstraint(fields=["user", "kind", "name"], name="category_name_unique")
+        ]
+
+    def __str__(self) -> str:
+        return f"{self.name} ({self.kind})"
+
+
+class Budget(models.Model):
+    """A monthly spending limit for one expense category, in one currency."""
+
+    id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
+    user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name="+")
+    category = models.OneToOneField(Category, on_delete=models.CASCADE, related_name="budget")
+    currency = models.CharField(max_length=8)
+    limit_minor = models.BigIntegerField()
+
+    class Meta:
+        constraints = [
+            models.CheckConstraint(condition=Q(limit_minor__gt=0), name="budget_limit_positive")
+        ]
+
+    def __str__(self) -> str:
+        return f"{self.category} {self.limit_minor} {self.currency}"
+
+
 class EventKind(models.TextChoices):
     OPENING_BALANCE = "opening_balance"
     INCOME = "income"
@@ -64,6 +102,9 @@ class LedgerEvent(models.Model):
     voided = models.BooleanField(default=False)
     replaces = models.ForeignKey(
         "self", null=True, blank=True, on_delete=models.SET_NULL, related_name="+"
+    )
+    category = models.ForeignKey(
+        Category, null=True, blank=True, on_delete=models.SET_NULL, related_name="+"
     )
     # Legs of one transfer (out, in, optional fee) share this id.
     transfer_id = models.UUIDField(null=True, blank=True, db_index=True)

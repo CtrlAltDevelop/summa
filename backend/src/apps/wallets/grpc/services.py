@@ -8,7 +8,8 @@ from django_socio_grpc import generics
 from django_socio_grpc.decorators import grpc_action
 from google.protobuf.empty_pb2 import Empty
 
-from apps.wallets.grpc.serializers import CurrencyTotal, Entry, Wallet
+from apps.wallets.categories import category_service
+from apps.wallets.grpc.serializers import BudgetRow, Category, CurrencyTotal, Entry, Wallet
 from apps.wallets.ledger import Entry as EntryView
 from apps.wallets.ledger import ledger_service
 from apps.wallets.services import WalletList, WalletView, wallets_service
@@ -115,6 +116,7 @@ def _entry(view: EntryView) -> Any:
         currency=view.currency,
         occurred_at=view.occurred_at.isoformat(),
         note=view.note,
+        category_id=view.category_id,
     )
 
 
@@ -133,6 +135,7 @@ class LedgerService(generics.GenericService):
             {"name": "kind", "type": "string"},
             *ENTRY_FIELDS,
             {"name": "client_mutation_id", "type": "string"},
+            {"name": "category_id", "type": "string"},
         ],
         request_name="EntryRecord",
         response=ENTRY_REPLY,
@@ -151,6 +154,7 @@ class LedgerService(generics.GenericService):
             occurred_at=_when(request.occurred_at),
             note=request.note,
             client_mutation_id=request.client_mutation_id,
+            category_id=request.category_id or None,
         )
         return wallets_pb2.EntryReply(entry=_entry(view))
 
@@ -205,7 +209,12 @@ class LedgerService(generics.GenericService):
         return wallets_pb2.EntryListReply(entries=[_entry(v) for v in views])
 
     @grpc_action(
-        request=[{"name": "entry_id", "type": "string"}, *ENTRY_FIELDS],
+        # category_id empty keeps the current category.
+        request=[
+            {"name": "entry_id", "type": "string"},
+            *ENTRY_FIELDS,
+            {"name": "category_id", "type": "string"},
+        ],
         request_name="EntryEdit",
         response=ENTRY_REPLY,
         response_name="EntryReply",
@@ -221,6 +230,7 @@ class LedgerService(generics.GenericService):
             amount_minor=request.amount_minor,
             occurred_at=_when(request.occurred_at),
             note=request.note,
+            category_id=request.category_id or None,
         )
         return wallets_pb2.EntryReply(entry=_entry(view))
 
@@ -236,4 +246,105 @@ class LedgerService(generics.GenericService):
         return Empty()
 
 
-GRPC_SERVICES = [WalletsService, LedgerService]
+def _category(view: Any) -> Any:
+    from apps.wallets.grpc import wallets_pb2
+
+    return wallets_pb2.Category(id=view.id, name=view.name, kind=view.kind, is_other=view.is_other)
+
+
+class CategoryService(generics.GenericService):
+    @grpc_action(
+        request=[],
+        response=[{"name": "categories", "type": Category, "cardinality": "repeated"}],
+        response_name="CategoryListReply",
+    )
+    @action
+    async def List(self, request: Any, context: Any) -> Any:
+        from apps.wallets.grpc import wallets_pb2
+
+        user = require_caller(await grpc_caller(context))
+        views = await sync_to_async(category_service.list)(user)
+        return wallets_pb2.CategoryListReply(categories=[_category(v) for v in views])
+
+    @grpc_action(
+        request=[{"name": "name", "type": "string"}, {"name": "kind", "type": "string"}],
+        request_name="CategoryCreate",
+        response=[{"name": "category", "type": Category}],
+        response_name="CategoryReply",
+    )
+    @action
+    async def Create(self, request: Any, context: Any) -> Any:
+        from apps.wallets.grpc import wallets_pb2
+
+        user = require_caller(await grpc_caller(context))
+        view = await sync_to_async(category_service.create)(
+            user, name=request.name, kind=request.kind
+        )
+        return wallets_pb2.CategoryReply(category=_category(view))
+
+    @grpc_action(
+        request=[{"name": "category_id", "type": "string"}],
+        request_name="CategoryRef",
+        response=[],
+    )
+    @action
+    async def Delete(self, request: Any, context: Any) -> Any:
+        user = require_caller(await grpc_caller(context))
+        await sync_to_async(category_service.delete)(user, request.category_id)
+        return Empty()
+
+    @grpc_action(
+        request=[
+            {"name": "category_id", "type": "string"},
+            {"name": "currency", "type": "string"},
+            # Zero removes the budget.
+            {"name": "limit_minor", "type": "int64"},
+        ],
+        request_name="BudgetSet",
+        response=[],
+    )
+    @action
+    async def SetBudget(self, request: Any, context: Any) -> Any:
+        user = require_caller(await grpc_caller(context))
+        await sync_to_async(category_service.set_budget)(
+            user,
+            request.category_id,
+            currency=request.currency,
+            limit_minor=request.limit_minor,
+        )
+        return Empty()
+
+    @grpc_action(
+        request=[
+            # The client picks the window (a Shamsi month); both need a UTC offset.
+            {"name": "starts_at", "type": "string"},
+            {"name": "ends_at", "type": "string"},
+        ],
+        request_name="BudgetWindow",
+        response=[{"name": "budgets", "type": BudgetRow, "cardinality": "repeated"}],
+        response_name="BudgetStatusReply",
+    )
+    @action
+    async def BudgetStatus(self, request: Any, context: Any) -> Any:
+        from apps.wallets.grpc import wallets_pb2
+
+        user = require_caller(await grpc_caller(context))
+        start, end = _when(request.starts_at), _when(request.ends_at)
+        if start is None or end is None:
+            raise ApiError("starts_at and ends_at are required.", 400)
+        rows = await sync_to_async(category_service.budget_status)(user, start, end)
+        return wallets_pb2.BudgetStatusReply(
+            budgets=[
+                wallets_pb2.BudgetRow(
+                    category_id=r.category_id,
+                    category_name=r.category_name,
+                    currency=r.currency,
+                    limit_minor=r.limit_minor,
+                    spent_minor=r.spent_minor,
+                )
+                for r in rows
+            ]
+        )
+
+
+GRPC_SERVICES = [WalletsService, LedgerService, CategoryService]
