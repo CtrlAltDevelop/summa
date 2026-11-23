@@ -25,6 +25,7 @@
 15. [phases/phase-02-ledger.md](phases/phase-02-ledger.md): سند فاز ۰۲ (دفتر)
 16. [phases/phase-02b-transfers.md](phases/phase-02b-transfers.md): سند فاز ۰۲b (انتقال بین کیف‌ها)
 17. [phases/phase-03-categories.md](phases/phase-03-categories.md): سند فاز ۰۳ (دسته‌ها و سقف)
+18. [phases/phase-04-assistant.md](phases/phase-04-assistant.md): سند فاز ۰۴ (چت دستیار)
 
 ## محدودیت‌های بررسی
 - همه صفحه‌های عمومی خونده شد، به جز `/disclosure` (دوبار خطای ۵۰۳؛ لیست شریک‌های رفرال و مدل درآمد رفرال مشخص نیست).
