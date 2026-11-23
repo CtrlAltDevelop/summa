@@ -1,0 +1,49 @@
+syntax = "proto3";
+
+package config.billing;
+
+import "google/protobuf/empty.proto";
+
+service BillingController {
+    rpc Checkout(CheckoutRequest) returns (CheckoutReply) {}
+    rpc Plans(google.protobuf.Empty) returns (PlanListReply) {}
+    rpc StartTrial(google.protobuf.Empty) returns (StatusReply) {}
+    rpc Status(google.protobuf.Empty) returns (StatusReply) {}
+    rpc Verify(VerifyRequest) returns (StatusReply) {}
+}
+
+message CheckoutReply {
+    string payment_id = 1;
+    string reference = 2;
+    string pay_url = 3;
+}
+
+message CheckoutRequest {
+    string plan_code = 1;
+}
+
+message PlanListReply {
+    repeated PlanMsg plans = 1;
+}
+
+message PlanMsg {
+    string code = 1;
+    string name = 2;
+    string description = 3;
+    int64 price_minor = 4;
+    int32 period_days = 5;
+}
+
+message StatusReply {
+    string status = 1;
+    string ends_at = 2;
+    int32 days_left = 3;
+    string plan_code = 4;
+    bool can_write = 5;
+    bool trial_available = 6;
+}
+
+message VerifyRequest {
+    string reference = 1;
+}
+
