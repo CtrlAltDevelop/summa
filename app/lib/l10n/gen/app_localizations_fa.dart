@@ -850,4 +850,25 @@ class AppLocalizationsFa extends AppLocalizations {
 
   @override
   String get reportFailed => 'گزارش گرفته نشد. دوباره امتحان کن.';
+
+  @override
+  String outboxPending(String count) {
+    return 'تراکنش در انتظار ارسال: $count';
+  }
+
+  @override
+  String get outboxRetry => 'ارسال دوباره';
+
+  @override
+  String get outboxSavedOffline =>
+      'اینترنت نیست؛ ذخیره شد و با اتصال فرستاده می‌شود.';
+
+  @override
+  String get outboxFailedTitle => 'این تراکنش‌ها ثبت نشدند';
+
+  @override
+  String get outboxFailedDismiss => 'حذف';
+
+  @override
+  String get outboxQueued => 'در انتظار ارسال';
 }

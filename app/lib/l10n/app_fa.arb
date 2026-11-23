@@ -359,5 +359,18 @@
       }
     }
   },
-  "reportFailed": "گزارش گرفته نشد. دوباره امتحان کن."
+  "reportFailed": "گزارش گرفته نشد. دوباره امتحان کن.",
+  "outboxPending": "تراکنش در انتظار ارسال: {count}",
+  "@outboxPending": {
+    "placeholders": {
+      "count": {
+        "type": "String"
+      }
+    }
+  },
+  "outboxRetry": "ارسال دوباره",
+  "outboxSavedOffline": "اینترنت نیست؛ ذخیره شد و با اتصال فرستاده می‌شود.",
+  "outboxFailedTitle": "این تراکنش‌ها ثبت نشدند",
+  "outboxFailedDismiss": "حذف",
+  "outboxQueued": "در انتظار ارسال"
 }

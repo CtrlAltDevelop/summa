@@ -12,11 +12,20 @@ class FakeLedgerApi implements LedgerApi {
   final List<Entry> entries = [];
   final List<String> mutations = [];
 
+  /// When set, every call fails as if there were no connection.
+  bool offline = false;
+
+  /// When set, `record` is refused for good (not a connection problem).
+  WalletFailure? refuseRecord;
+
   /// The rate strings sent with each transfer.
   final List<String> transferRates = [];
 
   @override
-  Future<List<Entry>> list(String access) async => entries.reversed.toList();
+  Future<List<Entry>> list(String access) async {
+    if (offline) throw const WalletException(WalletFailure.offline);
+    return entries.reversed.toList();
+  }
 
   @override
   Future<Entry> record(
@@ -30,6 +39,8 @@ class FakeLedgerApi implements LedgerApi {
     DateTime? occurredAt,
     bool outsideTotals = false,
   }) async {
+    if (offline) throw const WalletException(WalletFailure.offline);
+    if (refuseRecord != null) throw WalletException(refuseRecord!);
     if (mutations.contains(clientMutationId)) return entries.first;
     mutations.add(clientMutationId);
     final wallet = wallets.wallets.firstWhere((w) => w.id == walletId);

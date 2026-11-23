@@ -1,6 +1,8 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../core/grpc/grpc_providers.dart';
+import '../../core/storage/snapshot.dart';
+import '../../core/storage/snapshot_codecs.dart';
 import '../auth/auth_controller.dart';
 import '../categories/category_controller.dart';
 import 'entry_models.dart';
@@ -22,7 +24,13 @@ class LedgerController extends AsyncNotifier<List<Entry>> {
   AuthController get _auth => ref.read(authControllerProvider.notifier);
 
   @override
-  Future<List<Entry>> build() => _auth.withAccess(_api.list);
+  Future<List<Entry>> build() => withSnapshot(
+    ref,
+    'entries',
+    load: () => _auth.withAccess(_api.list),
+    encode: entriesToJson,
+    decode: entriesFromJson,
+  );
 
   /// [clientMutationId] stays the same for a retry of the same form.
   Future<void> record({

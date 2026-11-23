@@ -1,6 +1,8 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../core/grpc/grpc_providers.dart';
+import '../../core/storage/snapshot.dart';
+import '../../core/storage/snapshot_codecs.dart';
 import '../auth/auth_controller.dart';
 import 'wallet_api.dart';
 import 'wallet_models.dart';
@@ -20,7 +22,13 @@ class WalletsController extends AsyncNotifier<WalletList> {
   AuthController get _auth => ref.read(authControllerProvider.notifier);
 
   @override
-  Future<WalletList> build() => _auth.withAccess(_api.list);
+  Future<WalletList> build() => withSnapshot(
+    ref,
+    'wallets',
+    load: () => _auth.withAccess(_api.list),
+    encode: walletListToJson,
+    decode: walletListFromJson,
+  );
 
   /// Creates a wallet. [clientMutationId] must stay the same for a retry of
   /// the same form so the server does not make a second wallet.
