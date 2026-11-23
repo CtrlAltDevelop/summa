@@ -126,6 +126,8 @@ def _entry(view: EntryView) -> Any:
         category_id=view.category_id,
         outside_totals=view.outside_totals,
         split_id=view.split_id,
+        refund_of=view.refund_of,
+        refunded_minor=view.refunded_minor,
     )
 
 
@@ -184,6 +186,37 @@ class LedgerService(generics.GenericService):
             user, wallet_id=request.wallet_id or None, limit=request.limit
         )
         return wallets_pb2.EntryListReply(entries=[_entry(v) for v in views])
+
+    @grpc_action(
+        request=[
+            {"name": "entry_id", "type": "string"},
+            # Empty: back to the expense's own wallet.
+            {"name": "wallet_id", "type": "string"},
+            # Zero: everything still refundable.
+            {"name": "amount_minor", "type": "int64"},
+            {"name": "occurred_at", "type": "string"},
+            {"name": "note", "type": "string"},
+            {"name": "client_mutation_id", "type": "string"},
+        ],
+        request_name="RefundRequest",
+        response=ENTRY_REPLY,
+        response_name="EntryReply",
+    )
+    @action
+    async def Refund(self, request: Any, context: Any) -> Any:
+        from apps.wallets.grpc import wallets_pb2
+
+        user = require_caller(await grpc_caller(context))
+        view = await sync_to_async(ledger_service.refund)(
+            user,
+            request.entry_id,
+            wallet_id=request.wallet_id or None,
+            amount_minor=request.amount_minor,
+            occurred_at=_when(request.occurred_at),
+            note=request.note,
+            client_mutation_id=request.client_mutation_id,
+        )
+        return wallets_pb2.EntryReply(entry=_entry(view))
 
     @grpc_action(
         request=[

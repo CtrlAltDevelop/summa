@@ -119,27 +119,35 @@ class CategoryService:
         if start >= end:
             raise refuse("The window must start before it ends.")
         budgets = list(Budget.objects.filter(user=user).select_related("category"))
-        spent = {
-            (row["category_id"], row["wallet__currency"]): row["total"]
-            for row in LedgerEvent.objects.filter(
-                user=user,
-                voided=False,
-                outside_totals=False,
-                kind=EventKind.EXPENSE,
-                category__in=[b.category_id for b in budgets],
-                occurred_at__gte=start,
-                occurred_at__lt=end,
-            )
-            .values("category_id", "wallet__currency")
-            .annotate(total=Sum("amount_minor"))
+        window = {
+            "user": user,
+            "voided": False,
+            "outside_totals": False,
+            "category__in": [b.category_id for b in budgets],
+            "occurred_at__gte": start,
+            "occurred_at__lt": end,
         }
+
+        def totals(kind: str) -> dict[tuple[Any, str], int]:
+            rows = (
+                LedgerEvent.objects.filter(kind=kind, **window)
+                .values("category_id", "wallet__currency")
+                .annotate(total=Sum("amount_minor"))
+            )
+            return {(r["category_id"], r["wallet__currency"]): r["total"] for r in rows}
+
+        spent, refunded = totals(EventKind.EXPENSE), totals(EventKind.REFUND)
         return [
             BudgetStatus(
                 category_id=str(b.category_id),
                 category_name=b.category.name,
                 currency=b.currency,
                 limit_minor=b.limit_minor,
-                spent_minor=spent.get((b.category_id, b.currency), 0),
+                spent_minor=max(
+                    spent.get((b.category_id, b.currency), 0)
+                    - refunded.get((b.category_id, b.currency), 0),
+                    0,
+                ),
             )
             for b in sorted(budgets, key=lambda b: b.category.created_at)
         ]

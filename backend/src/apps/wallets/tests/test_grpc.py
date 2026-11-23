@@ -400,3 +400,65 @@ def test_an_income_cannot_be_recorded_outside_the_totals(
         )
 
     assert refusal.value.code() is grpc.StatusCode.INVALID_ARGUMENT
+
+
+def test_a_partial_refund_over_the_wire(
+    transactional_db: None, grpc_call: Callable[..., Any]
+) -> None:
+    token = sign_up("zoe")
+    wallet = grpc_call(Stub, "Create", new_wallet(balance=1_000), token=token).wallet
+    expense = grpc_call(
+        LedgerStub,
+        "Record",
+        wallets_pb2.EntryRecord(
+            wallet_id=wallet.id, kind="expense", amount_minor=400, client_mutation_id="e1"
+        ),
+        token=token,
+    ).entry
+
+    back = grpc_call(
+        LedgerStub,
+        "Refund",
+        wallets_pb2.RefundRequest(entry_id=expense.id, amount_minor=150, client_mutation_id="r1"),
+        token=token,
+    ).entry
+    listed = grpc_call(LedgerStub, "List", wallets_pb2.EntryQuery(), token=token).entries
+
+    assert (back.kind, back.amount_minor, back.refund_of) == ("refund", 150, expense.id)
+    assert {e.id: e.refunded_minor for e in listed}[expense.id] == 150
+    assert grpc_call(Stub, "List", Empty(), token=token).wallets[0].balance_minor == 750
+
+
+def test_refund_errors_map_to_statuses(
+    transactional_db: None, grpc_call: Callable[..., Any]
+) -> None:
+    zoe, ali = sign_up("zoe"), sign_up("ali")
+    wallet = grpc_call(Stub, "Create", new_wallet(), token=zoe).wallet
+    expense = grpc_call(
+        LedgerStub,
+        "Record",
+        wallets_pb2.EntryRecord(
+            wallet_id=wallet.id, kind="expense", amount_minor=100, client_mutation_id="e1"
+        ),
+        token=zoe,
+    ).entry
+
+    with pytest.raises(grpc.aio.AioRpcError) as foreign:
+        grpc_call(
+            LedgerStub,
+            "Refund",
+            wallets_pb2.RefundRequest(entry_id=expense.id, client_mutation_id="r"),
+            token=ali,
+        )
+    with pytest.raises(grpc.aio.AioRpcError) as too_much:
+        grpc_call(
+            LedgerStub,
+            "Refund",
+            wallets_pb2.RefundRequest(
+                entry_id=expense.id, amount_minor=101, client_mutation_id="r"
+            ),
+            token=zoe,
+        )
+
+    assert foreign.value.code() is grpc.StatusCode.NOT_FOUND
+    assert too_much.value.code() is grpc.StatusCode.INVALID_ARGUMENT
