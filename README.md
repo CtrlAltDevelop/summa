@@ -8,6 +8,8 @@
 
 Flutter · Django · gRPC · PostgreSQL · Redis · Celery
 
+**[پیش‌نمایش زندهٔ سایت معرفی ←](https://ctrlaltdevelop.github.io/summa/)**
+
 </div>
 
 <p align="center">
@@ -28,7 +30,7 @@ Flutter · Django · gRPC · PostgreSQL · Redis · Celery
 
 ### سایت معرفی
 
-سایت عمومی در `landing/` (Vite و Three.js) با دموی چت زنده، قیمت‌های روز از API بک‌اند و قسط‌سنج و ابزارهای رایگان. متن و قیمت‌ها در ادمین ویرایش می‌شود. با `make landing` (در کنار `make run-lite`) روی `http://localhost:5173` بالا می‌آید. اعداد قیمت در این تصویر نمونه‌اند.
+سایت عمومی در `landing/` (Vite و Three.js) با دموی چت زنده، قیمت‌های روز از API بک‌اند و قسط‌سنج و ابزارهای رایگان. متن و قیمت‌ها در ادمین ویرایش می‌شود. با `make landing` (در کنار `make run-lite`) روی `http://localhost:5173` بالا می‌آید. [پیش‌نمایش ایستا](https://ctrlaltdevelop.github.io/summa/) روی GitHub Pages هم هست؛ بدون بک‌اند است، پس قیمت‌ها نمونه‌اند و دموی چت کار نمی‌کند. اعداد قیمت در تصویر هم نمونه‌اند.
 
 <p align="center">
   <img src="docs/screenshots/landing-full.png" alt="سایت معرفی" width="60%">
