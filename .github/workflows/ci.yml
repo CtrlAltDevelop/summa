@@ -29,6 +29,10 @@ jobs:
     steps:
       - uses: actions/checkout@v6
       - uses: bufbuild/buf-setup-action@v1
+        with:
+          # Without a token the action's release lookup shares GitHub's anonymous
+          # rate limit and fails at random.
+          github_token: ${{ secrets.GITHUB_TOKEN }}
       - run: buf lint
 
   app:
