@@ -1,0 +1,24 @@
+syntax = "proto3";
+
+package config.privacy;
+
+import "google/protobuf/empty.proto";
+
+service PrivacyController {
+    rpc DeleteAccount(DeleteConfirmation) returns (google.protobuf.Empty) {}
+    rpc GetSettings(google.protobuf.Empty) returns (PrivacySettings) {}
+    rpc SetChatRetention(ChatRetention) returns (google.protobuf.Empty) {}
+}
+
+message ChatRetention {
+    int32 days = 1;
+}
+
+message DeleteConfirmation {
+    string confirmation = 1;
+}
+
+message PrivacySettings {
+    int32 chat_retention_days = 1;
+}
+

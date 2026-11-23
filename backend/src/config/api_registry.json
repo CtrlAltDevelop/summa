@@ -70,6 +70,13 @@
         "prefix": "/billing",
         "router": "apps.billing.rest.v1.router",
         "tag": "Billing"
+      },
+      {
+        "app_config": "apps.privacy.apps.PrivacyConfig",
+        "description": "Endpoints published by the privacy app.",
+        "prefix": "/privacy",
+        "router": "apps.privacy.rest.v1.router",
+        "tag": "Privacy"
       }
     ]
   }
