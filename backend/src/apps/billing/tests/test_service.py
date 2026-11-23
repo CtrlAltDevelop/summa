@@ -248,3 +248,23 @@ def test_each_user_has_their_own_subscription() -> None:
     billing_service.start_trial(zoe, NOW)
 
     assert (status(zoe).status, status(ali).status) == ("trial", "none")
+
+
+def test_the_public_plan_list_needs_no_sign_in_and_hides_inactive_plans() -> None:
+    from django.test import Client
+
+    plan("monthly", 30, price=150_000)
+    plan("old", 90, active=False)
+
+    response = Client().get("/api/v1/billing/plans")
+
+    assert response.status_code == 200
+    assert response.json()["data"] == [
+        {
+            "code": "monthly",
+            "name": "monthly",
+            "description": "",
+            "price_minor": 150_000,
+            "period_days": 30,
+        }
+    ]

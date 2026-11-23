@@ -266,3 +266,25 @@ def test_set_rate_and_refresh_commands(capsys: Any, settings: Any) -> None:
     out = capsys.readouterr().out
     assert price("USD") == Decimal(61_000)
     assert "USD" in out and "no sources" in out.lower()
+
+
+def test_the_public_rates_endpoint_lists_the_catalog_with_unknowns_marked() -> None:
+    from django.test import Client
+
+    rate_service.set_manual("USD", Decimal("61000"))
+
+    response = Client().get("/api/v1/assets/rates")
+    rows = {r["symbol"]: r for r in response.json()["data"]}
+
+    assert response.status_code == 200
+    assert (rows["USD"]["price"], rows["USD"]["known"], rows["USD"]["source"]) == (
+        "61000",
+        True,
+        "manual",
+    )
+    assert (rows["GOLD18"]["known"], rows["GOLD18"]["price"], rows["GOLD18"]["stale"]) == (
+        False,
+        "",
+        True,
+    )
+    assert rows["GOLD18"]["name"] == "طلای ۱۸ عیار"
