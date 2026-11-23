@@ -5,12 +5,15 @@ import 'package:summa/app.dart';
 import 'package:summa/features/auth/auth_controller.dart';
 import 'package:summa/features/auth/token_store.dart';
 import 'package:summa/features/wallets/wallet_models.dart';
+import 'package:summa/features/wallets/ledger_controller.dart';
 import 'package:summa/features/wallets/wallets_controller.dart';
 
 import '../auth/fake_auth_api.dart';
+import 'fake_ledger_api.dart';
 import 'fake_wallet_api.dart';
 
-Future<void> _pump(WidgetTester t, FakeWalletApi wallets) async {
+Future<FakeLedgerApi> _pump(WidgetTester t, FakeWalletApi wallets) async {
+  final ledger = FakeLedgerApi(wallets);
   final auth = FakeAuthApi(profileName: 'سارا');
   await t.pumpWidget(
     ProviderScope(
@@ -20,14 +23,17 @@ Future<void> _pump(WidgetTester t, FakeWalletApi wallets) async {
           MemoryTokenStore(auth.currentTokens),
         ),
         walletApiProvider.overrideWithValue(wallets),
+        ledgerApiProvider.overrideWithValue(ledger),
       ],
       child: const SummaApp(),
     ),
   );
   await t.pumpAndSettle();
+  return ledger;
 }
 
 void main() {
+  ledgerTests();
   testWidgets('no wallets: shows the empty hint and an add button', (t) async {
     await _pump(t, FakeWalletApi());
 
@@ -99,5 +105,93 @@ void main() {
 
     expect(find.textContaining('اتصال برقرار نشد'), findsOneWidget);
     expect(find.text('ذخیره'), findsOneWidget);
+  });
+}
+
+void _seed(FakeWalletApi api) => api.wallets.add(
+  const Wallet(
+    id: 'w1',
+    name: 'ملی من',
+    kind: WalletKind.bank,
+    currency: 'IRT',
+    bank: '',
+    archived: false,
+    balanceMinor: 1000000,
+  ),
+);
+
+void ledgerTests() {
+  testWidgets('recording an expense lists it and lowers the balance', (
+    t,
+  ) async {
+    final wallets = FakeWalletApi();
+    _seed(wallets);
+    final ledger = await _pump(t, wallets);
+
+    await t.tap(find.text('ثبت خرج یا درآمد'));
+    await t.pumpAndSettle();
+    await t.enterText(find.byType(TextField).at(0), '۳۰۰٬۰۰۰');
+    await t.enterText(find.byType(TextField).at(1), 'نان');
+    await t.tap(find.text('ذخیره'));
+    await t.pumpAndSettle();
+
+    expect(ledger.entries.single.amountMinor, 300000);
+    expect(find.text('نان'), findsOneWidget);
+    expect(find.text('-۳۰۰٬۰۰۰ تومان'), findsOneWidget);
+    expect(find.text('۷۰۰٬۰۰۰ تومان'), findsNWidgets(2)); // total + tile
+  });
+
+  testWidgets('an income shows with a plus and raises the balance', (t) async {
+    final wallets = FakeWalletApi();
+    _seed(wallets);
+    await _pump(t, wallets);
+
+    await t.tap(find.text('ثبت خرج یا درآمد'));
+    await t.pumpAndSettle();
+    await t.tap(find.text('درآمد'));
+    await t.enterText(find.byType(TextField).at(0), '۵۰۰٬۰۰۰');
+    await t.tap(find.text('ذخیره'));
+    await t.pumpAndSettle();
+
+    expect(find.text('+۵۰۰٬۰۰۰ تومان'), findsOneWidget);
+    expect(find.text('۱٬۵۰۰٬۰۰۰ تومان'), findsNWidgets(2));
+  });
+
+  testWidgets('a zero amount is refused without calling the server', (t) async {
+    final wallets = FakeWalletApi();
+    _seed(wallets);
+    final ledger = await _pump(t, wallets);
+
+    await t.tap(find.text('ثبت خرج یا درآمد'));
+    await t.pumpAndSettle();
+    await t.enterText(find.byType(TextField).at(0), '۰');
+    await t.tap(find.text('ذخیره'));
+    await t.pumpAndSettle();
+
+    expect(find.textContaining('مبلغ درست نیست'), findsOneWidget);
+    expect(ledger.entries, isEmpty);
+  });
+
+  testWidgets('deleting an entry restores the balance', (t) async {
+    final wallets = FakeWalletApi();
+    _seed(wallets);
+    final ledger = await _pump(t, wallets);
+    await t.tap(find.text('ثبت خرج یا درآمد'));
+    await t.pumpAndSettle();
+    await t.enterText(find.byType(TextField).at(0), '۱۰۰');
+    await t.tap(find.text('ذخیره'));
+    await t.pumpAndSettle();
+
+    await t.tap(find.text('حذف'));
+    await t.pumpAndSettle();
+
+    expect(ledger.entries, isEmpty);
+    expect(find.text('۱٬۰۰۰٬۰۰۰ تومان'), findsNWidgets(2));
+  });
+
+  testWidgets('no add-entry button until a wallet exists', (t) async {
+    await _pump(t, FakeWalletApi());
+
+    expect(find.text('ثبت خرج یا درآمد'), findsNothing);
   });
 }

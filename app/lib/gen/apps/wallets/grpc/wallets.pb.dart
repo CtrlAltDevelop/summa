@@ -86,6 +86,573 @@ class CurrencyTotal extends $pb.GeneratedMessage {
   void clearBalanceMinor() => $_clearField(2);
 }
 
+class Entry extends $pb.GeneratedMessage {
+  factory Entry({
+    $core.String? id,
+    $core.String? walletId,
+    $core.String? kind,
+    $fixnum.Int64? amountMinor,
+    $core.String? currency,
+    $core.String? occurredAt,
+    $core.String? note,
+  }) {
+    final result = Entry._();
+    if (id != null) result.id = id;
+    if (walletId != null) result.walletId = walletId;
+    if (kind != null) result.kind = kind;
+    if (amountMinor != null) result.amountMinor = amountMinor;
+    if (currency != null) result.currency = currency;
+    if (occurredAt != null) result.occurredAt = occurredAt;
+    if (note != null) result.note = note;
+    return result;
+  }
+
+  Entry._();
+
+  factory Entry.fromBuffer($core.List<$core.int> data,
+          [$pb.ExtensionRegistry registry = $pb.ExtensionRegistry.EMPTY]) =>
+      Entry()..mergeFromBuffer(data, registry);
+  factory Entry.fromJson($core.String json,
+          [$pb.ExtensionRegistry registry = $pb.ExtensionRegistry.EMPTY]) =>
+      Entry()..mergeFromJson(json, registry);
+
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo(
+      _omitMessageNames ? '' : 'Entry',
+      package: const $pb.PackageName(_omitMessageNames ? '' : 'config.wallets'),
+      createEmptyInstance: Entry.$_createMessage)
+    ..aOS(1, _omitFieldNames ? '' : 'id')
+    ..aOS(2, _omitFieldNames ? '' : 'walletId')
+    ..aOS(3, _omitFieldNames ? '' : 'kind')
+    ..aInt64(4, _omitFieldNames ? '' : 'amountMinor')
+    ..aOS(5, _omitFieldNames ? '' : 'currency')
+    ..aOS(6, _omitFieldNames ? '' : 'occurredAt')
+    ..aOS(7, _omitFieldNames ? '' : 'note')
+    ..hasRequiredFields = false;
+
+  @$core.Deprecated('See https://github.com/google/protobuf.dart/issues/998.')
+  Entry clone() => deepCopy();
+  @$core.Deprecated('See https://github.com/google/protobuf.dart/issues/998.')
+  Entry copyWith(void Function(Entry) updates) =>
+      super.copyWith((message) => updates(message as Entry)) as Entry;
+
+  @$core.override
+  $pb.BuilderInfo get info_ => _i;
+
+  @$core.pragma('dart2js:noInline')
+  @$core.Deprecated('Use Entry() / Entry.new instead')
+  static Entry create() => Entry._();
+  static $pb.GeneratedMessage $_createMessage() => Entry._();
+  @$core.override
+  Entry createEmptyInstance() => Entry._();
+  @$core.pragma('dart2js:noInline')
+  static Entry getDefault() => _defaultInstance ??=
+      $pb.GeneratedMessage.$_defaultFor<Entry>(Entry.$_createMessage);
+  static Entry? _defaultInstance;
+
+  @$pb.TagNumber(1)
+  $core.String get id => $_getSZ(0);
+  @$pb.TagNumber(1)
+  set id($core.String value) => $_setString(0, value);
+  @$pb.TagNumber(1)
+  $core.bool hasId() => $_has(0);
+  @$pb.TagNumber(1)
+  void clearId() => $_clearField(1);
+
+  @$pb.TagNumber(2)
+  $core.String get walletId => $_getSZ(1);
+  @$pb.TagNumber(2)
+  set walletId($core.String value) => $_setString(1, value);
+  @$pb.TagNumber(2)
+  $core.bool hasWalletId() => $_has(1);
+  @$pb.TagNumber(2)
+  void clearWalletId() => $_clearField(2);
+
+  @$pb.TagNumber(3)
+  $core.String get kind => $_getSZ(2);
+  @$pb.TagNumber(3)
+  set kind($core.String value) => $_setString(2, value);
+  @$pb.TagNumber(3)
+  $core.bool hasKind() => $_has(2);
+  @$pb.TagNumber(3)
+  void clearKind() => $_clearField(3);
+
+  @$pb.TagNumber(4)
+  $fixnum.Int64 get amountMinor => $_getI64(3);
+  @$pb.TagNumber(4)
+  set amountMinor($fixnum.Int64 value) => $_setInt64(3, value);
+  @$pb.TagNumber(4)
+  $core.bool hasAmountMinor() => $_has(3);
+  @$pb.TagNumber(4)
+  void clearAmountMinor() => $_clearField(4);
+
+  @$pb.TagNumber(5)
+  $core.String get currency => $_getSZ(4);
+  @$pb.TagNumber(5)
+  set currency($core.String value) => $_setString(4, value);
+  @$pb.TagNumber(5)
+  $core.bool hasCurrency() => $_has(4);
+  @$pb.TagNumber(5)
+  void clearCurrency() => $_clearField(5);
+
+  @$pb.TagNumber(6)
+  $core.String get occurredAt => $_getSZ(5);
+  @$pb.TagNumber(6)
+  set occurredAt($core.String value) => $_setString(5, value);
+  @$pb.TagNumber(6)
+  $core.bool hasOccurredAt() => $_has(5);
+  @$pb.TagNumber(6)
+  void clearOccurredAt() => $_clearField(6);
+
+  @$pb.TagNumber(7)
+  $core.String get note => $_getSZ(6);
+  @$pb.TagNumber(7)
+  set note($core.String value) => $_setString(6, value);
+  @$pb.TagNumber(7)
+  $core.bool hasNote() => $_has(6);
+  @$pb.TagNumber(7)
+  void clearNote() => $_clearField(7);
+}
+
+class EntryEdit extends $pb.GeneratedMessage {
+  factory EntryEdit({
+    $core.String? entryId,
+    $fixnum.Int64? amountMinor,
+    $core.String? occurredAt,
+    $core.String? note,
+  }) {
+    final result = EntryEdit._();
+    if (entryId != null) result.entryId = entryId;
+    if (amountMinor != null) result.amountMinor = amountMinor;
+    if (occurredAt != null) result.occurredAt = occurredAt;
+    if (note != null) result.note = note;
+    return result;
+  }
+
+  EntryEdit._();
+
+  factory EntryEdit.fromBuffer($core.List<$core.int> data,
+          [$pb.ExtensionRegistry registry = $pb.ExtensionRegistry.EMPTY]) =>
+      EntryEdit()..mergeFromBuffer(data, registry);
+  factory EntryEdit.fromJson($core.String json,
+          [$pb.ExtensionRegistry registry = $pb.ExtensionRegistry.EMPTY]) =>
+      EntryEdit()..mergeFromJson(json, registry);
+
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo(
+      _omitMessageNames ? '' : 'EntryEdit',
+      package: const $pb.PackageName(_omitMessageNames ? '' : 'config.wallets'),
+      createEmptyInstance: EntryEdit.$_createMessage)
+    ..aOS(1, _omitFieldNames ? '' : 'entryId')
+    ..aInt64(2, _omitFieldNames ? '' : 'amountMinor')
+    ..aOS(3, _omitFieldNames ? '' : 'occurredAt')
+    ..aOS(4, _omitFieldNames ? '' : 'note')
+    ..hasRequiredFields = false;
+
+  @$core.Deprecated('See https://github.com/google/protobuf.dart/issues/998.')
+  EntryEdit clone() => deepCopy();
+  @$core.Deprecated('See https://github.com/google/protobuf.dart/issues/998.')
+  EntryEdit copyWith(void Function(EntryEdit) updates) =>
+      super.copyWith((message) => updates(message as EntryEdit)) as EntryEdit;
+
+  @$core.override
+  $pb.BuilderInfo get info_ => _i;
+
+  @$core.pragma('dart2js:noInline')
+  @$core.Deprecated('Use EntryEdit() / EntryEdit.new instead')
+  static EntryEdit create() => EntryEdit._();
+  static $pb.GeneratedMessage $_createMessage() => EntryEdit._();
+  @$core.override
+  EntryEdit createEmptyInstance() => EntryEdit._();
+  @$core.pragma('dart2js:noInline')
+  static EntryEdit getDefault() => _defaultInstance ??=
+      $pb.GeneratedMessage.$_defaultFor<EntryEdit>(EntryEdit.$_createMessage);
+  static EntryEdit? _defaultInstance;
+
+  @$pb.TagNumber(1)
+  $core.String get entryId => $_getSZ(0);
+  @$pb.TagNumber(1)
+  set entryId($core.String value) => $_setString(0, value);
+  @$pb.TagNumber(1)
+  $core.bool hasEntryId() => $_has(0);
+  @$pb.TagNumber(1)
+  void clearEntryId() => $_clearField(1);
+
+  @$pb.TagNumber(2)
+  $fixnum.Int64 get amountMinor => $_getI64(1);
+  @$pb.TagNumber(2)
+  set amountMinor($fixnum.Int64 value) => $_setInt64(1, value);
+  @$pb.TagNumber(2)
+  $core.bool hasAmountMinor() => $_has(1);
+  @$pb.TagNumber(2)
+  void clearAmountMinor() => $_clearField(2);
+
+  @$pb.TagNumber(3)
+  $core.String get occurredAt => $_getSZ(2);
+  @$pb.TagNumber(3)
+  set occurredAt($core.String value) => $_setString(2, value);
+  @$pb.TagNumber(3)
+  $core.bool hasOccurredAt() => $_has(2);
+  @$pb.TagNumber(3)
+  void clearOccurredAt() => $_clearField(3);
+
+  @$pb.TagNumber(4)
+  $core.String get note => $_getSZ(3);
+  @$pb.TagNumber(4)
+  set note($core.String value) => $_setString(3, value);
+  @$pb.TagNumber(4)
+  $core.bool hasNote() => $_has(3);
+  @$pb.TagNumber(4)
+  void clearNote() => $_clearField(4);
+}
+
+class EntryListReply extends $pb.GeneratedMessage {
+  factory EntryListReply({
+    $core.Iterable<Entry>? entries,
+  }) {
+    final result = EntryListReply._();
+    if (entries != null) result.entries.addAll(entries);
+    return result;
+  }
+
+  EntryListReply._();
+
+  factory EntryListReply.fromBuffer($core.List<$core.int> data,
+          [$pb.ExtensionRegistry registry = $pb.ExtensionRegistry.EMPTY]) =>
+      EntryListReply()..mergeFromBuffer(data, registry);
+  factory EntryListReply.fromJson($core.String json,
+          [$pb.ExtensionRegistry registry = $pb.ExtensionRegistry.EMPTY]) =>
+      EntryListReply()..mergeFromJson(json, registry);
+
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo(
+      _omitMessageNames ? '' : 'EntryListReply',
+      package: const $pb.PackageName(_omitMessageNames ? '' : 'config.wallets'),
+      createEmptyInstance: EntryListReply.$_createMessage)
+    ..pPM<Entry>(1, _omitFieldNames ? '' : 'entries',
+        subBuilder: Entry.$_createMessage)
+    ..hasRequiredFields = false;
+
+  @$core.Deprecated('See https://github.com/google/protobuf.dart/issues/998.')
+  EntryListReply clone() => deepCopy();
+  @$core.Deprecated('See https://github.com/google/protobuf.dart/issues/998.')
+  EntryListReply copyWith(void Function(EntryListReply) updates) =>
+      super.copyWith((message) => updates(message as EntryListReply))
+          as EntryListReply;
+
+  @$core.override
+  $pb.BuilderInfo get info_ => _i;
+
+  @$core.pragma('dart2js:noInline')
+  @$core.Deprecated('Use EntryListReply() / EntryListReply.new instead')
+  static EntryListReply create() => EntryListReply._();
+  static $pb.GeneratedMessage $_createMessage() => EntryListReply._();
+  @$core.override
+  EntryListReply createEmptyInstance() => EntryListReply._();
+  @$core.pragma('dart2js:noInline')
+  static EntryListReply getDefault() =>
+      _defaultInstance ??= $pb.GeneratedMessage.$_defaultFor<EntryListReply>(
+          EntryListReply.$_createMessage);
+  static EntryListReply? _defaultInstance;
+
+  @$pb.TagNumber(1)
+  $pb.PbList<Entry> get entries => $_getList(0);
+}
+
+class EntryQuery extends $pb.GeneratedMessage {
+  factory EntryQuery({
+    $core.String? walletId,
+    $core.int? limit,
+  }) {
+    final result = EntryQuery._();
+    if (walletId != null) result.walletId = walletId;
+    if (limit != null) result.limit = limit;
+    return result;
+  }
+
+  EntryQuery._();
+
+  factory EntryQuery.fromBuffer($core.List<$core.int> data,
+          [$pb.ExtensionRegistry registry = $pb.ExtensionRegistry.EMPTY]) =>
+      EntryQuery()..mergeFromBuffer(data, registry);
+  factory EntryQuery.fromJson($core.String json,
+          [$pb.ExtensionRegistry registry = $pb.ExtensionRegistry.EMPTY]) =>
+      EntryQuery()..mergeFromJson(json, registry);
+
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo(
+      _omitMessageNames ? '' : 'EntryQuery',
+      package: const $pb.PackageName(_omitMessageNames ? '' : 'config.wallets'),
+      createEmptyInstance: EntryQuery.$_createMessage)
+    ..aOS(1, _omitFieldNames ? '' : 'walletId')
+    ..aI(2, _omitFieldNames ? '' : 'limit')
+    ..hasRequiredFields = false;
+
+  @$core.Deprecated('See https://github.com/google/protobuf.dart/issues/998.')
+  EntryQuery clone() => deepCopy();
+  @$core.Deprecated('See https://github.com/google/protobuf.dart/issues/998.')
+  EntryQuery copyWith(void Function(EntryQuery) updates) =>
+      super.copyWith((message) => updates(message as EntryQuery)) as EntryQuery;
+
+  @$core.override
+  $pb.BuilderInfo get info_ => _i;
+
+  @$core.pragma('dart2js:noInline')
+  @$core.Deprecated('Use EntryQuery() / EntryQuery.new instead')
+  static EntryQuery create() => EntryQuery._();
+  static $pb.GeneratedMessage $_createMessage() => EntryQuery._();
+  @$core.override
+  EntryQuery createEmptyInstance() => EntryQuery._();
+  @$core.pragma('dart2js:noInline')
+  static EntryQuery getDefault() => _defaultInstance ??=
+      $pb.GeneratedMessage.$_defaultFor<EntryQuery>(EntryQuery.$_createMessage);
+  static EntryQuery? _defaultInstance;
+
+  @$pb.TagNumber(1)
+  $core.String get walletId => $_getSZ(0);
+  @$pb.TagNumber(1)
+  set walletId($core.String value) => $_setString(0, value);
+  @$pb.TagNumber(1)
+  $core.bool hasWalletId() => $_has(0);
+  @$pb.TagNumber(1)
+  void clearWalletId() => $_clearField(1);
+
+  @$pb.TagNumber(2)
+  $core.int get limit => $_getIZ(1);
+  @$pb.TagNumber(2)
+  set limit($core.int value) => $_setSignedInt32(1, value);
+  @$pb.TagNumber(2)
+  $core.bool hasLimit() => $_has(1);
+  @$pb.TagNumber(2)
+  void clearLimit() => $_clearField(2);
+}
+
+class EntryRecord extends $pb.GeneratedMessage {
+  factory EntryRecord({
+    $core.String? walletId,
+    $core.String? kind,
+    $fixnum.Int64? amountMinor,
+    $core.String? occurredAt,
+    $core.String? note,
+    $core.String? clientMutationId,
+  }) {
+    final result = EntryRecord._();
+    if (walletId != null) result.walletId = walletId;
+    if (kind != null) result.kind = kind;
+    if (amountMinor != null) result.amountMinor = amountMinor;
+    if (occurredAt != null) result.occurredAt = occurredAt;
+    if (note != null) result.note = note;
+    if (clientMutationId != null) result.clientMutationId = clientMutationId;
+    return result;
+  }
+
+  EntryRecord._();
+
+  factory EntryRecord.fromBuffer($core.List<$core.int> data,
+          [$pb.ExtensionRegistry registry = $pb.ExtensionRegistry.EMPTY]) =>
+      EntryRecord()..mergeFromBuffer(data, registry);
+  factory EntryRecord.fromJson($core.String json,
+          [$pb.ExtensionRegistry registry = $pb.ExtensionRegistry.EMPTY]) =>
+      EntryRecord()..mergeFromJson(json, registry);
+
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo(
+      _omitMessageNames ? '' : 'EntryRecord',
+      package: const $pb.PackageName(_omitMessageNames ? '' : 'config.wallets'),
+      createEmptyInstance: EntryRecord.$_createMessage)
+    ..aOS(1, _omitFieldNames ? '' : 'walletId')
+    ..aOS(2, _omitFieldNames ? '' : 'kind')
+    ..aInt64(3, _omitFieldNames ? '' : 'amountMinor')
+    ..aOS(4, _omitFieldNames ? '' : 'occurredAt')
+    ..aOS(5, _omitFieldNames ? '' : 'note')
+    ..aOS(6, _omitFieldNames ? '' : 'clientMutationId')
+    ..hasRequiredFields = false;
+
+  @$core.Deprecated('See https://github.com/google/protobuf.dart/issues/998.')
+  EntryRecord clone() => deepCopy();
+  @$core.Deprecated('See https://github.com/google/protobuf.dart/issues/998.')
+  EntryRecord copyWith(void Function(EntryRecord) updates) =>
+      super.copyWith((message) => updates(message as EntryRecord))
+          as EntryRecord;
+
+  @$core.override
+  $pb.BuilderInfo get info_ => _i;
+
+  @$core.pragma('dart2js:noInline')
+  @$core.Deprecated('Use EntryRecord() / EntryRecord.new instead')
+  static EntryRecord create() => EntryRecord._();
+  static $pb.GeneratedMessage $_createMessage() => EntryRecord._();
+  @$core.override
+  EntryRecord createEmptyInstance() => EntryRecord._();
+  @$core.pragma('dart2js:noInline')
+  static EntryRecord getDefault() =>
+      _defaultInstance ??= $pb.GeneratedMessage.$_defaultFor<EntryRecord>(
+          EntryRecord.$_createMessage);
+  static EntryRecord? _defaultInstance;
+
+  @$pb.TagNumber(1)
+  $core.String get walletId => $_getSZ(0);
+  @$pb.TagNumber(1)
+  set walletId($core.String value) => $_setString(0, value);
+  @$pb.TagNumber(1)
+  $core.bool hasWalletId() => $_has(0);
+  @$pb.TagNumber(1)
+  void clearWalletId() => $_clearField(1);
+
+  @$pb.TagNumber(2)
+  $core.String get kind => $_getSZ(1);
+  @$pb.TagNumber(2)
+  set kind($core.String value) => $_setString(1, value);
+  @$pb.TagNumber(2)
+  $core.bool hasKind() => $_has(1);
+  @$pb.TagNumber(2)
+  void clearKind() => $_clearField(2);
+
+  @$pb.TagNumber(3)
+  $fixnum.Int64 get amountMinor => $_getI64(2);
+  @$pb.TagNumber(3)
+  set amountMinor($fixnum.Int64 value) => $_setInt64(2, value);
+  @$pb.TagNumber(3)
+  $core.bool hasAmountMinor() => $_has(2);
+  @$pb.TagNumber(3)
+  void clearAmountMinor() => $_clearField(3);
+
+  @$pb.TagNumber(4)
+  $core.String get occurredAt => $_getSZ(3);
+  @$pb.TagNumber(4)
+  set occurredAt($core.String value) => $_setString(3, value);
+  @$pb.TagNumber(4)
+  $core.bool hasOccurredAt() => $_has(3);
+  @$pb.TagNumber(4)
+  void clearOccurredAt() => $_clearField(4);
+
+  @$pb.TagNumber(5)
+  $core.String get note => $_getSZ(4);
+  @$pb.TagNumber(5)
+  set note($core.String value) => $_setString(4, value);
+  @$pb.TagNumber(5)
+  $core.bool hasNote() => $_has(4);
+  @$pb.TagNumber(5)
+  void clearNote() => $_clearField(5);
+
+  @$pb.TagNumber(6)
+  $core.String get clientMutationId => $_getSZ(5);
+  @$pb.TagNumber(6)
+  set clientMutationId($core.String value) => $_setString(5, value);
+  @$pb.TagNumber(6)
+  $core.bool hasClientMutationId() => $_has(5);
+  @$pb.TagNumber(6)
+  void clearClientMutationId() => $_clearField(6);
+}
+
+class EntryRef extends $pb.GeneratedMessage {
+  factory EntryRef({
+    $core.String? entryId,
+  }) {
+    final result = EntryRef._();
+    if (entryId != null) result.entryId = entryId;
+    return result;
+  }
+
+  EntryRef._();
+
+  factory EntryRef.fromBuffer($core.List<$core.int> data,
+          [$pb.ExtensionRegistry registry = $pb.ExtensionRegistry.EMPTY]) =>
+      EntryRef()..mergeFromBuffer(data, registry);
+  factory EntryRef.fromJson($core.String json,
+          [$pb.ExtensionRegistry registry = $pb.ExtensionRegistry.EMPTY]) =>
+      EntryRef()..mergeFromJson(json, registry);
+
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo(
+      _omitMessageNames ? '' : 'EntryRef',
+      package: const $pb.PackageName(_omitMessageNames ? '' : 'config.wallets'),
+      createEmptyInstance: EntryRef.$_createMessage)
+    ..aOS(1, _omitFieldNames ? '' : 'entryId')
+    ..hasRequiredFields = false;
+
+  @$core.Deprecated('See https://github.com/google/protobuf.dart/issues/998.')
+  EntryRef clone() => deepCopy();
+  @$core.Deprecated('See https://github.com/google/protobuf.dart/issues/998.')
+  EntryRef copyWith(void Function(EntryRef) updates) =>
+      super.copyWith((message) => updates(message as EntryRef)) as EntryRef;
+
+  @$core.override
+  $pb.BuilderInfo get info_ => _i;
+
+  @$core.pragma('dart2js:noInline')
+  @$core.Deprecated('Use EntryRef() / EntryRef.new instead')
+  static EntryRef create() => EntryRef._();
+  static $pb.GeneratedMessage $_createMessage() => EntryRef._();
+  @$core.override
+  EntryRef createEmptyInstance() => EntryRef._();
+  @$core.pragma('dart2js:noInline')
+  static EntryRef getDefault() => _defaultInstance ??=
+      $pb.GeneratedMessage.$_defaultFor<EntryRef>(EntryRef.$_createMessage);
+  static EntryRef? _defaultInstance;
+
+  @$pb.TagNumber(1)
+  $core.String get entryId => $_getSZ(0);
+  @$pb.TagNumber(1)
+  set entryId($core.String value) => $_setString(0, value);
+  @$pb.TagNumber(1)
+  $core.bool hasEntryId() => $_has(0);
+  @$pb.TagNumber(1)
+  void clearEntryId() => $_clearField(1);
+}
+
+class EntryReply extends $pb.GeneratedMessage {
+  factory EntryReply({
+    Entry? entry,
+  }) {
+    final result = EntryReply._();
+    if (entry != null) result.entry = entry;
+    return result;
+  }
+
+  EntryReply._();
+
+  factory EntryReply.fromBuffer($core.List<$core.int> data,
+          [$pb.ExtensionRegistry registry = $pb.ExtensionRegistry.EMPTY]) =>
+      EntryReply()..mergeFromBuffer(data, registry);
+  factory EntryReply.fromJson($core.String json,
+          [$pb.ExtensionRegistry registry = $pb.ExtensionRegistry.EMPTY]) =>
+      EntryReply()..mergeFromJson(json, registry);
+
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo(
+      _omitMessageNames ? '' : 'EntryReply',
+      package: const $pb.PackageName(_omitMessageNames ? '' : 'config.wallets'),
+      createEmptyInstance: EntryReply.$_createMessage)
+    ..aOM<Entry>(1, _omitFieldNames ? '' : 'entry',
+        subBuilder: Entry.$_createMessage)
+    ..hasRequiredFields = false;
+
+  @$core.Deprecated('See https://github.com/google/protobuf.dart/issues/998.')
+  EntryReply clone() => deepCopy();
+  @$core.Deprecated('See https://github.com/google/protobuf.dart/issues/998.')
+  EntryReply copyWith(void Function(EntryReply) updates) =>
+      super.copyWith((message) => updates(message as EntryReply)) as EntryReply;
+
+  @$core.override
+  $pb.BuilderInfo get info_ => _i;
+
+  @$core.pragma('dart2js:noInline')
+  @$core.Deprecated('Use EntryReply() / EntryReply.new instead')
+  static EntryReply create() => EntryReply._();
+  static $pb.GeneratedMessage $_createMessage() => EntryReply._();
+  @$core.override
+  EntryReply createEmptyInstance() => EntryReply._();
+  @$core.pragma('dart2js:noInline')
+  static EntryReply getDefault() => _defaultInstance ??=
+      $pb.GeneratedMessage.$_defaultFor<EntryReply>(EntryReply.$_createMessage);
+  static EntryReply? _defaultInstance;
+
+  @$pb.TagNumber(1)
+  Entry get entry => $_getN(0);
+  @$pb.TagNumber(1)
+  set entry(Entry value) => $_setField(1, value);
+  @$pb.TagNumber(1)
+  $core.bool hasEntry() => $_has(0);
+  @$pb.TagNumber(1)
+  void clearEntry() => $_clearField(1);
+  @$pb.TagNumber(1)
+  Entry ensureEntry() => $_ensure(0);
+}
+
 class Wallet extends $pb.GeneratedMessage {
   factory Wallet({
     $core.String? id,

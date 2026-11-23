@@ -4,6 +4,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../../core/ui/tokens/tokens.dart';
 import '../../core/ui/widgets/widgets.dart';
 import '../../l10n/gen/app_localizations.dart';
+import '../wallets/entries_panel.dart';
 import '../wallets/wallets_panel.dart';
 import 'auth_controller.dart';
 import 'auth_models.dart';
@@ -25,6 +26,8 @@ class HomeScreen extends ConsumerWidget {
             Text(l10n.homeGreeting(profile.displayName), style: SmType.title),
             const SizedBox(height: SmSpace.lg),
             const WalletsPanel(),
+            const SizedBox(height: SmSpace.lg),
+            const EntriesPanel(),
             const SizedBox(height: SmSpace.xl),
             SmButton(
               label: l10n.signOut,

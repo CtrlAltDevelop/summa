@@ -5,8 +5,10 @@ import 'package:summa/app.dart';
 import 'package:summa/features/auth/auth_controller.dart';
 import 'package:summa/features/auth/auth_models.dart';
 import 'package:summa/features/auth/token_store.dart';
+import 'package:summa/features/wallets/ledger_controller.dart';
 import 'package:summa/features/wallets/wallets_controller.dart';
 
+import '../wallets/fake_ledger_api.dart';
 import '../wallets/fake_wallet_api.dart';
 import 'fake_auth_api.dart';
 
@@ -16,12 +18,14 @@ Future<MemoryTokenStore> _pump(
   Tokens? stored,
 }) async {
   final store = MemoryTokenStore(stored);
+  final wallets = FakeWalletApi();
   await tester.pumpWidget(
     ProviderScope(
       overrides: [
         authApiProvider.overrideWithValue(api),
         tokenStoreProvider.overrideWithValue(store),
-        walletApiProvider.overrideWithValue(FakeWalletApi()),
+        walletApiProvider.overrideWithValue(wallets),
+        ledgerApiProvider.overrideWithValue(FakeLedgerApi(wallets)),
       ],
       child: const SummaApp(),
     ),

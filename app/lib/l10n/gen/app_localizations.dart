@@ -483,6 +483,60 @@ abstract class AppLocalizations {
   /// In fa, this message translates to:
   /// **'تتر'**
   String get currencyUSDT;
+
+  /// No description provided for @entryAdd.
+  ///
+  /// In fa, this message translates to:
+  /// **'ثبت خرج یا درآمد'**
+  String get entryAdd;
+
+  /// No description provided for @entryFormTitle.
+  ///
+  /// In fa, this message translates to:
+  /// **'ثبت جدید'**
+  String get entryFormTitle;
+
+  /// No description provided for @entryExpense.
+  ///
+  /// In fa, this message translates to:
+  /// **'خرج'**
+  String get entryExpense;
+
+  /// No description provided for @entryIncome.
+  ///
+  /// In fa, this message translates to:
+  /// **'درآمد'**
+  String get entryIncome;
+
+  /// No description provided for @entryWalletLabel.
+  ///
+  /// In fa, this message translates to:
+  /// **'کیف پول'**
+  String get entryWalletLabel;
+
+  /// No description provided for @entryAmountLabel.
+  ///
+  /// In fa, this message translates to:
+  /// **'مبلغ'**
+  String get entryAmountLabel;
+
+  /// No description provided for @entryNoteLabel.
+  ///
+  /// In fa, this message translates to:
+  /// **'یادداشت (اختیاری)'**
+  String get entryNoteLabel;
+
+  /// No description provided for @entryAmountInvalid.
+  ///
+  /// In fa, this message translates to:
+  /// **'مبلغ درست نیست. یک عدد بزرگ‌تر از صفر بنویس.'**
+  String get entryAmountInvalid;
+
+  /// No description provided for @entryDelete.
+  ///
+  /// In fa, this message translates to:
+  /// **'حذف'**
+  String get entryDelete;
 }
 
 class _AppLocalizationsDelegate

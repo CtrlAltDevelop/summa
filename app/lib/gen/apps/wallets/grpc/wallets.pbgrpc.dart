@@ -21,6 +21,133 @@ import 'wallets.pb.dart' as $0;
 
 export 'wallets.pb.dart';
 
+@$pb.GrpcServiceName('config.wallets.LedgerController')
+class LedgerControllerClient extends $grpc.Client {
+  /// The hostname for this service.
+  static const $core.String defaultHost = '';
+
+  /// OAuth scopes needed for the client.
+  static const $core.List<$core.String> oauthScopes = [
+    '',
+  ];
+
+  LedgerControllerClient(super.channel, {super.options, super.interceptors});
+
+  $grpc.ResponseFuture<$1.Empty> delete(
+    $0.EntryRef request, {
+    $grpc.CallOptions? options,
+  }) {
+    return $createUnaryCall(_$delete, request, options: options);
+  }
+
+  $grpc.ResponseFuture<$0.EntryReply> edit(
+    $0.EntryEdit request, {
+    $grpc.CallOptions? options,
+  }) {
+    return $createUnaryCall(_$edit, request, options: options);
+  }
+
+  $grpc.ResponseFuture<$0.EntryListReply> list(
+    $0.EntryQuery request, {
+    $grpc.CallOptions? options,
+  }) {
+    return $createUnaryCall(_$list, request, options: options);
+  }
+
+  $grpc.ResponseFuture<$0.EntryReply> record(
+    $0.EntryRecord request, {
+    $grpc.CallOptions? options,
+  }) {
+    return $createUnaryCall(_$record, request, options: options);
+  }
+
+  // method descriptors
+
+  static final _$delete = $grpc.ClientMethod<$0.EntryRef, $1.Empty>(
+      '/config.wallets.LedgerController/Delete',
+      ($0.EntryRef value) => value.writeToBuffer(),
+      $1.Empty.fromBuffer);
+  static final _$edit = $grpc.ClientMethod<$0.EntryEdit, $0.EntryReply>(
+      '/config.wallets.LedgerController/Edit',
+      ($0.EntryEdit value) => value.writeToBuffer(),
+      $0.EntryReply.fromBuffer);
+  static final _$list = $grpc.ClientMethod<$0.EntryQuery, $0.EntryListReply>(
+      '/config.wallets.LedgerController/List',
+      ($0.EntryQuery value) => value.writeToBuffer(),
+      $0.EntryListReply.fromBuffer);
+  static final _$record = $grpc.ClientMethod<$0.EntryRecord, $0.EntryReply>(
+      '/config.wallets.LedgerController/Record',
+      ($0.EntryRecord value) => value.writeToBuffer(),
+      $0.EntryReply.fromBuffer);
+}
+
+@$pb.GrpcServiceName('config.wallets.LedgerController')
+abstract class LedgerControllerServiceBase extends $grpc.Service {
+  $core.String get $name => 'config.wallets.LedgerController';
+
+  LedgerControllerServiceBase() {
+    $addMethod($grpc.ServiceMethod<$0.EntryRef, $1.Empty>(
+        'Delete',
+        delete_Pre,
+        false,
+        false,
+        ($core.List<$core.int> value) => $0.EntryRef.fromBuffer(value),
+        ($1.Empty value) => value.writeToBuffer()));
+    $addMethod($grpc.ServiceMethod<$0.EntryEdit, $0.EntryReply>(
+        'Edit',
+        edit_Pre,
+        false,
+        false,
+        ($core.List<$core.int> value) => $0.EntryEdit.fromBuffer(value),
+        ($0.EntryReply value) => value.writeToBuffer()));
+    $addMethod($grpc.ServiceMethod<$0.EntryQuery, $0.EntryListReply>(
+        'List',
+        list_Pre,
+        false,
+        false,
+        ($core.List<$core.int> value) => $0.EntryQuery.fromBuffer(value),
+        ($0.EntryListReply value) => value.writeToBuffer()));
+    $addMethod($grpc.ServiceMethod<$0.EntryRecord, $0.EntryReply>(
+        'Record',
+        record_Pre,
+        false,
+        false,
+        ($core.List<$core.int> value) => $0.EntryRecord.fromBuffer(value),
+        ($0.EntryReply value) => value.writeToBuffer()));
+  }
+
+  $async.Future<$1.Empty> delete_Pre(
+      $grpc.ServiceCall $call, $async.Future<$0.EntryRef> $request) async {
+    return delete($call, await $request);
+  }
+
+  $async.Future<$1.Empty> delete($grpc.ServiceCall call, $0.EntryRef request);
+
+  $async.Future<$0.EntryReply> edit_Pre(
+      $grpc.ServiceCall $call, $async.Future<$0.EntryEdit> $request) async {
+    return edit($call, await $request);
+  }
+
+  $async.Future<$0.EntryReply> edit(
+      $grpc.ServiceCall call, $0.EntryEdit request);
+
+  $async.Future<$0.EntryListReply> list_Pre(
+      $grpc.ServiceCall $call, $async.Future<$0.EntryQuery> $request) async {
+    return list($call, await $request);
+  }
+
+  $async.Future<$0.EntryListReply> list(
+      $grpc.ServiceCall call, $0.EntryQuery request);
+
+  $async.Future<$0.EntryReply> record_Pre(
+      $grpc.ServiceCall $call, $async.Future<$0.EntryRecord> $request) async {
+    return record($call, await $request);
+  }
+
+  $async.Future<$0.EntryReply> record(
+      $grpc.ServiceCall call, $0.EntryRecord request);
+}
+
 @$pb.GrpcServiceName('config.wallets.WalletsController')
 class WalletsControllerClient extends $grpc.Client {
   /// The hostname for this service.
