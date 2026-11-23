@@ -106,4 +106,8 @@ make macos      # اپ روی macOS (در ترمینال دیگر)
 
 ## مشارکت
 
-یک فاز، یک ویژگی؛ اول سند فاز (`docs/08-phase-template.md`) و بعد کد. پیام‌های commit به سبک emoji Conventional Commits است ([راهنما](docs/GIT_COMMIT_CONVENTIONS.md)). قبل از ارسال، `make check` و `make test` باید سبز باشند.
+یک فاز، یک ویژگی؛ اول سند فاز (`docs/08-phase-template.md`) و بعد کد. پیام‌های commit به سبک emoji Conventional Commits است ([راهنما](docs/GIT_COMMIT_CONVENTIONS.md)). قبل از ارسال، `make check` و `make test` باید سبز باشند. راهنمای کامل در [CONTRIBUTING.md](CONTRIBUTING.md). آسیب‌پذیری را خصوصی گزارش کن، نه در issue: [SECURITY.md](SECURITY.md).
+
+## مجوز
+
+[GNU AGPL-3.0](LICENSE). هر کس نسخهٔ تغییریافته را به‌صورت سرویس اجرا کند باید کد تغییرها را منتشر کند.
