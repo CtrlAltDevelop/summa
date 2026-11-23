@@ -21,6 +21,162 @@ import 'wallets.pb.dart' as $0;
 
 export 'wallets.pb.dart';
 
+@$pb.GrpcServiceName('config.wallets.CategoryController')
+class CategoryControllerClient extends $grpc.Client {
+  /// The hostname for this service.
+  static const $core.String defaultHost = '';
+
+  /// OAuth scopes needed for the client.
+  static const $core.List<$core.String> oauthScopes = [
+    '',
+  ];
+
+  CategoryControllerClient(super.channel, {super.options, super.interceptors});
+
+  $grpc.ResponseFuture<$0.BudgetStatusReply> budgetStatus(
+    $0.BudgetWindow request, {
+    $grpc.CallOptions? options,
+  }) {
+    return $createUnaryCall(_$budgetStatus, request, options: options);
+  }
+
+  $grpc.ResponseFuture<$0.CategoryReply> create(
+    $0.CategoryCreate request, {
+    $grpc.CallOptions? options,
+  }) {
+    return $createUnaryCall(_$create, request, options: options);
+  }
+
+  $grpc.ResponseFuture<$1.Empty> delete(
+    $0.CategoryRef request, {
+    $grpc.CallOptions? options,
+  }) {
+    return $createUnaryCall(_$delete, request, options: options);
+  }
+
+  $grpc.ResponseFuture<$0.CategoryListReply> list(
+    $1.Empty request, {
+    $grpc.CallOptions? options,
+  }) {
+    return $createUnaryCall(_$list, request, options: options);
+  }
+
+  $grpc.ResponseFuture<$1.Empty> setBudget(
+    $0.BudgetSet request, {
+    $grpc.CallOptions? options,
+  }) {
+    return $createUnaryCall(_$setBudget, request, options: options);
+  }
+
+  // method descriptors
+
+  static final _$budgetStatus =
+      $grpc.ClientMethod<$0.BudgetWindow, $0.BudgetStatusReply>(
+          '/config.wallets.CategoryController/BudgetStatus',
+          ($0.BudgetWindow value) => value.writeToBuffer(),
+          $0.BudgetStatusReply.fromBuffer);
+  static final _$create =
+      $grpc.ClientMethod<$0.CategoryCreate, $0.CategoryReply>(
+          '/config.wallets.CategoryController/Create',
+          ($0.CategoryCreate value) => value.writeToBuffer(),
+          $0.CategoryReply.fromBuffer);
+  static final _$delete = $grpc.ClientMethod<$0.CategoryRef, $1.Empty>(
+      '/config.wallets.CategoryController/Delete',
+      ($0.CategoryRef value) => value.writeToBuffer(),
+      $1.Empty.fromBuffer);
+  static final _$list = $grpc.ClientMethod<$1.Empty, $0.CategoryListReply>(
+      '/config.wallets.CategoryController/List',
+      ($1.Empty value) => value.writeToBuffer(),
+      $0.CategoryListReply.fromBuffer);
+  static final _$setBudget = $grpc.ClientMethod<$0.BudgetSet, $1.Empty>(
+      '/config.wallets.CategoryController/SetBudget',
+      ($0.BudgetSet value) => value.writeToBuffer(),
+      $1.Empty.fromBuffer);
+}
+
+@$pb.GrpcServiceName('config.wallets.CategoryController')
+abstract class CategoryControllerServiceBase extends $grpc.Service {
+  $core.String get $name => 'config.wallets.CategoryController';
+
+  CategoryControllerServiceBase() {
+    $addMethod($grpc.ServiceMethod<$0.BudgetWindow, $0.BudgetStatusReply>(
+        'BudgetStatus',
+        budgetStatus_Pre,
+        false,
+        false,
+        ($core.List<$core.int> value) => $0.BudgetWindow.fromBuffer(value),
+        ($0.BudgetStatusReply value) => value.writeToBuffer()));
+    $addMethod($grpc.ServiceMethod<$0.CategoryCreate, $0.CategoryReply>(
+        'Create',
+        create_Pre,
+        false,
+        false,
+        ($core.List<$core.int> value) => $0.CategoryCreate.fromBuffer(value),
+        ($0.CategoryReply value) => value.writeToBuffer()));
+    $addMethod($grpc.ServiceMethod<$0.CategoryRef, $1.Empty>(
+        'Delete',
+        delete_Pre,
+        false,
+        false,
+        ($core.List<$core.int> value) => $0.CategoryRef.fromBuffer(value),
+        ($1.Empty value) => value.writeToBuffer()));
+    $addMethod($grpc.ServiceMethod<$1.Empty, $0.CategoryListReply>(
+        'List',
+        list_Pre,
+        false,
+        false,
+        ($core.List<$core.int> value) => $1.Empty.fromBuffer(value),
+        ($0.CategoryListReply value) => value.writeToBuffer()));
+    $addMethod($grpc.ServiceMethod<$0.BudgetSet, $1.Empty>(
+        'SetBudget',
+        setBudget_Pre,
+        false,
+        false,
+        ($core.List<$core.int> value) => $0.BudgetSet.fromBuffer(value),
+        ($1.Empty value) => value.writeToBuffer()));
+  }
+
+  $async.Future<$0.BudgetStatusReply> budgetStatus_Pre(
+      $grpc.ServiceCall $call, $async.Future<$0.BudgetWindow> $request) async {
+    return budgetStatus($call, await $request);
+  }
+
+  $async.Future<$0.BudgetStatusReply> budgetStatus(
+      $grpc.ServiceCall call, $0.BudgetWindow request);
+
+  $async.Future<$0.CategoryReply> create_Pre($grpc.ServiceCall $call,
+      $async.Future<$0.CategoryCreate> $request) async {
+    return create($call, await $request);
+  }
+
+  $async.Future<$0.CategoryReply> create(
+      $grpc.ServiceCall call, $0.CategoryCreate request);
+
+  $async.Future<$1.Empty> delete_Pre(
+      $grpc.ServiceCall $call, $async.Future<$0.CategoryRef> $request) async {
+    return delete($call, await $request);
+  }
+
+  $async.Future<$1.Empty> delete(
+      $grpc.ServiceCall call, $0.CategoryRef request);
+
+  $async.Future<$0.CategoryListReply> list_Pre(
+      $grpc.ServiceCall $call, $async.Future<$1.Empty> $request) async {
+    return list($call, await $request);
+  }
+
+  $async.Future<$0.CategoryListReply> list(
+      $grpc.ServiceCall call, $1.Empty request);
+
+  $async.Future<$1.Empty> setBudget_Pre(
+      $grpc.ServiceCall $call, $async.Future<$0.BudgetSet> $request) async {
+    return setBudget($call, await $request);
+  }
+
+  $async.Future<$1.Empty> setBudget(
+      $grpc.ServiceCall call, $0.BudgetSet request);
+}
+
 @$pb.GrpcServiceName('config.wallets.LedgerController')
 class LedgerControllerClient extends $grpc.Client {
   /// The hostname for this service.

@@ -26,6 +26,7 @@ class FakeLedgerApi implements LedgerApi {
     required int amountMinor,
     required String note,
     required String clientMutationId,
+    String categoryId = '',
   }) async {
     if (mutations.contains(clientMutationId)) return entries.first;
     mutations.add(clientMutationId);
@@ -38,6 +39,7 @@ class FakeLedgerApi implements LedgerApi {
       currency: wallet.currency,
       occurredAt: DateTime.utc(2026, 11, 1),
       note: note,
+      categoryId: categoryId,
     );
     entries.add(entry);
     wallets.shift(
