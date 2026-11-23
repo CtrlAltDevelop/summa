@@ -27,6 +27,64 @@ class _ServicerContext(_grpc.ServicerContext, _aio.ServicerContext):  # type: ig
 GRPC_GENERATED_VERSION: str
 GRPC_VERSION: str
 
+class CategoryControllerStub:
+    @_typing.overload
+    def __new__(cls, channel: _grpc.Channel) -> _Self: ...
+    @_typing.overload
+    def __new__(cls, channel: _aio.Channel) -> CategoryControllerAsyncStub: ...
+    BudgetStatus: _grpc.UnaryUnaryMultiCallable[_wallets_pb2.BudgetWindow, _wallets_pb2.BudgetStatusReply]
+    Create: _grpc.UnaryUnaryMultiCallable[_wallets_pb2.CategoryCreate, _wallets_pb2.CategoryReply]
+    Delete: _grpc.UnaryUnaryMultiCallable[_wallets_pb2.CategoryRef, _empty_pb2.Empty]
+    List: _grpc.UnaryUnaryMultiCallable[_empty_pb2.Empty, _wallets_pb2.CategoryListReply]
+    SetBudget: _grpc.UnaryUnaryMultiCallable[_wallets_pb2.BudgetSet, _empty_pb2.Empty]
+
+@_typing.type_check_only
+class CategoryControllerAsyncStub(CategoryControllerStub):
+    def __init__(self, channel: _aio.Channel) -> None: ...
+    BudgetStatus: _aio.UnaryUnaryMultiCallable[_wallets_pb2.BudgetWindow, _wallets_pb2.BudgetStatusReply]  # type: ignore[assignment]
+    Create: _aio.UnaryUnaryMultiCallable[_wallets_pb2.CategoryCreate, _wallets_pb2.CategoryReply]  # type: ignore[assignment]
+    Delete: _aio.UnaryUnaryMultiCallable[_wallets_pb2.CategoryRef, _empty_pb2.Empty]  # type: ignore[assignment]
+    List: _aio.UnaryUnaryMultiCallable[_empty_pb2.Empty, _wallets_pb2.CategoryListReply]  # type: ignore[assignment]
+    SetBudget: _aio.UnaryUnaryMultiCallable[_wallets_pb2.BudgetSet, _empty_pb2.Empty]  # type: ignore[assignment]
+
+class CategoryControllerServicer(metaclass=_abc_1.ABCMeta):
+    @_abc_1.abstractmethod
+    def BudgetStatus(
+        self,
+        request: _wallets_pb2.BudgetWindow,
+        context: _ServicerContext,
+    ) -> _typing.Union[_wallets_pb2.BudgetStatusReply, _abc.Awaitable[_wallets_pb2.BudgetStatusReply]]: ...
+
+    @_abc_1.abstractmethod
+    def Create(
+        self,
+        request: _wallets_pb2.CategoryCreate,
+        context: _ServicerContext,
+    ) -> _typing.Union[_wallets_pb2.CategoryReply, _abc.Awaitable[_wallets_pb2.CategoryReply]]: ...
+
+    @_abc_1.abstractmethod
+    def Delete(
+        self,
+        request: _wallets_pb2.CategoryRef,
+        context: _ServicerContext,
+    ) -> _typing.Union[_empty_pb2.Empty, _abc.Awaitable[_empty_pb2.Empty]]: ...
+
+    @_abc_1.abstractmethod
+    def List(
+        self,
+        request: _empty_pb2.Empty,
+        context: _ServicerContext,
+    ) -> _typing.Union[_wallets_pb2.CategoryListReply, _abc.Awaitable[_wallets_pb2.CategoryListReply]]: ...
+
+    @_abc_1.abstractmethod
+    def SetBudget(
+        self,
+        request: _wallets_pb2.BudgetSet,
+        context: _ServicerContext,
+    ) -> _typing.Union[_empty_pb2.Empty, _abc.Awaitable[_empty_pb2.Empty]]: ...
+
+def add_CategoryControllerServicer_to_server(servicer: CategoryControllerServicer, server: _typing.Union[_grpc.Server, _aio.Server]) -> None: ...
+
 class LedgerControllerStub:
     @_typing.overload
     def __new__(cls, channel: _grpc.Channel) -> _Self: ...

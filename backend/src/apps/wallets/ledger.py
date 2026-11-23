@@ -13,9 +13,11 @@ from uuid import UUID
 from django.db import IntegrityError, transaction
 from django.utils import timezone
 
+from apps.wallets.categories import resolve_category
 from apps.wallets.models import Direction, EventKind, LedgerEvent, Wallet
-from infrastructure.common.errors import ApiError
-from infrastructure.common.responses import ResponseTitle
+from apps.wallets.validation import not_found as _not_found
+from apps.wallets.validation import parse_uuid as _uuid
+from apps.wallets.validation import refuse as _refuse
 
 NOTE_MAX_LENGTH = 200
 DEFAULT_LIMIT = 50
@@ -34,6 +36,7 @@ class Entry:
     currency: str
     occurred_at: datetime
     note: str
+    category_id: str
 
 
 def _entry(event: LedgerEvent) -> Entry:
@@ -45,22 +48,8 @@ def _entry(event: LedgerEvent) -> Entry:
         currency=event.wallet.currency,
         occurred_at=event.occurred_at,
         note=event.note,
+        category_id=str(event.category_id or ""),
     )
-
-
-def _refuse(message: str) -> ApiError:
-    return ApiError(message, 400, title=ResponseTitle.VALIDATION_ERROR)
-
-
-def _not_found(what: str) -> ApiError:
-    return ApiError(f"{what} not found.", 404, title=ResponseTitle.NOT_FOUND)
-
-
-def _uuid(value: str, what: str) -> UUID:
-    try:
-        return UUID(value)
-    except ValueError:
-        raise _not_found(what) from None
 
 
 def _check_fields(amount_minor: int, note: str) -> str:
@@ -83,6 +72,7 @@ class LedgerService:
         occurred_at: datetime | None,
         note: str,
         client_mutation_id: str,
+        category_id: str | None = None,
     ) -> Entry:
         if not client_mutation_id or len(client_mutation_id) > 64:
             raise _refuse("client_mutation_id is required (at most 64 characters).")
@@ -94,6 +84,7 @@ class LedgerService:
             raise _not_found("Wallet")
         if wallet.archived:
             raise _refuse("This wallet is archived.")
+        category = resolve_category(user, category_id, kind)
         try:
             with transaction.atomic():
                 event = LedgerEvent.objects.create(
@@ -104,6 +95,7 @@ class LedgerService:
                     amount_minor=amount_minor,
                     occurred_at=occurred_at or timezone.now(),
                     note=note,
+                    category=category,
                     client_mutation_id=client_mutation_id,
                 )
         except IntegrityError:
@@ -133,12 +125,18 @@ class LedgerService:
         amount_minor: int,
         occurred_at: datetime | None,
         note: str,
+        category_id: str | None = None,
     ) -> Entry:
         note = _check_fields(amount_minor, note)
 
         def replace(old: LedgerEvent) -> LedgerEvent:
             if old.transfer_id is not None:
                 raise _refuse("A transfer cannot be edited. Delete it and make a new one.")
+            category = (
+                resolve_category(user, category_id, old.kind)
+                if category_id is not None
+                else old.category
+            )
             old.voided = True
             old.save(update_fields=["voided"])
             return LedgerEvent.objects.create(
@@ -149,6 +147,7 @@ class LedgerService:
                 amount_minor=amount_minor,
                 occurred_at=occurred_at or old.occurred_at,
                 note=note,
+                category=category,
                 replaces=old,
             )
 

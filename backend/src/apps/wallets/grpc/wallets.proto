@@ -4,6 +4,14 @@ package config.wallets;
 
 import "google/protobuf/empty.proto";
 
+service CategoryController {
+    rpc BudgetStatus(BudgetWindow) returns (BudgetStatusReply) {}
+    rpc Create(CategoryCreate) returns (CategoryReply) {}
+    rpc Delete(CategoryRef) returns (google.protobuf.Empty) {}
+    rpc List(google.protobuf.Empty) returns (CategoryListReply) {}
+    rpc SetBudget(BudgetSet) returns (google.protobuf.Empty) {}
+}
+
 service LedgerController {
     rpc Delete(EntryRef) returns (google.protobuf.Empty) {}
     rpc Edit(EntryEdit) returns (EntryReply) {}
@@ -16,6 +24,53 @@ service WalletsController {
     rpc Archive(WalletRef) returns (WalletReply) {}
     rpc Create(WalletCreate) returns (WalletReply) {}
     rpc List(google.protobuf.Empty) returns (WalletListReply) {}
+}
+
+message BudgetRow {
+    string category_id = 1;
+    string category_name = 2;
+    string currency = 3;
+    int64 limit_minor = 4;
+    int64 spent_minor = 5;
+}
+
+message BudgetSet {
+    string category_id = 1;
+    string currency = 2;
+    int64 limit_minor = 3;
+}
+
+message BudgetStatusReply {
+    repeated BudgetRow budgets = 1;
+}
+
+message BudgetWindow {
+    string starts_at = 1;
+    string ends_at = 2;
+}
+
+message Category {
+    string id = 1;
+    string name = 2;
+    string kind = 3;
+    bool is_other = 4;
+}
+
+message CategoryCreate {
+    string name = 1;
+    string kind = 2;
+}
+
+message CategoryListReply {
+    repeated Category categories = 1;
+}
+
+message CategoryRef {
+    string category_id = 1;
+}
+
+message CategoryReply {
+    Category category = 1;
 }
 
 message CurrencyTotal {
@@ -31,6 +86,7 @@ message Entry {
     string currency = 5;
     string occurred_at = 6;
     string note = 7;
+    string category_id = 8;
 }
 
 message EntryEdit {
@@ -38,6 +94,7 @@ message EntryEdit {
     int64 amount_minor = 2;
     string occurred_at = 3;
     string note = 4;
+    string category_id = 5;
 }
 
 message EntryListReply {
@@ -56,6 +113,7 @@ message EntryRecord {
     string occurred_at = 4;
     string note = 5;
     string client_mutation_id = 6;
+    string category_id = 7;
 }
 
 message EntryRef {

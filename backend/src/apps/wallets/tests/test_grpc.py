@@ -219,3 +219,78 @@ def test_a_transfer_without_a_needed_rate_is_invalid_argument(
         )
 
     assert refusal.value.code() is grpc.StatusCode.INVALID_ARGUMENT
+
+
+CategoryStub = wallets_pb2_grpc.CategoryControllerStub
+
+
+def test_categories_budget_and_status_over_the_wire(
+    transactional_db: None, grpc_call: Callable[..., Any]
+) -> None:
+    token = sign_up("zoe")
+    wallet = grpc_call(Stub, "Create", new_wallet(), token=token).wallet
+    cats = grpc_call(CategoryStub, "List", Empty(), token=token).categories
+    food = next(c for c in cats if c.name == "خوراک و سوپرمارکت")
+
+    entry = grpc_call(
+        LedgerStub,
+        "Record",
+        wallets_pb2.EntryRecord(
+            wallet_id=wallet.id,
+            kind="expense",
+            amount_minor=300,
+            occurred_at="2026-11-10T00:00:00+00:00",
+            category_id=food.id,
+            client_mutation_id="e1",
+        ),
+        token=token,
+    ).entry
+    grpc_call(
+        CategoryStub,
+        "SetBudget",
+        wallets_pb2.BudgetSet(category_id=food.id, currency="IRT", limit_minor=1_000),
+        token=token,
+    )
+    status = grpc_call(
+        CategoryStub,
+        "BudgetStatus",
+        wallets_pb2.BudgetWindow(
+            starts_at="2026-11-01T00:00:00+00:00", ends_at="2026-12-01T00:00:00+00:00"
+        ),
+        token=token,
+    )
+
+    assert entry.category_id == food.id
+    assert [(b.category_name, b.limit_minor, b.spent_minor) for b in status.budgets] == [
+        ("خوراک و سوپرمارکت", 1_000, 300)
+    ]
+
+
+def test_another_user_cannot_delete_my_category_and_defaults_are_per_user(
+    transactional_db: None, grpc_call: Callable[..., Any]
+) -> None:
+    zoe, ali = sign_up("zoe"), sign_up("ali")
+    mine = grpc_call(
+        CategoryStub, "Create", wallets_pb2.CategoryCreate(name="سفر", kind="expense"), token=zoe
+    ).category
+
+    with pytest.raises(grpc.aio.AioRpcError) as refusal:
+        grpc_call(CategoryStub, "Delete", wallets_pb2.CategoryRef(category_id=mine.id), token=ali)
+
+    assert refusal.value.code() is grpc.StatusCode.NOT_FOUND
+    ali_names = {c.name for c in grpc_call(CategoryStub, "List", Empty(), token=ali).categories}
+    assert "سفر" not in ali_names
+
+
+def test_a_budget_window_without_offsets_is_invalid_argument(
+    transactional_db: None, grpc_call: Callable[..., Any]
+) -> None:
+    with pytest.raises(grpc.aio.AioRpcError) as refusal:
+        grpc_call(
+            CategoryStub,
+            "BudgetStatus",
+            wallets_pb2.BudgetWindow(starts_at="2026-11-01T00:00:00", ends_at=""),
+            token=sign_up("zoe"),
+        )
+
+    assert refusal.value.code() is grpc.StatusCode.INVALID_ARGUMENT

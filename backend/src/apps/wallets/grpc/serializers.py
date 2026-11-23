@@ -28,3 +28,19 @@ class Entry(serializers.Serializer[dict[str, object]]):
     currency = serializers.CharField()
     occurred_at = serializers.CharField()
     note = serializers.CharField()
+    category_id = serializers.CharField()
+
+
+class Category(serializers.Serializer[dict[str, object]]):
+    id = serializers.CharField()
+    name = serializers.CharField()
+    kind = serializers.CharField()
+    is_other = serializers.BooleanField()
+
+
+class BudgetRow(serializers.Serializer[dict[str, object]]):
+    category_id = serializers.CharField()
+    category_name = serializers.CharField()
+    currency = serializers.CharField()
+    limit_minor = serializers.IntegerField(min_value=BIG_MIN, max_value=BIG_MAX)
+    spent_minor = serializers.IntegerField(min_value=BIG_MIN, max_value=BIG_MAX)
