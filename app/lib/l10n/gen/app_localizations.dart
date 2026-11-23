@@ -2157,6 +2157,90 @@ abstract class AppLocalizations {
   /// In fa, this message translates to:
   /// **'حذف انجام نشد. عبارت را درست بنویس یا دوباره امتحان کن.'**
   String get deleteAccountFailed;
+
+  /// No description provided for @dataOpen.
+  ///
+  /// In fa, this message translates to:
+  /// **'خروجی و ورود داده'**
+  String get dataOpen;
+
+  /// No description provided for @dataTitle.
+  ///
+  /// In fa, this message translates to:
+  /// **'خروجی و ورود داده'**
+  String get dataTitle;
+
+  /// No description provided for @dataExport.
+  ///
+  /// In fa, this message translates to:
+  /// **'گرفتن خروجی CSV'**
+  String get dataExport;
+
+  /// No description provided for @dataExported.
+  ///
+  /// In fa, this message translates to:
+  /// **'خروجی آماده شد: {where}'**
+  String dataExported(String where);
+
+  /// No description provided for @dataExportFailed.
+  ///
+  /// In fa, this message translates to:
+  /// **'خروجی گرفته نشد. دوباره امتحان کن.'**
+  String get dataExportFailed;
+
+  /// No description provided for @dataImportTitle.
+  ///
+  /// In fa, this message translates to:
+  /// **'ورود از CSV'**
+  String get dataImportTitle;
+
+  /// No description provided for @dataImportHint.
+  ///
+  /// In fa, this message translates to:
+  /// **'متن CSV را اینجا بچسبان (سرستون‌ها: date، kind، amount، wallet، …)'**
+  String get dataImportHint;
+
+  /// No description provided for @dataPreview.
+  ///
+  /// In fa, this message translates to:
+  /// **'پیش‌نمایش'**
+  String get dataPreview;
+
+  /// No description provided for @dataImport.
+  ///
+  /// In fa, this message translates to:
+  /// **'ورود تراکنش‌ها'**
+  String get dataImport;
+
+  /// No description provided for @dataDenied.
+  ///
+  /// In fa, this message translates to:
+  /// **'تأیید هویت نشد؛ کاری انجام نشد.'**
+  String get dataDenied;
+
+  /// No description provided for @dataPreviewResult.
+  ///
+  /// In fa, this message translates to:
+  /// **'ردیف‌ها: {rows} · قابل ورود: {ok} · ردشده: {skipped}'**
+  String dataPreviewResult(String rows, String ok, String skipped);
+
+  /// No description provided for @dataImported.
+  ///
+  /// In fa, this message translates to:
+  /// **'{count} تراکنش وارد شد.'**
+  String dataImported(String count);
+
+  /// No description provided for @dataLineError.
+  ///
+  /// In fa, this message translates to:
+  /// **'خط {line}: {message}'**
+  String dataLineError(String line, String message);
+
+  /// No description provided for @dataImportFailed.
+  ///
+  /// In fa, this message translates to:
+  /// **'ورود انجام نشد. فایل را بررسی کن.'**
+  String get dataImportFailed;
 }
 
 class _AppLocalizationsDelegate

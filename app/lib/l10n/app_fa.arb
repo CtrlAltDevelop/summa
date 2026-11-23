@@ -486,5 +486,56 @@
   "deleteAccountWarning": "همه داده‌هایت برای همیشه پاک می‌شود و برگشتی ندارد. برای تأیید DELETE را بنویس.",
   "deleteAccountConfirmLabel": "عبارت تأیید",
   "deleteAccountButton": "حذف همیشگی حساب",
-  "deleteAccountFailed": "حذف انجام نشد. عبارت را درست بنویس یا دوباره امتحان کن."
+  "deleteAccountFailed": "حذف انجام نشد. عبارت را درست بنویس یا دوباره امتحان کن.",
+  "dataOpen": "خروجی و ورود داده",
+  "dataTitle": "خروجی و ورود داده",
+  "dataExport": "گرفتن خروجی CSV",
+  "dataExported": "خروجی آماده شد: {where}",
+  "@dataExported": {
+    "placeholders": {
+      "where": {
+        "type": "String"
+      }
+    }
+  },
+  "dataExportFailed": "خروجی گرفته نشد. دوباره امتحان کن.",
+  "dataImportTitle": "ورود از CSV",
+  "dataImportHint": "متن CSV را اینجا بچسبان (سرستون‌ها: date، kind، amount، wallet، …)",
+  "dataPreview": "پیش‌نمایش",
+  "dataImport": "ورود تراکنش‌ها",
+  "dataDenied": "تأیید هویت نشد؛ کاری انجام نشد.",
+  "dataPreviewResult": "ردیف‌ها: {rows} · قابل ورود: {ok} · ردشده: {skipped}",
+  "@dataPreviewResult": {
+    "placeholders": {
+      "rows": {
+        "type": "String"
+      },
+      "ok": {
+        "type": "String"
+      },
+      "skipped": {
+        "type": "String"
+      }
+    }
+  },
+  "dataImported": "{count} تراکنش وارد شد.",
+  "@dataImported": {
+    "placeholders": {
+      "count": {
+        "type": "String"
+      }
+    }
+  },
+  "dataLineError": "خط {line}: {message}",
+  "@dataLineError": {
+    "placeholders": {
+      "line": {
+        "type": "String"
+      },
+      "message": {
+        "type": "String"
+      }
+    }
+  },
+  "dataImportFailed": "ورود انجام نشد. فایل را بررسی کن."
 }

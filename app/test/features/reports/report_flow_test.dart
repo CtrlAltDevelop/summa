@@ -30,6 +30,17 @@ class _FakeReportApi implements ReportApi {
   bool fail = false;
 
   @override
+  Future<ExportFile> exportCsv(String access) async =>
+      throw UnimplementedError();
+
+  @override
+  Future<ImportOutcome> importCsv(
+    String access,
+    String text, {
+    required bool commit,
+  }) async => throw UnimplementedError();
+
+  @override
   Future<Report> monthly(
     String access, {
     required DateTime start,

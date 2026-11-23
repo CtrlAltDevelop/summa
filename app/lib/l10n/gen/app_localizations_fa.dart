@@ -1094,4 +1094,55 @@ class AppLocalizationsFa extends AppLocalizations {
   @override
   String get deleteAccountFailed =>
       'حذف انجام نشد. عبارت را درست بنویس یا دوباره امتحان کن.';
+
+  @override
+  String get dataOpen => 'خروجی و ورود داده';
+
+  @override
+  String get dataTitle => 'خروجی و ورود داده';
+
+  @override
+  String get dataExport => 'گرفتن خروجی CSV';
+
+  @override
+  String dataExported(String where) {
+    return 'خروجی آماده شد: $where';
+  }
+
+  @override
+  String get dataExportFailed => 'خروجی گرفته نشد. دوباره امتحان کن.';
+
+  @override
+  String get dataImportTitle => 'ورود از CSV';
+
+  @override
+  String get dataImportHint =>
+      'متن CSV را اینجا بچسبان (سرستون‌ها: date، kind، amount، wallet، …)';
+
+  @override
+  String get dataPreview => 'پیش‌نمایش';
+
+  @override
+  String get dataImport => 'ورود تراکنش‌ها';
+
+  @override
+  String get dataDenied => 'تأیید هویت نشد؛ کاری انجام نشد.';
+
+  @override
+  String dataPreviewResult(String rows, String ok, String skipped) {
+    return 'ردیف‌ها: $rows · قابل ورود: $ok · ردشده: $skipped';
+  }
+
+  @override
+  String dataImported(String count) {
+    return '$count تراکنش وارد شد.';
+  }
+
+  @override
+  String dataLineError(String line, String message) {
+    return 'خط $line: $message';
+  }
+
+  @override
+  String get dataImportFailed => 'ورود انجام نشد. فایل را بررسی کن.';
 }
