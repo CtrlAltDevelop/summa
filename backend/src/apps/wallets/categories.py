@@ -124,6 +124,7 @@ class CategoryService:
             for row in LedgerEvent.objects.filter(
                 user=user,
                 voided=False,
+                outside_totals=False,
                 kind=EventKind.EXPENSE,
                 category__in=[b.category_id for b in budgets],
                 occurred_at__gte=start,

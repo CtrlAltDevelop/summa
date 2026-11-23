@@ -106,6 +106,11 @@ class LedgerEvent(models.Model):
     category = models.ForeignKey(
         Category, null=True, blank=True, on_delete=models.SET_NULL, related_name="+"
     )
+    # True: the money left the wallet but is not the user's own expense (someone
+    # else's share). Budgets and expense reports skip it; the balance does not.
+    outside_totals = models.BooleanField(default=False)
+    # Parts of one split expense share this id.
+    split_id = models.UUIDField(null=True, blank=True, db_index=True)
     # Legs of one transfer (out, in, optional fee) share this id.
     transfer_id = models.UUIDField(null=True, blank=True, db_index=True)
     # The user-entered rate of a cross-currency transfer, kept as typed.

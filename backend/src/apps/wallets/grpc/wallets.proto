@@ -17,6 +17,7 @@ service LedgerController {
     rpc Edit(EntryEdit) returns (EntryReply) {}
     rpc List(EntryQuery) returns (EntryListReply) {}
     rpc Record(EntryRecord) returns (EntryReply) {}
+    rpc RecordSplit(SplitRequest) returns (EntryListReply) {}
     rpc Transfer(TransferRequest) returns (EntryListReply) {}
 }
 
@@ -87,6 +88,8 @@ message Entry {
     string occurred_at = 6;
     string note = 7;
     string category_id = 8;
+    bool outside_totals = 9;
+    string split_id = 10;
 }
 
 message EntryEdit {
@@ -95,6 +98,7 @@ message EntryEdit {
     string occurred_at = 3;
     string note = 4;
     string category_id = 5;
+    optional bool outside_totals = 6;
 }
 
 message EntryListReply {
@@ -114,6 +118,7 @@ message EntryRecord {
     string note = 5;
     string client_mutation_id = 6;
     string category_id = 7;
+    bool outside_totals = 8;
 }
 
 message EntryRef {
@@ -122,6 +127,20 @@ message EntryRef {
 
 message EntryReply {
     Entry entry = 1;
+}
+
+message SplitPartMsg {
+    string category_id = 1;
+    int64 amount_minor = 2;
+    bool outside_totals = 3;
+}
+
+message SplitRequest {
+    string wallet_id = 1;
+    repeated SplitPartMsg parts = 2;
+    string occurred_at = 3;
+    string note = 4;
+    string client_mutation_id = 5;
 }
 
 message TransferRequest {
