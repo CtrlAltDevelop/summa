@@ -35,6 +35,7 @@
 25. [phases/phase-08-debts.md](phases/phase-08-debts.md): سند فاز ۰۸ (وام و قسط)
 26. [phases/phase-09-assets.md](phases/phase-09-assets.md): سند فاز ۰۹ (دارایی و قیمت)
 27. [phases/phase-10-networth.md](phases/phase-10-networth.md): سند فاز ۱۰ (خالص دارایی و سبدها)
+28. [phases/phase-11-reports.md](phases/phase-11-reports.md): سند فاز ۱۱ (گزارش و خروجی)
 
 ## محدودیت‌های بررسی
 - همه صفحه‌های عمومی خونده شد، به جز `/disclosure` (دوبار خطای ۵۰۳؛ لیست شریک‌های رفرال و مدل درآمد رفرال مشخص نیست).
