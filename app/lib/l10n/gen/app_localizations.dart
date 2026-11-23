@@ -1209,6 +1209,150 @@ abstract class AppLocalizations {
   /// In fa, this message translates to:
   /// **'خاموش'**
   String get accountingHourOff;
+
+  /// No description provided for @debtAdd.
+  ///
+  /// In fa, this message translates to:
+  /// **'وام یا قسط جدید'**
+  String get debtAdd;
+
+  /// No description provided for @debtTitle.
+  ///
+  /// In fa, this message translates to:
+  /// **'وام یا قسط'**
+  String get debtTitle;
+
+  /// No description provided for @debtFormTitle.
+  ///
+  /// In fa, this message translates to:
+  /// **'بدهی جدید'**
+  String get debtFormTitle;
+
+  /// No description provided for @debtKindLoan.
+  ///
+  /// In fa, this message translates to:
+  /// **'وام بانکی'**
+  String get debtKindLoan;
+
+  /// No description provided for @debtKindPurchase.
+  ///
+  /// In fa, this message translates to:
+  /// **'خرید اقساطی'**
+  String get debtKindPurchase;
+
+  /// No description provided for @debtKindPersonal.
+  ///
+  /// In fa, this message translates to:
+  /// **'قرض شخصی'**
+  String get debtKindPersonal;
+
+  /// No description provided for @debtTitleLabel.
+  ///
+  /// In fa, this message translates to:
+  /// **'عنوان (مثلاً وام مسکن)'**
+  String get debtTitleLabel;
+
+  /// No description provided for @debtInstallmentLabel.
+  ///
+  /// In fa, this message translates to:
+  /// **'مبلغ هر قسط'**
+  String get debtInstallmentLabel;
+
+  /// No description provided for @debtCountLabel.
+  ///
+  /// In fa, this message translates to:
+  /// **'تعداد اقساط'**
+  String get debtCountLabel;
+
+  /// No description provided for @debtFirstDueLabel.
+  ///
+  /// In fa, this message translates to:
+  /// **'تاریخ اولین قسط (مثل ۱۴۰۵/۰۹/۱۵)'**
+  String get debtFirstDueLabel;
+
+  /// No description provided for @debtPrincipalLabel.
+  ///
+  /// In fa, this message translates to:
+  /// **'مبلغ اصل (اختیاری)'**
+  String get debtPrincipalLabel;
+
+  /// No description provided for @debtWalletLabel.
+  ///
+  /// In fa, this message translates to:
+  /// **'کیف پرداخت (اختیاری)'**
+  String get debtWalletLabel;
+
+  /// No description provided for @debtRemaining.
+  ///
+  /// In fa, this message translates to:
+  /// **'مانده'**
+  String get debtRemaining;
+
+  /// No description provided for @debtNextDue.
+  ///
+  /// In fa, this message translates to:
+  /// **'قسط بعدی'**
+  String get debtNextDue;
+
+  /// No description provided for @debtClosed.
+  ///
+  /// In fa, this message translates to:
+  /// **'تسویه شد'**
+  String get debtClosed;
+
+  /// No description provided for @debtOverdue.
+  ///
+  /// In fa, this message translates to:
+  /// **'عقب‌افتاده'**
+  String get debtOverdue;
+
+  /// No description provided for @installmentPay.
+  ///
+  /// In fa, this message translates to:
+  /// **'پرداخت شد'**
+  String get installmentPay;
+
+  /// No description provided for @installmentUndo.
+  ///
+  /// In fa, this message translates to:
+  /// **'لغو پرداخت'**
+  String get installmentUndo;
+
+  /// No description provided for @installmentPaid.
+  ///
+  /// In fa, this message translates to:
+  /// **'پرداخت‌شده'**
+  String get installmentPaid;
+
+  /// No description provided for @debtDelete.
+  ///
+  /// In fa, this message translates to:
+  /// **'حذف بدهی'**
+  String get debtDelete;
+
+  /// No description provided for @debtCountInvalid.
+  ///
+  /// In fa, this message translates to:
+  /// **'تعداد اقساط باید بین ۱ تا ۱۲۰ باشد.'**
+  String get debtCountInvalid;
+
+  /// No description provided for @debtDateInvalid.
+  ///
+  /// In fa, this message translates to:
+  /// **'تاریخ اولین قسط درست نیست.'**
+  String get debtDateInvalid;
+
+  /// No description provided for @debtPayWallet.
+  ///
+  /// In fa, this message translates to:
+  /// **'از کدام کیف پرداخت شود؟'**
+  String get debtPayWallet;
+
+  /// No description provided for @debtPayFailed.
+  ///
+  /// In fa, this message translates to:
+  /// **'پرداخت انجام نشد؛ کیف و مبلغ را بررسی کن.'**
+  String get debtPayFailed;
 }
 
 class _AppLocalizationsDelegate

@@ -8,6 +8,7 @@ import '../assistant/chat_screen.dart';
 import '../assistant/digest_panel.dart';
 import '../assistant/sms_screen.dart';
 import '../categories/budgets_panel.dart';
+import '../debts/debts_panel.dart';
 import '../recurring/recurring_panel.dart';
 import '../wallets/entries_panel.dart';
 import '../wallets/wallets_panel.dart';
@@ -54,6 +55,8 @@ class HomeScreen extends ConsumerWidget {
             const DigestPanel(),
             const SizedBox(height: SmSpace.lg),
             const RecurringPanel(),
+            const SizedBox(height: SmSpace.lg),
+            const DebtsPanel(),
             const SizedBox(height: SmSpace.lg),
             const BudgetsPanel(),
             const SizedBox(height: SmSpace.lg),
