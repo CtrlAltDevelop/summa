@@ -804,4 +804,50 @@ class AppLocalizationsFa extends AppLocalizations {
   String basketProgress(String percent) {
     return '$percent٪ از هدف';
   }
+
+  @override
+  String get reportOpen => 'گزارش ماه';
+
+  @override
+  String get reportTitle => 'گزارش ماه';
+
+  @override
+  String get reportPrev => 'ماه قبل';
+
+  @override
+  String get reportNext => 'ماه بعد';
+
+  @override
+  String get reportIncome => 'درآمد';
+
+  @override
+  String get reportExpense => 'خرج';
+
+  @override
+  String get reportNet => 'خالص';
+
+  @override
+  String get reportByCategory => 'خرج به تفکیک دسته';
+
+  @override
+  String get reportIncomeByCategory => 'درآمد به تفکیک دسته';
+
+  @override
+  String get reportDaily => 'خرج روزانه';
+
+  @override
+  String get reportEmpty => 'در این ماه تراکنشی نیست.';
+
+  @override
+  String reportEntries(String count) {
+    return 'تعداد تراکنش: $count';
+  }
+
+  @override
+  String reportTop(String name) {
+    return 'پرخرج‌ترین دسته: $name';
+  }
+
+  @override
+  String get reportFailed => 'گزارش گرفته نشد. دوباره امتحان کن.';
 }

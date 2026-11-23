@@ -12,6 +12,7 @@ import '../categories/budgets_panel.dart';
 import '../debts/debts_panel.dart';
 import '../networth/networth_panel.dart';
 import '../recurring/recurring_panel.dart';
+import '../reports/report_screen.dart';
 import '../wallets/entries_panel.dart';
 import '../wallets/wallets_panel.dart';
 import 'auth_controller.dart';
@@ -65,6 +66,15 @@ class HomeScreen extends ConsumerWidget {
             const AssetsPanel(),
             const SizedBox(height: SmSpace.lg),
             const BasketsPanel(),
+            const SizedBox(height: SmSpace.lg),
+            SmButton(
+              label: l10n.reportOpen,
+              onPressed: () => Navigator.of(context).push(
+                PageRouteBuilder<void>(
+                  pageBuilder: (_, _, _) => const ReportScreen(),
+                ),
+              ),
+            ),
             const SizedBox(height: SmSpace.lg),
             const BudgetsPanel(),
             const SizedBox(height: SmSpace.lg),
