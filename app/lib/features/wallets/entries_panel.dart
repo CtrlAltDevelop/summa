@@ -44,6 +44,7 @@ class EntriesPanel extends ConsumerWidget {
         if (wallets.isNotEmpty) ...[
           SmButton(
             label: l10n.splitOpen,
+            secondary: true,
             onPressed: () => Navigator.of(context).push(
               PageRouteBuilder<void>(
                 pageBuilder: (_, _, _) => SplitFormScreen(wallets: wallets),
@@ -55,6 +56,7 @@ class EntriesPanel extends ConsumerWidget {
         if (wallets.length >= 2) ...[
           SmButton(
             label: l10n.transferAdd,
+            secondary: true,
             icon: SmIcons.refresh,
             onPressed: () => Navigator.of(context).push(
               PageRouteBuilder<void>(

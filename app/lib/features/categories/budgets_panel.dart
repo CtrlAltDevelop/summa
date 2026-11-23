@@ -37,6 +37,7 @@ class BudgetsPanel extends ConsumerWidget {
         ],
         SmButton(
           label: l10n.categoriesOpen,
+          secondary: true,
           onPressed: () => Navigator.of(context).push(
             PageRouteBuilder<void>(
               pageBuilder: (_, _, _) => const CategoriesScreen(),
