@@ -21,6 +21,13 @@
         "prefix": "/assistant",
         "router": "apps.assistant.rest.v1.router",
         "tag": "Assistant"
+      },
+      {
+        "app_config": "apps.recurring.apps.RecurringConfig",
+        "description": "Endpoints published by the recurring app.",
+        "prefix": "/recurring",
+        "router": "apps.recurring.rest.v1.router",
+        "tag": "Recurring"
       }
     ]
   }

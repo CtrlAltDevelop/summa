@@ -1,0 +1,79 @@
+syntax = "proto3";
+
+package config.recurring;
+
+import "google/protobuf/empty.proto";
+
+service RecurringController {
+    rpc Create(RecurringCreate) returns (RecurringReply) {}
+    rpc Delete(RecurringRef) returns (google.protobuf.Empty) {}
+    rpc List(google.protobuf.Empty) returns (RecurringListReply) {}
+    rpc Resolve(OccurrenceAnswer) returns (google.protobuf.Empty) {}
+    rpc SetActive(RecurringActive) returns (google.protobuf.Empty) {}
+}
+
+message OccurrenceAnswer {
+    string occurrence_id = 1;
+    string action = 2;
+    string wallet_id = 3;
+    int64 amount_minor = 4;
+}
+
+message OccurrenceMsg {
+    string id = 1;
+    string recurring_id = 2;
+    string wallet_id = 3;
+    string kind = 4;
+    int64 amount_minor = 5;
+    string currency = 6;
+    string note = 7;
+    string due_date = 8;
+    string status = 9;
+    bool low_balance = 10;
+}
+
+message RecurringActive {
+    string recurring_id = 1;
+    bool active = 2;
+}
+
+message RecurringCreate {
+    string wallet_id = 1;
+    string kind = 2;
+    int64 amount_minor = 3;
+    string category_id = 4;
+    string note = 5;
+    string period = 6;
+    int32 day = 7;
+    bool auto_confirm = 8;
+    string client_mutation_id = 9;
+}
+
+message RecurringListReply {
+    repeated RecurringMsg recurrings = 1;
+    repeated OccurrenceMsg occurrences = 2;
+}
+
+message RecurringMsg {
+    string id = 1;
+    string wallet_id = 2;
+    string kind = 3;
+    int64 amount_minor = 4;
+    string currency = 5;
+    string category_id = 6;
+    string note = 7;
+    string period = 8;
+    int32 day = 9;
+    bool auto_confirm = 10;
+    bool active = 11;
+    string next_due = 12;
+}
+
+message RecurringRef {
+    string recurring_id = 1;
+}
+
+message RecurringReply {
+    RecurringMsg recurring = 1;
+}
+

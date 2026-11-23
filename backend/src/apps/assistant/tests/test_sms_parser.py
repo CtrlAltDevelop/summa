@@ -92,3 +92,32 @@ def test_a_message_without_a_date_has_no_time() -> None:
 
 def test_an_impossible_date_is_dropped_not_trusted() -> None:
     assert parse_sms("برداشت 500,000 ریال 1405/13/40").occurred_at is None
+
+
+def test_gregorian_to_jalali_round_trips_over_many_years() -> None:
+    from datetime import date, timedelta
+
+    from apps.assistant.calendar import gregorian_to_jalali
+
+    day = date(2015, 1, 1)
+    for _ in range(0, 365 * 20, 7):
+        jy, jm, jd = gregorian_to_jalali(day.year, day.month, day.day)
+        assert jalali_to_gregorian(jy, jm, jd) == (day.year, day.month, day.day)
+        day += timedelta(days=7)
+
+
+def test_gregorian_to_jalali_known_dates() -> None:
+    from apps.assistant.calendar import gregorian_to_jalali
+
+    assert gregorian_to_jalali(2026, 11, 22) == (1405, 9, 1)
+    assert gregorian_to_jalali(2024, 3, 20) == (1403, 1, 1)
+
+
+@pytest.mark.parametrize(
+    ("year", "month", "length"),
+    [(1405, 1, 31), (1405, 6, 31), (1405, 7, 30), (1405, 11, 30), (1405, 12, 29), (1403, 12, 30)],
+)
+def test_shamsi_month_lengths(year: int, month: int, length: int) -> None:
+    from apps.assistant.calendar import jalali_month_length
+
+    assert jalali_month_length(year, month) == length
