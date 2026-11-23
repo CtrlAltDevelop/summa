@@ -440,3 +440,133 @@ def test_the_command_processes_every_user(capsys: Any) -> None:
     assert "2 user(s)" in capsys.readouterr().out
     assert len(ledger_service.list(zoe, wallet_id=None, limit=50)) == 1
     assert len(ledger_service.list(ali, wallet_id=None, limit=50)) == 1
+
+
+# --- phase 07b: "not yet" and "I got it now" ------------------------------------
+
+
+def test_not_yet_moves_the_question_to_tomorrow() -> None:
+    user = make_user()
+    _, occurrence = due(user, kind="income", amount_minor=2_000_000, note="حقوق")
+
+    recurring_service.resolve(
+        user, occurrence.id, action="postpone", wallet_id=None, amount_minor=0
+    )
+    today_view = recurring_service.list(user, NOW).occurrences
+    tomorrow_view = recurring_service.list(user, NOW + timedelta(days=1)).occurrences
+
+    assert [o.due_date for o in today_view] == [TODAY + timedelta(days=1)]
+    assert [o.status for o in today_view] == ["upcoming"]
+    assert [o.status for o in tomorrow_view] == ["due"]
+    assert ledger_service.list(user, wallet_id=None, limit=50) == []
+
+
+def test_postponing_keeps_the_same_question_and_can_repeat() -> None:
+    user = make_user()
+    _, occurrence = due(user)
+
+    for _ in range(2):
+        recurring_service.resolve(
+            user, occurrence.id, action="postpone", wallet_id=None, amount_minor=0
+        )
+
+    [only] = recurring_service.list(user, NOW).occurrences
+    assert only.id == occurrence.id and only.due_date == TODAY + timedelta(days=2)
+
+
+def test_postponing_onto_the_next_cycle_is_refused() -> None:
+    user = make_user()
+    w = wallet(user)
+    create(user, w, period="weekly", day=0)  # every Monday
+    later = NOW + timedelta(days=1)  # Monday, due today
+    [monday] = recurring_service.list(user, later).occurrences
+    next_monday = recurring_service.list(user, later + timedelta(days=5)).occurrences
+
+    assert monday.status == "due" and len(next_monday) == 2
+    with pytest.raises(ApiError) as refusal:
+        for _ in range(8):  # slide the first one into next Monday's date
+            recurring_service.resolve(
+                user, monday.id, action="postpone", wallet_id=None, amount_minor=0
+            )
+
+    assert refusal.value.status == 400
+
+
+def test_an_answered_occurrence_cannot_be_postponed() -> None:
+    user = make_user()
+    _, occurrence = due(user)
+    recurring_service.resolve(user, occurrence.id, action="cancel", wallet_id=None, amount_minor=0)
+
+    with pytest.raises(ApiError) as refusal:
+        recurring_service.resolve(
+            user, occurrence.id, action="postpone", wallet_id=None, amount_minor=0
+        )
+
+    assert refusal.value.status == 400
+
+
+def test_confirming_early_records_today_and_a_late_one_records_its_own_date() -> None:
+    user = make_user()
+    w = wallet(user)
+    create(user, w, day=15, amount_minor=1_000)  # 2026-12-06
+    create(user, w, day=1, amount_minor=2_000, client_mutation_id="r2")  # due 2026-11-22
+    on_dec_4 = datetime(2026, 12, 4, 9, 0, tzinfo=UTC)
+    by_amount = {o.amount_minor: o for o in recurring_service.list(user, on_dec_4).occurrences}
+
+    recurring_service.resolve(
+        user, by_amount[1_000].id, action="confirm", wallet_id=None, amount_minor=0, now=on_dec_4
+    )
+    recurring_service.resolve(
+        user, by_amount[2_000].id, action="confirm", wallet_id=None, amount_minor=0, now=on_dec_4
+    )
+
+    dates = {
+        e.amount_minor: e.occurred_at.astimezone(UTC).date()
+        for e in ledger_service.list(user, wallet_id=None, limit=50)
+    }
+    assert dates == {1_000: date(2026, 12, 4), 2_000: date(2026, 11, 22)}
+
+
+def test_settle_now_records_the_next_cycle_even_before_its_window() -> None:
+    user = make_user()
+    w = wallet(user)
+    view = create(user, w, kind="income", amount_minor=5_000_000, note="حقوق", day=15)
+
+    entry = recurring_service.settle_now(user, view.id, amount_minor=0, now=NOW)
+
+    assert (entry.kind, entry.amount_minor) == ("income", 5_000_000)
+    assert entry.occurred_at.astimezone(UTC).date() == TODAY  # early: today
+    assert balance(user) == 6_000_000
+    assert recurring_service.list(user, NOW).occurrences == []
+    assert recurring_service.list(user, NOW).recurrings[0].next_due > date(2026, 12, 6)
+
+
+def test_settle_now_uses_the_open_occurrence_when_there_is_one() -> None:
+    user = make_user()
+    _, occurrence = due(user, kind="income", amount_minor=300)
+
+    recurring_service.settle_now(user, occurrence.recurring_id, amount_minor=0, now=NOW)
+
+    assert Occurrence.objects.filter(user=user).count() == 1
+    assert Occurrence.objects.get(user=user).status == Occurrence.CONFIRMED
+
+
+def test_settle_now_needs_an_amount_for_a_variable_recurring() -> None:
+    user = make_user()
+    view = create(user, wallet(user), kind="income", amount_minor=0, day=15)
+
+    with pytest.raises(ApiError) as missing:
+        recurring_service.settle_now(user, view.id, amount_minor=0, now=NOW)
+    entry = recurring_service.settle_now(user, view.id, amount_minor=77, now=NOW)
+
+    assert missing.value.status == 400 and entry.amount_minor == 77
+
+
+def test_settle_now_is_private() -> None:
+    zoe, ali = make_user("zoe"), make_user("ali")
+    view = create(zoe, wallet(zoe))
+
+    with pytest.raises(ApiError) as refusal:
+        recurring_service.settle_now(ali, view.id, amount_minor=0, now=NOW)
+
+    assert refusal.value.status == 404
