@@ -33,6 +33,7 @@ class RecurringController extends AsyncNotifier<RecurringState> {
     required int day,
     required bool autoConfirm,
     required String clientMutationId,
+    String categoryId = '',
   }) async {
     await _auth.withAccess(
       (a) => _api.create(
@@ -45,9 +46,20 @@ class RecurringController extends AsyncNotifier<RecurringState> {
         day: day,
         autoConfirm: autoConfirm,
         clientMutationId: clientMutationId,
+        categoryId: categoryId,
       ),
     );
     await _reload();
+  }
+
+  Future<void> settleNow(String id, {int amountMinor = 0}) async {
+    await _auth.withAccess(
+      (a) => _api.settleNow(a, id, amountMinor: amountMinor),
+    );
+    await _reload();
+    ref
+      ..invalidate(ledgerControllerProvider)
+      ..invalidate(walletsControllerProvider);
   }
 
   Future<void> setActive(String id, {required bool active}) async {

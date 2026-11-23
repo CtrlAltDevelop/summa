@@ -94,6 +94,7 @@ void main() {
     await t.pumpAndSettle();
 
     expect(api.created.single, {
+      'category': 'c-other',
       'wallet': 'w1',
       'kind': 'expense',
       'amount': 1000000,
@@ -233,4 +234,109 @@ void main() {
     await t.pumpAndSettle();
     expect(api.recurrings, isEmpty);
   });
+
+  testWidgets('"not yet" postpones instead of answering', (t) async {
+    final api = await _pump(t, occurrences: [_occurrence()]);
+
+    await t.tap(find.text('هنوز نه'));
+    await t.pumpAndSettle();
+
+    expect(api.answers.single['action'], 'postpone');
+    expect(api.answers.single['amount'], 0); // no amount needed to postpone
+  });
+
+  testWidgets('an income cycle asks "got it?" and has a "got it" button', (
+    t,
+  ) async {
+    await _pump(
+      t,
+      occurrences: [
+        Occurrence(
+          id: 'o2',
+          recurringId: 'r1',
+          walletId: 'w1',
+          kind: 'income',
+          amountMinor: 5000000,
+          currency: 'IRT',
+          note: 'حقوق',
+          dueDate: DateTime.utc(2026, 12, 6),
+          isDue: true,
+          lowBalance: false,
+        ),
+      ],
+    );
+
+    expect(find.textContaining('گرفتی؟'), findsOneWidget);
+    expect(find.text('گرفتم'), findsOneWidget);
+    expect(find.text('از همین حساب کسر شد'), findsNothing);
+  });
+
+  testWidgets('a salary is defined with its income category', (t) async {
+    final api = await _pump(t);
+
+    await t.tap(find.text('تکراری جدید'));
+    await t.pumpAndSettle();
+    await t.tap(find.text('درآمد'));
+    await t.pumpAndSettle();
+    await t.tap(find.text('حقوق'));
+    await t.enterText(find.byType(TextField).at(0), 'حقوق');
+    await t.enterText(find.byType(TextField).at(1), '۲۰٬۰۰۰٬۰۰۰');
+    await t.enterText(find.byType(TextField).at(2), '۱۶');
+    await t.tap(find.text('ذخیره'));
+    await t.pumpAndSettle();
+
+    final c = api.created.single;
+    expect(
+      (c['kind'], c['category'], c['day'], c['amount']),
+      ('income', 'c-salary', 16, 20000000),
+    );
+  });
+
+  testWidgets('"I got this month\'s salary" settles now', (t) async {
+    final api = await _pump(t);
+    api.recurrings.add(_salary(amount: 20000000));
+    await t.runAsync(() async {});
+    ProviderScope.containerOf(t.element(find.byType(SummaApp)))
+        .invalidate(recurringControllerProvider);
+    await t.pumpAndSettle();
+
+    await t.tap(find.text('حقوق این ماه را گرفتم'));
+    await t.pumpAndSettle();
+
+    expect(api.settled.single, ('r1', 0));
+  });
+
+  testWidgets('a variable salary asks for the amount first', (t) async {
+    final api = await _pump(t);
+    api.recurrings.add(_salary(amount: 0));
+    ProviderScope.containerOf(t.element(find.byType(SummaApp)))
+        .invalidate(recurringControllerProvider);
+    await t.pumpAndSettle();
+
+    await t.tap(find.text('حقوق این ماه را گرفتم'));
+    await t.pumpAndSettle();
+    expect(api.settled, isEmpty);
+    await t.tap(find.text('حقوق این ماه را گرفتم'));
+    await t.pumpAndSettle();
+    expect(find.text('مبلغ این بار را بنویس.'), findsOneWidget);
+    await t.enterText(find.byType(TextField).first, '۱۸٬۰۰۰٬۰۰۰');
+    await t.tap(find.text('حقوق این ماه را گرفتم'));
+    await t.pumpAndSettle();
+
+    expect(api.settled.single, ('r1', 18000000));
+  });
 }
+
+Recurring _salary({required int amount}) => Recurring(
+  id: 'r1',
+  walletId: 'w1',
+  kind: 'income',
+  amountMinor: amount,
+  currency: 'IRT',
+  note: 'حقوق',
+  period: RecurringPeriod.monthly,
+  day: 16,
+  autoConfirm: false,
+  active: true,
+  nextDue: DateTime.utc(2026, 12, 7),
+);

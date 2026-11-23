@@ -18,6 +18,14 @@ abstract interface class RecurringApi {
     required int day,
     required bool autoConfirm,
     required String clientMutationId,
+    String categoryId = '',
+  });
+
+  /// "I got it / it was paid": settles the next cycle now.
+  Future<void> settleNow(
+    String access,
+    String recurringId, {
+    int amountMinor = 0,
   });
   Future<void> setActive(String access, String id, {required bool active});
   Future<void> delete(String access, String id);
@@ -92,6 +100,7 @@ class GrpcRecurringApi implements RecurringApi {
     required int day,
     required bool autoConfirm,
     required String clientMutationId,
+    String categoryId = '',
   }) => guardGrpc(() async {
     await _client.create(
       pb.RecurringCreate(
@@ -103,6 +112,22 @@ class GrpcRecurringApi implements RecurringApi {
         day: day,
         autoConfirm: autoConfirm,
         clientMutationId: clientMutationId,
+        categoryId: categoryId,
+      ),
+      options: _bearer(access),
+    );
+  });
+
+  @override
+  Future<void> settleNow(
+    String access,
+    String recurringId, {
+    int amountMinor = 0,
+  }) => guardGrpc(() async {
+    await _client.settleNow(
+      pb.SettleRequest(
+        recurringId: recurringId,
+        amountMinor: Int64(amountMinor),
       ),
       options: _bearer(access),
     );

@@ -207,5 +207,11 @@
   "occurrenceOtherWallet": "از حساب دیگر",
   "occurrenceCancelled": "لغو شد",
   "occurrenceAmountLabel": "مبلغ این بار",
-  "occurrenceNeedsAmount": "مبلغ این بار را بنویس."
+  "occurrenceNeedsAmount": "مبلغ این بار را بنویس.",
+  "occurrenceNotYet": "هنوز نه",
+  "occurrenceGotIt": "گرفتم",
+  "occurrenceDidYouGetIt": "گرفتی؟",
+  "recurringReceived": "حقوق این ماه را گرفتم",
+  "recurringPaid": "این ماه پرداخت شد",
+  "recurringCategoryLabel": "دسته"
 }

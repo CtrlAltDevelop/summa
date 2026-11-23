@@ -76,7 +76,7 @@ class _OccurrenceCardState extends ConsumerState<_OccurrenceCard> {
     final l10n = AppLocalizations.of(context);
     final o = widget.occurrence;
     var amount = 0;
-    if (action != 'cancel' && o.isVariable) {
+    if ((action == 'confirm' || action == 'other_wallet') && o.isVariable) {
       final parsed = parseMinor(_amount.text, o.currency);
       if (parsed == null || parsed <= 0) {
         setState(() => _error = l10n.occurrenceNeedsAmount);
@@ -128,7 +128,12 @@ class _OccurrenceCardState extends ConsumerState<_OccurrenceCard> {
             '${o.note.isEmpty ? o.kind : o.note}$amountText',
             style: SmType.body,
           ),
-          Text(formatJalaliLong(o.dueDate), style: SmType.caption),
+          Text(
+            o.isDue && o.kind == 'income'
+                ? '${l10n.occurrenceDidYouGetIt} ${formatJalaliLong(o.dueDate)}'
+                : formatJalaliLong(o.dueDate),
+            style: SmType.caption,
+          ),
           if (o.lowBalance) ...[
             const SizedBox(height: SmSpace.sm),
             Text(
@@ -150,8 +155,15 @@ class _OccurrenceCardState extends ConsumerState<_OccurrenceCard> {
             ],
             const SizedBox(height: SmSpace.md),
             SmButton(
-              label: l10n.occurrenceDeducted,
+              label: o.kind == 'income'
+                  ? l10n.occurrenceGotIt
+                  : l10n.occurrenceDeducted,
               onPressed: _busy ? null : () => _answer('confirm'),
+            ),
+            const SizedBox(height: SmSpace.sm),
+            SmButton(
+              label: l10n.occurrenceNotYet,
+              onPressed: _busy ? null : () => _answer('postpone'),
             ),
             if (others.isNotEmpty) ...[
               const SizedBox(height: SmSpace.sm),
@@ -190,15 +202,60 @@ class _OccurrenceCardState extends ConsumerState<_OccurrenceCard> {
   }
 }
 
-class _RecurringTile extends ConsumerWidget {
+class _RecurringTile extends ConsumerStatefulWidget {
   const _RecurringTile({required this.recurring});
 
   final Recurring recurring;
 
   @override
-  Widget build(BuildContext context, WidgetRef ref) {
+  ConsumerState<_RecurringTile> createState() => _RecurringTileState();
+}
+
+class _RecurringTileState extends ConsumerState<_RecurringTile> {
+  final _amount = TextEditingController();
+  bool _asking = false;
+  String? _error;
+
+  @override
+  void dispose() {
+    _amount.dispose();
+    super.dispose();
+  }
+
+  Future<void> _settle() async {
     final l10n = AppLocalizations.of(context);
-    final r = recurring;
+    final r = widget.recurring;
+    if (r.amountMinor == 0 && !_asking) {
+      setState(() => _asking = true); // a variable amount: ask for it first
+      return;
+    }
+    final parsed = r.amountMinor == 0
+        ? parseMinor(_amount.text, r.currency)
+        : 0;
+    if (parsed == null || (r.amountMinor == 0 && parsed <= 0)) {
+      setState(() => _error = l10n.occurrenceNeedsAmount);
+      return;
+    }
+    try {
+      await ref
+          .read(recurringControllerProvider.notifier)
+          .settleNow(r.id, amountMinor: parsed);
+      if (mounted) {
+        setState(() {
+          _asking = false;
+          _error = null;
+          _amount.clear();
+        });
+      }
+    } on Exception {
+      if (mounted) setState(() => _error = l10n.errUnknown);
+    }
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context);
+    final r = widget.recurring;
     final amount = r.amountMinor == 0
         ? ''
         : ' · ${formatMinor(r.amountMinor, r.currency)} '
@@ -206,34 +263,63 @@ class _RecurringTile extends ConsumerWidget {
     final controller = ref.read(recurringControllerProvider.notifier);
     return SmGlassCard(
       padding: const EdgeInsets.all(SmSpace.lg),
-      child: Row(
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Expanded(
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text(
-                  '${r.note.isEmpty ? r.kind : r.note}$amount',
-                  style: SmType.body,
+          Row(
+            children: [
+              Expanded(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      '${r.note.isEmpty ? r.kind : r.note}$amount',
+                      style: SmType.body,
+                    ),
+                    Text(
+                      '${l10n.recurringNext}: ${formatJalaliDate(r.nextDue)}',
+                      style: SmType.caption,
+                    ),
+                  ],
                 ),
-                Text(
-                  '${l10n.recurringNext}: ${formatJalaliDate(r.nextDue)}',
-                  style: SmType.caption,
-                ),
-              ],
+              ),
+              _Link(
+                label: r.active ? l10n.recurringPause : l10n.recurringResume,
+                color: SmColors.accent,
+                onTap: () => controller.setActive(r.id, active: !r.active),
+              ),
+              const SizedBox(width: SmSpace.md),
+              _Link(
+                label: l10n.entryDelete,
+                color: SmColors.danger,
+                onTap: () => controller.delete(r.id),
+              ),
+            ],
+          ),
+          const SizedBox(height: SmSpace.sm),
+          _Link(
+            label: r.kind == 'income'
+                ? l10n.recurringReceived
+                : l10n.recurringPaid,
+            color: SmColors.success,
+            onTap: _settle,
+          ),
+          if (_asking) ...[
+            const SizedBox(height: SmSpace.sm),
+            SmTextField(
+              controller: _amount,
+              label: l10n.occurrenceAmountLabel,
+              keyboardType: const TextInputType.numberWithOptions(
+                decimal: true,
+              ),
+              textDirection: TextDirection.ltr,
             ),
-          ),
-          _Link(
-            label: r.active ? l10n.recurringPause : l10n.recurringResume,
-            color: SmColors.accent,
-            onTap: () => controller.setActive(r.id, active: !r.active),
-          ),
-          const SizedBox(width: SmSpace.md),
-          _Link(
-            label: l10n.entryDelete,
-            color: SmColors.danger,
-            onTap: () => controller.delete(r.id),
-          ),
+          ],
+          if (_error != null)
+            Text(
+              _error!,
+              style: SmType.caption.copyWith(color: SmColors.danger),
+            ),
         ],
       ),
     );

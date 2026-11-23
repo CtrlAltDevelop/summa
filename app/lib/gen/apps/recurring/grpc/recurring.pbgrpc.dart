@@ -68,6 +68,13 @@ class RecurringControllerClient extends $grpc.Client {
     return $createUnaryCall(_$setActive, request, options: options);
   }
 
+  $grpc.ResponseFuture<$1.Empty> settleNow(
+    $0.SettleRequest request, {
+    $grpc.CallOptions? options,
+  }) {
+    return $createUnaryCall(_$settleNow, request, options: options);
+  }
+
   // method descriptors
 
   static final _$create =
@@ -90,6 +97,10 @@ class RecurringControllerClient extends $grpc.Client {
   static final _$setActive = $grpc.ClientMethod<$0.RecurringActive, $1.Empty>(
       '/config.recurring.RecurringController/SetActive',
       ($0.RecurringActive value) => value.writeToBuffer(),
+      $1.Empty.fromBuffer);
+  static final _$settleNow = $grpc.ClientMethod<$0.SettleRequest, $1.Empty>(
+      '/config.recurring.RecurringController/SettleNow',
+      ($0.SettleRequest value) => value.writeToBuffer(),
       $1.Empty.fromBuffer);
 }
 
@@ -133,6 +144,13 @@ abstract class RecurringControllerServiceBase extends $grpc.Service {
         false,
         ($core.List<$core.int> value) => $0.RecurringActive.fromBuffer(value),
         ($1.Empty value) => value.writeToBuffer()));
+    $addMethod($grpc.ServiceMethod<$0.SettleRequest, $1.Empty>(
+        'SettleNow',
+        settleNow_Pre,
+        false,
+        false,
+        ($core.List<$core.int> value) => $0.SettleRequest.fromBuffer(value),
+        ($1.Empty value) => value.writeToBuffer()));
   }
 
   $async.Future<$0.RecurringReply> create_Pre($grpc.ServiceCall $call,
@@ -174,4 +192,12 @@ abstract class RecurringControllerServiceBase extends $grpc.Service {
 
   $async.Future<$1.Empty> setActive(
       $grpc.ServiceCall call, $0.RecurringActive request);
+
+  $async.Future<$1.Empty> settleNow_Pre(
+      $grpc.ServiceCall $call, $async.Future<$0.SettleRequest> $request) async {
+    return settleNow($call, await $request);
+  }
+
+  $async.Future<$1.Empty> settleNow(
+      $grpc.ServiceCall call, $0.SettleRequest request);
 }

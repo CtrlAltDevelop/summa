@@ -546,4 +546,22 @@ class AppLocalizationsFa extends AppLocalizations {
 
   @override
   String get occurrenceNeedsAmount => 'مبلغ این بار را بنویس.';
+
+  @override
+  String get occurrenceNotYet => 'هنوز نه';
+
+  @override
+  String get occurrenceGotIt => 'گرفتم';
+
+  @override
+  String get occurrenceDidYouGetIt => 'گرفتی؟';
+
+  @override
+  String get recurringReceived => 'حقوق این ماه را گرفتم';
+
+  @override
+  String get recurringPaid => 'این ماه پرداخت شد';
+
+  @override
+  String get recurringCategoryLabel => 'دسته';
 }

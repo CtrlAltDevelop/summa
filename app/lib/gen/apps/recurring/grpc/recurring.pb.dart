@@ -870,6 +870,76 @@ class RecurringReply extends $pb.GeneratedMessage {
   RecurringMsg ensureRecurring() => $_ensure(0);
 }
 
+class SettleRequest extends $pb.GeneratedMessage {
+  factory SettleRequest({
+    $core.String? recurringId,
+    $fixnum.Int64? amountMinor,
+  }) {
+    final result = SettleRequest._();
+    if (recurringId != null) result.recurringId = recurringId;
+    if (amountMinor != null) result.amountMinor = amountMinor;
+    return result;
+  }
+
+  SettleRequest._();
+
+  factory SettleRequest.fromBuffer($core.List<$core.int> data,
+          [$pb.ExtensionRegistry registry = $pb.ExtensionRegistry.EMPTY]) =>
+      SettleRequest()..mergeFromBuffer(data, registry);
+  factory SettleRequest.fromJson($core.String json,
+          [$pb.ExtensionRegistry registry = $pb.ExtensionRegistry.EMPTY]) =>
+      SettleRequest()..mergeFromJson(json, registry);
+
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo(
+      _omitMessageNames ? '' : 'SettleRequest',
+      package:
+          const $pb.PackageName(_omitMessageNames ? '' : 'config.recurring'),
+      createEmptyInstance: SettleRequest.$_createMessage)
+    ..aOS(1, _omitFieldNames ? '' : 'recurringId')
+    ..aInt64(2, _omitFieldNames ? '' : 'amountMinor')
+    ..hasRequiredFields = false;
+
+  @$core.Deprecated('See https://github.com/google/protobuf.dart/issues/998.')
+  SettleRequest clone() => deepCopy();
+  @$core.Deprecated('See https://github.com/google/protobuf.dart/issues/998.')
+  SettleRequest copyWith(void Function(SettleRequest) updates) =>
+      super.copyWith((message) => updates(message as SettleRequest))
+          as SettleRequest;
+
+  @$core.override
+  $pb.BuilderInfo get info_ => _i;
+
+  @$core.pragma('dart2js:noInline')
+  @$core.Deprecated('Use SettleRequest() / SettleRequest.new instead')
+  static SettleRequest create() => SettleRequest._();
+  static $pb.GeneratedMessage $_createMessage() => SettleRequest._();
+  @$core.override
+  SettleRequest createEmptyInstance() => SettleRequest._();
+  @$core.pragma('dart2js:noInline')
+  static SettleRequest getDefault() =>
+      _defaultInstance ??= $pb.GeneratedMessage.$_defaultFor<SettleRequest>(
+          SettleRequest.$_createMessage);
+  static SettleRequest? _defaultInstance;
+
+  @$pb.TagNumber(1)
+  $core.String get recurringId => $_getSZ(0);
+  @$pb.TagNumber(1)
+  set recurringId($core.String value) => $_setString(0, value);
+  @$pb.TagNumber(1)
+  $core.bool hasRecurringId() => $_has(0);
+  @$pb.TagNumber(1)
+  void clearRecurringId() => $_clearField(1);
+
+  @$pb.TagNumber(2)
+  $fixnum.Int64 get amountMinor => $_getI64(1);
+  @$pb.TagNumber(2)
+  set amountMinor($fixnum.Int64 value) => $_setInt64(1, value);
+  @$pb.TagNumber(2)
+  $core.bool hasAmountMinor() => $_has(1);
+  @$pb.TagNumber(2)
+  void clearAmountMinor() => $_clearField(2);
+}
+
 const $core.bool _omitFieldNames =
     $core.bool.fromEnvironment('protobuf.omit_field_names');
 const $core.bool _omitMessageNames =

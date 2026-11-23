@@ -1131,6 +1131,42 @@ abstract class AppLocalizations {
   /// In fa, this message translates to:
   /// **'مبلغ این بار را بنویس.'**
   String get occurrenceNeedsAmount;
+
+  /// No description provided for @occurrenceNotYet.
+  ///
+  /// In fa, this message translates to:
+  /// **'هنوز نه'**
+  String get occurrenceNotYet;
+
+  /// No description provided for @occurrenceGotIt.
+  ///
+  /// In fa, this message translates to:
+  /// **'گرفتم'**
+  String get occurrenceGotIt;
+
+  /// No description provided for @occurrenceDidYouGetIt.
+  ///
+  /// In fa, this message translates to:
+  /// **'گرفتی؟'**
+  String get occurrenceDidYouGetIt;
+
+  /// No description provided for @recurringReceived.
+  ///
+  /// In fa, this message translates to:
+  /// **'حقوق این ماه را گرفتم'**
+  String get recurringReceived;
+
+  /// No description provided for @recurringPaid.
+  ///
+  /// In fa, this message translates to:
+  /// **'این ماه پرداخت شد'**
+  String get recurringPaid;
+
+  /// No description provided for @recurringCategoryLabel.
+  ///
+  /// In fa, this message translates to:
+  /// **'دسته'**
+  String get recurringCategoryLabel;
 }
 
 class _AppLocalizationsDelegate
