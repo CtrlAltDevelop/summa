@@ -759,6 +759,14 @@ CLUB_JOIN_ON_SIGNUP = os.getenv("DJANGO_CLUB_JOIN_ON_SIGNUP", "").strip()
 CLUB_PAGE_SIZE = int(os.getenv("DJANGO_CLUB_PAGE_SIZE", "50"))
 CLUB_MAX_PAGE_SIZE = int(os.getenv("DJANGO_CLUB_MAX_PAGE_SIZE", "200"))
 
+# Subscriptions. TRIAL_DAYS 0 turns the trial off. With ENFORCED on, an account whose
+# trial or subscription has ended becomes read-only (writes are refused, reads stay
+# open, nothing is deleted). PROVIDER is the payment gateway adapter; the default is
+# a fake for development and tests and must never be used in production.
+BILLING_TRIAL_DAYS = int(os.getenv("DJANGO_BILLING_TRIAL_DAYS", "14"))
+BILLING_ENFORCED = os.getenv("DJANGO_BILLING_ENFORCED", "false").lower() == "true"
+BILLING_PROVIDER = os.getenv("DJANGO_BILLING_PROVIDER", "apps.billing.providers.FakeProvider")
+
 # Rates and assets. SOURCES is a JSON list of {"name", "url", "map": {SYMBOL: "json.path"}};
 # empty means rates are set by hand (`manage.py set_rate`). A price is "stale" after
 # STALE_SECONDS; a fetched price that jumps more than MAX_JUMP (0.5 = 50%) from the

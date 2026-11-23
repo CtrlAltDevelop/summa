@@ -63,6 +63,13 @@
         "prefix": "/sync",
         "router": "apps.sync.rest.v1.router",
         "tag": "Sync"
+      },
+      {
+        "app_config": "apps.billing.apps.BillingConfig",
+        "description": "Endpoints published by the billing app.",
+        "prefix": "/billing",
+        "router": "apps.billing.rest.v1.router",
+        "tag": "Billing"
       }
     ]
   }

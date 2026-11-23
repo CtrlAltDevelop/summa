@@ -43,6 +43,20 @@ def register_grpc_error(error_type: type[Exception], *, status: int, title: Resp
         _REGISTERED.append((error_type, status, title))
 
 
+# Checks that run before every gRPC action: ``guard(method_name, module, context)``
+# either returns or raises an ``ApiError``. An app registers one from its ``ready()``
+# (billing uses it to make an expired account read-only) so the rule lives in one
+# place instead of in every action.
+CallGuard = Callable[[str, str, Any], Awaitable[None]]
+_GUARDS: list[CallGuard] = []
+
+
+def register_call_guard(guard: CallGuard) -> None:
+    """Run ``guard`` before every action. Registering the same guard twice keeps one."""
+    if guard not in _GUARDS:
+        _GUARDS.append(guard)
+
+
 def _registered_refusal(error: Exception) -> ApiError | None:
     for error_type, status, title in _REGISTERED:
         if isinstance(error, error_type):
@@ -77,6 +91,8 @@ def action(function: Callable[..., Awaitable[Any]]) -> Callable[..., Awaitable[A
     @wraps(function)
     async def wrapper(self: Any, request: Any, context: Any) -> Any:
         try:
+            for guard in _GUARDS:
+                await guard(function.__name__, function.__module__, context)
             return await function(self, request, context)
         except ApiError as error:
             await abort(context, error)
