@@ -15,6 +15,16 @@ abstract interface class LedgerApi {
     required String note,
     required String clientMutationId,
   });
+  Future<void> transfer(
+    String access, {
+    required String fromWalletId,
+    required String toWalletId,
+    required int amountMinor,
+    required String rate,
+    required int feeMinor,
+    required String note,
+    required String clientMutationId,
+  });
   Future<void> delete(String access, String entryId);
 }
 
@@ -53,6 +63,31 @@ class GrpcLedgerApi implements LedgerApi {
       options: _bearer(access),
     );
     return _entry(r.entry);
+  });
+
+  @override
+  Future<void> transfer(
+    String access, {
+    required String fromWalletId,
+    required String toWalletId,
+    required int amountMinor,
+    required String rate,
+    required int feeMinor,
+    required String note,
+    required String clientMutationId,
+  }) => guardGrpc(() async {
+    await _client.transfer(
+      pb.TransferRequest(
+        fromWalletId: fromWalletId,
+        toWalletId: toWalletId,
+        amountMinor: Int64(amountMinor),
+        rate: rate,
+        feeMinor: Int64(feeMinor),
+        note: note,
+        clientMutationId: clientMutationId,
+      ),
+      options: _bearer(access),
+    );
   });
 
   @override

@@ -1,5 +1,6 @@
 import 'package:summa/features/wallets/entry_models.dart';
 import 'package:summa/features/wallets/ledger_api.dart';
+import 'package:summa/features/wallets/wallet_models.dart';
 
 import 'fake_wallet_api.dart';
 
@@ -10,6 +11,9 @@ class FakeLedgerApi implements LedgerApi {
   final FakeWalletApi wallets;
   final List<Entry> entries = [];
   final List<String> mutations = [];
+
+  /// The rate strings sent with each transfer.
+  final List<String> transferRates = [];
 
   @override
   Future<List<Entry>> list(String access) async => entries.reversed.toList();
@@ -42,6 +46,66 @@ class FakeLedgerApi implements LedgerApi {
     );
     return entry;
   }
+
+  @override
+  Future<void> transfer(
+    String access, {
+    required String fromWalletId,
+    required String toWalletId,
+    required int amountMinor,
+    required String rate,
+    required int feeMinor,
+    required String note,
+    required String clientMutationId,
+  }) async {
+    transferRates.add(rate);
+    final from = wallets.wallets.firstWhere((w) => w.id == fromWalletId);
+    final to = wallets.wallets.firstWhere((w) => w.id == toWalletId);
+    final received = from.currency == to.currency
+        ? amountMinor
+        : (amountMinor *
+                  double.parse(rate) *
+                  _pow10(
+                    currencyDecimals[to.currency]! -
+                        currencyDecimals[from.currency]!,
+                  ))
+              .round();
+    Entry leg(
+      String id,
+      String wallet,
+      EntryKind kind,
+      int amount,
+      String cur,
+    ) => Entry(
+      id: id,
+      walletId: wallet,
+      kind: kind,
+      amountMinor: amount,
+      currency: cur,
+      occurredAt: DateTime.utc(2026, 11, 1),
+      note: note,
+    );
+    final n = entries.length;
+    entries
+      ..add(
+        leg(
+          'e${n + 1}',
+          from.id,
+          EntryKind.transferOut,
+          amountMinor,
+          from.currency,
+        ),
+      )
+      ..add(
+        leg('e${n + 2}', to.id, EntryKind.transferIn, received, to.currency),
+      );
+    wallets.shift(from.id, -amountMinor - feeMinor);
+    wallets.shift(to.id, received);
+  }
+
+  static num _pow10(int n) => n >= 0
+      ? List.filled(n, 10).fold(1, (a, b) => a * b)
+      : 1 / List.filled(-n, 10).fold(1, (a, b) => a * b);
 
   @override
   Future<void> delete(String access, String entryId) async {

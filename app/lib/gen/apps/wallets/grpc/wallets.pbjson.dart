@@ -159,6 +159,35 @@ final $typed_data.Uint8List entryReplyDescriptor = $convert.base64Decode(
     'CgpFbnRyeVJlcGx5EisKBWVudHJ5GAEgASgLMhUuY29uZmlnLndhbGxldHMuRW50cnlSBWVudH'
     'J5');
 
+@$core.Deprecated('Use transferRequestDescriptor instead')
+const TransferRequest$json = {
+  '1': 'TransferRequest',
+  '2': [
+    {'1': 'from_wallet_id', '3': 1, '4': 1, '5': 9, '10': 'fromWalletId'},
+    {'1': 'to_wallet_id', '3': 2, '4': 1, '5': 9, '10': 'toWalletId'},
+    {'1': 'amount_minor', '3': 3, '4': 1, '5': 3, '10': 'amountMinor'},
+    {'1': 'rate', '3': 4, '4': 1, '5': 9, '10': 'rate'},
+    {'1': 'fee_minor', '3': 5, '4': 1, '5': 3, '10': 'feeMinor'},
+    {'1': 'occurred_at', '3': 6, '4': 1, '5': 9, '10': 'occurredAt'},
+    {'1': 'note', '3': 7, '4': 1, '5': 9, '10': 'note'},
+    {
+      '1': 'client_mutation_id',
+      '3': 8,
+      '4': 1,
+      '5': 9,
+      '10': 'clientMutationId'
+    },
+  ],
+};
+
+/// Descriptor for `TransferRequest`. Decode as a `google.protobuf.DescriptorProto`.
+final $typed_data.Uint8List transferRequestDescriptor = $convert.base64Decode(
+    'Cg9UcmFuc2ZlclJlcXVlc3QSJAoOZnJvbV93YWxsZXRfaWQYASABKAlSDGZyb21XYWxsZXRJZB'
+    'IgCgx0b193YWxsZXRfaWQYAiABKAlSCnRvV2FsbGV0SWQSIQoMYW1vdW50X21pbm9yGAMgASgD'
+    'UgthbW91bnRNaW5vchISCgRyYXRlGAQgASgJUgRyYXRlEhsKCWZlZV9taW5vchgFIAEoA1IIZm'
+    'VlTWlub3ISHwoLb2NjdXJyZWRfYXQYBiABKAlSCm9jY3VycmVkQXQSEgoEbm90ZRgHIAEoCVIE'
+    'bm90ZRIsChJjbGllbnRfbXV0YXRpb25faWQYCCABKAlSEGNsaWVudE11dGF0aW9uSWQ=');
+
 @$core.Deprecated('Use walletDescriptor instead')
 const Wallet$json = {
   '1': 'Wallet',

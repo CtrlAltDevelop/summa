@@ -653,6 +653,147 @@ class EntryReply extends $pb.GeneratedMessage {
   Entry ensureEntry() => $_ensure(0);
 }
 
+class TransferRequest extends $pb.GeneratedMessage {
+  factory TransferRequest({
+    $core.String? fromWalletId,
+    $core.String? toWalletId,
+    $fixnum.Int64? amountMinor,
+    $core.String? rate,
+    $fixnum.Int64? feeMinor,
+    $core.String? occurredAt,
+    $core.String? note,
+    $core.String? clientMutationId,
+  }) {
+    final result = TransferRequest._();
+    if (fromWalletId != null) result.fromWalletId = fromWalletId;
+    if (toWalletId != null) result.toWalletId = toWalletId;
+    if (amountMinor != null) result.amountMinor = amountMinor;
+    if (rate != null) result.rate = rate;
+    if (feeMinor != null) result.feeMinor = feeMinor;
+    if (occurredAt != null) result.occurredAt = occurredAt;
+    if (note != null) result.note = note;
+    if (clientMutationId != null) result.clientMutationId = clientMutationId;
+    return result;
+  }
+
+  TransferRequest._();
+
+  factory TransferRequest.fromBuffer($core.List<$core.int> data,
+          [$pb.ExtensionRegistry registry = $pb.ExtensionRegistry.EMPTY]) =>
+      TransferRequest()..mergeFromBuffer(data, registry);
+  factory TransferRequest.fromJson($core.String json,
+          [$pb.ExtensionRegistry registry = $pb.ExtensionRegistry.EMPTY]) =>
+      TransferRequest()..mergeFromJson(json, registry);
+
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo(
+      _omitMessageNames ? '' : 'TransferRequest',
+      package: const $pb.PackageName(_omitMessageNames ? '' : 'config.wallets'),
+      createEmptyInstance: TransferRequest.$_createMessage)
+    ..aOS(1, _omitFieldNames ? '' : 'fromWalletId')
+    ..aOS(2, _omitFieldNames ? '' : 'toWalletId')
+    ..aInt64(3, _omitFieldNames ? '' : 'amountMinor')
+    ..aOS(4, _omitFieldNames ? '' : 'rate')
+    ..aInt64(5, _omitFieldNames ? '' : 'feeMinor')
+    ..aOS(6, _omitFieldNames ? '' : 'occurredAt')
+    ..aOS(7, _omitFieldNames ? '' : 'note')
+    ..aOS(8, _omitFieldNames ? '' : 'clientMutationId')
+    ..hasRequiredFields = false;
+
+  @$core.Deprecated('See https://github.com/google/protobuf.dart/issues/998.')
+  TransferRequest clone() => deepCopy();
+  @$core.Deprecated('See https://github.com/google/protobuf.dart/issues/998.')
+  TransferRequest copyWith(void Function(TransferRequest) updates) =>
+      super.copyWith((message) => updates(message as TransferRequest))
+          as TransferRequest;
+
+  @$core.override
+  $pb.BuilderInfo get info_ => _i;
+
+  @$core.pragma('dart2js:noInline')
+  @$core.Deprecated('Use TransferRequest() / TransferRequest.new instead')
+  static TransferRequest create() => TransferRequest._();
+  static $pb.GeneratedMessage $_createMessage() => TransferRequest._();
+  @$core.override
+  TransferRequest createEmptyInstance() => TransferRequest._();
+  @$core.pragma('dart2js:noInline')
+  static TransferRequest getDefault() =>
+      _defaultInstance ??= $pb.GeneratedMessage.$_defaultFor<TransferRequest>(
+          TransferRequest.$_createMessage);
+  static TransferRequest? _defaultInstance;
+
+  @$pb.TagNumber(1)
+  $core.String get fromWalletId => $_getSZ(0);
+  @$pb.TagNumber(1)
+  set fromWalletId($core.String value) => $_setString(0, value);
+  @$pb.TagNumber(1)
+  $core.bool hasFromWalletId() => $_has(0);
+  @$pb.TagNumber(1)
+  void clearFromWalletId() => $_clearField(1);
+
+  @$pb.TagNumber(2)
+  $core.String get toWalletId => $_getSZ(1);
+  @$pb.TagNumber(2)
+  set toWalletId($core.String value) => $_setString(1, value);
+  @$pb.TagNumber(2)
+  $core.bool hasToWalletId() => $_has(1);
+  @$pb.TagNumber(2)
+  void clearToWalletId() => $_clearField(2);
+
+  @$pb.TagNumber(3)
+  $fixnum.Int64 get amountMinor => $_getI64(2);
+  @$pb.TagNumber(3)
+  set amountMinor($fixnum.Int64 value) => $_setInt64(2, value);
+  @$pb.TagNumber(3)
+  $core.bool hasAmountMinor() => $_has(2);
+  @$pb.TagNumber(3)
+  void clearAmountMinor() => $_clearField(3);
+
+  @$pb.TagNumber(4)
+  $core.String get rate => $_getSZ(3);
+  @$pb.TagNumber(4)
+  set rate($core.String value) => $_setString(3, value);
+  @$pb.TagNumber(4)
+  $core.bool hasRate() => $_has(3);
+  @$pb.TagNumber(4)
+  void clearRate() => $_clearField(4);
+
+  @$pb.TagNumber(5)
+  $fixnum.Int64 get feeMinor => $_getI64(4);
+  @$pb.TagNumber(5)
+  set feeMinor($fixnum.Int64 value) => $_setInt64(4, value);
+  @$pb.TagNumber(5)
+  $core.bool hasFeeMinor() => $_has(4);
+  @$pb.TagNumber(5)
+  void clearFeeMinor() => $_clearField(5);
+
+  @$pb.TagNumber(6)
+  $core.String get occurredAt => $_getSZ(5);
+  @$pb.TagNumber(6)
+  set occurredAt($core.String value) => $_setString(5, value);
+  @$pb.TagNumber(6)
+  $core.bool hasOccurredAt() => $_has(5);
+  @$pb.TagNumber(6)
+  void clearOccurredAt() => $_clearField(6);
+
+  @$pb.TagNumber(7)
+  $core.String get note => $_getSZ(6);
+  @$pb.TagNumber(7)
+  set note($core.String value) => $_setString(6, value);
+  @$pb.TagNumber(7)
+  $core.bool hasNote() => $_has(6);
+  @$pb.TagNumber(7)
+  void clearNote() => $_clearField(7);
+
+  @$pb.TagNumber(8)
+  $core.String get clientMutationId => $_getSZ(7);
+  @$pb.TagNumber(8)
+  set clientMutationId($core.String value) => $_setString(7, value);
+  @$pb.TagNumber(8)
+  $core.bool hasClientMutationId() => $_has(7);
+  @$pb.TagNumber(8)
+  void clearClientMutationId() => $_clearField(8);
+}
+
 class Wallet extends $pb.GeneratedMessage {
   factory Wallet({
     $core.String? id,

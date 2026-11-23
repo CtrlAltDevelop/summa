@@ -61,6 +61,13 @@ class LedgerControllerClient extends $grpc.Client {
     return $createUnaryCall(_$record, request, options: options);
   }
 
+  $grpc.ResponseFuture<$0.EntryListReply> transfer(
+    $0.TransferRequest request, {
+    $grpc.CallOptions? options,
+  }) {
+    return $createUnaryCall(_$transfer, request, options: options);
+  }
+
   // method descriptors
 
   static final _$delete = $grpc.ClientMethod<$0.EntryRef, $1.Empty>(
@@ -79,6 +86,11 @@ class LedgerControllerClient extends $grpc.Client {
       '/config.wallets.LedgerController/Record',
       ($0.EntryRecord value) => value.writeToBuffer(),
       $0.EntryReply.fromBuffer);
+  static final _$transfer =
+      $grpc.ClientMethod<$0.TransferRequest, $0.EntryListReply>(
+          '/config.wallets.LedgerController/Transfer',
+          ($0.TransferRequest value) => value.writeToBuffer(),
+          $0.EntryListReply.fromBuffer);
 }
 
 @$pb.GrpcServiceName('config.wallets.LedgerController')
@@ -114,6 +126,13 @@ abstract class LedgerControllerServiceBase extends $grpc.Service {
         false,
         ($core.List<$core.int> value) => $0.EntryRecord.fromBuffer(value),
         ($0.EntryReply value) => value.writeToBuffer()));
+    $addMethod($grpc.ServiceMethod<$0.TransferRequest, $0.EntryListReply>(
+        'Transfer',
+        transfer_Pre,
+        false,
+        false,
+        ($core.List<$core.int> value) => $0.TransferRequest.fromBuffer(value),
+        ($0.EntryListReply value) => value.writeToBuffer()));
   }
 
   $async.Future<$1.Empty> delete_Pre(
@@ -146,6 +165,14 @@ abstract class LedgerControllerServiceBase extends $grpc.Service {
 
   $async.Future<$0.EntryReply> record(
       $grpc.ServiceCall call, $0.EntryRecord request);
+
+  $async.Future<$0.EntryListReply> transfer_Pre($grpc.ServiceCall $call,
+      $async.Future<$0.TransferRequest> $request) async {
+    return transfer($call, await $request);
+  }
+
+  $async.Future<$0.EntryListReply> transfer(
+      $grpc.ServiceCall call, $0.TransferRequest request);
 }
 
 @$pb.GrpcServiceName('config.wallets.WalletsController')

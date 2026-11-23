@@ -98,7 +98,7 @@ class _EntryFormScreenState extends ConsumerState<EntryFormScreen> {
             Text(l10n.entryFormTitle, style: SmType.title),
             const SizedBox(height: SmSpace.lg),
             Choices<EntryKind>(
-              values: EntryKind.values,
+              values: EntryKind.recordable,
               selected: _kind,
               label: (k) =>
                   k == EntryKind.expense ? l10n.entryExpense : l10n.entryIncome,

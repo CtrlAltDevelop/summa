@@ -101,5 +101,16 @@
   "entryAmountLabel": "مبلغ",
   "entryNoteLabel": "یادداشت (اختیاری)",
   "entryAmountInvalid": "مبلغ درست نیست. یک عدد بزرگ‌تر از صفر بنویس.",
-  "entryDelete": "حذف"
+  "entryDelete": "حذف",
+  "transferAdd": "انتقال بین کیف‌ها",
+  "transferFormTitle": "انتقال پول",
+  "transferFrom": "از کیف",
+  "transferTo": "به کیف",
+  "transferRateLabel": "نرخ (هر یک واحد مبدأ چند واحد مقصد)",
+  "transferFeeLabel": "کارمزد (اختیاری)",
+  "transferOut": "انتقال (برداشت)",
+  "transferIn": "انتقال (دریافت)",
+  "transferSameWallet": "مبدأ و مقصد باید دو کیف پول متفاوت باشند.",
+  "transferRateInvalid": "نرخ درست نیست. یک عدد بزرگ‌تر از صفر بنویس.",
+  "transferFeeInvalid": "کارمزد درست نیست."
 }
