@@ -28,7 +28,7 @@ at section zero (what "different" means, audience, platform, revenue).
 
 Commands (root `Makefile`): `make setup`, `make run-lite` (no Docker: REST :8010 + gRPC :50051), `make macos`, `make proto` (Python and Dart stubs; add new protos to `DART_PROTOS`), `make check`, `make test`. App id `com.summa.app`; dark glass theme only; no web target for now.
 
-Details: `docs/06-architecture.md`; phases: `docs/07-roadmap.md`. No bot. Iran and Persian only (RTL, Shamsi calendar); multiple currencies kept. Strings still go through Flutter l10n files, but extra languages are not a goal. `app/` and `backend/` exist (phase 00); `landing/` comes in phase 16.
+Details: `docs/06-architecture.md`; phases: `docs/07-roadmap.md`. No bot. Iran and Persian only (RTL, Shamsi calendar); multiple currencies kept. Strings still go through Flutter l10n files, but extra languages are not a goal. `app/` and `backend/` exist (phase 00); `landing/` exists (Vite + Three.js; `make landing`, `make landing-test`; phases 16, 16b, 17). Phase 18 (widget) is a scope decision only; native code is pending a device.
 
 ## Rules
 
