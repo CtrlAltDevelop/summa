@@ -135,4 +135,84 @@ class AppLocalizationsFa extends AppLocalizations {
 
   @override
   String get retry => 'تلاش دوباره';
+
+  @override
+  String get walletsTotalTitle => 'صندوق حساب‌وکتاب';
+
+  @override
+  String get walletsEmpty =>
+      'هنوز کیف پولی نداری. اولین را بساز تا موجودی‌ات را ببینی.';
+
+  @override
+  String get walletAdd => 'کیف پول جدید';
+
+  @override
+  String get walletFormTitle => 'کیف پول جدید';
+
+  @override
+  String get walletNameLabel => 'نام کیف پول';
+
+  @override
+  String get walletKindLabel => 'نوع';
+
+  @override
+  String get walletCurrencyLabel => 'ارز';
+
+  @override
+  String get walletBankLabel => 'بانک (اختیاری)';
+
+  @override
+  String get walletOpeningLabel => 'موجودی اولیه';
+
+  @override
+  String get walletSave => 'ذخیره';
+
+  @override
+  String get walletNameRequired => 'برای کیف پول یک نام بنویس.';
+
+  @override
+  String get walletBalanceInvalid =>
+      'موجودی اولیه درست نیست. فقط کارت اعتباری و اقساط می‌توانند منفی شروع شوند.';
+
+  @override
+  String get kindCash => 'نقد';
+
+  @override
+  String get kindBank => 'حساب بانکی';
+
+  @override
+  String get kindCreditCard => 'کارت اعتباری';
+
+  @override
+  String get kindBnpl => 'خرید اقساطی';
+
+  @override
+  String get kindGiftCard => 'هدیه‌کارت';
+
+  @override
+  String get kindCrypto => 'رمزارز';
+
+  @override
+  String get kindGold => 'طلا';
+
+  @override
+  String get currencyIRT => 'تومان';
+
+  @override
+  String get currencyIRR => 'ریال';
+
+  @override
+  String get currencyUSD => 'دلار';
+
+  @override
+  String get currencyEUR => 'یورو';
+
+  @override
+  String get currencyAED => 'درهم';
+
+  @override
+  String get currencyTRY => 'لیر';
+
+  @override
+  String get currencyUSDT => 'تتر';
 }
