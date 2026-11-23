@@ -3,6 +3,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:summa/app.dart';
 import 'package:summa/features/assets/asset_controller.dart';
+import 'package:summa/features/networth/networth_controller.dart';
 import 'package:summa/features/auth/auth_controller.dart';
 import 'package:summa/features/auth/token_store.dart';
 import 'package:summa/features/wallets/wallet_models.dart';
@@ -20,6 +21,7 @@ import '../assistant/fake_assistant_api.dart';
 import '../categories/fake_category_api.dart';
 import 'fake_ledger_api.dart';
 import 'fake_wallet_api.dart';
+import '../networth/fake_networth_api.dart';
 import '../assets/fake_asset_api.dart';
 
 Future<FakeLedgerApi> _pump(WidgetTester t, FakeWalletApi wallets) async {
@@ -41,6 +43,7 @@ Future<FakeLedgerApi> _pump(WidgetTester t, FakeWalletApi wallets) async {
         assistantApiProvider.overrideWithValue(FakeAssistantApi()),
         debtApiProvider.overrideWithValue(FakeDebtApi()),
         assetApiProvider.overrideWithValue(FakeAssetApi()),
+        networthApiProvider.overrideWithValue(FakeNetWorthApi()),
         walletApiProvider.overrideWithValue(wallets),
         ledgerApiProvider.overrideWithValue(ledger),
         categoryApiProvider.overrideWithValue(categories),

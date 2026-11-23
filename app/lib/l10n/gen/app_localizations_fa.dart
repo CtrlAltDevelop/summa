@@ -747,4 +747,61 @@ class AppLocalizationsFa extends AppLocalizations {
 
   @override
   String get priceSourcePrefix => 'منبع';
+
+  @override
+  String get netWorthTitle => 'خالص دارایی';
+
+  @override
+  String get netWorthWallets => 'کیف‌ها';
+
+  @override
+  String get netWorthAssets => 'دارایی‌ها';
+
+  @override
+  String get netWorthDebts => 'بدهی‌ها';
+
+  @override
+  String get netWorthGold => 'گرم طلای ۱۸ عیار';
+
+  @override
+  String get netWorthStale => 'بعضی نرخ‌ها کهنه‌اند؛ عدد تقریبی است.';
+
+  @override
+  String netWorthUnconverted(String codes) {
+    return 'ارزهای بدون نرخ (کنار گذاشته شد): $codes';
+  }
+
+  @override
+  String netWorthUnpriced(String count) {
+    return 'دارایی بدون قیمت: $count';
+  }
+
+  @override
+  String get basketsTitle => 'سبدهای هدف';
+
+  @override
+  String get basketAdd => 'سبد هدف جدید';
+
+  @override
+  String get basketFormTitle => 'سبد هدف';
+
+  @override
+  String get basketNameLabel => 'نام هدف (مثلاً پیش‌پرداخت خانه)';
+
+  @override
+  String get basketTargetLabel => 'مبلغ هدف (تومان)';
+
+  @override
+  String get basketItemsLabel => 'چه چیزهایی به این هدف حساب شود؟';
+
+  @override
+  String get basketTargetInvalid => 'مبلغ هدف درست نیست.';
+
+  @override
+  String get basketDelete => 'حذف سبد';
+
+  @override
+  String basketProgress(String percent) {
+    return '$percent٪ از هدف';
+  }
 }

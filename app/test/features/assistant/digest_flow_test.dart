@@ -5,6 +5,7 @@ import 'package:summa/app.dart';
 import 'package:summa/core/reminders/reminder_scheduler.dart';
 import 'package:summa/features/assistant/assistant_controller.dart';
 import 'package:summa/features/assistant/chat_models.dart';
+import 'package:summa/features/networth/networth_controller.dart';
 import 'package:summa/features/auth/auth_controller.dart';
 import 'package:summa/features/auth/token_store.dart';
 import 'package:summa/features/categories/category_controller.dart';
@@ -22,6 +23,7 @@ import '../assets/fake_asset_api.dart';
 import '../debts/fake_debt_api.dart';
 import '../wallets/fake_ledger_api.dart';
 import '../wallets/fake_wallet_api.dart';
+import '../networth/fake_networth_api.dart';
 import 'fake_assistant_api.dart';
 
 class _RecordingScheduler implements ReminderScheduler {
@@ -68,6 +70,7 @@ Future<({FakeAssistantApi assistant, _RecordingScheduler scheduler})> _pump(
         ),
         debtApiProvider.overrideWithValue(FakeDebtApi()),
         assetApiProvider.overrideWithValue(FakeAssetApi()),
+        networthApiProvider.overrideWithValue(FakeNetWorthApi()),
         walletApiProvider.overrideWithValue(wallets),
         ledgerApiProvider.overrideWithValue(ledger),
         categoryApiProvider.overrideWithValue(FakeCategoryApi(ledger)),
