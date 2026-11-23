@@ -16,6 +16,7 @@ ThemeData buildSummaTheme() {
       );
   return ThemeData(
     useMaterial3: true,
+    fontFamily: SmType.fontFamily,
     colorScheme: scheme,
     scaffoldBackgroundColor: SmColors.transparent,
     textTheme: const TextTheme(
