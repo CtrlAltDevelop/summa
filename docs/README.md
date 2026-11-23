@@ -27,6 +27,7 @@
 17. [phases/phase-03-categories.md](phases/phase-03-categories.md): سند فاز ۰۳ (دسته‌ها و سقف)
 18. [phases/phase-04-assistant.md](phases/phase-04-assistant.md): سند فاز ۰۴ (چت دستیار)
 19. [phases/phase-05-sms.md](phases/phase-05-sms.md): سند فاز ۰۵ (پیامک بانک)
+20. [phases/phase-06-split.md](phases/phase-06-split.md): سند فاز ۰۶ (تقسیم و خارج از جمع)
 
 ## محدودیت‌های بررسی
 - همه صفحه‌های عمومی خونده شد، به جز `/disclosure` (دوبار خطای ۵۰۳؛ لیست شریک‌های رفرال و مدل درآمد رفرال مشخص نیست).
