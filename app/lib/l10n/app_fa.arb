@@ -429,5 +429,62 @@
   "supportStatusClosed": "بسته",
   "supportFromTeam": "پشتیبان",
   "supportFromYou": "تو",
-  "supportUnread": "پیام جدید"
+  "supportUnread": "پیام جدید",
+  "lockTitle": "Summa قفل است",
+  "lockPasscodeLabel": "رمز اپ",
+  "lockUnlock": "باز کردن",
+  "lockBiometric": "باز کردن با بیومتریک",
+  "lockWrong": "رمز درست نیست.",
+  "lockWait": "تلاش‌ها زیاد بود؛ کمی صبر کن و دوباره امتحان کن.",
+  "privacyOpen": "حریم و امنیت",
+  "privacyTitle": "حریم و امنیت",
+  "lockEnable": "فعال‌کردن قفل اپ",
+  "lockDisable": "خاموش‌کردن قفل",
+  "lockChange": "تغییر رمز",
+  "lockNewPasscode": "رمز جدید (۴ تا ۸ رقم)",
+  "lockConfirmPasscode": "تکرار رمز",
+  "lockMismatch": "دو رمز یکی نیست.",
+  "lockInvalid": "رمز باید ۴ تا ۸ رقم باشد.",
+  "lockCurrentPasscode": "رمز فعلی",
+  "lockBiometricToggle": "بیومتریک",
+  "lockOn": "روشن",
+  "lockOff": "خاموش",
+  "lockDelayLabel": "قفل خودکار بعد از",
+  "lockDelayNow": "فوری",
+  "lockDelaySeconds": "{count} ثانیه",
+  "@lockDelaySeconds": {
+    "placeholders": {
+      "count": {
+        "type": "String"
+      }
+    }
+  },
+  "lockDelayMinutes": "{count} دقیقه",
+  "@lockDelayMinutes": {
+    "placeholders": {
+      "count": {
+        "type": "String"
+      }
+    }
+  },
+  "lockSave": "ذخیره",
+  "strongAuthReason": "برای ادامه هویتت را تأیید کن",
+  "strongAuthNeedPasscode": "این کار حساس است. اول یک رمز برای اپ تعیین کن.",
+  "strongAuthPrompt": "رمز اپ را وارد کن",
+  "strongAuthDenied": "تأیید نشد.",
+  "retentionTitle": "نگه‌داری چت",
+  "retentionForever": "همیشه",
+  "retentionDays": "{count} روز",
+  "@retentionDays": {
+    "placeholders": {
+      "count": {
+        "type": "String"
+      }
+    }
+  },
+  "deleteAccountOpen": "حذف حساب",
+  "deleteAccountWarning": "همه داده‌هایت برای همیشه پاک می‌شود و برگشتی ندارد. برای تأیید DELETE را بنویس.",
+  "deleteAccountConfirmLabel": "عبارت تأیید",
+  "deleteAccountButton": "حذف همیشگی حساب",
+  "deleteAccountFailed": "حذف انجام نشد. عبارت را درست بنویس یا دوباره امتحان کن."
 }
