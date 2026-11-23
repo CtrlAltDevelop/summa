@@ -3,10 +3,17 @@
     "routes": [
       {
         "app_config": "infrastructure.common.apps.CommonConfig",
+        "description": "Liveness and readiness probes, for a load balancer and an orchestrator. Public, so a probe needs no credential.",
         "prefix": "/health",
         "router": "infrastructure.common.rest.api.router",
-        "tag": "Health",
-        "description": "Liveness and readiness probes, for a load balancer and an orchestrator. Public, so a probe needs no credential."
+        "tag": "Health"
+      },
+      {
+        "app_config": "apps.wallets.apps.WalletsConfig",
+        "description": "Endpoints published by the wallets app.",
+        "prefix": "/wallets",
+        "router": "apps.wallets.rest.v1.router",
+        "tag": "Wallets"
       }
     ]
   }
