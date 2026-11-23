@@ -35,6 +35,7 @@ class NetWorthControllerStub:
     CreateBasket: _grpc.UnaryUnaryMultiCallable[_networth_pb2.BasketCreate, _networth_pb2.BasketReply]
     DeleteBasket: _grpc.UnaryUnaryMultiCallable[_networth_pb2.BasketRef, _empty_pb2.Empty]
     Get: _grpc.UnaryUnaryMultiCallable[_empty_pb2.Empty, _networth_pb2.NetWorthReply]
+    History: _grpc.UnaryUnaryMultiCallable[_networth_pb2.HistoryRequest, _networth_pb2.HistoryReply]
     ListBaskets: _grpc.UnaryUnaryMultiCallable[_empty_pb2.Empty, _networth_pb2.BasketListReply]
 
 @_typing.type_check_only
@@ -43,6 +44,7 @@ class NetWorthControllerAsyncStub(NetWorthControllerStub):
     CreateBasket: _aio.UnaryUnaryMultiCallable[_networth_pb2.BasketCreate, _networth_pb2.BasketReply]  # type: ignore[assignment]
     DeleteBasket: _aio.UnaryUnaryMultiCallable[_networth_pb2.BasketRef, _empty_pb2.Empty]  # type: ignore[assignment]
     Get: _aio.UnaryUnaryMultiCallable[_empty_pb2.Empty, _networth_pb2.NetWorthReply]  # type: ignore[assignment]
+    History: _aio.UnaryUnaryMultiCallable[_networth_pb2.HistoryRequest, _networth_pb2.HistoryReply]  # type: ignore[assignment]
     ListBaskets: _aio.UnaryUnaryMultiCallable[_empty_pb2.Empty, _networth_pb2.BasketListReply]  # type: ignore[assignment]
 
 class NetWorthControllerServicer(metaclass=_abc_1.ABCMeta):
@@ -66,6 +68,13 @@ class NetWorthControllerServicer(metaclass=_abc_1.ABCMeta):
         request: _empty_pb2.Empty,
         context: _ServicerContext,
     ) -> _typing.Union[_networth_pb2.NetWorthReply, _abc.Awaitable[_networth_pb2.NetWorthReply]]: ...
+
+    @_abc_1.abstractmethod
+    def History(
+        self,
+        request: _networth_pb2.HistoryRequest,
+        context: _ServicerContext,
+    ) -> _typing.Union[_networth_pb2.HistoryReply, _abc.Awaitable[_networth_pb2.HistoryReply]]: ...
 
     @_abc_1.abstractmethod
     def ListBaskets(

@@ -155,6 +155,52 @@ final $typed_data.Uint8List basketReplyDescriptor = $convert.base64Decode(
     'CgtCYXNrZXRSZXBseRIyCgZiYXNrZXQYASABKAsyGi5jb25maWcubmV0d29ydGguQmFza2V0TX'
     'NnUgZiYXNrZXQ=');
 
+@$core.Deprecated('Use historyPointMsgDescriptor instead')
+const HistoryPointMsg$json = {
+  '1': 'HistoryPointMsg',
+  '2': [
+    {'1': 'date', '3': 1, '4': 1, '5': 9, '10': 'date'},
+    {'1': 'total_minor', '3': 2, '4': 1, '5': 3, '10': 'totalMinor'},
+  ],
+};
+
+/// Descriptor for `HistoryPointMsg`. Decode as a `google.protobuf.DescriptorProto`.
+final $typed_data.Uint8List historyPointMsgDescriptor = $convert.base64Decode(
+    'Cg9IaXN0b3J5UG9pbnRNc2cSEgoEZGF0ZRgBIAEoCVIEZGF0ZRIfCgt0b3RhbF9taW5vchgCIA'
+    'EoA1IKdG90YWxNaW5vcg==');
+
+@$core.Deprecated('Use historyReplyDescriptor instead')
+const HistoryReply$json = {
+  '1': 'HistoryReply',
+  '2': [
+    {
+      '1': 'points',
+      '3': 1,
+      '4': 3,
+      '5': 11,
+      '6': '.config.networth.HistoryPointMsg',
+      '10': 'points'
+    },
+  ],
+};
+
+/// Descriptor for `HistoryReply`. Decode as a `google.protobuf.DescriptorProto`.
+final $typed_data.Uint8List historyReplyDescriptor = $convert.base64Decode(
+    'CgxIaXN0b3J5UmVwbHkSOAoGcG9pbnRzGAEgAygLMiAuY29uZmlnLm5ldHdvcnRoLkhpc3Rvcn'
+    'lQb2ludE1zZ1IGcG9pbnRz');
+
+@$core.Deprecated('Use historyRequestDescriptor instead')
+const HistoryRequest$json = {
+  '1': 'HistoryRequest',
+  '2': [
+    {'1': 'days', '3': 1, '4': 1, '5': 5, '10': 'days'},
+  ],
+};
+
+/// Descriptor for `HistoryRequest`. Decode as a `google.protobuf.DescriptorProto`.
+final $typed_data.Uint8List historyRequestDescriptor =
+    $convert.base64Decode('Cg5IaXN0b3J5UmVxdWVzdBISCgRkYXlzGAEgASgFUgRkYXlz');
+
 @$core.Deprecated('Use netWorthReplyDescriptor instead')
 const NetWorthReply$json = {
   '1': 'NetWorthReply',

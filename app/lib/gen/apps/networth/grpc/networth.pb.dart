@@ -551,6 +551,187 @@ class BasketReply extends $pb.GeneratedMessage {
   BasketMsg ensureBasket() => $_ensure(0);
 }
 
+class HistoryPointMsg extends $pb.GeneratedMessage {
+  factory HistoryPointMsg({
+    $core.String? date,
+    $fixnum.Int64? totalMinor,
+  }) {
+    final result = HistoryPointMsg._();
+    if (date != null) result.date = date;
+    if (totalMinor != null) result.totalMinor = totalMinor;
+    return result;
+  }
+
+  HistoryPointMsg._();
+
+  factory HistoryPointMsg.fromBuffer($core.List<$core.int> data,
+          [$pb.ExtensionRegistry registry = $pb.ExtensionRegistry.EMPTY]) =>
+      HistoryPointMsg()..mergeFromBuffer(data, registry);
+  factory HistoryPointMsg.fromJson($core.String json,
+          [$pb.ExtensionRegistry registry = $pb.ExtensionRegistry.EMPTY]) =>
+      HistoryPointMsg()..mergeFromJson(json, registry);
+
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo(
+      _omitMessageNames ? '' : 'HistoryPointMsg',
+      package:
+          const $pb.PackageName(_omitMessageNames ? '' : 'config.networth'),
+      createEmptyInstance: HistoryPointMsg.$_createMessage)
+    ..aOS(1, _omitFieldNames ? '' : 'date')
+    ..aInt64(2, _omitFieldNames ? '' : 'totalMinor')
+    ..hasRequiredFields = false;
+
+  @$core.Deprecated('See https://github.com/google/protobuf.dart/issues/998.')
+  HistoryPointMsg clone() => deepCopy();
+  @$core.Deprecated('See https://github.com/google/protobuf.dart/issues/998.')
+  HistoryPointMsg copyWith(void Function(HistoryPointMsg) updates) =>
+      super.copyWith((message) => updates(message as HistoryPointMsg))
+          as HistoryPointMsg;
+
+  @$core.override
+  $pb.BuilderInfo get info_ => _i;
+
+  @$core.pragma('dart2js:noInline')
+  @$core.Deprecated('Use HistoryPointMsg() / HistoryPointMsg.new instead')
+  static HistoryPointMsg create() => HistoryPointMsg._();
+  static $pb.GeneratedMessage $_createMessage() => HistoryPointMsg._();
+  @$core.override
+  HistoryPointMsg createEmptyInstance() => HistoryPointMsg._();
+  @$core.pragma('dart2js:noInline')
+  static HistoryPointMsg getDefault() =>
+      _defaultInstance ??= $pb.GeneratedMessage.$_defaultFor<HistoryPointMsg>(
+          HistoryPointMsg.$_createMessage);
+  static HistoryPointMsg? _defaultInstance;
+
+  @$pb.TagNumber(1)
+  $core.String get date => $_getSZ(0);
+  @$pb.TagNumber(1)
+  set date($core.String value) => $_setString(0, value);
+  @$pb.TagNumber(1)
+  $core.bool hasDate() => $_has(0);
+  @$pb.TagNumber(1)
+  void clearDate() => $_clearField(1);
+
+  @$pb.TagNumber(2)
+  $fixnum.Int64 get totalMinor => $_getI64(1);
+  @$pb.TagNumber(2)
+  set totalMinor($fixnum.Int64 value) => $_setInt64(1, value);
+  @$pb.TagNumber(2)
+  $core.bool hasTotalMinor() => $_has(1);
+  @$pb.TagNumber(2)
+  void clearTotalMinor() => $_clearField(2);
+}
+
+class HistoryReply extends $pb.GeneratedMessage {
+  factory HistoryReply({
+    $core.Iterable<HistoryPointMsg>? points,
+  }) {
+    final result = HistoryReply._();
+    if (points != null) result.points.addAll(points);
+    return result;
+  }
+
+  HistoryReply._();
+
+  factory HistoryReply.fromBuffer($core.List<$core.int> data,
+          [$pb.ExtensionRegistry registry = $pb.ExtensionRegistry.EMPTY]) =>
+      HistoryReply()..mergeFromBuffer(data, registry);
+  factory HistoryReply.fromJson($core.String json,
+          [$pb.ExtensionRegistry registry = $pb.ExtensionRegistry.EMPTY]) =>
+      HistoryReply()..mergeFromJson(json, registry);
+
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo(
+      _omitMessageNames ? '' : 'HistoryReply',
+      package:
+          const $pb.PackageName(_omitMessageNames ? '' : 'config.networth'),
+      createEmptyInstance: HistoryReply.$_createMessage)
+    ..pPM<HistoryPointMsg>(1, _omitFieldNames ? '' : 'points',
+        subBuilder: HistoryPointMsg.$_createMessage)
+    ..hasRequiredFields = false;
+
+  @$core.Deprecated('See https://github.com/google/protobuf.dart/issues/998.')
+  HistoryReply clone() => deepCopy();
+  @$core.Deprecated('See https://github.com/google/protobuf.dart/issues/998.')
+  HistoryReply copyWith(void Function(HistoryReply) updates) =>
+      super.copyWith((message) => updates(message as HistoryReply))
+          as HistoryReply;
+
+  @$core.override
+  $pb.BuilderInfo get info_ => _i;
+
+  @$core.pragma('dart2js:noInline')
+  @$core.Deprecated('Use HistoryReply() / HistoryReply.new instead')
+  static HistoryReply create() => HistoryReply._();
+  static $pb.GeneratedMessage $_createMessage() => HistoryReply._();
+  @$core.override
+  HistoryReply createEmptyInstance() => HistoryReply._();
+  @$core.pragma('dart2js:noInline')
+  static HistoryReply getDefault() =>
+      _defaultInstance ??= $pb.GeneratedMessage.$_defaultFor<HistoryReply>(
+          HistoryReply.$_createMessage);
+  static HistoryReply? _defaultInstance;
+
+  @$pb.TagNumber(1)
+  $pb.PbList<HistoryPointMsg> get points => $_getList(0);
+}
+
+class HistoryRequest extends $pb.GeneratedMessage {
+  factory HistoryRequest({
+    $core.int? days,
+  }) {
+    final result = HistoryRequest._();
+    if (days != null) result.days = days;
+    return result;
+  }
+
+  HistoryRequest._();
+
+  factory HistoryRequest.fromBuffer($core.List<$core.int> data,
+          [$pb.ExtensionRegistry registry = $pb.ExtensionRegistry.EMPTY]) =>
+      HistoryRequest()..mergeFromBuffer(data, registry);
+  factory HistoryRequest.fromJson($core.String json,
+          [$pb.ExtensionRegistry registry = $pb.ExtensionRegistry.EMPTY]) =>
+      HistoryRequest()..mergeFromJson(json, registry);
+
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo(
+      _omitMessageNames ? '' : 'HistoryRequest',
+      package:
+          const $pb.PackageName(_omitMessageNames ? '' : 'config.networth'),
+      createEmptyInstance: HistoryRequest.$_createMessage)
+    ..aI(1, _omitFieldNames ? '' : 'days')
+    ..hasRequiredFields = false;
+
+  @$core.Deprecated('See https://github.com/google/protobuf.dart/issues/998.')
+  HistoryRequest clone() => deepCopy();
+  @$core.Deprecated('See https://github.com/google/protobuf.dart/issues/998.')
+  HistoryRequest copyWith(void Function(HistoryRequest) updates) =>
+      super.copyWith((message) => updates(message as HistoryRequest))
+          as HistoryRequest;
+
+  @$core.override
+  $pb.BuilderInfo get info_ => _i;
+
+  @$core.pragma('dart2js:noInline')
+  @$core.Deprecated('Use HistoryRequest() / HistoryRequest.new instead')
+  static HistoryRequest create() => HistoryRequest._();
+  static $pb.GeneratedMessage $_createMessage() => HistoryRequest._();
+  @$core.override
+  HistoryRequest createEmptyInstance() => HistoryRequest._();
+  @$core.pragma('dart2js:noInline')
+  static HistoryRequest getDefault() =>
+      _defaultInstance ??= $pb.GeneratedMessage.$_defaultFor<HistoryRequest>(
+          HistoryRequest.$_createMessage);
+  static HistoryRequest? _defaultInstance;
+
+  @$pb.TagNumber(1)
+  $core.int get days => $_getIZ(0);
+  @$pb.TagNumber(1)
+  set days($core.int value) => $_setSignedInt32(0, value);
+  @$pb.TagNumber(1)
+  $core.bool hasDays() => $_has(0);
+  @$pb.TagNumber(1)
+  void clearDays() => $_clearField(1);
+}
+
 class NetWorthReply extends $pb.GeneratedMessage {
   factory NetWorthReply({
     $fixnum.Int64? totalMinor,
