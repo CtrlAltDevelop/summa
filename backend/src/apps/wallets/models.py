@@ -1,4 +1,5 @@
 import uuid
+from typing import Any
 
 from django.conf import settings
 from django.db import models
@@ -8,7 +9,31 @@ from django.utils import timezone
 from apps.wallets.profile import KINDS
 
 
-class Wallet(models.Model):
+class TrackedQuerySet(models.QuerySet["Tracked"]):
+    def update(self, **kwargs: Any) -> int:
+        kwargs.setdefault("updated_at", timezone.now())
+        return super().update(**kwargs)
+
+
+class Tracked(models.Model):
+    """A row whose every change is visible to the sync feed through ``updated_at``."""
+
+    updated_at = models.DateTimeField(default=timezone.now, db_index=True)
+
+    objects = TrackedQuerySet.as_manager()
+
+    class Meta:
+        abstract = True
+
+    def save(self, *args: Any, **kwargs: Any) -> None:
+        self.updated_at = timezone.now()
+        fields = kwargs.get("update_fields")
+        if fields is not None:
+            kwargs["update_fields"] = {*fields, "updated_at"}
+        super().save(*args, **kwargs)
+
+
+class Wallet(Tracked):
     """A place money sits: cash, a bank account, a card. The balance is never stored."""
 
     id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
@@ -33,7 +58,7 @@ class Wallet(models.Model):
         return f"{self.name} ({self.currency})"
 
 
-class Category(models.Model):
+class Category(Tracked):
     """What an income or expense was for. Per user; each kind has one undeletable "other"."""
 
     id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
@@ -85,7 +110,7 @@ class Direction(models.TextChoices):
     OUT = "out"
 
 
-class LedgerEvent(models.Model):
+class LedgerEvent(Tracked):
     """One append-only movement.
 
     An edit adds a replacement (``replaces``) and voids the old row; a delete only

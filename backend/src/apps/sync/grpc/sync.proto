@@ -1,0 +1,57 @@
+syntax = "proto3";
+
+package config.sync;
+
+service SyncController {
+    rpc Changes(ChangesRequest) returns (ChangesReply) {}
+}
+
+message ChangesReply {
+    repeated SyncWalletMsg wallets = 1;
+    repeated SyncCategoryMsg categories = 2;
+    repeated SyncEntryMsg entries = 3;
+    string wallets_cursor = 4;
+    string categories_cursor = 5;
+    string events_cursor = 6;
+    bool has_more = 7;
+}
+
+message ChangesRequest {
+    string wallets_cursor = 1;
+    string categories_cursor = 2;
+    string events_cursor = 3;
+    int32 limit = 4;
+}
+
+message SyncCategoryMsg {
+    string id = 1;
+    string name = 2;
+    string kind = 3;
+    bool is_other = 4;
+}
+
+message SyncEntryMsg {
+    string id = 1;
+    string wallet_id = 2;
+    string kind = 3;
+    string direction = 4;
+    int64 amount_minor = 5;
+    string occurred_at = 6;
+    string note = 7;
+    string category_id = 8;
+    bool outside_totals = 9;
+    string split_id = 10;
+    string transfer_id = 11;
+    string refund_of = 12;
+    bool voided = 13;
+}
+
+message SyncWalletMsg {
+    string id = 1;
+    string name = 2;
+    string kind = 3;
+    string currency = 4;
+    string bank = 5;
+    bool archived = 6;
+}
+
