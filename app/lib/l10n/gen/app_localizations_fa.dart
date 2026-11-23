@@ -453,4 +453,97 @@ class AppLocalizationsFa extends AppLocalizations {
   @override
   String get refundInvalid =>
       'مبلغ برگشت درست نیست یا بیشتر از باقی‌مانده است.';
+
+  @override
+  String get recurringOpen => 'تراکنش‌های تکراری';
+
+  @override
+  String get recurringTitle => 'تراکنش تکراری';
+
+  @override
+  String get recurringAdd => 'تکراری جدید';
+
+  @override
+  String get recurringNoteLabel => 'عنوان (مثلاً اجاره)';
+
+  @override
+  String get recurringAmountLabel => 'مبلغ (خالی = هر بار می‌پرسم)';
+
+  @override
+  String get recurringPeriodLabel => 'تکرار';
+
+  @override
+  String get recurringMonthly => 'ماهانه';
+
+  @override
+  String get recurringWeekly => 'هفتگی';
+
+  @override
+  String get recurringDayLabel => 'روز ماه شمسی (۱ تا ۳۱)';
+
+  @override
+  String get recurringWeekdayLabel => 'روز هفته';
+
+  @override
+  String get recurringAuto => 'ثبت خودکار روز سررسید';
+
+  @override
+  String get recurringAskMe => 'بپرس';
+
+  @override
+  String get recurringNext => 'سررسید بعدی';
+
+  @override
+  String get recurringPause => 'توقف';
+
+  @override
+  String get recurringResume => 'ادامه';
+
+  @override
+  String get recurringDayInvalid => 'روز درست نیست.';
+
+  @override
+  String get weekdaySat => 'شنبه';
+
+  @override
+  String get weekdaySun => 'یکشنبه';
+
+  @override
+  String get weekdayMon => 'دوشنبه';
+
+  @override
+  String get weekdayTue => 'سه‌شنبه';
+
+  @override
+  String get weekdayWed => 'چهارشنبه';
+
+  @override
+  String get weekdayThu => 'پنجشنبه';
+
+  @override
+  String get weekdayFri => 'جمعه';
+
+  @override
+  String get occurrenceDueTitle => 'سررسید';
+
+  @override
+  String get occurrenceUpcoming => 'به‌زودی';
+
+  @override
+  String get occurrenceLowBalance => 'موجودی کیف برای این مبلغ کم است.';
+
+  @override
+  String get occurrenceDeducted => 'از همین حساب کسر شد';
+
+  @override
+  String get occurrenceOtherWallet => 'از حساب دیگر';
+
+  @override
+  String get occurrenceCancelled => 'لغو شد';
+
+  @override
+  String get occurrenceAmountLabel => 'مبلغ این بار';
+
+  @override
+  String get occurrenceNeedsAmount => 'مبلغ این بار را بنویس.';
 }

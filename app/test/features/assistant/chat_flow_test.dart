@@ -8,11 +8,13 @@ import 'package:summa/features/auth/auth_controller.dart';
 import 'package:summa/features/auth/token_store.dart';
 import 'package:summa/features/categories/category_controller.dart';
 import 'package:summa/features/wallets/entry_models.dart';
+import 'package:summa/features/recurring/recurring_controller.dart';
 import 'package:summa/features/wallets/ledger_controller.dart';
 import 'package:summa/features/wallets/wallet_models.dart';
 import 'package:summa/features/wallets/wallets_controller.dart';
 
 import '../auth/fake_auth_api.dart';
+import '../recurring/fake_recurring_api.dart';
 import '../categories/fake_category_api.dart';
 import '../wallets/fake_ledger_api.dart';
 import '../wallets/fake_wallet_api.dart';
@@ -44,6 +46,7 @@ Future<({FakeLedgerApi ledger, FakeAssistantApi assistant})> _pump(
         tokenStoreProvider.overrideWithValue(
           MemoryTokenStore(auth.currentTokens),
         ),
+        recurringApiProvider.overrideWithValue(FakeRecurringApi()),
         walletApiProvider.overrideWithValue(walletApi),
         ledgerApiProvider.overrideWithValue(ledger),
         categoryApiProvider.overrideWithValue(FakeCategoryApi(ledger)),
