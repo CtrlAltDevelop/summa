@@ -1839,6 +1839,108 @@ abstract class AppLocalizations {
   /// In fa, this message translates to:
   /// **'تمدید'**
   String get readOnlyRenew;
+
+  /// No description provided for @supportOpen.
+  ///
+  /// In fa, this message translates to:
+  /// **'پشتیبانی'**
+  String get supportOpen;
+
+  /// No description provided for @supportTitle.
+  ///
+  /// In fa, this message translates to:
+  /// **'پشتیبانی'**
+  String get supportTitle;
+
+  /// No description provided for @supportNew.
+  ///
+  /// In fa, this message translates to:
+  /// **'تیکت جدید'**
+  String get supportNew;
+
+  /// No description provided for @supportEmpty.
+  ///
+  /// In fa, this message translates to:
+  /// **'هنوز تیکتی نداری.'**
+  String get supportEmpty;
+
+  /// No description provided for @supportSubjectLabel.
+  ///
+  /// In fa, this message translates to:
+  /// **'موضوع'**
+  String get supportSubjectLabel;
+
+  /// No description provided for @supportBodyLabel.
+  ///
+  /// In fa, this message translates to:
+  /// **'مشکل یا سؤالت را بنویس'**
+  String get supportBodyLabel;
+
+  /// No description provided for @supportSend.
+  ///
+  /// In fa, this message translates to:
+  /// **'ارسال'**
+  String get supportSend;
+
+  /// No description provided for @supportReplyHint.
+  ///
+  /// In fa, this message translates to:
+  /// **'پیامت را بنویس'**
+  String get supportReplyHint;
+
+  /// No description provided for @supportSubjectRequired.
+  ///
+  /// In fa, this message translates to:
+  /// **'موضوع و متن را بنویس.'**
+  String get supportSubjectRequired;
+
+  /// No description provided for @supportFailed.
+  ///
+  /// In fa, this message translates to:
+  /// **'ارسال نشد. دوباره امتحان کن.'**
+  String get supportFailed;
+
+  /// No description provided for @supportStatusOpen.
+  ///
+  /// In fa, this message translates to:
+  /// **'باز'**
+  String get supportStatusOpen;
+
+  /// No description provided for @supportStatusPending.
+  ///
+  /// In fa, this message translates to:
+  /// **'در انتظار پاسخ'**
+  String get supportStatusPending;
+
+  /// No description provided for @supportStatusResolved.
+  ///
+  /// In fa, this message translates to:
+  /// **'حل شد'**
+  String get supportStatusResolved;
+
+  /// No description provided for @supportStatusClosed.
+  ///
+  /// In fa, this message translates to:
+  /// **'بسته'**
+  String get supportStatusClosed;
+
+  /// No description provided for @supportFromTeam.
+  ///
+  /// In fa, this message translates to:
+  /// **'پشتیبان'**
+  String get supportFromTeam;
+
+  /// No description provided for @supportFromYou.
+  ///
+  /// In fa, this message translates to:
+  /// **'تو'**
+  String get supportFromYou;
+
+  /// No description provided for @supportUnread.
+  ///
+  /// In fa, this message translates to:
+  /// **'پیام جدید'**
+  String get supportUnread;
 }
 
 class _AppLocalizationsDelegate

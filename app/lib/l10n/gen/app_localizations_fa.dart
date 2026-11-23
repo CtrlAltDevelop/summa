@@ -926,4 +926,55 @@ class AppLocalizationsFa extends AppLocalizations {
 
   @override
   String get readOnlyRenew => 'تمدید';
+
+  @override
+  String get supportOpen => 'پشتیبانی';
+
+  @override
+  String get supportTitle => 'پشتیبانی';
+
+  @override
+  String get supportNew => 'تیکت جدید';
+
+  @override
+  String get supportEmpty => 'هنوز تیکتی نداری.';
+
+  @override
+  String get supportSubjectLabel => 'موضوع';
+
+  @override
+  String get supportBodyLabel => 'مشکل یا سؤالت را بنویس';
+
+  @override
+  String get supportSend => 'ارسال';
+
+  @override
+  String get supportReplyHint => 'پیامت را بنویس';
+
+  @override
+  String get supportSubjectRequired => 'موضوع و متن را بنویس.';
+
+  @override
+  String get supportFailed => 'ارسال نشد. دوباره امتحان کن.';
+
+  @override
+  String get supportStatusOpen => 'باز';
+
+  @override
+  String get supportStatusPending => 'در انتظار پاسخ';
+
+  @override
+  String get supportStatusResolved => 'حل شد';
+
+  @override
+  String get supportStatusClosed => 'بسته';
+
+  @override
+  String get supportFromTeam => 'پشتیبان';
+
+  @override
+  String get supportFromYou => 'تو';
+
+  @override
+  String get supportUnread => 'پیام جدید';
 }
