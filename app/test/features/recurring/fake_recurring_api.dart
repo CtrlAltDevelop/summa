@@ -25,8 +25,10 @@ class FakeRecurringApi implements RecurringApi {
     required int day,
     required bool autoConfirm,
     required String clientMutationId,
+    String categoryId = '',
   }) async {
     created.add({
+      'category': categoryId,
       'wallet': walletId,
       'kind': kind,
       'amount': amountMinor,
@@ -51,6 +53,15 @@ class FakeRecurringApi implements RecurringApi {
       ),
     );
   }
+
+  final List<(String, int)> settled = [];
+
+  @override
+  Future<void> settleNow(
+    String access,
+    String recurringId, {
+    int amountMinor = 0,
+  }) async => settled.add((recurringId, amountMinor));
 
   @override
   Future<void> setActive(

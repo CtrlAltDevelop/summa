@@ -191,3 +191,17 @@ const RecurringReply$json = {
 final $typed_data.Uint8List recurringReplyDescriptor = $convert.base64Decode(
     'Cg5SZWN1cnJpbmdSZXBseRI8CglyZWN1cnJpbmcYASABKAsyHi5jb25maWcucmVjdXJyaW5nLl'
     'JlY3VycmluZ01zZ1IJcmVjdXJyaW5n');
+
+@$core.Deprecated('Use settleRequestDescriptor instead')
+const SettleRequest$json = {
+  '1': 'SettleRequest',
+  '2': [
+    {'1': 'recurring_id', '3': 1, '4': 1, '5': 9, '10': 'recurringId'},
+    {'1': 'amount_minor', '3': 2, '4': 1, '5': 3, '10': 'amountMinor'},
+  ],
+};
+
+/// Descriptor for `SettleRequest`. Decode as a `google.protobuf.DescriptorProto`.
+final $typed_data.Uint8List settleRequestDescriptor = $convert.base64Decode(
+    'Cg1TZXR0bGVSZXF1ZXN0EiEKDHJlY3VycmluZ19pZBgBIAEoCVILcmVjdXJyaW5nSWQSIQoMYW'
+    '1vdW50X21pbm9yGAIgASgDUgthbW91bnRNaW5vcg==');

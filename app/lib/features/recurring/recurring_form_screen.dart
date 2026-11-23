@@ -8,6 +8,8 @@ import '../../core/ui/tokens/tokens.dart';
 import '../../core/ui/widgets/widgets.dart';
 import '../../l10n/gen/app_localizations.dart';
 import '../auth/auth_models.dart';
+import '../categories/category_controller.dart';
+import '../categories/category_models.dart';
 import '../wallets/choices.dart';
 import '../wallets/entry_models.dart';
 import '../wallets/wallet_models.dart';
@@ -38,6 +40,7 @@ class _RecurringFormScreenState extends ConsumerState<RecurringFormScreen> {
   RecurringPeriod _period = RecurringPeriod.monthly;
   int _weekday = 5; // Saturday
   bool _auto = false;
+  Category? _category;
   bool _saving = false;
   String? _error;
 
@@ -47,6 +50,25 @@ class _RecurringFormScreenState extends ConsumerState<RecurringFormScreen> {
       16,
       (_) => random.nextInt(256).toRadixString(16).padLeft(2, '0'),
     ).join();
+  }
+
+  /// The categories for the chosen kind; "other" is the default.
+  List<Category> _categoriesFor(WidgetRef ref) {
+    final kind = _kind == EntryKind.income
+        ? CategoryKind.income
+        : CategoryKind.expense;
+    return (ref.read(categoriesControllerProvider).value ?? const <Category>[])
+        .where((c) => c.kind == kind)
+        .toList();
+  }
+
+  Category? _chosenCategory(WidgetRef ref) {
+    final options = _categoriesFor(ref);
+    if (options.isEmpty) return null;
+    if (_category != null && options.any((c) => c.id == _category!.id)) {
+      return _category;
+    }
+    return options.firstWhere((c) => c.isOther, orElse: () => options.first);
   }
 
   @override
@@ -90,6 +112,7 @@ class _RecurringFormScreenState extends ConsumerState<RecurringFormScreen> {
             day: day,
             autoConfirm: _auto && amount > 0,
             clientMutationId: _mutationId,
+            categoryId: _chosenCategory(ref)?.id ?? '',
           );
       if (mounted) navigator.pop();
     } on WalletException catch (e) {
@@ -112,6 +135,7 @@ class _RecurringFormScreenState extends ConsumerState<RecurringFormScreen> {
   @override
   Widget build(BuildContext context) {
     final l10n = AppLocalizations.of(context);
+    ref.watch(categoriesControllerProvider); // load them for the choice
     final weekdays = {
       5: l10n.weekdaySat,
       6: l10n.weekdaySun,
@@ -144,6 +168,17 @@ class _RecurringFormScreenState extends ConsumerState<RecurringFormScreen> {
               label: (w) => w.name,
               onSelected: (w) => setState(() => _wallet = w),
             ),
+            if (_categoriesFor(ref).isNotEmpty) ...[
+              const SizedBox(height: SmSpace.lg),
+              Text(l10n.recurringCategoryLabel, style: SmType.caption),
+              const SizedBox(height: SmSpace.sm),
+              Choices<Category>(
+                values: _categoriesFor(ref),
+                selected: _chosenCategory(ref)!,
+                label: (c) => c.name,
+                onSelected: (c) => setState(() => _category = c),
+              ),
+            ],
             const SizedBox(height: SmSpace.lg),
             SmTextField(
               controller: _note,
