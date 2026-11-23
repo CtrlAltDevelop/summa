@@ -21,6 +21,8 @@ NOTE_MAX_LENGTH = 200
 DEFAULT_LIMIT = 50
 MAX_LIMIT = 200
 _DIRECTION = {EventKind.INCOME: Direction.IN, EventKind.EXPENSE: Direction.OUT}
+# What the list shows and delete may void; only income/expense can be recorded or edited.
+_LISTED = [*_DIRECTION, EventKind.TRANSFER_OUT, EventKind.TRANSFER_IN]
 
 
 @dataclass(frozen=True, slots=True)
@@ -112,7 +114,7 @@ class LedgerService:
         query = LedgerEvent.objects.filter(
             user=user,
             voided=False,
-            kind__in=list(_DIRECTION),
+            kind__in=_LISTED,
         ).select_related("wallet")
         if wallet_id:
             try:
@@ -135,6 +137,8 @@ class LedgerService:
         note = _check_fields(amount_minor, note)
 
         def replace(old: LedgerEvent) -> LedgerEvent:
+            if old.transfer_id is not None:
+                raise _refuse("A transfer cannot be edited. Delete it and make a new one.")
             old.voided = True
             old.save(update_fields=["voided"])
             return LedgerEvent.objects.create(
@@ -152,6 +156,11 @@ class LedgerService:
 
     def delete(self, user: Any, entry_id: str) -> None:
         def void(old: LedgerEvent) -> LedgerEvent:
+            if old.transfer_id is not None:
+                # One transfer is one thing to the user: void every leg together.
+                LedgerEvent.objects.filter(user=user, transfer_id=old.transfer_id).update(
+                    voided=True
+                )
             old.voided = True
             old.save(update_fields=["voided"])
             return old
@@ -167,7 +176,7 @@ class LedgerService:
             old = (
                 LedgerEvent.objects.select_for_update()
                 .select_related("wallet")
-                .filter(user=user, id=key, voided=False, kind__in=list(_DIRECTION))
+                .filter(user=user, id=key, voided=False, kind__in=_LISTED)
                 .first()
             )
             if old is None:

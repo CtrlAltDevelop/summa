@@ -55,6 +55,11 @@ class LedgerControllerStub:
                 request_serializer=apps_dot_wallets_dot_grpc_dot_wallets__pb2.EntryRecord.SerializeToString,
                 response_deserializer=apps_dot_wallets_dot_grpc_dot_wallets__pb2.EntryReply.FromString,
                 _registered_method=True)
+        self.Transfer = channel.unary_unary(
+                '/config.wallets.LedgerController/Transfer',
+                request_serializer=apps_dot_wallets_dot_grpc_dot_wallets__pb2.TransferRequest.SerializeToString,
+                response_deserializer=apps_dot_wallets_dot_grpc_dot_wallets__pb2.EntryListReply.FromString,
+                _registered_method=True)
 
 
 class LedgerControllerServicer:
@@ -84,6 +89,12 @@ class LedgerControllerServicer:
         context.set_details('Method not implemented!')
         raise NotImplementedError('Method not implemented!')
 
+    def Transfer(self, request, context):
+        """Missing associated documentation comment in .proto file."""
+        context.set_code(grpc.StatusCode.UNIMPLEMENTED)
+        context.set_details('Method not implemented!')
+        raise NotImplementedError('Method not implemented!')
+
 
 def add_LedgerControllerServicer_to_server(servicer, server):
     rpc_method_handlers = {
@@ -106,6 +117,11 @@ def add_LedgerControllerServicer_to_server(servicer, server):
                     servicer.Record,
                     request_deserializer=apps_dot_wallets_dot_grpc_dot_wallets__pb2.EntryRecord.FromString,
                     response_serializer=apps_dot_wallets_dot_grpc_dot_wallets__pb2.EntryReply.SerializeToString,
+            ),
+            'Transfer': grpc.unary_unary_rpc_method_handler(
+                    servicer.Transfer,
+                    request_deserializer=apps_dot_wallets_dot_grpc_dot_wallets__pb2.TransferRequest.FromString,
+                    response_serializer=apps_dot_wallets_dot_grpc_dot_wallets__pb2.EntryListReply.SerializeToString,
             ),
     }
     generic_handler = grpc.method_handlers_generic_handler(
@@ -216,6 +232,33 @@ class LedgerController:
             '/config.wallets.LedgerController/Record',
             apps_dot_wallets_dot_grpc_dot_wallets__pb2.EntryRecord.SerializeToString,
             apps_dot_wallets_dot_grpc_dot_wallets__pb2.EntryReply.FromString,
+            options,
+            channel_credentials,
+            insecure,
+            call_credentials,
+            compression,
+            wait_for_ready,
+            timeout,
+            metadata,
+            _registered_method=True)
+
+    @staticmethod
+    def Transfer(request,
+            target,
+            options=(),
+            channel_credentials=None,
+            call_credentials=None,
+            insecure=False,
+            compression=None,
+            wait_for_ready=None,
+            timeout=None,
+            metadata=None):
+        return grpc.experimental.unary_unary(
+            request,
+            target,
+            '/config.wallets.LedgerController/Transfer',
+            apps_dot_wallets_dot_grpc_dot_wallets__pb2.TransferRequest.SerializeToString,
+            apps_dot_wallets_dot_grpc_dot_wallets__pb2.EntryListReply.FromString,
             options,
             channel_credentials,
             insecure,

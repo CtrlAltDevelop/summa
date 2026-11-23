@@ -36,6 +36,7 @@ class LedgerControllerStub:
     Edit: _grpc.UnaryUnaryMultiCallable[_wallets_pb2.EntryEdit, _wallets_pb2.EntryReply]
     List: _grpc.UnaryUnaryMultiCallable[_wallets_pb2.EntryQuery, _wallets_pb2.EntryListReply]
     Record: _grpc.UnaryUnaryMultiCallable[_wallets_pb2.EntryRecord, _wallets_pb2.EntryReply]
+    Transfer: _grpc.UnaryUnaryMultiCallable[_wallets_pb2.TransferRequest, _wallets_pb2.EntryListReply]
 
 @_typing.type_check_only
 class LedgerControllerAsyncStub(LedgerControllerStub):
@@ -44,6 +45,7 @@ class LedgerControllerAsyncStub(LedgerControllerStub):
     Edit: _aio.UnaryUnaryMultiCallable[_wallets_pb2.EntryEdit, _wallets_pb2.EntryReply]  # type: ignore[assignment]
     List: _aio.UnaryUnaryMultiCallable[_wallets_pb2.EntryQuery, _wallets_pb2.EntryListReply]  # type: ignore[assignment]
     Record: _aio.UnaryUnaryMultiCallable[_wallets_pb2.EntryRecord, _wallets_pb2.EntryReply]  # type: ignore[assignment]
+    Transfer: _aio.UnaryUnaryMultiCallable[_wallets_pb2.TransferRequest, _wallets_pb2.EntryListReply]  # type: ignore[assignment]
 
 class LedgerControllerServicer(metaclass=_abc_1.ABCMeta):
     @_abc_1.abstractmethod
@@ -73,6 +75,13 @@ class LedgerControllerServicer(metaclass=_abc_1.ABCMeta):
         request: _wallets_pb2.EntryRecord,
         context: _ServicerContext,
     ) -> _typing.Union[_wallets_pb2.EntryReply, _abc.Awaitable[_wallets_pb2.EntryReply]]: ...
+
+    @_abc_1.abstractmethod
+    def Transfer(
+        self,
+        request: _wallets_pb2.TransferRequest,
+        context: _ServicerContext,
+    ) -> _typing.Union[_wallets_pb2.EntryListReply, _abc.Awaitable[_wallets_pb2.EntryListReply]]: ...
 
 def add_LedgerControllerServicer_to_server(servicer: LedgerControllerServicer, server: _typing.Union[_grpc.Server, _aio.Server]) -> None: ...
 

@@ -165,3 +165,57 @@ def test_a_bad_time_is_invalid_argument(
         )
 
     assert refusal.value.code() is grpc.StatusCode.INVALID_ARGUMENT
+
+
+def test_transfer_between_currencies_over_the_wire(
+    transactional_db: None, grpc_call: Callable[..., Any]
+) -> None:
+    token = sign_up("zoe")
+    toman = grpc_call(Stub, "Create", new_wallet("m1", balance=5_000_000), token=token).wallet
+    usd = grpc_call(
+        Stub, "Create", new_wallet("m2", balance=0, currency="USD", name="usd"), token=token
+    ).wallet
+
+    reply = grpc_call(
+        LedgerStub,
+        "Transfer",
+        wallets_pb2.TransferRequest(
+            from_wallet_id=toman.id,
+            to_wallet_id=usd.id,
+            amount_minor=1_000_000,
+            rate="0.0000165",
+            fee_minor=500,
+            client_mutation_id="t1",
+        ),
+        token=token,
+    )
+
+    assert [(e.kind, e.amount_minor, e.currency) for e in reply.entries] == [
+        ("transfer_out", 1_000_000, "IRT"),
+        ("transfer_in", 1_650, "USD"),
+        ("expense", 500, "IRT"),
+    ]
+    balances = {
+        w.id: w.balance_minor for w in grpc_call(Stub, "List", Empty(), token=token).wallets
+    }
+    assert balances == {toman.id: 3_999_500, usd.id: 1_650}
+
+
+def test_a_transfer_without_a_needed_rate_is_invalid_argument(
+    transactional_db: None, grpc_call: Callable[..., Any]
+) -> None:
+    token = sign_up("zoe")
+    a = grpc_call(Stub, "Create", new_wallet("m1"), token=token).wallet
+    b = grpc_call(Stub, "Create", new_wallet("m2", currency="USD", name="u"), token=token).wallet
+
+    with pytest.raises(grpc.aio.AioRpcError) as refusal:
+        grpc_call(
+            LedgerStub,
+            "Transfer",
+            wallets_pb2.TransferRequest(
+                from_wallet_id=a.id, to_wallet_id=b.id, amount_minor=10, client_mutation_id="t"
+            ),
+            token=token,
+        )
+
+    assert refusal.value.code() is grpc.StatusCode.INVALID_ARGUMENT
