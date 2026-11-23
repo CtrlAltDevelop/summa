@@ -6,12 +6,14 @@ import 'package:summa/features/auth/auth_controller.dart';
 import 'package:summa/features/auth/auth_models.dart';
 import 'package:summa/features/auth/token_store.dart';
 import 'package:summa/features/categories/category_controller.dart';
+import 'package:summa/features/recurring/recurring_controller.dart';
 import 'package:summa/features/wallets/ledger_controller.dart';
 import 'package:summa/features/wallets/wallets_controller.dart';
 
 import '../categories/fake_category_api.dart';
 import '../wallets/fake_ledger_api.dart';
 import '../wallets/fake_wallet_api.dart';
+import '../recurring/fake_recurring_api.dart';
 import 'fake_auth_api.dart';
 
 Future<MemoryTokenStore> _pump(
@@ -27,6 +29,7 @@ Future<MemoryTokenStore> _pump(
       overrides: [
         authApiProvider.overrideWithValue(api),
         tokenStoreProvider.overrideWithValue(store),
+        recurringApiProvider.overrideWithValue(FakeRecurringApi()),
         walletApiProvider.overrideWithValue(wallets),
         ledgerApiProvider.overrideWithValue(ledger),
         categoryApiProvider.overrideWithValue(FakeCategoryApi(ledger)),

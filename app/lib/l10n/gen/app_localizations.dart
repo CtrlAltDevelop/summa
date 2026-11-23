@@ -945,6 +945,192 @@ abstract class AppLocalizations {
   /// In fa, this message translates to:
   /// **'مبلغ برگشت درست نیست یا بیشتر از باقی‌مانده است.'**
   String get refundInvalid;
+
+  /// No description provided for @recurringOpen.
+  ///
+  /// In fa, this message translates to:
+  /// **'تراکنش‌های تکراری'**
+  String get recurringOpen;
+
+  /// No description provided for @recurringTitle.
+  ///
+  /// In fa, this message translates to:
+  /// **'تراکنش تکراری'**
+  String get recurringTitle;
+
+  /// No description provided for @recurringAdd.
+  ///
+  /// In fa, this message translates to:
+  /// **'تکراری جدید'**
+  String get recurringAdd;
+
+  /// No description provided for @recurringNoteLabel.
+  ///
+  /// In fa, this message translates to:
+  /// **'عنوان (مثلاً اجاره)'**
+  String get recurringNoteLabel;
+
+  /// No description provided for @recurringAmountLabel.
+  ///
+  /// In fa, this message translates to:
+  /// **'مبلغ (خالی = هر بار می‌پرسم)'**
+  String get recurringAmountLabel;
+
+  /// No description provided for @recurringPeriodLabel.
+  ///
+  /// In fa, this message translates to:
+  /// **'تکرار'**
+  String get recurringPeriodLabel;
+
+  /// No description provided for @recurringMonthly.
+  ///
+  /// In fa, this message translates to:
+  /// **'ماهانه'**
+  String get recurringMonthly;
+
+  /// No description provided for @recurringWeekly.
+  ///
+  /// In fa, this message translates to:
+  /// **'هفتگی'**
+  String get recurringWeekly;
+
+  /// No description provided for @recurringDayLabel.
+  ///
+  /// In fa, this message translates to:
+  /// **'روز ماه شمسی (۱ تا ۳۱)'**
+  String get recurringDayLabel;
+
+  /// No description provided for @recurringWeekdayLabel.
+  ///
+  /// In fa, this message translates to:
+  /// **'روز هفته'**
+  String get recurringWeekdayLabel;
+
+  /// No description provided for @recurringAuto.
+  ///
+  /// In fa, this message translates to:
+  /// **'ثبت خودکار روز سررسید'**
+  String get recurringAuto;
+
+  /// No description provided for @recurringAskMe.
+  ///
+  /// In fa, this message translates to:
+  /// **'بپرس'**
+  String get recurringAskMe;
+
+  /// No description provided for @recurringNext.
+  ///
+  /// In fa, this message translates to:
+  /// **'سررسید بعدی'**
+  String get recurringNext;
+
+  /// No description provided for @recurringPause.
+  ///
+  /// In fa, this message translates to:
+  /// **'توقف'**
+  String get recurringPause;
+
+  /// No description provided for @recurringResume.
+  ///
+  /// In fa, this message translates to:
+  /// **'ادامه'**
+  String get recurringResume;
+
+  /// No description provided for @recurringDayInvalid.
+  ///
+  /// In fa, this message translates to:
+  /// **'روز درست نیست.'**
+  String get recurringDayInvalid;
+
+  /// No description provided for @weekdaySat.
+  ///
+  /// In fa, this message translates to:
+  /// **'شنبه'**
+  String get weekdaySat;
+
+  /// No description provided for @weekdaySun.
+  ///
+  /// In fa, this message translates to:
+  /// **'یکشنبه'**
+  String get weekdaySun;
+
+  /// No description provided for @weekdayMon.
+  ///
+  /// In fa, this message translates to:
+  /// **'دوشنبه'**
+  String get weekdayMon;
+
+  /// No description provided for @weekdayTue.
+  ///
+  /// In fa, this message translates to:
+  /// **'سه‌شنبه'**
+  String get weekdayTue;
+
+  /// No description provided for @weekdayWed.
+  ///
+  /// In fa, this message translates to:
+  /// **'چهارشنبه'**
+  String get weekdayWed;
+
+  /// No description provided for @weekdayThu.
+  ///
+  /// In fa, this message translates to:
+  /// **'پنجشنبه'**
+  String get weekdayThu;
+
+  /// No description provided for @weekdayFri.
+  ///
+  /// In fa, this message translates to:
+  /// **'جمعه'**
+  String get weekdayFri;
+
+  /// No description provided for @occurrenceDueTitle.
+  ///
+  /// In fa, this message translates to:
+  /// **'سررسید'**
+  String get occurrenceDueTitle;
+
+  /// No description provided for @occurrenceUpcoming.
+  ///
+  /// In fa, this message translates to:
+  /// **'به‌زودی'**
+  String get occurrenceUpcoming;
+
+  /// No description provided for @occurrenceLowBalance.
+  ///
+  /// In fa, this message translates to:
+  /// **'موجودی کیف برای این مبلغ کم است.'**
+  String get occurrenceLowBalance;
+
+  /// No description provided for @occurrenceDeducted.
+  ///
+  /// In fa, this message translates to:
+  /// **'از همین حساب کسر شد'**
+  String get occurrenceDeducted;
+
+  /// No description provided for @occurrenceOtherWallet.
+  ///
+  /// In fa, this message translates to:
+  /// **'از حساب دیگر'**
+  String get occurrenceOtherWallet;
+
+  /// No description provided for @occurrenceCancelled.
+  ///
+  /// In fa, this message translates to:
+  /// **'لغو شد'**
+  String get occurrenceCancelled;
+
+  /// No description provided for @occurrenceAmountLabel.
+  ///
+  /// In fa, this message translates to:
+  /// **'مبلغ این بار'**
+  String get occurrenceAmountLabel;
+
+  /// No description provided for @occurrenceNeedsAmount.
+  ///
+  /// In fa, this message translates to:
+  /// **'مبلغ این بار را بنویس.'**
+  String get occurrenceNeedsAmount;
 }
 
 class _AppLocalizationsDelegate
