@@ -39,6 +39,13 @@ class ReportsControllerClient extends $grpc.Client {
     return $createUnaryCall(_$exportCsv, request, options: options);
   }
 
+  $grpc.ResponseFuture<$0.ImportReply> importCsv(
+    $0.ImportRequest request, {
+    $grpc.CallOptions? options,
+  }) {
+    return $createUnaryCall(_$importCsv, request, options: options);
+  }
+
   $grpc.ResponseFuture<$0.ReportReply> monthly(
     $0.ReportRequest request, {
     $grpc.CallOptions? options,
@@ -53,6 +60,11 @@ class ReportsControllerClient extends $grpc.Client {
           '/config.reports.ReportsController/ExportCsv',
           ($0.ExportRequest value) => value.writeToBuffer(),
           $0.ExportReply.fromBuffer);
+  static final _$importCsv =
+      $grpc.ClientMethod<$0.ImportRequest, $0.ImportReply>(
+          '/config.reports.ReportsController/ImportCsv',
+          ($0.ImportRequest value) => value.writeToBuffer(),
+          $0.ImportReply.fromBuffer);
   static final _$monthly = $grpc.ClientMethod<$0.ReportRequest, $0.ReportReply>(
       '/config.reports.ReportsController/Monthly',
       ($0.ReportRequest value) => value.writeToBuffer(),
@@ -71,6 +83,13 @@ abstract class ReportsControllerServiceBase extends $grpc.Service {
         false,
         ($core.List<$core.int> value) => $0.ExportRequest.fromBuffer(value),
         ($0.ExportReply value) => value.writeToBuffer()));
+    $addMethod($grpc.ServiceMethod<$0.ImportRequest, $0.ImportReply>(
+        'ImportCsv',
+        importCsv_Pre,
+        false,
+        false,
+        ($core.List<$core.int> value) => $0.ImportRequest.fromBuffer(value),
+        ($0.ImportReply value) => value.writeToBuffer()));
     $addMethod($grpc.ServiceMethod<$0.ReportRequest, $0.ReportReply>(
         'Monthly',
         monthly_Pre,
@@ -87,6 +106,14 @@ abstract class ReportsControllerServiceBase extends $grpc.Service {
 
   $async.Future<$0.ExportReply> exportCsv(
       $grpc.ServiceCall call, $0.ExportRequest request);
+
+  $async.Future<$0.ImportReply> importCsv_Pre(
+      $grpc.ServiceCall $call, $async.Future<$0.ImportRequest> $request) async {
+    return importCsv($call, await $request);
+  }
+
+  $async.Future<$0.ImportReply> importCsv(
+      $grpc.ServiceCall call, $0.ImportRequest request);
 
   $async.Future<$0.ReportReply> monthly_Pre(
       $grpc.ServiceCall $call, $async.Future<$0.ReportRequest> $request) async {

@@ -16,6 +16,7 @@ import '../outbox/outbox_panel.dart';
 import '../privacy/privacy_screen.dart';
 import '../recurring/recurring_panel.dart';
 import '../support/support_screen.dart';
+import '../reports/data_screen.dart';
 import '../reports/report_screen.dart';
 import '../wallets/entries_panel.dart';
 import '../wallets/wallets_panel.dart';
@@ -86,6 +87,15 @@ class HomeScreen extends ConsumerWidget {
             const SizedBox(height: SmSpace.lg),
             const EntriesPanel(),
             const SizedBox(height: SmSpace.xl),
+            SmButton(
+              label: l10n.dataOpen,
+              onPressed: () => Navigator.of(context).push(
+                PageRouteBuilder<void>(
+                  pageBuilder: (_, _, _) => const DataScreen(),
+                ),
+              ),
+            ),
+            const SizedBox(height: SmSpace.sm),
             SmButton(
               label: l10n.privacyOpen,
               onPressed: () => Navigator.of(context).push(

@@ -330,6 +330,244 @@ class ExportRequest extends $pb.GeneratedMessage {
   void clearEndsAt() => $_clearField(2);
 }
 
+class ImportErrorMsg extends $pb.GeneratedMessage {
+  factory ImportErrorMsg({
+    $core.int? line,
+    $core.String? message,
+  }) {
+    final result = ImportErrorMsg._();
+    if (line != null) result.line = line;
+    if (message != null) result.message = message;
+    return result;
+  }
+
+  ImportErrorMsg._();
+
+  factory ImportErrorMsg.fromBuffer($core.List<$core.int> data,
+          [$pb.ExtensionRegistry registry = $pb.ExtensionRegistry.EMPTY]) =>
+      ImportErrorMsg()..mergeFromBuffer(data, registry);
+  factory ImportErrorMsg.fromJson($core.String json,
+          [$pb.ExtensionRegistry registry = $pb.ExtensionRegistry.EMPTY]) =>
+      ImportErrorMsg()..mergeFromJson(json, registry);
+
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo(
+      _omitMessageNames ? '' : 'ImportErrorMsg',
+      package: const $pb.PackageName(_omitMessageNames ? '' : 'config.reports'),
+      createEmptyInstance: ImportErrorMsg.$_createMessage)
+    ..aI(1, _omitFieldNames ? '' : 'line')
+    ..aOS(2, _omitFieldNames ? '' : 'message')
+    ..hasRequiredFields = false;
+
+  @$core.Deprecated('See https://github.com/google/protobuf.dart/issues/998.')
+  ImportErrorMsg clone() => deepCopy();
+  @$core.Deprecated('See https://github.com/google/protobuf.dart/issues/998.')
+  ImportErrorMsg copyWith(void Function(ImportErrorMsg) updates) =>
+      super.copyWith((message) => updates(message as ImportErrorMsg))
+          as ImportErrorMsg;
+
+  @$core.override
+  $pb.BuilderInfo get info_ => _i;
+
+  @$core.pragma('dart2js:noInline')
+  @$core.Deprecated('Use ImportErrorMsg() / ImportErrorMsg.new instead')
+  static ImportErrorMsg create() => ImportErrorMsg._();
+  static $pb.GeneratedMessage $_createMessage() => ImportErrorMsg._();
+  @$core.override
+  ImportErrorMsg createEmptyInstance() => ImportErrorMsg._();
+  @$core.pragma('dart2js:noInline')
+  static ImportErrorMsg getDefault() =>
+      _defaultInstance ??= $pb.GeneratedMessage.$_defaultFor<ImportErrorMsg>(
+          ImportErrorMsg.$_createMessage);
+  static ImportErrorMsg? _defaultInstance;
+
+  @$pb.TagNumber(1)
+  $core.int get line => $_getIZ(0);
+  @$pb.TagNumber(1)
+  set line($core.int value) => $_setSignedInt32(0, value);
+  @$pb.TagNumber(1)
+  $core.bool hasLine() => $_has(0);
+  @$pb.TagNumber(1)
+  void clearLine() => $_clearField(1);
+
+  @$pb.TagNumber(2)
+  $core.String get message => $_getSZ(1);
+  @$pb.TagNumber(2)
+  set message($core.String value) => $_setString(1, value);
+  @$pb.TagNumber(2)
+  $core.bool hasMessage() => $_has(1);
+  @$pb.TagNumber(2)
+  void clearMessage() => $_clearField(2);
+}
+
+class ImportReply extends $pb.GeneratedMessage {
+  factory ImportReply({
+    $core.int? rows,
+    $core.int? importable,
+    $core.int? imported,
+    $core.int? skipped,
+    $core.Iterable<ImportErrorMsg>? errors,
+  }) {
+    final result = ImportReply._();
+    if (rows != null) result.rows = rows;
+    if (importable != null) result.importable = importable;
+    if (imported != null) result.imported = imported;
+    if (skipped != null) result.skipped = skipped;
+    if (errors != null) result.errors.addAll(errors);
+    return result;
+  }
+
+  ImportReply._();
+
+  factory ImportReply.fromBuffer($core.List<$core.int> data,
+          [$pb.ExtensionRegistry registry = $pb.ExtensionRegistry.EMPTY]) =>
+      ImportReply()..mergeFromBuffer(data, registry);
+  factory ImportReply.fromJson($core.String json,
+          [$pb.ExtensionRegistry registry = $pb.ExtensionRegistry.EMPTY]) =>
+      ImportReply()..mergeFromJson(json, registry);
+
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo(
+      _omitMessageNames ? '' : 'ImportReply',
+      package: const $pb.PackageName(_omitMessageNames ? '' : 'config.reports'),
+      createEmptyInstance: ImportReply.$_createMessage)
+    ..aI(1, _omitFieldNames ? '' : 'rows')
+    ..aI(2, _omitFieldNames ? '' : 'importable')
+    ..aI(3, _omitFieldNames ? '' : 'imported')
+    ..aI(4, _omitFieldNames ? '' : 'skipped')
+    ..pPM<ImportErrorMsg>(5, _omitFieldNames ? '' : 'errors',
+        subBuilder: ImportErrorMsg.$_createMessage)
+    ..hasRequiredFields = false;
+
+  @$core.Deprecated('See https://github.com/google/protobuf.dart/issues/998.')
+  ImportReply clone() => deepCopy();
+  @$core.Deprecated('See https://github.com/google/protobuf.dart/issues/998.')
+  ImportReply copyWith(void Function(ImportReply) updates) =>
+      super.copyWith((message) => updates(message as ImportReply))
+          as ImportReply;
+
+  @$core.override
+  $pb.BuilderInfo get info_ => _i;
+
+  @$core.pragma('dart2js:noInline')
+  @$core.Deprecated('Use ImportReply() / ImportReply.new instead')
+  static ImportReply create() => ImportReply._();
+  static $pb.GeneratedMessage $_createMessage() => ImportReply._();
+  @$core.override
+  ImportReply createEmptyInstance() => ImportReply._();
+  @$core.pragma('dart2js:noInline')
+  static ImportReply getDefault() =>
+      _defaultInstance ??= $pb.GeneratedMessage.$_defaultFor<ImportReply>(
+          ImportReply.$_createMessage);
+  static ImportReply? _defaultInstance;
+
+  @$pb.TagNumber(1)
+  $core.int get rows => $_getIZ(0);
+  @$pb.TagNumber(1)
+  set rows($core.int value) => $_setSignedInt32(0, value);
+  @$pb.TagNumber(1)
+  $core.bool hasRows() => $_has(0);
+  @$pb.TagNumber(1)
+  void clearRows() => $_clearField(1);
+
+  @$pb.TagNumber(2)
+  $core.int get importable => $_getIZ(1);
+  @$pb.TagNumber(2)
+  set importable($core.int value) => $_setSignedInt32(1, value);
+  @$pb.TagNumber(2)
+  $core.bool hasImportable() => $_has(1);
+  @$pb.TagNumber(2)
+  void clearImportable() => $_clearField(2);
+
+  @$pb.TagNumber(3)
+  $core.int get imported => $_getIZ(2);
+  @$pb.TagNumber(3)
+  set imported($core.int value) => $_setSignedInt32(2, value);
+  @$pb.TagNumber(3)
+  $core.bool hasImported() => $_has(2);
+  @$pb.TagNumber(3)
+  void clearImported() => $_clearField(3);
+
+  @$pb.TagNumber(4)
+  $core.int get skipped => $_getIZ(3);
+  @$pb.TagNumber(4)
+  set skipped($core.int value) => $_setSignedInt32(3, value);
+  @$pb.TagNumber(4)
+  $core.bool hasSkipped() => $_has(3);
+  @$pb.TagNumber(4)
+  void clearSkipped() => $_clearField(4);
+
+  @$pb.TagNumber(5)
+  $pb.PbList<ImportErrorMsg> get errors => $_getList(4);
+}
+
+class ImportRequest extends $pb.GeneratedMessage {
+  factory ImportRequest({
+    $core.String? text,
+    $core.bool? commit,
+  }) {
+    final result = ImportRequest._();
+    if (text != null) result.text = text;
+    if (commit != null) result.commit = commit;
+    return result;
+  }
+
+  ImportRequest._();
+
+  factory ImportRequest.fromBuffer($core.List<$core.int> data,
+          [$pb.ExtensionRegistry registry = $pb.ExtensionRegistry.EMPTY]) =>
+      ImportRequest()..mergeFromBuffer(data, registry);
+  factory ImportRequest.fromJson($core.String json,
+          [$pb.ExtensionRegistry registry = $pb.ExtensionRegistry.EMPTY]) =>
+      ImportRequest()..mergeFromJson(json, registry);
+
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo(
+      _omitMessageNames ? '' : 'ImportRequest',
+      package: const $pb.PackageName(_omitMessageNames ? '' : 'config.reports'),
+      createEmptyInstance: ImportRequest.$_createMessage)
+    ..aOS(1, _omitFieldNames ? '' : 'text')
+    ..aOB(2, _omitFieldNames ? '' : 'commit')
+    ..hasRequiredFields = false;
+
+  @$core.Deprecated('See https://github.com/google/protobuf.dart/issues/998.')
+  ImportRequest clone() => deepCopy();
+  @$core.Deprecated('See https://github.com/google/protobuf.dart/issues/998.')
+  ImportRequest copyWith(void Function(ImportRequest) updates) =>
+      super.copyWith((message) => updates(message as ImportRequest))
+          as ImportRequest;
+
+  @$core.override
+  $pb.BuilderInfo get info_ => _i;
+
+  @$core.pragma('dart2js:noInline')
+  @$core.Deprecated('Use ImportRequest() / ImportRequest.new instead')
+  static ImportRequest create() => ImportRequest._();
+  static $pb.GeneratedMessage $_createMessage() => ImportRequest._();
+  @$core.override
+  ImportRequest createEmptyInstance() => ImportRequest._();
+  @$core.pragma('dart2js:noInline')
+  static ImportRequest getDefault() =>
+      _defaultInstance ??= $pb.GeneratedMessage.$_defaultFor<ImportRequest>(
+          ImportRequest.$_createMessage);
+  static ImportRequest? _defaultInstance;
+
+  @$pb.TagNumber(1)
+  $core.String get text => $_getSZ(0);
+  @$pb.TagNumber(1)
+  set text($core.String value) => $_setString(0, value);
+  @$pb.TagNumber(1)
+  $core.bool hasText() => $_has(0);
+  @$pb.TagNumber(1)
+  void clearText() => $_clearField(1);
+
+  @$pb.TagNumber(2)
+  $core.bool get commit => $_getBF(1);
+  @$pb.TagNumber(2)
+  set commit($core.bool value) => $_setBool(1, value);
+  @$pb.TagNumber(2)
+  $core.bool hasCommit() => $_has(1);
+  @$pb.TagNumber(2)
+  void clearCommit() => $_clearField(2);
+}
+
 class ReportReply extends $pb.GeneratedMessage {
   factory ReportReply({
     $core.String? currency,

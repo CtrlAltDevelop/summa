@@ -75,6 +75,60 @@ final $typed_data.Uint8List exportRequestDescriptor = $convert.base64Decode(
     'Cg1FeHBvcnRSZXF1ZXN0EhsKCXN0YXJ0c19hdBgBIAEoCVIIc3RhcnRzQXQSFwoHZW5kc19hdB'
     'gCIAEoCVIGZW5kc0F0');
 
+@$core.Deprecated('Use importErrorMsgDescriptor instead')
+const ImportErrorMsg$json = {
+  '1': 'ImportErrorMsg',
+  '2': [
+    {'1': 'line', '3': 1, '4': 1, '5': 5, '10': 'line'},
+    {'1': 'message', '3': 2, '4': 1, '5': 9, '10': 'message'},
+  ],
+};
+
+/// Descriptor for `ImportErrorMsg`. Decode as a `google.protobuf.DescriptorProto`.
+final $typed_data.Uint8List importErrorMsgDescriptor = $convert.base64Decode(
+    'Cg5JbXBvcnRFcnJvck1zZxISCgRsaW5lGAEgASgFUgRsaW5lEhgKB21lc3NhZ2UYAiABKAlSB2'
+    '1lc3NhZ2U=');
+
+@$core.Deprecated('Use importReplyDescriptor instead')
+const ImportReply$json = {
+  '1': 'ImportReply',
+  '2': [
+    {'1': 'rows', '3': 1, '4': 1, '5': 5, '10': 'rows'},
+    {'1': 'importable', '3': 2, '4': 1, '5': 5, '10': 'importable'},
+    {'1': 'imported', '3': 3, '4': 1, '5': 5, '10': 'imported'},
+    {'1': 'skipped', '3': 4, '4': 1, '5': 5, '10': 'skipped'},
+    {
+      '1': 'errors',
+      '3': 5,
+      '4': 3,
+      '5': 11,
+      '6': '.config.reports.ImportErrorMsg',
+      '10': 'errors'
+    },
+  ],
+};
+
+/// Descriptor for `ImportReply`. Decode as a `google.protobuf.DescriptorProto`.
+final $typed_data.Uint8List importReplyDescriptor = $convert.base64Decode(
+    'CgtJbXBvcnRSZXBseRISCgRyb3dzGAEgASgFUgRyb3dzEh4KCmltcG9ydGFibGUYAiABKAVSCm'
+    'ltcG9ydGFibGUSGgoIaW1wb3J0ZWQYAyABKAVSCGltcG9ydGVkEhgKB3NraXBwZWQYBCABKAVS'
+    'B3NraXBwZWQSNgoGZXJyb3JzGAUgAygLMh4uY29uZmlnLnJlcG9ydHMuSW1wb3J0RXJyb3JNc2'
+    'dSBmVycm9ycw==');
+
+@$core.Deprecated('Use importRequestDescriptor instead')
+const ImportRequest$json = {
+  '1': 'ImportRequest',
+  '2': [
+    {'1': 'text', '3': 1, '4': 1, '5': 9, '10': 'text'},
+    {'1': 'commit', '3': 2, '4': 1, '5': 8, '10': 'commit'},
+  ],
+};
+
+/// Descriptor for `ImportRequest`. Decode as a `google.protobuf.DescriptorProto`.
+final $typed_data.Uint8List importRequestDescriptor = $convert.base64Decode(
+    'Cg1JbXBvcnRSZXF1ZXN0EhIKBHRleHQYASABKAlSBHRleHQSFgoGY29tbWl0GAIgASgIUgZjb2'
+    '1taXQ=');
+
 @$core.Deprecated('Use reportReplyDescriptor instead')
 const ReportReply$json = {
   '1': 'ReportReply',
