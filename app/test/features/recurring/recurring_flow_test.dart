@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:summa/app.dart';
+import 'package:summa/features/assets/asset_controller.dart';
 import 'package:summa/features/auth/auth_controller.dart';
 import 'package:summa/features/auth/token_store.dart';
 import 'package:summa/features/categories/category_controller.dart';
@@ -17,6 +18,7 @@ import '../auth/fake_auth_api.dart';
 import '../categories/fake_category_api.dart';
 import '../wallets/fake_ledger_api.dart';
 import '../wallets/fake_wallet_api.dart';
+import '../assets/fake_asset_api.dart';
 import 'fake_recurring_api.dart';
 import '../debts/fake_debt_api.dart';
 import '../assistant/fake_assistant_api.dart';
@@ -74,6 +76,7 @@ Future<FakeRecurringApi> _pump(
         ),
         assistantApiProvider.overrideWithValue(FakeAssistantApi()),
         debtApiProvider.overrideWithValue(FakeDebtApi()),
+        assetApiProvider.overrideWithValue(FakeAssetApi()),
         walletApiProvider.overrideWithValue(wallets),
         ledgerApiProvider.overrideWithValue(ledger),
         categoryApiProvider.overrideWithValue(FakeCategoryApi(ledger)),

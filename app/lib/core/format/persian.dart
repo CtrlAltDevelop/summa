@@ -109,3 +109,14 @@ String isoDate(DateTime date) =>
     '${date.year.toString().padLeft(4, '0')}-'
     '${date.month.toString().padLeft(2, '0')}-'
     '${date.day.toString().padLeft(2, '0')}';
+
+/// A quantity as the server wants it: Latin digits and `.` (never a float).
+String quantityText(String input) =>
+    toLatinDigits(input.trim())
+        .replaceAll('٫', '.')
+        .replaceAll(',', '.')
+        .replaceAll('٬', '');
+
+/// Persian digits for a decimal quantity such as `0.5` -> `۰٫۵`.
+String formatQuantity(String quantity) =>
+    toPersianDigits(quantity.replaceAll('.', '٫'));

@@ -1353,6 +1353,174 @@ abstract class AppLocalizations {
   /// In fa, this message translates to:
   /// **'پرداخت انجام نشد؛ کیف و مبلغ را بررسی کن.'**
   String get debtPayFailed;
+
+  /// No description provided for @assetsTitle.
+  ///
+  /// In fa, this message translates to:
+  /// **'دارایی‌ها'**
+  String get assetsTitle;
+
+  /// No description provided for @assetAdd.
+  ///
+  /// In fa, this message translates to:
+  /// **'دارایی جدید'**
+  String get assetAdd;
+
+  /// No description provided for @assetsValue.
+  ///
+  /// In fa, this message translates to:
+  /// **'ارزش دارایی‌ها'**
+  String get assetsValue;
+
+  /// No description provided for @assetsProfit.
+  ///
+  /// In fa, this message translates to:
+  /// **'سود و زیان'**
+  String get assetsProfit;
+
+  /// No description provided for @assetsRealized.
+  ///
+  /// In fa, this message translates to:
+  /// **'سود تحقق‌یافته'**
+  String get assetsRealized;
+
+  /// No description provided for @assetFormTitle.
+  ///
+  /// In fa, this message translates to:
+  /// **'دارایی جدید'**
+  String get assetFormTitle;
+
+  /// No description provided for @assetCustom.
+  ///
+  /// In fa, this message translates to:
+  /// **'دلخواه'**
+  String get assetCustom;
+
+  /// No description provided for @assetNameLabel.
+  ///
+  /// In fa, this message translates to:
+  /// **'نام دارایی'**
+  String get assetNameLabel;
+
+  /// No description provided for @assetQuantityLabel.
+  ///
+  /// In fa, this message translates to:
+  /// **'مقدار'**
+  String get assetQuantityLabel;
+
+  /// No description provided for @assetBuyPriceLabel.
+  ///
+  /// In fa, this message translates to:
+  /// **'قیمت خرید هر واحد (تومان)'**
+  String get assetBuyPriceLabel;
+
+  /// No description provided for @assetManualPriceLabel.
+  ///
+  /// In fa, this message translates to:
+  /// **'قیمت امروز هر واحد (تومان)'**
+  String get assetManualPriceLabel;
+
+  /// No description provided for @assetBuyMore.
+  ///
+  /// In fa, this message translates to:
+  /// **'خرید جدید'**
+  String get assetBuyMore;
+
+  /// No description provided for @assetSell.
+  ///
+  /// In fa, this message translates to:
+  /// **'فروش'**
+  String get assetSell;
+
+  /// No description provided for @assetSellPriceLabel.
+  ///
+  /// In fa, this message translates to:
+  /// **'قیمت فروش هر واحد (تومان)'**
+  String get assetSellPriceLabel;
+
+  /// No description provided for @assetDelete.
+  ///
+  /// In fa, this message translates to:
+  /// **'حذف دارایی'**
+  String get assetDelete;
+
+  /// No description provided for @assetUnknownPrice.
+  ///
+  /// In fa, this message translates to:
+  /// **'قیمت این دارایی هنوز معلوم نیست.'**
+  String get assetUnknownPrice;
+
+  /// No description provided for @assetStale.
+  ///
+  /// In fa, this message translates to:
+  /// **'قیمت کهنه'**
+  String get assetStale;
+
+  /// No description provided for @assetQuantityInvalid.
+  ///
+  /// In fa, this message translates to:
+  /// **'مقدار درست نیست.'**
+  String get assetQuantityInvalid;
+
+  /// No description provided for @assetPriceInvalid.
+  ///
+  /// In fa, this message translates to:
+  /// **'قیمت درست نیست.'**
+  String get assetPriceInvalid;
+
+  /// No description provided for @assetNameInvalid.
+  ///
+  /// In fa, this message translates to:
+  /// **'نام و قیمت امروز لازم است.'**
+  String get assetNameInvalid;
+
+  /// No description provided for @assetFailed.
+  ///
+  /// In fa, this message translates to:
+  /// **'انجام نشد؛ مقدار و قیمت را بررسی کن.'**
+  String get assetFailed;
+
+  /// No description provided for @assetCost.
+  ///
+  /// In fa, this message translates to:
+  /// **'هزینه خرید'**
+  String get assetCost;
+
+  /// No description provided for @assetHeld.
+  ///
+  /// In fa, this message translates to:
+  /// **'مقدار فعلی'**
+  String get assetHeld;
+
+  /// No description provided for @pricesOpen.
+  ///
+  /// In fa, this message translates to:
+  /// **'قیمت‌ها'**
+  String get pricesOpen;
+
+  /// No description provided for @pricesTitle.
+  ///
+  /// In fa, this message translates to:
+  /// **'قیمت‌ها'**
+  String get pricesTitle;
+
+  /// No description provided for @priceUnknown.
+  ///
+  /// In fa, this message translates to:
+  /// **'نامشخص'**
+  String get priceUnknown;
+
+  /// No description provided for @priceStaleSuffix.
+  ///
+  /// In fa, this message translates to:
+  /// **'کهنه'**
+  String get priceStaleSuffix;
+
+  /// No description provided for @priceSourcePrefix.
+  ///
+  /// In fa, this message translates to:
+  /// **'منبع'**
+  String get priceSourcePrefix;
 }
 
 class _AppLocalizationsDelegate

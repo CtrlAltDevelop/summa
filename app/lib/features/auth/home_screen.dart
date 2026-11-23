@@ -4,6 +4,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../../core/ui/tokens/tokens.dart';
 import '../../core/ui/widgets/widgets.dart';
 import '../../l10n/gen/app_localizations.dart';
+import '../assets/assets_panel.dart';
 import '../assistant/chat_screen.dart';
 import '../assistant/digest_panel.dart';
 import '../assistant/sms_screen.dart';
@@ -57,6 +58,8 @@ class HomeScreen extends ConsumerWidget {
             const RecurringPanel(),
             const SizedBox(height: SmSpace.lg),
             const DebtsPanel(),
+            const SizedBox(height: SmSpace.lg),
+            const AssetsPanel(),
             const SizedBox(height: SmSpace.lg),
             const BudgetsPanel(),
             const SizedBox(height: SmSpace.lg),
