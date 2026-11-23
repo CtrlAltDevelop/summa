@@ -60,6 +60,11 @@ class RecurringControllerStub:
                 request_serializer=apps_dot_recurring_dot_grpc_dot_recurring__pb2.RecurringActive.SerializeToString,
                 response_deserializer=google_dot_protobuf_dot_empty__pb2.Empty.FromString,
                 _registered_method=True)
+        self.SettleNow = channel.unary_unary(
+                '/config.recurring.RecurringController/SettleNow',
+                request_serializer=apps_dot_recurring_dot_grpc_dot_recurring__pb2.SettleRequest.SerializeToString,
+                response_deserializer=google_dot_protobuf_dot_empty__pb2.Empty.FromString,
+                _registered_method=True)
 
 
 class RecurringControllerServicer:
@@ -95,6 +100,12 @@ class RecurringControllerServicer:
         context.set_details('Method not implemented!')
         raise NotImplementedError('Method not implemented!')
 
+    def SettleNow(self, request, context):
+        """Missing associated documentation comment in .proto file."""
+        context.set_code(grpc.StatusCode.UNIMPLEMENTED)
+        context.set_details('Method not implemented!')
+        raise NotImplementedError('Method not implemented!')
+
 
 def add_RecurringControllerServicer_to_server(servicer, server):
     rpc_method_handlers = {
@@ -121,6 +132,11 @@ def add_RecurringControllerServicer_to_server(servicer, server):
             'SetActive': grpc.unary_unary_rpc_method_handler(
                     servicer.SetActive,
                     request_deserializer=apps_dot_recurring_dot_grpc_dot_recurring__pb2.RecurringActive.FromString,
+                    response_serializer=google_dot_protobuf_dot_empty__pb2.Empty.SerializeToString,
+            ),
+            'SettleNow': grpc.unary_unary_rpc_method_handler(
+                    servicer.SettleNow,
+                    request_deserializer=apps_dot_recurring_dot_grpc_dot_recurring__pb2.SettleRequest.FromString,
                     response_serializer=google_dot_protobuf_dot_empty__pb2.Empty.SerializeToString,
             ),
     }
@@ -258,6 +274,33 @@ class RecurringController:
             target,
             '/config.recurring.RecurringController/SetActive',
             apps_dot_recurring_dot_grpc_dot_recurring__pb2.RecurringActive.SerializeToString,
+            google_dot_protobuf_dot_empty__pb2.Empty.FromString,
+            options,
+            channel_credentials,
+            insecure,
+            call_credentials,
+            compression,
+            wait_for_ready,
+            timeout,
+            metadata,
+            _registered_method=True)
+
+    @staticmethod
+    def SettleNow(request,
+            target,
+            options=(),
+            channel_credentials=None,
+            call_credentials=None,
+            insecure=False,
+            compression=None,
+            wait_for_ready=None,
+            timeout=None,
+            metadata=None):
+        return grpc.experimental.unary_unary(
+            request,
+            target,
+            '/config.recurring.RecurringController/SettleNow',
+            apps_dot_recurring_dot_grpc_dot_recurring__pb2.SettleRequest.SerializeToString,
             google_dot_protobuf_dot_empty__pb2.Empty.FromString,
             options,
             channel_credentials,

@@ -121,3 +121,56 @@ def test_invalid_input_and_missing_credential(
 
     assert bad_day.value.code() is grpc.StatusCode.INVALID_ARGUMENT
     assert anonymous.value.code() is grpc.StatusCode.UNAUTHENTICATED
+
+
+def test_not_yet_and_i_got_it_over_the_wire(
+    transactional_db: None, grpc_call: Callable[..., Any]
+) -> None:
+    token = sign_up("zoe")
+    wallet = make_wallet(grpc_call, token, balance=0)
+    for day in range(7):  # one cycle is always due today
+        grpc_call(
+            Stub,
+            "Create",
+            definition(wallet.id, kind="income", day=day, client_mutation_id=f"r{day}"),
+            token=token,
+        )
+    due = next(
+        o for o in grpc_call(Stub, "List", Empty(), token=token).occurrences if o.status == "due"
+    )
+
+    grpc_call(
+        Stub,
+        "Resolve",
+        recurring_pb2.OccurrenceAnswer(occurrence_id=due.id, action="postpone"),
+        token=token,
+    )
+    after = {o.id: o for o in grpc_call(Stub, "List", Empty(), token=token).occurrences}
+    grpc_call(
+        Stub,
+        "SettleNow",
+        recurring_pb2.SettleRequest(recurring_id=due.recurring_id),
+        token=token,
+    )
+
+    assert after[due.id].status == "upcoming" and after[due.id].due_date > due.due_date
+    assert (
+        grpc_call(wallets_pb2_grpc.WalletsControllerStub, "List", Empty(), token=token)
+        .wallets[0]
+        .balance_minor
+        == 100_000
+    )
+
+
+def test_settle_now_is_private(transactional_db: None, grpc_call: Callable[..., Any]) -> None:
+    zoe, ali = sign_up("zoe"), sign_up("ali")
+    created = grpc_call(
+        Stub, "Create", definition(make_wallet(grpc_call, zoe).id), token=zoe
+    ).recurring
+
+    with pytest.raises(grpc.aio.AioRpcError) as refusal:
+        grpc_call(
+            Stub, "SettleNow", recurring_pb2.SettleRequest(recurring_id=created.id), token=ali
+        )
+
+    assert refusal.value.code() is grpc.StatusCode.NOT_FOUND

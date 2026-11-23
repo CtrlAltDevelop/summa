@@ -271,3 +271,25 @@ class RecurringReply(_message.Message):
     def WhichOneof(self, oneof_group: _Never) -> None: ...
 
 Global___RecurringReply: _TypeAlias = RecurringReply  # noqa: Y015
+
+@_typing.final
+class SettleRequest(_message.Message):
+    DESCRIPTOR: _descriptor.Descriptor
+
+    RECURRING_ID_FIELD_NUMBER: _builtins.int
+    AMOUNT_MINOR_FIELD_NUMBER: _builtins.int
+    recurring_id: _builtins.str
+    amount_minor: _builtins.int
+    def __init__(
+        self,
+        *,
+        recurring_id: _builtins.str = ...,
+        amount_minor: _builtins.int = ...,
+    ) -> None: ...
+    _HasFieldArgType: _TypeAlias = _Never  # noqa: Y015
+    def HasField(self, field_name: _HasFieldArgType) -> _builtins.bool: ...
+    _ClearFieldArgType: _TypeAlias = _typing.Literal["amount_minor", b"amount_minor", "recurring_id", b"recurring_id"]  # noqa: Y015
+    def ClearField(self, field_name: _ClearFieldArgType) -> None: ...
+    def WhichOneof(self, oneof_group: _Never) -> None: ...
+
+Global___SettleRequest: _TypeAlias = SettleRequest  # noqa: Y015

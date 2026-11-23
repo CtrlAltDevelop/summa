@@ -138,7 +138,7 @@ class RecurringService(generics.GenericService):
     @grpc_action(
         request=[
             {"name": "occurrence_id", "type": "string"},
-            # confirm | other_wallet | cancel
+            # confirm | other_wallet | cancel | postpone ("not yet": ask again tomorrow)
             {"name": "action", "type": "string"},
             {"name": "wallet_id", "type": "string"},
             # Needed for a variable amount; otherwise zero keeps the planned amount.
@@ -156,6 +156,26 @@ class RecurringService(generics.GenericService):
             action=request.action,
             wallet_id=request.wallet_id or None,
             amount_minor=request.amount_minor,
+        )
+        return Empty()
+
+    @grpc_action(
+        request=[
+            {"name": "recurring_id", "type": "string"},
+            # Needed for a variable amount; otherwise zero keeps the planned amount.
+            {"name": "amount_minor", "type": "int64"},
+        ],
+        request_name="SettleRequest",
+        response=[],
+    )
+    @action
+    async def SettleNow(self, request: Any, context: Any) -> Any:
+        user = require_caller(await grpc_caller(context))
+        await sync_to_async(recurring_service.settle_now)(
+            user,
+            request.recurring_id,
+            amount_minor=request.amount_minor,
+            now=timezone.now(),
         )
         return Empty()
 

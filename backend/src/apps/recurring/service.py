@@ -5,12 +5,13 @@ from datetime import UTC, date, datetime, time, timedelta
 from typing import Any
 
 from django.db import IntegrityError, transaction
+from django.utils import timezone
 
 from apps.assistant.calendar import TEHRAN
 from apps.recurring.models import Occurrence, Recurring
 from apps.recurring.schedule import PERIODS, next_due, valid_day
 from apps.wallets.categories import resolve_category
-from apps.wallets.ledger import NOTE_MAX_LENGTH, ledger_service
+from apps.wallets.ledger import NOTE_MAX_LENGTH, Entry, ledger_service
 from apps.wallets.models import Wallet
 from apps.wallets.services import wallets_service
 from apps.wallets.validation import not_found, parse_uuid, refuse
@@ -18,7 +19,7 @@ from infrastructure.common.errors import ApiError
 
 LEAD_DAYS = 3
 MAX_CATCH_UP = 12
-_ACTIONS = ("confirm", "other_wallet", "cancel")
+_ACTIONS = ("confirm", "other_wallet", "cancel", "postpone")
 _NOON = time(12, 0)
 
 
@@ -221,7 +222,8 @@ class RecurringService:
         action: str,
         wallet_id: str | None,
         amount_minor: int,
-    ) -> None:
+        now: datetime | None = None,
+    ) -> Entry | None:
         if action not in _ACTIONS:
             raise refuse(f"Unknown action: {action}.")
         key = parse_uuid(occurrence_id, "Occurrence")
@@ -239,7 +241,10 @@ class RecurringService:
             if action == "cancel":
                 occurrence.status = Occurrence.CANCELLED
                 occurrence.save(update_fields=["status"])
-                return
+                return None
+            if action == "postpone":
+                self._postpone(occurrence)
+                return None
             recurring = occurrence.recurring
             target = recurring.wallet_id
             if action == "other_wallet":
@@ -259,7 +264,9 @@ class RecurringService:
                 wallet_id=str(target),
                 kind=recurring.kind,
                 amount_minor=amount,
-                occurred_at=datetime.combine(occurrence.due_date, _NOON, TEHRAN).astimezone(UTC),
+                occurred_at=datetime.combine(
+                    min(occurrence.due_date, _today(now or timezone.now())), _NOON, TEHRAN
+                ).astimezone(UTC),
                 note=recurring.note,
                 client_mutation_id=f"rec-{occurrence.id}",
                 category_id=str(recurring.category_id) if recurring.category_id else None,
@@ -267,6 +274,51 @@ class RecurringService:
             occurrence.status = Occurrence.CONFIRMED
             occurrence.entry_id = parse_uuid(entry.id, "Entry")
             occurrence.save(update_fields=["status", "entry_id"])
+            return entry
+
+    @staticmethod
+    def _postpone(occurrence: Occurrence) -> None:
+        """ "Not yet": ask again tomorrow."""
+        tomorrow = occurrence.due_date + timedelta(days=1)
+        if Occurrence.objects.filter(recurring=occurrence.recurring, due_date=tomorrow).exists():
+            raise refuse("The next cycle is already tomorrow; answer this one instead.")
+        occurrence.due_date = tomorrow
+        occurrence.save(update_fields=["due_date"])
+
+    def settle_now(
+        self, user: Any, recurring_id: str, *, amount_minor: int, now: datetime
+    ) -> Entry:
+        """ "I got it" / "it was paid": settle the next cycle now, even before its window."""
+        recurring = _own(user, recurring_id)
+        with transaction.atomic():
+            locked = Recurring.objects.select_for_update().get(pk=recurring.pk)
+            occurrence = (
+                Occurrence.objects.filter(recurring=locked, status=Occurrence.PENDING)
+                .order_by("due_date")
+                .first()
+            )
+            if occurrence is None:
+                occurrence = Occurrence.objects.create(
+                    user=user,
+                    recurring=locked,
+                    due_date=locked.next_due,
+                    amount_minor=locked.amount_minor,
+                )
+                locked.next_due = next_due(
+                    locked.period, locked.day, locked.next_due + timedelta(days=1)
+                )
+                locked.save(update_fields=["next_due"])
+            entry = self.resolve(
+                user,
+                str(occurrence.id),
+                action="confirm",
+                wallet_id=None,
+                amount_minor=amount_minor,
+                now=now,
+            )
+        if entry is None:  # pragma: no cover - confirm always records
+            raise refuse("Nothing was recorded.")
+        return entry
 
     def set_active(self, user: Any, recurring_id: str, *, active: bool) -> None:
         recurring = _own(user, recurring_id)

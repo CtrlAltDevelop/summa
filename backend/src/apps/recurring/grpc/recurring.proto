@@ -10,6 +10,7 @@ service RecurringController {
     rpc List(google.protobuf.Empty) returns (RecurringListReply) {}
     rpc Resolve(OccurrenceAnswer) returns (google.protobuf.Empty) {}
     rpc SetActive(RecurringActive) returns (google.protobuf.Empty) {}
+    rpc SettleNow(SettleRequest) returns (google.protobuf.Empty) {}
 }
 
 message OccurrenceAnswer {
@@ -75,5 +76,10 @@ message RecurringRef {
 
 message RecurringReply {
     RecurringMsg recurring = 1;
+}
+
+message SettleRequest {
+    string recurring_id = 1;
+    int64 amount_minor = 2;
 }
 

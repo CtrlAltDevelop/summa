@@ -37,6 +37,7 @@ class RecurringControllerStub:
     List: _grpc.UnaryUnaryMultiCallable[_empty_pb2.Empty, _recurring_pb2.RecurringListReply]
     Resolve: _grpc.UnaryUnaryMultiCallable[_recurring_pb2.OccurrenceAnswer, _empty_pb2.Empty]
     SetActive: _grpc.UnaryUnaryMultiCallable[_recurring_pb2.RecurringActive, _empty_pb2.Empty]
+    SettleNow: _grpc.UnaryUnaryMultiCallable[_recurring_pb2.SettleRequest, _empty_pb2.Empty]
 
 @_typing.type_check_only
 class RecurringControllerAsyncStub(RecurringControllerStub):
@@ -46,6 +47,7 @@ class RecurringControllerAsyncStub(RecurringControllerStub):
     List: _aio.UnaryUnaryMultiCallable[_empty_pb2.Empty, _recurring_pb2.RecurringListReply]  # type: ignore[assignment]
     Resolve: _aio.UnaryUnaryMultiCallable[_recurring_pb2.OccurrenceAnswer, _empty_pb2.Empty]  # type: ignore[assignment]
     SetActive: _aio.UnaryUnaryMultiCallable[_recurring_pb2.RecurringActive, _empty_pb2.Empty]  # type: ignore[assignment]
+    SettleNow: _aio.UnaryUnaryMultiCallable[_recurring_pb2.SettleRequest, _empty_pb2.Empty]  # type: ignore[assignment]
 
 class RecurringControllerServicer(metaclass=_abc_1.ABCMeta):
     @_abc_1.abstractmethod
@@ -80,6 +82,13 @@ class RecurringControllerServicer(metaclass=_abc_1.ABCMeta):
     def SetActive(
         self,
         request: _recurring_pb2.RecurringActive,
+        context: _ServicerContext,
+    ) -> _typing.Union[_empty_pb2.Empty, _abc.Awaitable[_empty_pb2.Empty]]: ...
+
+    @_abc_1.abstractmethod
+    def SettleNow(
+        self,
+        request: _recurring_pb2.SettleRequest,
         context: _ServicerContext,
     ) -> _typing.Union[_empty_pb2.Empty, _abc.Awaitable[_empty_pb2.Empty]]: ...
 
