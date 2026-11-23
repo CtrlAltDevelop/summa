@@ -56,6 +56,13 @@
         "prefix": "/reports",
         "router": "apps.reports.rest.v1.router",
         "tag": "Reports"
+      },
+      {
+        "app_config": "apps.sync.apps.SyncConfig",
+        "description": "Endpoints published by the sync app.",
+        "prefix": "/sync",
+        "router": "apps.sync.rest.v1.router",
+        "tag": "Sync"
       }
     ]
   }
