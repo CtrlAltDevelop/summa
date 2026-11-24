@@ -8,6 +8,10 @@ on:
   push:
     branches: [main]
     paths: ['landing/**', '.github/workflows/landing-preview.yml']
+  # A PR to main builds and tests the site; only a push to main publishes it.
+  pull_request:
+    branches: [main]
+    paths: ['landing/**', '.github/workflows/landing-preview.yml']
   workflow_dispatch:
 
 permissions:
@@ -44,6 +48,7 @@ jobs:
 
   deploy:
     needs: build
+    if: github.event_name != 'pull_request'
     runs-on: ubuntu-latest
     environment:
       name: github-pages
