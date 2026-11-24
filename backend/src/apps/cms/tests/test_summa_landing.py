@@ -1,11 +1,12 @@
 """The landing content that ships with Summa imports cleanly and reads back."""
 
+from collections.abc import Iterator
 from io import StringIO
 from pathlib import Path
 
 import pytest
 from django.core.management import call_command
-from django.test import Client
+from django.test import Client, override_settings
 
 from apps.cms.models import Menu, Page
 
@@ -15,8 +16,11 @@ DOCUMENT = Path(__file__).resolve().parents[5] / "landing" / "content" / "landin
 
 
 @pytest.fixture
-def landing(db: None) -> None:
-    call_command("cms_import", str(DOCUMENT), stdout=StringIO())
+def landing(db: None) -> Iterator[None]:
+    # The shipped content is written in Persian and English (`en`, not `en-us`).
+    with override_settings(CMS_LANGUAGES=["en", "fa"]):
+        call_command("cms_import", str(DOCUMENT), stdout=StringIO())
+        yield
 
 
 def read(slug: str) -> dict:
