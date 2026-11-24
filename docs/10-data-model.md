@@ -1,42 +1,42 @@
-# مدل داده و سرویس‌ها (پیشنهاد اولیه)
+# Data Model and Services (initial proposal)
 
-> طرح سطح بالا برای هماهنگ‌کردن فازها. جزئیات هر جدول و RPC در سند همان فاز نهایی می‌شود.
+> A high-level sketch to align the phases. The details of each table and RPC are finalised in that phase's own document.
 
-## اصل‌ها
-- **رویدادمحور:** منبع حقیقت یک دفتر رویداد (append-only) است؛ موجودی‌ها و گزارش‌ها از آن محاسبه یا ماتریالایز می‌شوند.
-- پول = عدد صحیح به کوچک‌ترین واحد + کد ارز. هیچ float.
-- هر ردیف به `user_id` وصل است؛ هر کوئری با کاربر احراز‌شده فیلتر می‌شود (تست «کاربر دیگر» برای هر سرویس).
-- زمان همیشه UTC؛ نمایش شمسی و منطقه زمانی کاربر (پیش‌فرض Asia/Tehran).
-- هر نوشتن `client_mutation_id` یکتا دارد (idempotent، پایه آفلاین).
+## Principles
+- **Event-driven:** the source of truth is an event ledger (append-only); balances and reports are computed or materialised from it.
+- Money = an integer in the smallest unit + a currency code. No floats.
+- Every row is tied to a `user_id`; every query is filtered by the authenticated user (an "other user" test for every service).
+- Time is always UTC; display uses Shamsi and the user's time zone (default Asia/Tehran).
+- Every write carries a unique `client_mutation_id` (idempotent, the foundation of offline).
 
-## موجودیت‌ها
-| موجودیت | فیلدهای کلیدی | نکته |
+## Entities
+| Entity | Key fields | Note |
 |---|---|---|
-| `User` | موبایل، نام، ارز پایه، ساعت حساب‌وکتاب، منطقه زمانی | |
-| `Wallet` | نوع (نقد/بانک/کارت اعتباری/BNPL/هدیه‌کارت/رمزارز/طلا)، ارز، بانک، نام، بایگانی | موجودی ذخیره نمی‌شود؛ از رویدادها |
-| `LedgerEvent` | wallet، جهت (ورودی/خروجی)، مبلغ، ارز، زمان، نوع (درآمد/خرج/انتقال/کارمزد/تعدیل/موجودی اولیه/برگشت)، منبع (دستی/چت/پیامک/تکراری)، `transfer_id`، `refund_of`، نرخ تبدیل | تغییرناپذیر؛ ویرایش = رویداد جایگزین |
-| `Transaction` (نما) | دسته، یادداشت، برچسب، «بیرون از جمع‌ها»، تقسیم‌ها | تجمیع رویدادهای یک تراکنش برای نمایش |
-| `Category`، `Budget` | نام، آیکن، رنگ؛ سقف ماهانه | پیش‌فرض‌ها از پروفایل ایران |
-| `Recurring` | الگو، دوره، کیف پول، مبلغ ثابت/متغیر، وضعیت | تولید «موعد» ← پرسش کاربر |
-| `Reminder` | نوع (حقوق/ساعت/قسط/تکراری)، زمان، وضعیت (باز/انجام/به‌تعویق) | «هنوز نه» ← فردا |
-| `Debt`، `Installment` | نوع، اصل، تعداد، سررسیدها، پرداخت‌شده | پرداخت = رویداد خرج |
-| `Asset`، `AssetLot` | نوع، مقدار، قیمت خرید، سبد | قیمت از `Rate` |
-| `Rate` | نماد، قیمت، منبع، زمان | به‌روزرسانی با Celery beat |
-| `ChatThread`، `ChatMessage` | کاربر، متن، نقش، کارت‌ها (JSON)، وضعیت | فقط کاربر؛ حذف خودکار پس از N روز |
-| `SmsParse` | نسخه مدل/الگو، نتیجه ساختاریافته، اطمینان | متن خام پیش‌فرض ذخیره نمی‌شود |
-| `Device`، `Session` | دستگاه، توکن، آخرین استفاده | |
-| `Plan`، `Subscription` | پلن، وضعیت، پایان | بعد از پاسخ سؤال ۶ |
-| محتوای لندینگ | `Page`، `FaqItem`، `Article`، `PricingPlan`، `IranProfile` | قابل ویرایش در ادمین |
+| `User` | mobile number, name, base currency, bookkeeping hour, time zone | |
+| `Wallet` | type (cash/bank/credit card/BNPL/gift card/crypto/gold), currency, bank, name, archived | the balance is not stored; it comes from events |
+| `LedgerEvent` | wallet, direction (in/out), amount, currency, time, kind (income/expense/transfer/fee/adjustment/initial balance/refund), source (manual/chat/SMS/recurring), `transfer_id`, `refund_of`, conversion rate | immutable; an edit = a replacement event |
+| `Transaction` (view) | category, note, tag, "excluded from totals", splits | aggregates one transaction's events for display |
+| `Category`, `Budget` | name, icon, color; monthly limit | defaults come from the Iran profile |
+| `Recurring` | pattern, period, wallet, fixed/variable amount, status | generates a "due" -> asks the user |
+| `Reminder` | type (salary/hour/installment/recurring), time, status (open/done/snoozed) | "not yet" -> tomorrow |
+| `Debt`, `Installment` | type, principal, count, due dates, paid | a payment = an expense event |
+| `Asset`, `AssetLot` | type, quantity, purchase price, portfolio | the price comes from `Rate` |
+| `Rate` | symbol, price, source, time | updated by Celery beat |
+| `ChatThread`, `ChatMessage` | user, text, role, cards (JSON), status | user only; auto-deleted after N days |
+| `SmsParse` | model/pattern version, structured result, confidence | raw text is not stored by default |
+| `Device`, `Session` | device, token, last used | |
+| `Plan`, `Subscription` | plan, status, end | after the answer to question 6 |
+| Landing content | `Page`, `FaqItem`, `Article`, `PricingPlan`, `IranProfile` | editable in the admin |
 
-## سرویس‌های gRPC (کاربر احراز‌شده)
-`AuthService`، `WalletService`، `LedgerService`، `CategoryService`، `BudgetService`، `ChatService` (استریم پاسخ AI)، `ParseService` (پیامک/جمله ← کارت)، `RecurringService`، `ReminderService`، `DebtService`، `AssetService`، `RateService`، `ReportService`، `SyncService`، `ExportService`، `AccountService`.
-- **REST عمومی فقط‌خواندنی** برای لندینگ (محتوا، قیمت‌ها، نرخ نمونه) با کش و ETag، و برای دموی چت یک endpoint محدود با حساب نمونه.
-- نوشتن داده فقط از طریق همین سرویس‌ها؛ `ChatService` و `ParseService` هرگز مستقیم `LedgerService` را صدا نمی‌زنند (کارت ← دکمه ثبت ← اپ).
+## gRPC services (authenticated user)
+`AuthService`, `WalletService`, `LedgerService`, `CategoryService`, `BudgetService`, `ChatService` (streams the AI reply), `ParseService` (SMS/sentence -> card), `RecurringService`, `ReminderService`, `DebtService`, `AssetService`, `RateService`, `ReportService`, `SyncService`, `ExportService`, `AccountService`.
+- **A public read-only REST API** for the landing site (content, prices, sample rates) with caching and ETag, and a limited endpoint with a sample account for the chat demo.
+- Data is written only through these services; `ChatService` and `ParseService` never call `LedgerService` directly (card -> Register button -> app).
 
-## پایپ‌لاین پیامک/جمله
-متن ← پاک‌سازی (ارقام فارسی/انگلیسی، فاصله) ← regex بانک ← (اگر نخورد) Ollama با خروجی JSON ← اعتبارسنجی (مبلغ عیناً در متن، نوع، تاریخ معقول) ← امتیاز اطمینان ← کارت (+ پیشنهاد کیف پول و دسته) ← تأیید کاربر ← درخواست معمولی `LedgerService.Create`.
+## SMS/sentence pipeline
+Text -> cleaning (Persian/English digits, whitespace) -> bank regex -> (if no match) Ollama with JSON output -> validation (amount verbatim in the text, type, plausible date) -> confidence score -> card (+ suggested wallet and category) -> user confirmation -> the normal `LedgerService.Create` request.
 
-## عملیات
-- Celery: نرخ‌ها، یادآورها، حذف چت قدیمی، ماتریالایز گزارش، پردازش صف پیامک.
-- مشاهده‌پذیری: لاگ ساختاریافته بدون مبلغ و متن پیامک؛ شمارنده‌های دقت پارس (بدون محتوا)؛ وضعیت Ollama و صف.
-- پشتیبان دیتابیس رمزنگاری‌شده؛ حذف حساب = حذف واقعی داده کاربر (به‌جز رسید پرداخت).
+## Operations
+- Celery: rates, reminders, deleting old chats, report materialisation, processing the SMS queue.
+- Observability: structured logs without amounts or SMS text; parse-accuracy counters (without content); Ollama and queue status.
+- Encrypted database backup; account deletion = real deletion of the user's data (except the payment receipt).

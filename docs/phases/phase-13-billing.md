@@ -1,40 +1,40 @@
-# فاز ۱۳: اشتراک و پرداخت
+# Phase 13: Subscription and payment
 
-## هدف
-کاربر دوره آزمایشی بگیرد، پلنی بخرد، و وقتی اشتراکش تمام شد حسابش **فقط‌خواندنی** شود (داده پاک نمی‌شود). همه تصمیم‌های تجاری **پیکربندی‌اند نه کد**: چون سؤال ۶ مشتری (درگاه، تعداد پلن‌ها، مدت آزمایشی، تمدید خودکار، فاکتور) هنوز جواب نگرفته، این فاز یک موتور آماده می‌سازد و هیچ قیمت یا پلنی از خودش نمی‌گذارد.
+## Goal
+The user gets a trial, buys a plan, and when the subscription ends their account becomes **read-only** (data is never deleted). All business decisions are **configuration, not code**: since the client's question 6 (gateway, number of plans, trial length, auto-renewal, invoice) is still unanswered, this phase builds a ready engine and sets no price or plan on its own.
 
-## وابستگی‌ها
-فاز ۰۱.
+## Dependencies
+Phase 01.
 
-## محدوده
-**داخل**
-- بک‌اند (اپ جدید `apps.billing`): `Plan` (کد، نام، توضیح، قیمت به تومان، مدت به روز، فعال/غیرفعال، ترتیب — **از ادمین ویرایش می‌شود**، هیچ پلنی از قبل ساخته نمی‌شود)، `Subscription` (یکی برای هر کاربر: `trial`/`active`/`expired`، پایان)، `Payment` (در انتظار/پرداخت‌شده/ناموفق، مبلغ، ارجاع درگاه). سرویس gRPC `BillingController`: `Plans` / `Status` / `StartTrial` / `Checkout` / `Verify`.
-- **دوره آزمایشی:** یک بار برای هر کاربر، `DJANGO_BILLING_TRIAL_DAYS` روز (پیش‌فرض ۱۴؛ ۰ یعنی بدون آزمایشی)، بدون کارت.
-- **خرید:** `Checkout(plan_code)` پرداخت در انتظار می‌سازد و از **درگاه قابل‌تعویض** (`PaymentProvider`) آدرس پرداخت می‌گیرد؛ `Verify(reference)` سمت **سرور** با درگاه راستی‌آزمایی می‌کند (به ادعای کلاینت اعتماد نمی‌شود)، اشتراک را تمدید می‌کند (از `max(الان، پایان فعلی)` به اندازه مدت پلن؛ خرید روی اشتراک فعال به آخر آن اضافه می‌شود) و **idempotent** است (دو بار تأیید دو بار تمدید نمی‌کند). فقط پرداخت‌های **خود کاربر** (`NOT_FOUND` برای دیگران).
-- **حالت فقط‌خواندنی** (`DJANGO_BILLING_ENFORCED`، پیش‌فرض خاموش): وقتی روشن باشد و اشتراک نه آزمایشی باشد نه فعال، هر RPC **نوشتنی** در اپ‌های ویژگی با `PERMISSION_DENIED` رد می‌شود؛ خواندن‌ها (`List`، `Get`، گزارش، خروجی، فید همگام‌سازی…) و ورود/خروج و خود `BillingController` آزاد می‌مانند. پیاده‌سازی: یک **نگهبان مرکزی** در دکوراتور `action` (نه ویرایش تک‌تک RPCها).
-- ادمین: `Plan` و `Subscription` و `Payment` قابل‌مشاهده؛ `Plan` قابل‌ویرایش.
-- اپ: صفحه «اشتراک» (وضعیت و روز باقی‌مانده، شروع آزمایشی، فهرست پلن‌ها و خرید، «بررسی پرداخت»)، و نوار «فقط‌خواندنی» روی خانه وقتی `can_write` نادرست است.
+## Scope
+**In**
+- Backend (new app `apps.billing`): `Plan` (code, name, description, price in Toman, duration in days, active/inactive, order; **editable from the admin**, no plan is pre-created), `Subscription` (one per user: `trial`/`active`/`expired`, end), `Payment` (pending/paid/failed, amount, gateway reference). gRPC service `BillingController`: `Plans` / `Status` / `StartTrial` / `Checkout` / `Verify`.
+- **Trial:** once per user, `DJANGO_BILLING_TRIAL_DAYS` days (default 14; 0 means no trial), no card.
+- **Purchase:** `Checkout(plan_code)` creates a pending payment and gets a payment URL from a **swappable gateway** (`PaymentProvider`); `Verify(reference)` verifies **server-side** with the gateway (the client's claim is not trusted), extends the subscription (from `max(now, current end)` by the plan duration; a purchase on an active subscription is added to its end) and is **idempotent** (verifying twice does not extend twice). Only the user's **own** payments (`NOT_FOUND` for others).
+- **Read-only mode** (`DJANGO_BILLING_ENFORCED`, default off): when on and the subscription is neither trial nor active, every **write** RPC in the feature apps is rejected with `PERMISSION_DENIED`; reads (`List`, `Get`, reports, export, sync feed…), sign-in/sign-out and `BillingController` itself stay open. Implementation: one **central guard** in the `action` decorator (not editing each RPC).
+- Admin: `Plan`, `Subscription` and `Payment` visible; `Plan` editable.
+- App: a "Subscription" page (status and days remaining, start trial, plan list and purchase, "Check payment"), and a "read-only" banner on home when `can_write` is false.
 
-**بیرون**
-**درگاه واقعی** (زرین‌پال یا هر چه مشتری بگوید؛ نیاز به مرچنت و بازگشت از مرورگر با deep link و `url_launcher`)، پیاده‌سازی پیش‌فرض `FakeProvider` فقط برای توسعه و تست است و **نباید در production باشد**، تمدید خودکار، کد تخفیف، فاکتور و ارزش افزوده، استرداد، ویژگی‌های متفاوت پلن‌ها (محدودیت وام و غیره)، رفرال.
+**Out**
+**A real gateway** (Zarinpal or whatever the client says; needs a merchant account and a browser return via deep link and `url_launcher`); the default `FakeProvider` is for development and tests only and **must not be in production**, auto-renewal, discount codes, invoices and VAT, refunds, different features per plan (loan limits and so on), referral.
 
-## قوانین و لبه‌ها
-- پلن ناشناس = `NOT_FOUND`؛ پلن غیرفعال = `INVALID_ARGUMENT`؛ آزمایشی دوباره یا وقتی غیرفعال است = `INVALID_ARGUMENT`.
-- `Verify` برای پرداخت دیگران = `NOT_FOUND`؛ پرداخت ناموفق نزد درگاه = پرداخت `failed` و اشتراک دست‌نخورده.
-- اشتراک `expired` فقط وقتی `ends_at` گذشته باشد؛ داده هرگز پاک نمی‌شود.
-- با `BILLING_ENFORCED` خاموش همه چیز مثل قبل کار می‌کند.
+## Rules and edges
+- Unknown plan = `NOT_FOUND`; inactive plan = `INVALID_ARGUMENT`; a second trial, or a trial when disabled = `INVALID_ARGUMENT`.
+- `Verify` on someone else's payment = `NOT_FOUND`; a payment that failed at the gateway = payment `failed` and the subscription untouched.
+- A subscription is `expired` only once `ends_at` has passed; data is never deleted.
+- With `BILLING_ENFORCED` off everything works as before.
 
-## تست‌ها
-آزمایشی (یک بار، غیرفعال)، وضعیت‌ها و روز باقی‌مانده، خرید و تأیید و تمدید روی فعال و منقضی، idempotency، پرداخت ناموفق، پلن‌های نامعتبر، ایزولاسیون، نگهبان (روشن/خاموش، نوشتنی در برابر خواندنی، منقضی در برابر فعال، RPCهای معاف)، gRPC واقعی، اپ.
+## Tests
+Trial (once, disabled), statuses and days remaining, purchase and verify and extension on active and expired, idempotency, failed payment, invalid plans, isolation, the guard (on/off, write vs read, expired vs active, exempt RPCs), real gRPC, app.
 
-## معیار پذیرش
-- [x] آزمایشی یک بار می‌دهد و بعد از پایان حساب فقط‌خواندنی می‌شود (با قفل روشن).
-- [x] خرید پلن اشتراک را درست تمدید می‌کند و تأیید دوباره اثری ندارد.
-- [x] خواندن و گزارش و خروجی برای حساب منقضی آزاد است.
-- [x] `make check` و `make test` سبز.
+## Acceptance
+- [x] The trial is granted once and after it ends the account becomes read-only (with the lock on).
+- [x] Buying a plan extends the subscription correctly and verifying again has no effect.
+- [x] Reads, reports and export stay open for an expired account.
+- [x] `make check` and `make test` are green.
 
-## وضعیت اجرا
-- ✅ بک‌اند: اپ `apps.billing` (`Plan`، `Subscription`، `Payment`)، آزمایشی یک‌بار، `Checkout`/`Verify` با تأیید سمت سرور از درگاه، تمدید روی `max(الان، پایان فعلی)` و idempotent، `BillingController` روی gRPC، ادمین، و **نگهبان مرکزی فقط‌خواندنی** (`register_call_guard` در دکوراتور `action`؛ با `DJANGO_BILLING_ENFORCED` روشن، RPCهای نوشتنی برای حساب منقضی `PERMISSION_DENIED` می‌شوند و خواندن و ورود و خود billing آزادند).
-- ✅ اپ: صفحه «اشتراک» (وضعیت، آزمایشی، پلن‌ها، خرید، بررسی پرداخت) و نوار «فقط‌خواندنی» روی خانه.
-- ⚠️ **تصمیم‌های تجاری هنوز باز است** (سؤال ۶): هیچ پلن یا قیمتی ساخته نشده (از ادمین ساخته می‌شود)، آزمایشی پیش‌فرض ۱۴ روز و `ENFORCED` خاموش است. **درگاه واقعی نیست**: `FakeProvider` فقط برای توسعه است و همیشه پرداخت را تأیید می‌کند (**در production نباید باشد**). باز کردن آدرس درگاه از اپ و بازگشت با deep link نیاز به `url_launcher` و درگاه انتخاب‌شده دارد؛ فعلاً آدرس نشان داده می‌شود و کاربر «بررسی پرداخت» را می‌زند. اپ روی دستگاه اجرا نشده.
-- ⏳ بعداً: درگاه واقعی، تمدید خودکار، کد تخفیف، فاکتور، استرداد، ویژگی‌های متفاوت پلن‌ها.
+## Implementation status
+- ✅ Backend: app `apps.billing` (`Plan`, `Subscription`, `Payment`), one-time trial, `Checkout`/`Verify` with server-side gateway verification, extension from `max(now, current end)` and idempotent, `BillingController` over gRPC, admin, and the **central read-only guard** (`register_call_guard` in the `action` decorator; with `DJANGO_BILLING_ENFORCED` on, write RPCs for an expired account become `PERMISSION_DENIED` while reads, sign-in and billing itself stay open).
+- ✅ App: the "Subscription" page (status, trial, plans, purchase, check payment) and a "read-only" banner on home.
+- ⚠️ **Business decisions are still open** (question 6): no plan or price has been created (they are created from the admin), the trial defaults to 14 days and `ENFORCED` is off. **There is no real gateway**: `FakeProvider` is for development only and always confirms the payment (**must not be in production**). Opening the gateway URL from the app and returning via deep link needs `url_launcher` and the chosen gateway; for now the URL is shown and the user taps "Check payment". The app has not been run on a device.
+- ⏳ Later: a real gateway, auto-renewal, discount codes, invoices, refunds, different features per plan.

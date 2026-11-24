@@ -1,115 +1,115 @@
 <div align="center">
 
-# سوما · Summa
+# Summa
 
-**حسابداری شخصی برای ایران: خرج، قسط و دارایی را یک‌جا ببین.**
+**Personal accounting for Iran: see expenses, installments and assets in one place.**
 
-*Personal accounting for Iran: expenses, installments and assets in one place. Persian-first, multi-currency, fed by bank SMS.*
+*Persian-first, multi-currency, fed by bank SMS.*
 
 Flutter · Django · gRPC · PostgreSQL · Redis · Celery
 
-**[پیش‌نمایش زندهٔ سایت معرفی ←](https://ctrlaltdevelop.github.io/summa/)**
+**[Live preview of the landing site →](https://ctrlaltdevelop.github.io/summa/)**
 
 </div>
 
 <p align="center">
-  <img src="docs/screenshots/login.png" alt="ورود با کد پیامکی" width="23%">
-  <img src="docs/screenshots/home.png" alt="خانه: خالص دارایی و نمودار" width="23%">
-  <img src="docs/screenshots/panels.png" alt="وام، دارایی و ساعت حساب‌وکتاب" width="23%">
-  <img src="docs/screenshots/form.png" alt="فرم کیف پول جدید" width="23%">
+  <img src="docs/screenshots/login.png" alt="Sign in with an SMS code" width="23%">
+  <img src="docs/screenshots/home.png" alt="Home: net worth and chart" width="23%">
+  <img src="docs/screenshots/panels.png" alt="Loans, assets and the accounting hour" width="23%">
+  <img src="docs/screenshots/form.png" alt="New wallet form" width="23%">
 </p>
 
-### صفحه‌های بزرگ
+### Large screens
 
-از ۹۰۰ نقطه به بالا (دسکتاپ و تبلت بزرگ) خانه به داشبورد با نوار کناری و دو ستون کارت تبدیل می‌شود؛ پایین‌تر از آن یک ستون وسط‌چین است. تصویر اول: iPad Pro ‎13 اینچی (همان چیدمان دسکتاپ)، تصویر دوم: iPad mini.
+From 900 px up (desktop and large tablets) Home becomes a dashboard with a sidebar and two columns of cards; below that it is a single centred column. First image: iPad Pro 13" (same layout as desktop), second: a small tablet.
 
 <p align="center">
-  <img src="docs/screenshots/dashboard-wide.png" alt="داشبورد در صفحهٔ عریض" width="58%">
-  <img src="docs/screenshots/tablet.png" alt="خانه روی تبلت کوچک" width="38%">
+  <img src="docs/screenshots/dashboard-wide.png" alt="Dashboard on a wide screen" width="58%">
+  <img src="docs/screenshots/tablet.png" alt="Home on a small tablet" width="38%">
 </p>
 
-### سایت معرفی
+### Landing site
 
-سایت عمومی در `landing/` (Vite و Three.js) با دموی چت زنده، قیمت‌های روز از API بک‌اند و قسط‌سنج و ابزارهای رایگان. متن و قیمت‌ها در ادمین ویرایش می‌شود. با `make landing` (در کنار `make run-lite`) روی `http://localhost:5173` بالا می‌آید. [پیش‌نمایش ایستا](https://ctrlaltdevelop.github.io/summa/) روی GitHub Pages هم هست؛ بدون بک‌اند است، پس قیمت‌ها نمونه‌اند و دموی چت کار نمی‌کند. اعداد قیمت در تصویر هم نمونه‌اند.
+The public site lives in `landing/` (Vite and Three.js) with a live chat demo, today's prices from the backend API, an installment calculator and free tools. Copy and prices are editable in the admin. `make landing` (alongside `make run-lite`) serves it on `http://localhost:5173`. A [static preview](https://ctrlaltdevelop.github.io/summa/) is also on GitHub Pages; it has no backend, so prices are samples and the chat demo does not work. The prices in the screenshot are samples too.
 
 <p align="center">
-  <img src="docs/screenshots/landing-full.png" alt="سایت معرفی" width="60%">
+  <img src="docs/screenshots/landing-full.png" alt="Landing site" width="60%">
 </p>
 
-### مستندات API
+### API docs
 
-بک‌اند Swagger دارد: بعد از `make run-lite` روی `http://127.0.0.1:8010/api/docs` (و ReDoc روی `/api/redoc`) و پنل ادمین روی `/admin/`. در production مستندات به‌طور پیش‌فرض خاموش است (`DJANGO_API_DOCS_ENABLED=true` روشنش می‌کند). اپ از gRPC استفاده می‌کند و Swagger فقط REST را نشان می‌دهد.
+The backend ships Swagger: after `make run-lite`, open `http://127.0.0.1:8010/api/docs` (ReDoc at `/api/redoc`) and the admin panel at `/admin/`. In production the docs are off by default (`DJANGO_API_DOCS_ENABLED=true` turns them on). The app speaks gRPC; Swagger only shows REST.
 
 <p align="center">
   <img src="docs/screenshots/swagger.png" alt="Swagger" width="80%">
 </p>
 
-## چه کار می‌کند
+## What it does
 
-- **کیف پول‌ها:** هر تعداد کیف پول با ارز و بانک دلخواه (نقد، حساب بانکی، کارت اعتباری، خرید اقساطی، هدیه‌کارت، رمزارز، طلا). موجودی از رویدادها ساخته می‌شود و موجودی اولیه هنگام ساخت پرسیده می‌شود.
-- **دفتر:** ثبت خرج و درآمد، انتقال بین کیف پول‌ها با کارمزد اختیاری و نرخ تبدیلی که خودت می‌دهی، تقسیم یک خرج بین چند دسته، برگشت وجه.
-- **دسته‌ها و سقف ماهانه** با هشدار، تراکنش‌های تکراری، یادآور حقوق و ساعت روزانهٔ حساب‌وکتاب.
-- **وام و قسط:** جدول اقساط، «پرداخت شد» و یادآوری.
-- **دارایی و قیمت:** طلا، ارز و دارایی دلخواه با نرخ تقریبی که بک‌اند هر چند ساعت تازه می‌کند.
-- **خالص دارایی:** یک عدد بزرگ به تومان، معادل دلار و گرم طلا، نمودار ۷/۳۰/۹۰ روزه و سهم کیف‌ها، دارایی‌ها و بدهی‌ها. سبدهای هدف هم دارد.
-- **پیامک بانک:** متن پیامک را share یا paste می‌کنی؛ بک‌اند با regex هر بانک و یک مدل کوچک Ollama آن را می‌خواند. مبلغ باید عیناً در متن باشد و متن خام به‌طور پیش‌فرض ذخیره نمی‌شود.
-- **دستیار:** چت خصوصی داخل اپ. دستیار فقط بررسی و پیشنهاد می‌دهد؛ دکمهٔ «ثبت» همان درخواست معمولی ثبت را از گوشی خودت می‌فرستد و دستیار هیچ دسترسی نوشتن ندارد.
-- **حریم و امنیت:** قفل اپ با بیومتریک یا رمز داخل اپ، و خروجی/ورود داده فقط بعد از تأیید هویت.
-- **آفلاین و چنددستگاه:** صف تغییرات محلی و همگام‌سازی.
+- **Wallets:** any number of wallets with any currency and bank (cash, bank account, credit card, installment purchase, gift card, crypto, gold). Balances are built from events, and the initial balance is asked for at creation.
+- **Ledger:** record expenses and income, transfer between wallets with an optional fee and a rate you enter yourself, split one expense across several categories, refunds.
+- **Categories and monthly caps** with warnings, recurring transactions, salary reminders and a daily accounting hour.
+- **Loans and installments:** an installment schedule, "mark as paid" and reminders.
+- **Assets and prices:** gold, currencies and custom assets, valued at approximate rates the backend refreshes every few hours.
+- **Net worth:** one big number in Toman, with its dollar and gold-gram equivalents, a 7/30/90-day chart and the share of wallets, assets and debts. Goal buckets are included.
+- **Bank SMS:** share or paste the SMS text; the backend reads it with per-bank regexes and a small Ollama model. The amount must appear verbatim in the text, and the raw text is not stored by default.
+- **Assistant:** a private chat inside the app. The assistant only analyses and suggests; its "Register" button sends the normal register request from your own phone, and the assistant has no write access.
+- **Privacy and security:** app lock with biometrics or an in-app passcode, and data export/import only after identity confirmation.
+- **Offline and multi-device:** a local change queue and sync.
 
-فقط ایران و فارسی (RTL، تقویم شمسی). چند ارز و چند نوع کیف پول نگه داشته شده‌اند.
+Iran and Persian only for now (RTL, Shamsi calendar). Multiple currencies and wallet types are kept. English and non-Iran country profiles are planned as phases 19 and 19b.
 
-## ساختار
+## Layout
 
 ```
-app/       Flutter: اندروید، iOS، macOS (یک کدبیس)
-backend/   Django + gRPC (REST هم برای سایت)، PostgreSQL، Redis، Celery
-landing/   سایت معرفی تعاملی (Vite + Three.js) با دموی چت زنده و ماشین‌حساب‌ها
-deploy/    docker compose برای Postgres و Redis
-docs/      مستندات فارسی، نقشهٔ راه و سند هر فاز
+app/       Flutter: Android, iOS, macOS (one codebase)
+backend/   Django + gRPC (plus REST for the site), PostgreSQL, Redis, Celery
+landing/   interactive landing site (Vite + Three.js) with a live chat demo and calculators
+deploy/    docker compose for Postgres and Redis
+docs/      documentation, roadmap and one doc per phase
 ```
 
-## شروع سریع
+## Quick start
 
-پیش‌نیاز: Flutter، Python 3.14، و برای قراردادها `brew install protobuf buf` و `dart pub global activate protoc_plugin`.
+Prerequisites: Flutter, Python 3.14, and for the contracts `brew install protobuf buf` and `dart pub global activate protoc_plugin`.
 
 ```bash
-make setup      # venv بک‌اند + وابستگی‌ها + flutter pub get
-make run-lite   # بدون Docker: migrate + REST (:8010) + gRPC (:50051)
-make macos      # اپ روی macOS (در ترمینال دیگر)
+make setup      # backend venv + dependencies + flutter pub get
+make run-lite   # no Docker: migrate + REST (:8010) + gRPC (:50051)
+make macos      # the app on macOS (in another terminal)
 ```
 
-کد ورود پیامکی در محیط توسعه به ترمینال `make run-lite` چاپ می‌شود.
+In development the SMS sign-in code is printed to the `make run-lite` terminal.
 
-| فرمان | کار |
+| Command | What it does |
 |---|---|
-| `make run-lite` | بک‌اند سبک با SQLite و حافظه، بدون Docker |
-| `make dev` / `make down` | بک‌اند کامل با Postgres و Redis |
-| `make macos` | اجرای اپ روی macOS |
-| `make proto` | ساخت دوبارهٔ stub های Python و Dart (پروتوی جدید را به `DART_PROTOS` اضافه کن) |
-| `make check` | lint، type، migration، proto، format و analyze |
-| `make test` | pytest و flutter test |
-| `make landing` / `make landing-test` | سایت معرفی و آزمون‌هایش |
+| `make run-lite` | lightweight backend with SQLite and in-memory cache, no Docker |
+| `make dev` / `make down` | full backend with Postgres and Redis |
+| `make macos` | run the app on macOS |
+| `make proto` | regenerate the Python and Dart stubs (add a new proto to `DART_PROTOS`) |
+| `make check` | lint, types, migrations, proto, format and analyze |
+| `make test` | pytest and flutter test |
+| `make landing` / `make landing-test` | the landing site and its tests |
 
-برای اجرا روی شبیه‌ساز iOS، اپ را با `--dart-define=GRPC_HOST=...` و `GRPC_PORT=...` بساز؛ پیش‌فرض‌ها `localhost:50051` (و `10.0.2.2` برای شبیه‌ساز اندروید) هستند.
+To run on the iOS simulator, build the app with `--dart-define=GRPC_HOST=...` and `GRPC_PORT=...`; the defaults are `localhost:50051` (and `10.0.2.2` for the Android emulator).
 
-## فناوری
+## Stack
 
-| بخش | انتخاب |
+| Part | Choice |
 |---|---|
-| اپ | Flutter، Riverpod، gRPC، تم تیرهٔ شیشه‌ای با طلایی و انیمیشن (احترام به reduced-motion) |
-| بک‌اند | Django و gRPC، PostgreSQL، Redis، Celery (نرخ‌ها هر چند ساعت) |
-| پیامک | regex هر بانک + Ollama، با اعتبارسنجی schema |
-| سایت | Vite و Three.js؛ محتوا و قیمت‌ها از API بک‌اند و قابل ویرایش در ادمین |
+| App | Flutter, Riverpod, gRPC, dark glass theme with gold accents and animation (respects reduced motion) |
+| Backend | Django and gRPC, PostgreSQL, Redis, Celery (rates every few hours) |
+| SMS | per-bank regex + Ollama, schema-validated |
+| Site | Vite and Three.js; content and prices come from the backend API and are editable in the admin |
 
-## مستندات
+## Documentation
 
-مستندات فارسی در [`docs/`](docs/README.md): تحقیق مرجع، [سؤال‌های باز](docs/05-open-questions.md)، [معماری](docs/06-architecture.md)، [نقشهٔ راه](docs/07-roadmap.md)، [مدل داده](docs/10-data-model.md)، [مدل امنیتی](docs/12-security-model.md). قواعد کار برای انسان و هوش مصنوعی در [AGENTS.md](AGENTS.md).
+Docs live in [`docs/`](docs/README.md): reference research, [open questions](docs/05-open-questions.md), [architecture](docs/06-architecture.md), [roadmap](docs/07-roadmap.md), [data model](docs/10-data-model.md), [security model](docs/12-security-model.md). Working rules for humans and AI are in [AGENTS.md](AGENTS.md).
 
-## مشارکت
+## Contributing
 
-یک فاز، یک ویژگی؛ اول سند فاز (`docs/08-phase-template.md`) و بعد کد. پیام‌های commit به سبک emoji Conventional Commits است ([راهنما](docs/GIT_COMMIT_CONVENTIONS.md)). قبل از ارسال، `make check` و `make test` باید سبز باشند. راهنمای کامل در [CONTRIBUTING.md](CONTRIBUTING.md). آسیب‌پذیری را خصوصی گزارش کن، نه در issue: [SECURITY.md](SECURITY.md).
+One phase, one feature: the phase doc (`docs/08-phase-template.md`) comes first, then code. Commit messages follow emoji Conventional Commits ([guide](docs/GIT_COMMIT_CONVENTIONS.md)). Before sending a change, `make check` and `make test` must be green. The full guide is in [CONTRIBUTING.md](CONTRIBUTING.md). Report vulnerabilities privately, not in an issue: [SECURITY.md](SECURITY.md).
 
-## مجوز
+## License
 
-[GNU AGPL-3.0](LICENSE). هر کس نسخهٔ تغییریافته را به‌صورت سرویس اجرا کند باید کد تغییرها را منتشر کند.
+[GNU AGPL-3.0](LICENSE). Anyone who runs a modified version as a service must publish the changes.

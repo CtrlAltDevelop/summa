@@ -1,37 +1,37 @@
-# فاز ۱۲: آفلاین و همگام‌سازی
+# Phase 12: Offline and sync
 
-## هدف
-اپ بدون اینترنت هم قابل‌استفاده باشد (دیدن آخرین داده و ثبت تراکنش) و چند دستگاه یک کاربر به یک وضعیت برسند.
+## Goal
+The app is usable without internet (see the latest data and record transactions) and a user's multiple devices converge to the same state.
 
-## وابستگی‌ها
-فاز ۰۲.
+## Dependencies
+Phase 02.
 
-## محدوده
-**داخل**
-- بک‌اند: ردگیری `updated_at` روی `Wallet`، `Category` و `LedgerEvent` (هر `save` و هر `QuerySet.update` آن را تازه می‌کند)؛ اپ جدید `apps.sync` با `SyncController.Changes`.
-- **`Changes`** سه فهرست مستقل (کیف‌ها، دسته‌ها، رویدادهای دفتر) را با **مکان‌نمای keyset** `(updated_at, id)` برمی‌گرداند؛ هر کدام cursor خودش را دارد. صفحه‌بندی با `limit` (پیش‌فرض ۲۰۰، حداکثر ۵۰۰ برای هر فهرست) و `has_more`. موجودی در فید نیست (از رویدادها حساب می‌شود). رویداد باطل‌شده با `voided=true` می‌آید و کیف بایگانی‌شده با `archived=true`. فقط داده خود کاربر.
-- **هم‌پوشانی ۵ ثانیه‌ای:** وقتی صفحه آخر است cursor ۵ ثانیه عقب‌تر از آخرین ردیف داده می‌شود تا تراکنشی که دیرتر commit شده از دست نرود؛ کلاینت با `id` ردیف‌های تکراری را بی‌اثر اعمال می‌کند (idempotent).
-- اپ: **صف خروجی (outbox)** برای ثبت خرج/درآمد: وقتی اینترنت نیست، ثبت در صف دائمی (فایل) می‌رود و با همان `client_mutation_id` بعداً فرستاده می‌شود (idempotent)؛ رد سرور (نامعتبر/ناموجود) به فهرست «ناموفق» می‌رود و با زدن «حذف» پاک می‌شود. **کش خواندن**: آخرین فهرست کیف‌ها و دسته‌ها و تراکنش‌ها در فایل نگه داشته و در حالت آفلاین نشان داده می‌شود. نشان «در انتظار ارسال» و دکمه «ارسال دوباره».
+## Scope
+**In**
+- Backend: `updated_at` tracking on `Wallet`, `Category` and `LedgerEvent` (every `save` and every `QuerySet.update` refreshes it); new app `apps.sync` with `SyncController.Changes`.
+- **`Changes`** returns three independent lists (wallets, categories, ledger events) with a **keyset cursor** `(updated_at, id)`; each has its own cursor. Pagination with `limit` (default 200, at most 500 per list) and `has_more`. Balances are not in the feed (they are computed from events). A voided event arrives with `voided=true` and an archived wallet with `archived=true`. Only the user's own data.
+- **5-second overlap:** when it is the last page the cursor is given 5 seconds earlier than the last data row so that a transaction committed late is not missed; the client applies duplicate rows by `id` with no effect (idempotent).
+- App: an **outbox** for recording expenses/income: when there is no internet, the entry goes to a durable queue (a file) and is sent later with the same `client_mutation_id` (idempotent); a server rejection (invalid/not found) goes to a "failed" list and is cleared by tapping "Delete". A **read cache**: the latest lists of wallets, categories and transactions are kept in a file and shown offline. A "pending send" badge and a "Send again" button.
 
-**بیرون**
-صف خروجی برای بقیه عملیات (انتقال، تقسیم، برگشت، بدهی…)، اعمال فید در پایگاه محلی کامل (جایگزین کش)، ارجاع به موجودیتی که هنوز آفلاین است (نیاز به شناسه سمت کلاینت)، همگام‌سازی پس‌زمینه و push، حل تعارض ویرایش هم‌زمان (دفتر append-only است و سرور برنده است)، رمزنگاری فایل کش (فاز ۱۵).
+**Out**
+An outbox for other operations (transfer, split, refund, debt…), applying the feed into a full local database (replacing the cache), referencing an entity that is still offline (needs client-side ids), background sync and push, resolving concurrent edit conflicts (the ledger is append-only and the server wins), encrypting the cache file (phase 15).
 
-## قوانین و لبه‌ها
-- cursor نامعتبر = `INVALID_ARGUMENT`؛ `limit` خارج از بازه به بازه می‌چسبد.
-- همه چیز با کاربر احراز‌شده؛ شناسه کاربر هرگز از کلاینت.
-- ثبت در صف با همان `client_mutation_id` دو بار فقط یک رویداد می‌سازد.
+## Rules and edges
+- An invalid cursor = `INVALID_ARGUMENT`; an out-of-range `limit` is clamped to the range.
+- Everything is tied to the authenticated user; the user id never comes from the client.
+- Queueing with the same `client_mutation_id` twice creates only one event.
 
-## تست‌ها
-بک‌اند: ردگیری `updated_at` (save، update، باطل‌کردن گروهی، بایگانی، جابه‌جایی دسته)، فید (اول‌بار، تغییر، باطل، بایگانی، دسته، صفحه‌بندی با زمان یکسان بدون جاانداختن و تکرار، هم‌پوشانی، cursor بد، ایزولاسیون)، gRPC واقعی. اپ: صف (افزودن، ارسال، ماندن وقتی آفلاین، رد سرور، idempotency)، کش، ویجت.
+## Tests
+Backend: `updated_at` tracking (save, update, bulk void, archive, category move), the feed (first load, change, void, archive, category, pagination with identical timestamps without skipping or duplicating, overlap, bad cursor, isolation), real gRPC. App: the queue (add, send, stay when offline, server rejection, idempotency), cache, widget.
 
-## معیار پذیرش
-- [x] دستگاه دوم با صفحه‌بندی همه رویدادها را بدون جاانداختن و تکرار می‌گیرد.
-- [x] تغییرات (باطل، بایگانی، جابه‌جایی دسته) در فید می‌آیند.
-- [x] ثبت آفلاین بعد از اتصال دقیقاً یک بار ثبت می‌شود.
-- [x] `make check` و `make test` سبز.
+## Acceptance
+- [x] A second device paginates through all events without skipping or duplicating.
+- [x] Changes (void, archive, category move) arrive in the feed.
+- [x] An offline entry is recorded exactly once after reconnecting.
+- [x] `make check` and `make test` are green.
 
-## وضعیت اجرا
-- ✅ بک‌اند: `updated_at` روی `Wallet`/`Category`/`LedgerEvent` (کلاس پایه `Tracked`: هر `save` و هر `QuerySet.update` آن را تازه می‌کند)، اپ `apps.sync` با `SyncController.Changes`: سه فید با cursor keyset، `has_more`، هم‌پوشانی ۵ ثانیه‌ای روی صفحه آخر، `voided`/`archived` در فید، فقط داده خود کاربر.
-- ✅ اپ: `KeyValueStore` (حافظه یا فایل اتمیک در پوشه برنامه با `path_provider`)، **صف خروجی** برای ثبت خرج/درآمد (آفلاین ← صف دائمی، ارسال به ترتیب با همان `client_mutation_id`، رد سرور ← فهرست ناموفق، پنل «در انتظار ارسال» و «ارسال دوباره»)، **کش** کیف‌ها و دسته‌ها و تراکنش‌ها که فقط در حالت آفلاین نشان داده می‌شود، و پاک‌شدن همه این‌ها هنگام خروج.
-- ⚠️ **اپ فید `Changes` را هنوز مصرف نمی‌کند**؛ دستگاه دوم فعلاً با کش و بارگیری عادی کار می‌کند و فید برای اعمال در پایگاه محلی کامل آماده است. صف فقط ثبت خرج/درآمد را پوشش می‌دهد. فایل کش رمز نشده (فاز ۱۵). ارسال خودکار فقط هنگام باز شدن خانه یا با دکمه است (بدون تایمر پس‌زمینه). روی دستگاه اجرا نشده.
-- ⏳ بعداً: صف برای بقیه عملیات و شناسه سمت کلاینت برای ارجاع آفلاین، پایگاه محلی کامل (drift/sqlite) و مصرف فید، همگام‌سازی پس‌زمینه، رمزنگاری کش.
+## Implementation status
+- ✅ Backend: `updated_at` on `Wallet`/`Category`/`LedgerEvent` (base class `Tracked`: every `save` and every `QuerySet.update` refreshes it), app `apps.sync` with `SyncController.Changes`: three feeds with a keyset cursor, `has_more`, a 5-second overlap on the last page, `voided`/`archived` in the feed, only the user's own data.
+- ✅ App: `KeyValueStore` (memory or an atomic file in the app folder via `path_provider`), an **outbox** for recording expenses/income (offline goes to a durable queue, sent in order with the same `client_mutation_id`, server rejection goes to the failed list, a "pending send" panel and "Send again"), a **cache** of wallets, categories and transactions shown only when offline, and everything is cleared on sign-out.
+- ⚠️ **The app does not consume the `Changes` feed yet**; for now a second device works with the cache and normal loading, and the feed is ready for applying into a full local database. The queue covers only expense/income entry. The cache file is not encrypted (phase 15). Automatic sending happens only when home opens or via the button (no background timer). Not run on a device.
+- ⏳ Later: a queue for other operations and client-side ids for offline references, a full local database (drift/sqlite) and consuming the feed, background sync, cache encryption.

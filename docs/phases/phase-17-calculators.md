@@ -1,26 +1,26 @@
-# فاز ۱۷: ماشین‌حساب‌های عمومی
+# Phase 17: Public calculators
 
-## هدف
-ابزارهای بدون ثبت‌نام روی لندینگ: قسط‌سنج، هدف پس‌انداز و مبدل ارز/طلا با نرخ‌های عمومی بک‌اند.
+## Goal
+Sign-up-free tools on the landing site: an installment calculator, a savings goal, and a currency/gold converter using the backend's public rates.
 
-## وابستگی‌ها
-فاز ۱۶.
+## Dependencies
+Phase 16.
 
-## محدوده
-**داخل**
-- `landing/src/calculators.js`: توابع خالص `loanPayment` (اقساط برابر؛ سود صفر = تقسیم مساوی)، `monthsToGoal` (ماه‌های لازم با بازده سالانه اختیاری)، `convert` (از طریق قیمت تومانی). ورودی نامعتبر = `null`.
-- `landing/src/tools.js`: سه فرم کوچک زیر جدول قیمت‌ها؛ ورودی با ارقام فارسی هم پذیرفته می‌شود؛ مبدل فقط نمادهای با قیمت معلوم را نشان می‌دهد و بدون نرخ حذف می‌شود.
+## Scope
+**In**
+- `landing/src/calculators.js`: pure functions `loanPayment` (equal installments; zero interest = equal split), `monthsToGoal` (months needed, with an optional annual return), `convert` (via the Toman price). Invalid input = `null`.
+- `landing/src/tools.js`: three small forms below the price table; input accepts Persian digits too; the converter shows only symbols with a known price and drops those without a rate.
 
-**بیرون**
-ذخیره نتیجه، اقساط با تاریخ سررسید، پیوند به ثبت در اپ.
+**Out**
+Saving results, installments with due dates, a link to registering in the app.
 
-## تست‌ها
-vitest: فرمول‌ها و ورودی‌های نامعتبر، رندر فرم‌ها، ارقام فارسی، حذف مبدل بدون نرخ (۱۵ تست جدید).
+## Tests
+vitest: formulas and invalid input, form rendering, Persian digits, dropping converter entries without a rate (15 new tests).
 
-## معیار پذیرش
-- [x] نتیجه با تایپ بلافاصله به‌روز می‌شود؛ ورودی بد پیام می‌دهد.
-- [x] `vite build` و تست‌ها سبز.
+## Acceptance
+- [x] The result updates immediately as you type; bad input shows a message.
+- [x] `vite build` and tests are green.
 
-## وضعیت اجرا
-- ✅ سه ابزار و تست‌ها.
-- ⚠️ در مرورگر واقعی دیده نشده. قسط‌سنج مدل ساده اقساط برابر است، نه قرارداد خاص بانکی (کارمزد، سود مرکب روزانه و ...). نتیجه‌ها تقریبی‌اند.
+## Status
+- ✅ The three tools and their tests.
+- ⚠️ Not seen in a real browser. The installment calculator is a simple equal-installments model, not any specific bank contract (fees, daily compound interest, etc.). Results are approximate.

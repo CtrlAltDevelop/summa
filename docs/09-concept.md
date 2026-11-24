@@ -1,174 +1,174 @@
-# ایده کامل Summa (پیشنهاد، قابل ویرایش)
+# The complete Summa idea (proposal, editable)
 
-> پیشنهادهای تکمیلی بر پایه تصمیم‌های ثبت‌شده. هر مورد وقتی تأیید شد به فاز تبدیل می‌شود. چیزی در اینجا هنوز تصمیم نهایی نیست.
+> Supplementary proposals built on the recorded decisions. Each item becomes a phase once approved. Nothing here is a final decision yet.
 
-## حلقه اصلی (۳ ثانیه)
-پیامک بانک → اپ می‌فهمد (مبلغ، کیف پول) → یک سؤال: «برای چه بود؟» با ۳ پیشنهاد دسته → ثبت شد، تراز تکان می‌خورد. همه‌چیز دیگر دور همین حلقه ساخته می‌شود.
+## The core loop (3 seconds)
+Bank SMS -> the app understands it (amount, wallet) -> one question: "What was it for?" with 3 category suggestions -> recorded, the Taraz balance indicator moves. Everything else is built around this loop.
 
-## ثبت خودکار، جزئیات
-- **پاسخ سریع:** سؤال «برای چه بود؟» در خود اعلان اپ جواب داده می‌شود (دکمه‌های دسته، بدون باز کردن اپ).
-- **حافظه فروشنده:** هر جواب کاربر یاد گرفته می‌شود (پیامک مشابه ← همان دسته)؛ بعد از چند بار، بی‌سؤال ثبت می‌شود و فقط در گزارش هفتگی «تأیید کن» دیده می‌شود.
-- **اتصال پیامک به کیف پول:** با شماره‌ی کارت/حساب در پیامک؛ بار اول از کاربر پرسیده و ذخیره می‌شود.
-- **صف تأیید:** هر پیامک مبهم می‌ماند تا یک‌لمس؛ هیچ‌چیز بی‌صدا در گزارش نمی‌رود.
-- **مانده در پیامک:** پیامک مانده حساب را می‌گوید؛ اپ آن را با موجودی محاسبه‌شده مقایسه می‌کند و اگر فرق داشت «موجودی کیف پول با بانک نمی‌خواند» هشدار می‌دهد (تطبیق خودکار، یک تفاوت بزرگ نسبت به ترازنما).
-- **ثبت دستی** همیشه هست (جمله فارسی، فاز ۰۴).
+## Automatic entry, in detail
+- **Quick reply:** the "What was it for?" question is answered in the app notification itself (category buttons, without opening the app).
+- **Merchant memory:** every user answer is learned (similar SMS -> same category); after a few times it is recorded without asking and only appears for "Confirm" in the weekly report.
+- **Linking an SMS to a wallet:** via the card/account number in the SMS; asked from the user the first time and saved.
+- **Approval queue:** every ambiguous SMS waits for a single tap; nothing silently lands in reports.
+- **Balance in the SMS:** the SMS states the account balance; the app compares it with the computed balance and, if they differ, warns "the wallet balance doesn't match the bank" (automatic reconciliation, a big difference from the Taraznama reference).
+- **Manual entry** is always available (a Persian sentence, phase 04).
 
-## کیف پول و صندوق
-- **صندوق محاسباتی:** صفحه اصلی؛ کارت هر کیف پول با موجودی، و جمع کل به ارز پایه. لمس کارت ← تاریخچه آن کیف پول.
-- **تطبیق:** کاربر هر زمان «موجودی واقعی» را وارد می‌کند؛ اگر فرق داشت، فرق به‌صورت «تعدیل» ثبت می‌شود (نه ویرایش گذشته).
-- **بایگانی:** کیف پول بسته شده (مثلاً حساب بسته‌شده) بایگانی می‌شود و تاریخچه می‌ماند.
-- **ارز سفارشی:** طلا (گرم)، تتر و غیره به‌عنوان ارز تعریف‌پذیر.
+## Wallets and the vault
+- **Computed vault:** the home screen; a card for each wallet with its balance, and the grand total in the base currency. Tap a card -> that wallet's history.
+- **Reconciliation:** the user can enter the "real balance" at any time; if it differs, the difference is recorded as an "adjustment" (not an edit of the past).
+- **Archive:** a closed wallet (for example a closed account) is archived and its history stays.
+- **Custom currency:** gold (grams), Tether and so on as definable currencies.
 
-## بودجه و هدف
-- بودجه ماهانه برای هر دسته، به ازای ارز پایه؛ نوار پیشرفت با رنگ و انیمیشن؛ پیشنهاد مبلغ از میانگین ماه‌های قبل.
-- **هدف پس‌انداز:** مبلغ + تاریخ؛ از یک کیف پول تغذیه می‌شود؛ «چقدر مانده و هر ماه چقدر لازم است».
-- **تراز ماه:** درآمد − خرج − قسط، یک عدد اصلی؛ همان نشانگر «تراز» لندینگ.
+## Budget and goals
+- A monthly budget for each category, in the base currency; a progress bar with color and animation; amount suggested from the average of previous months.
+- **Savings goal:** amount + date; funded from one wallet; "how much is left and how much is needed each month".
+- **Month balance:** income − spending − installments, one main number; the same "Taraz" indicator as on the landing site.
 
-## قسط و بدهی
-- جدول اقساط، «پرداخت شد» خودکار از پیامک (اگر پیامک پرداخت قسط آمد پیشنهاد می‌شود)، یادآوری push.
-- **بدهکار/طلبکار:** «به فلانی بدهکارم/طلب دارم» با تاریخ؛ جدا از خرج؛ در خالص دارایی می‌آید.
+## Installments and debt
+- Installment table, an automatic "paid" from SMS (if a payment SMS arrives it is suggested), push reminders.
+- **Debtor/creditor:** "I owe so-and-so / so-and-so owes me" with a date; separate from spending; counted in net worth.
 
-## دارایی
-- کیف دارایی با قیمت زنده (طلا، سکه، تتر، ارز، سهام) و سود/زیان؛ سبد؛ نمایش خالص دارایی به تومان/گرم طلا/دلار.
-- نمودار «ثروتم در طول زمان» با نقطه روی هر تغییر.
+## Assets
+- Asset wallet with live prices (gold, coins, Tether, currency, stocks) and profit/loss; portfolios; net worth shown in Toman/gold grams/dollars.
+- A "my wealth over time" chart with a point at every change.
 
-## بینش (قابل ساخت با همان Ollama یا قاعده‌محور)
-- خلاصه ماه به زبان ساده، خرج غیرعادی، «این ماه ۳۰٪ بیشتر از معمول خرج کافه»، پیش‌بینی پایان ماه.
-- همه روی سرور خودمان، بدون سرویس بیرونی؛ کاربر می‌تواند خاموش کند.
+## Insights (buildable with the same Ollama or rule-based)
+- A plain-language monthly summary, unusual spending, "30% more cafe spending than usual this month", an end-of-month forecast.
+- All on our own server, no external service; the user can turn it off.
 
-## حریم و اعتماد
-- بدون اتصال به بانک، بدون گرفتن رمز؛ متن پیامک بعد از پردازش ذخیره نمی‌شود (مگر با رضایت).
-- قفل اپ (بیومتریک/پین)، حالت پنهان‌کردن مبلغ‌ها در صفحه، خروجی کامل و حذف حساب.
+## Privacy and trust
+- No bank connection, no passwords collected; SMS text is not stored after processing (except with consent).
+- App lock (biometrics/PIN), a mode that hides amounts on screen, full export and account deletion.
 
-## حس محصول
-- انیمیشن در لحظه‌های معنادار: ثبت تراکنش، تغییر تراز، رسیدن به هدف، پر شدن بودجه.
-- لندینگ همان حلقه اصلی را زنده نشان می‌دهد (دموی چت با پارسر واقعی).
+## Product feel
+- Animation at meaningful moments: recording a transaction, a balance change, reaching a goal, a budget filling up.
+- The landing site shows the core loop live (a chat demo with the real parser).
 
-## پیشنهاد پلن (برای سؤال ۶، فقط ایده)
-- **رایگان:** یک کیف پول، ثبت دستی/share، بودجه ساده.
-- **پرو:** کیف پول نامحدود و چندارز، خواندن خودکار پیامک (نسخه کامل)، تطبیق با بانک، بینش، هدف‌ها، خروجی.
-- بدون تبلیغ و بدون فروش داده؛ درآمد فقط اشتراک.
+## Plan proposal (for question 6, just an idea)
+- **Free:** one wallet, manual/share entry, a simple budget.
+- **Pro:** unlimited multi-currency wallets, automatic SMS reading (full version), bank reconciliation, insights, goals, export.
+- No ads and no data sales; revenue only from subscriptions.
 
-## جاافتاده‌ها (شناسایی‌شده، تصمیم نگرفته)
-1. **نرخ تاریخی ارز:** ارزش یک تراکنش دلاری به تومان «همان روز» حساب شود یا «امروز»؟ بدون این، گزارش چندارزی ناپایدار می‌شود. پیشنهاد: نرخ روز ثبت ذخیره شود و گزارش هر دو را نشان دهد.
-2. **انواع کیف پول:** کارت اعتباری (موجودی منفی)، BNPL (اسنپ‌پی)، هدیه‌کارت، رمزارز؛ فقط «نقد/بانک» کافی نیست.
-3. **ماه مالی سفارشی:** شروع ماه از روز حقوق، نه اول ماه شمسی.
-4. **درآمد و خرج تکراری:** حقوق ماهانه، اشتراک‌ها (نتفلیکس…)، تشخیص خودکار تکرار از پیامک.
-5. **برگشت و بازپرداخت:** مرجوعی، برگشت وجه، سهم دوستان (در ترازنما «سهم دیگران»)، تقسیم هزینه.
-6. **چک و سررسیدها** (چک صیادی، چک پاس‌شده/برگشتی) و بدهی با سررسید.
-7. **ابزارهای ثبت سریع:** ویجت صفحه اصلی، میانبر قفل‌صفحه، جستجو، برچسب، یادداشت، عکس رسید.
-8. **ورود/خروج داده:** وارد کردن از اکسل/CSV و از ترازنما، پشتیبان‌گیری و بازیابی، قاعده حل تعارض در همگام‌سازی چنددستگاه.
-9. **امنیت داده:** رمزنگاری سمت کاربر (end-to-end) برای داده مالی، قفل اپ، نشست‌ها؛ تصمیم لازم: سرور می‌تواند محتوا را بخواند (برای Ollama و بینش) یا نه؟ این دو با هم تضاد دارند.
-10. **عملیات و حقوقی:** سایز و هزینه سرور Ollama، مانیتورینگ و پشتیبان دیتابیس، پنل ادمین و نقش‌ها، قوانین و حریم، درگاه پرداخت داخلی (زرین‌پال) در برابر خرید درون‌برنامه‌ای استورها.
-11. **هنوز ننوشته‌ایم:** سند هر فاز، فهرست بانک‌های ایران و نمونه پیامک واقعی، هویت بصری و برند، پلن و قیمت (سؤال ۶)، ویژگی‌های جدید (سؤال ۳).
+## Gaps (identified, not decided)
+1. **Historical exchange rate:** should the Toman value of a dollar transaction be computed at "that day's" rate or "today's"? Without this, multi-currency reports become unstable. Proposal: store the rate of the day of entry, and let the report show both.
+2. **Wallet types:** credit card (negative balance), BNPL (SnappPay), gift card, crypto; "cash/bank" alone is not enough.
+3. **Custom fiscal month:** the month starting on payday, not the first of the Shamsi month.
+4. **Recurring income and spending:** monthly salary, subscriptions (Netflix...), automatic detection of recurrence from SMS.
+5. **Returns and refunds:** returned goods, chargebacks, friends' share (in Taraznama, "others' share"), splitting costs.
+6. **Cheques and due dates** (Sayad cheque, cleared/bounced cheque) and debt with a due date.
+7. **Quick-entry tools:** home-screen widget, lock-screen shortcut, search, tags, notes, receipt photo.
+8. **Data in/out:** import from Excel/CSV and from Taraznama, backup and restore, a conflict-resolution rule for multi-device sync.
+9. **Data security:** end-to-end encryption for financial data, app lock, sessions; a decision is needed: can the server read content (for Ollama and insights) or not? These two conflict.
+10. **Operations and legal:** size and cost of the Ollama server, monitoring and database backup, admin panel and roles, laws and privacy, a domestic payment gateway (Zarinpal) versus the stores' in-app purchases.
+11. **Not written yet:** each phase's doc, the list of Iranian banks and real SMS samples, visual identity and brand, plan and price (question 6), new features (question 3).
 
-### وضعیت جاافتاده‌ها بعد از تصمیم‌های جدید
-- ✅ نرخ ارز: سرویس پس‌زمینه در بک‌اند، تقریبی (نرخ روز ثبت برای گزارش هنوز پیشنهاد است).
-- ✅ انواع کیف پول: فاز ۰۱b با پروفایل کشور (بند ۲).
-- ✅ برگشت و بازپرداخت: فاز ۰۶b. «سهم دیگران» و تقسیم در فاز ۰۶ می‌ماند (بند ۵).
-- ✅ حقوق و تراکنش تکراری: فازهای ۰۷، ۰۷b و ۰۷c (بند ۴).
-- ✅ ورود/خروج داده با بیومتریک یا رمز اپ: فاز ۱۵b (بند ۸).
-- ✅ ویجت: فاز ۱۸ (تصمیم دقیق در همان فاز).
-- ⏳ هنوز باز: تضاد رمزنگاری سمت کاربر با Ollama/بینش (بند ۹)؛ ماه مالی سفارشی (بند ۳)؛ چک (بند ۶)؛ ثبت سریع جز ویجت (بند ۷).
-- توجه: «چت بسته برای هر کاربر» کنترل دسترسی سمت سرور است، نه رمزنگاری سرتاسری؛ سرور هنوز متن را برای پردازش می‌بیند.
+### Status of the gaps after the new decisions
+- ✅ Exchange rate: a background service in the backend, approximate (storing the entry-day rate for reports is still a proposal).
+- ✅ Wallet types: phase 01b with the country profile (item 2).
+- ✅ Returns and refunds: phase 06b. "Others' share" and splitting stay in phase 06 (item 5).
+- ✅ Salary and recurring transactions: phases 07, 07b and 07c (item 4).
+- ✅ Data import/export with biometrics or the app passcode: phase 15b (item 8).
+- ✅ Widget: phase 18 (exact decision in that phase).
+- ⏳ Still open: the conflict between end-to-end encryption and Ollama/insights (item 9); custom fiscal month (item 3); cheques (item 6); quick entry other than the widget (item 7).
+- Note: "a private chat per user" is server-side access control, not end-to-end encryption; the server still sees the text for processing.
 
-## ادامه ایده: چت دستیار (پیشنهاد)
-- **انواع کارت:** تراکنش (خرج/درآمد)، انتقال بین کیف پول‌ها با کارمزد، برگشت/بازپرداخت، تراکنش تکراری، یادآور حقوق/قسط، تنظیم بودجه، کیف پول جدید. هر کارت قابل ویرایش پیش از «ثبت» است و فیلد مشکوک (مبلغ نامطمئن، کیف پول حدسی) با علامت مشخص می‌شود.
-- **چند کارت در یک پیام:** اگر کاربر چند پیامک یک‌جا فرستاد، AI چند کارت می‌دهد و یک دکمه «ثبت همه» (با مرور سریع).
-- **پرسش‌وپاسخ فقط‌خواندنی:** «این ماه برای کافه چقدر دادم؟» یا «موجودی کل دلاری‌ام؟». AI فقط روی داده همان کاربر و فقط خواندنی جواب می‌دهد (از طریق پرسمان‌های ثابت و محدود بک‌اند، نه دسترسی آزاد به دیتابیس) و عدد را با اتصال به صفحه مربوط نشان می‌دهد.
-- **دکمه‌های سریع:** زیر ورودی چت: «ثبت خرج»، «پیامک را بچسبان»، «این ماه»، «موجودی‌ها».
-- **ورودی صوتی** (اختیاری): گفتن «ناهار ۲۸۵» ← متن ← همان مسیر.
-- **زبان:** AI فقط فارسی جواب می‌دهد؛ ارقام فارسی (ورودی با ارقام انگلیسی هم فهمیده می‌شود).
-- **حالت‌های خطا:** اگر Ollama در دسترس نبود، چت می‌گوید «الان نمی‌توانم بررسی کنم» و **فرم دستی با متن پیامک پرشده** (regex) پیشنهاد می‌شود؛ اپ هرگز بدون مسیر دستی نمی‌ماند. آفلاین: پیام‌ها صف می‌شوند و بعد پردازش می‌شوند، ثبت دستی همچنان کار می‌کند.
-- **حدود:** rate limit هر کاربر، طول پیام، و حذف خودکار تاریخچه چت بعد از N روز (قابل تنظیم و حذف توسط کاربر).
+## Idea continued: the assistant chat (proposal)
+- **Card types:** transaction (expense/income), transfer between wallets with a fee, return/refund, recurring transaction, salary/installment reminder, budget setting, new wallet. Every card is editable before "Register", and a suspicious field (uncertain amount, guessed wallet) is visibly marked.
+- **Several cards in one message:** if the user sends several SMS messages at once, the AI gives several cards and one "Register all" button (with a quick review).
+- **Read-only Q&A:** "How much did I spend on cafes this month?" or "What's my total dollar balance?". The AI answers read-only and only from that user's data (through fixed, limited backend queries, not free database access) and shows the number linked to the relevant screen.
+- **Quick buttons:** under the chat input: "Record expense", "Paste SMS", "This month", "Balances".
+- **Voice input** (optional): saying "ناهار ۲۸۵" (lunch 285) -> text -> the same path.
+- **Language:** the AI replies only in Persian; Persian digits (input with English digits is understood too).
+- **Error states:** if Ollama is unavailable, the chat says "I can't check right now" and offers a **manual form prefilled with the SMS text** (regex); the app is never left without a manual path. Offline: messages are queued and processed later, and manual entry keeps working.
+- **Limits:** per-user rate limit, message length, and automatic deletion of chat history after N days (configurable, and deletable by the user).
 
-## ادامه ایده: شروع کار (onboarding)
-۱) زبان و کشور ← پروفایل کشور (ارز، تقویم، کیف پول‌ها) ۲) ساخت اولین کیف پول با موجودی ۳) ساعت حساب‌وکتاب و روز حقوق ۴) آموزش «پیامک را بچسبان» با یک مثال زنده. هر قدم قابل رد کردن است؛ بعداً از «شروع کار» در صفحه اصلی قابل ادامه است.
+## Idea continued: onboarding
+1) Language and country -> country profile (currency, calendar, wallets) 2) create the first wallet with its balance 3) bookkeeping hour and payday 4) teach "paste the SMS" with a live example. Every step can be skipped; it can be resumed later from "Getting started" on the home screen.
 
-## ادامه ایده: لغو و ردپا
-- **لغو (undo):** بعد از هر ثبت چند ثانیه نوار «برگردان»؛ بعدش ویرایش/حذف از تاریخچه.
-- **ردپا:** هر تراکنش می‌گوید از کجا آمده (دستی، چت، پیامک، تکراری) و چه کسی/چه چیزی ساخته؛ ویرایش‌ها رویداد جدا هستند و گذشته پاک نمی‌شود.
-- **حذف نرم و سطل زباله** برای تراکنش‌ها (بازگردانی تا ۳۰ روز).
+## Idea continued: undo and audit trail
+- **Undo:** after every entry, an "Undo" bar for a few seconds; after that, edit/delete from history.
+- **Audit trail:** every transaction says where it came from (manual, chat, SMS, recurring) and who/what created it; edits are separate events and the past is never erased.
+- **Soft delete and a trash bin** for transactions (restorable for up to 30 days).
 
-## ادامه ایده: مخصوص ایران
-- **کارت‌به‌کارت** و **ساتنا/پایا/پل** به‌عنوان انتقال با کارمزد (پیش‌فرض کارمزد هر بانک از پروفایل کشور، قابل ویرایش).
-- **چک** (صیادی): تاریخ سررسید، صادرشده/دریافتی، پاس/برگشت؛ در قسط و بدهی می‌آید.
-- **تاریخ شمسی** پیش‌فرض و ماه مالی قابل تنظیم؛ اعداد فارسی؛ نوشتن مبلغ به ریال/تومان با تبدیل خودکار و نمایش تنظیم‌پذیر.
-- **پیامک خدماتی** رایج: قبض، شارژ، جرائم؛ قالب‌ها در پروفایل کشور.
+## Idea continued: Iran-specific
+- **Card-to-card** and **Satna/Paya/Pol** as transfers with a fee (each bank's default fee from the country profile, editable).
+- **Cheque** (Sayad): due date, issued/received, cleared/bounced; shown under installments and debt.
+- **Shamsi date** by default and a configurable fiscal month; Persian digits; entering amounts in Rial/Toman with automatic conversion and a configurable display.
+- **Common service SMS:** bills, top-ups, fines; templates in the country profile.
 
-## ادامه ایده: هوشمندی (همه روی سرور خودمان، قابل خاموش شدن)
-- **تشخیص تکرار:** سه بار «نتفلیکس» با فاصله ماهانه ← پیشنهاد «تکراری کنم؟».
-- **پیش‌بینی موجودی:** «تا ۵ روز دیگر قسط ۱۰ میلیونی سررسید است و موجودی این کیف پول ۶ میلیون است».
-- **ناهنجاری:** خرج بسیار بزرگ‌تر از معمول آن دسته ← یادآوری ملایم، نه هشدار ترسناک.
-- **خلاصه هفتگی** کوتاه در ساعت حساب‌وکتاب.
+## Idea continued: intelligence (all on our own server, can be turned off)
+- **Recurrence detection:** "Netflix" three times at monthly intervals -> suggest "make it recurring?".
+- **Balance forecast:** "In 5 days a 10 million installment is due and this wallet's balance is 6 million".
+- **Anomaly:** spending far above that category's norm -> a gentle reminder, not a scary alert.
+- **Short weekly summary** at the bookkeeping hour.
 
-## ادامه ایده: کیفیت AI
-- **مجموعه نمونه:** برای هر بانک چند ده پیامک واقعی (با شماره/نام حذف‌شده) در ریپو؛ تست خودکار که دقت مبلغ، نوع، تاریخ را می‌سنجد.
-- **معیار:** مبلغ باید عیناً در متن باشد؛ دقت مبلغ و نوع را به‌عنوان گیت CI می‌گذاریم و قبل از انتشار مدل/الگوی جدید می‌سنجیم.
-- **بازخورد کاربر:** «این اشتباه بود» روی کارت ← (با رضایت) متن بدون اطلاعات شخصی برای ساخت الگو؛ هرگز بدون رضایت.
-- **نسخه‌بندی:** مدل، پرامپت و الگوها نسخه دارند؛ هر پارس نسخه‌ای که ساخته را ذخیره می‌کند تا خطا قابل ردیابی باشد.
+## Idea continued: AI quality
+- **Sample set:** a few dozen real SMS messages per bank (with numbers/names removed) in the repo; an automated test that measures accuracy of amount, type and date.
+- **Criterion:** the amount must appear verbatim in the text; amount and type accuracy become a CI gate and are measured before any new model/template is released.
+- **User feedback:** "This was wrong" on a card -> (with consent) the text without personal information is used to build a template; never without consent.
+- **Versioning:** models, prompts and templates are versioned; every parse stores the version that produced it so errors can be traced.
 
-## ادامه ایده: دفتر مشترک (بعداً)
-خانواده تا چند نفر؛ کیف پول مشترک و شخصی؛ هر عضو فقط آنچه اجازه داده را می‌بیند. بعد از فاز اول، فاز جدا.
+## Idea continued: shared ledger (later)
+A family of up to several people; shared and personal wallets; each member sees only what they have allowed. After the first phase, as a separate phase.
 
-## ادامه ایده: صفحه‌های اپ (پیشنهاد)
-ناوبری پایین، ۵ بخش:
-1. **خانه:** نشانگر «تراز ماه» (درآمد − خرج − قسط) با انیمیشن، کارت «برای چه بود؟» برای پیامک‌های بی‌دسته، سررسیدهای نزدیک، بودجه‌های رو به پر شدن.
-2. **صندوق:** کارت هر کیف پول (نقد، بانک‌ها، کارت اعتباری…) با موجودی و جمع کل به ارز پایه؛ لمس ← تاریخچه؛ دکمه «موجودی واقعی» برای تطبیق.
-3. **چت (دکمه مرکزی):** دستیار؛ همیشه یک لمس دورتر از هر جای اپ.
-4. **گزارش:** ماه، «کجا خرج شد»، روزبه‌روز، مقایسه با ماه قبل، بودجه، خروجی.
-5. **بیشتر:** دارایی و قیمت‌ها، قسط/بدهی/چک، هدف‌ها، تکراری‌ها، تنظیمات (ساعت حساب‌وکتاب، حقوق، قفل، حریم).
-- **افزودن سریع** از هر صفحه: خرج، درآمد، مدیریت پول (انتقال)، برگشت.
+## Idea continued: app screens (proposal)
+Bottom navigation, 5 sections:
+1. **Home:** the "month balance" Taraz indicator (income − spending − installments) with animation, the "What was it for?" card for uncategorized SMS, upcoming due dates, budgets that are nearly full.
+2. **Vault:** a card for each wallet (cash, banks, credit card...) with its balance and the grand total in the base currency; tap -> history; a "Real balance" button for reconciliation.
+3. **Chat (center button):** the assistant; always one tap away from anywhere in the app.
+4. **Reports:** the month, "where it went", day by day, comparison with the previous month, budget, export.
+5. **More:** assets and prices, installments/debt/cheques, goals, recurring items, settings (bookkeeping hour, salary, lock, privacy).
+- **Quick add** from any screen: expense, income, money management (transfer), return.
 
-## ادامه ایده: دسته‌های پیش‌فرض ایران
-خوراک و سوپرمارکت، رستوران و کافه، رفت‌وآمد (اسنپ، تپسی، بنزین، مترو)، قبض و شارژ، اجاره و خانه، اقساط، سلامت، آموزش، تفریح و اشتراک (نتفلیکس، فیلیمو)، خرید و پوشاک، هدیه و مهمانی، کارمزد بانکی، سایر. درآمد: حقوق، پروژه، هدیه، سود، فروش دارایی، سایر. دسته دلخواه با نام و آیکن و رنگ؛ حذف دسته ← «سایر».
-- **قاعده فروشنده:** اسنپ/تپسی ← رفت‌وآمد، دیجی‌کالا ← خرید، فیلیمو ← اشتراک، و غیره؛ در پروفایل ایران و قابل ویرایش در ادمین.
+## Idea continued: Iran default categories
+Food and groceries, restaurants and cafes, transport (Snapp, Tapsi, fuel, metro), bills and charges, rent and home, installments, health, education, leisure and subscriptions (Netflix, Filimo), shopping and clothing, gifts and parties, bank fees, other. Income: salary, project, gift, interest, asset sale, other. A custom category has a name, icon and color; deleting a category -> "Other".
+- **Merchant rule:** Snapp/Tapsi -> transport, Digikala -> shopping, Filimo -> subscription, and so on; in the Iran profile and editable in the admin.
 
-## ادامه ایده: دارایی و بدهی (ایران)
-- **دارایی:** طلا (گرم، ۱۸ عیار)، سکه (انواع)، ارز (دلار، یورو…)، تتر و رمزارز، سهام و صندوق، ملک و خودرو (ارزش دستی). قیمت از سرویس بک‌اند؛ نشان «قیمت قدیمی» اگر منبع قطع شد.
-- **بدهی:** وام بانکی، قرض‌الحسنه، قسط خرید، چک، «به فلانی بدهکارم/طلب دارم».
-- **ثروت خالص** به تومان، گرم طلا و دلار؛ نمودار در زمان؛ کسر وام قابل انتخاب (قسط خرید هرگز کسر نمی‌شود، مثل مرجع).
-- **تورم:** نمایش اختیاری «ثروتت به گرم طلا چقدر شد» برای دیدن اثر تورم.
+## Idea continued: assets and debt (Iran)
+- **Assets:** gold (grams, 18-karat), coins (varieties), currency (dollar, euro...), Tether and crypto, stocks and funds, property and cars (manual value). Prices from the backend service; a "stale price" marker if a source goes down.
+- **Debt:** bank loan, interest-free loan (qarz al-hasanah), purchase installment, cheque, "I owe so-and-so / so-and-so owes me".
+- **Net worth** in Toman, gold grams and dollars; a chart over time; loan deduction selectable (a purchase installment is never deducted, as in the reference).
+- **Inflation:** an optional view "what your wealth is in gold grams" to see the effect of inflation.
 
-## ادامه ایده: لندینگ (ساختار پیشنهادی)
-۱) هیرو: تیتر + دموی چت زنده + نشانگر «تراز» (Three.js) ۲) سه قدم: پیامک را بچسبان ← AI می‌فهمد ← یک لمس ثبت ۳) صندوق چندکیف‌پولی ۴) یادآورها و حقوق ۵) امنیت و حریم (متن خام ذخیره نمی‌شود، بیومتریک، بدون رمز بانکی) ۶) قیمت‌ها (از ادمین) ۷) سؤالات متداول (از ادمین) ۸) مجله و راهنما ۹) دانلود: لینک بازار/مایکت/گوگل‌پلی/دانلود مستقیم.
-- موبایل‌اول؛ نسخه ساده (بدون WebGL) برای دستگاه ضعیف؛ سرعت بارگذاری و SEO فارسی؛ متن‌ها همه قابل ویرایش در ادمین.
+## Idea continued: landing site (proposed structure)
+1) Hero: headline + live chat demo + the "Taraz" indicator (Three.js) 2) three steps: paste the SMS -> AI understands -> one-tap record 3) the multi-wallet vault 4) reminders and salary 5) security and privacy (raw text not stored, biometrics, no bank password) 6) prices (from the admin) 7) FAQ (from the admin) 8) journal and guides 9) download: Bazaar/Myket/Google Play links/direct download.
+- Mobile-first; a simple version (no WebGL) for weak devices; load speed and Persian SEO; all texts editable in the admin.
 
-## ادامه ایده: پنل ادمین (Unfold)
-محتوا (قیمت، FAQ، مجله، متن‌ها)، پروفایل ایران (دسته‌ها، قواعد فروشنده، بانک‌ها، الگوهای پیامک، کارمزد پیش‌فرض)، نرخ‌ها (منبع و آخرین به‌روزرسانی)، کاربران و اشتراک (بدون دیدن داده مالی)، صف پیامک‌های پارس‌نشده (فقط با رضایت کاربر)، پرچم ویژگی‌ها (feature flags)، وضعیت Ollama و صف‌ها. نقش‌ها: ویرایشگر محتوا، پشتیبان (دسترسی محدود و لاگ‌شده)، مدیر.
+## Idea continued: admin panel (Unfold)
+Content (prices, FAQ, journal, texts), the Iran profile (categories, merchant rules, banks, SMS templates, default fees), rates (source and last update), users and subscriptions (without seeing financial data), a queue of unparsed SMS messages (only with user consent), feature flags, Ollama and queue status. Roles: content editor, support (limited and logged access), admin.
 
-## ریسک‌ها و ترتیب پیشنهادی
-**ریسک‌های اصلی:**
-1. دقت پارس پیامک با مدل کوچک روی فارسی (کاهش: regex اول، اعتبارسنجی، مجموعه نمونه، صف تأیید).
-2. سرور Ollama: هزینه و تأخیر (کاهش: مدل کوچک، صف، کش، regex برای بیشتر پیامک‌ها).
-3. اندروید و توزیع: پلی `READ_SMS` را نمی‌پذیرد؛ مسیر مشترک share حل می‌کند (انتخاب شده).
-4. حریم: متن پیامک به سرور می‌رود؛ شفافیت و ذخیره نشدن لازم است.
-5. نرخ ارز و قیمت طلا: منبع قابل اعتماد در ایران (مشتری API می‌دهد).
+## Risks and suggested order
+**Main risks:**
+1. SMS parse accuracy with a small model on Persian (mitigation: regex first, validation, sample set, approval queue).
+2. The Ollama server: cost and latency (mitigation: small model, queue, cache, regex for most SMS messages).
+3. Android and distribution: Play does not accept `READ_SMS`; the shared share path solves it (chosen).
+4. Privacy: the SMS text goes to the server; transparency and not storing it are required.
+5. Exchange rate and gold price: a reliable source in Iran (the client provides an API).
 
-**ترتیب پیشنهادی برای اولین نسخه قابل‌انتشار (برش کوچک و کامل):**
-۰۰ پایه ← ۰۱ ورود ← ۰۱b کیف پول‌ها ← ۰۲ دفتر ← ۰۳ دسته‌ها ← ۰۴ چت و پارس ← ۰۵ پیامک ← ۱۵ قفل ← ۱۶ لندینگ.
-بعدش: ۰۲b مدیریت پول، ۰۶b برگشت، ۰۷ تکراری، ۰۷b/۰۷c یادآورها، ۰۸ قسط، ۰۹ دارایی، ۱۱ گزارش، ۱۲ آفلاین، ۱۳ اشتراک، ۱۵b ورود/خروج، ۱۸ ویجت.
-دلیل: ارزش اصلی (پیامک ← حساب) و لندینگ زودتر در دست کاربر و بازار قرار می‌گیرند و بقیه ویژگی‌ها روی آن ساخته می‌شود.
+**Suggested order for the first releasable version (a small, complete slice):**
+00 foundation -> 01 login -> 01b wallets -> 02 ledger -> 03 categories -> 04 chat and parse -> 05 SMS -> 15 lock -> 16 landing.
+After that: 02b money management, 06b returns, 07 recurring, 07b/07c reminders, 08 installments, 09 assets, 11 reports, 12 offline, 13 subscription, 15b import/export, 18 widget.
+Reason: the core value (SMS -> accounting) and the landing site get into users' and the market's hands sooner, and the remaining features are built on top.
 
-## ادامه ایده: هویت و لحن
-- **لحن:** آرام، دوستانه، بدون سرزنش («این ماه کافه کمی بیشتر شد» نه «بودجه را رد کردی!»)؛ فارسی محاوره‌ای مؤدب؛ کوتاه.
-- **حس بصری:** مدرن و پرانیمیشن، متفاوت از ترازنما (که تیره/طلایی است)؛ جهت‌های ممکن: روشن و هوایی با رنگ تأکید یکی، یا شیشه‌ای/نرم با گرادیان ملایم. انتخاب نهایی در فاز ۰۰ با چند نمونه.
-- **نام و نماد:** «Summa» (جمع/خلاصه) ← نشانگر «تراز» و نماد جمع (Σ) می‌تواند حلقه بصری شود.
-- **حالت‌های خالی و شادی کوچک:** هر صفحه خالی یک اقدام روشن دارد؛ لحظه‌های موفقیت (هدف، بودجه سالم) انیمیشن کوتاه و بی‌سروصدا.
+## Idea continued: identity and tone
+- **Tone:** calm, friendly, never scolding ("cafes ran a bit higher this month", not "you blew the budget!"); polite colloquial Persian; short.
+- **Visual feel:** modern and animation-rich, different from Taraznama (which is dark/gold); possible directions: light and airy with a single accent color, or glassy/soft with a gentle gradient. The final choice in phase 00 with a few samples.
+- **Name and symbol:** "Summa" (sum/summary) -> the "Taraz" indicator and the sum symbol (Σ) can become the visual ring.
+- **Empty states and small joys:** every empty screen has one clear action; success moments (a goal, a healthy budget) get a short, quiet animation.
 
-## ادامه ایده: اعلان‌ها بدون خسته‌کردن
-- حداکثر تعداد اعلان در روز، ساعت سکوت، دسته‌بندی (فوری: سررسید/موجودی؛ عادی: ساعت حساب‌وکتاب؛ کم‌اهمیت: خلاصه هفتگی). کاربر هر نوع را جدا خاموش می‌کند.
-- اعلان‌های حساس مبلغ را روی صفحه قفل نشان نمی‌دهند (قابل تنظیم).
-- «هنوز نه» در یادآور حقوق فردا را می‌گذارد، و بعد از ۳ بار آرام‌تر می‌شود (هفتگی).
+## Idea continued: notifications without fatigue
+- A maximum number of notifications per day, quiet hours, categories (urgent: due dates/balance; normal: bookkeeping hour; low: weekly summary). The user turns off each type separately.
+- Sensitive notifications do not show amounts on the lock screen (configurable).
+- "Not yet" on the salary reminder sets it to tomorrow, and after 3 times it gets gentler (weekly).
 
-## ادامه ایده: دسترس‌پذیری و کیفیت
-- فونت و اندازه قابل تغییر، کنتراست کافی، کاهش حرکت، خواندن صفحه‌خوان برای کارت‌ها و نمودارها (معادل متنی).
-- تحلیل استفاده بدون حریم‌شکنی: رویدادهای ناشناس و تجمیعی، خاموش به‌صورت پیش‌فرض، هرگز مبلغ یا متن.
-- تست: واحد برای پارس/موجودی/نرخ، یکپارچه برای هر سرویس gRPC، تست «کاربر دیگر»، و تست انتها‌به‌انتهای جریان اصلی (پیامک ← کارت ← ثبت ← تراز).
+## Idea continued: accessibility and quality
+- Adjustable font and size, sufficient contrast, reduced motion, screen-reader support for cards and charts (text equivalents).
+- Usage analytics without breaching privacy: anonymous, aggregated events, off by default, never amounts or text.
+- Tests: unit for parse/balance/rate, integration for every gRPC service, an "other user" test, and an end-to-end test of the main flow (SMS -> card -> record -> balance).
 
-## ادامه ایده: انتشار و درآمد (پیشنهاد)
-- **توزیع:** لندینگ (سئو فارسی) + بازار و مایکت (نسخه کامل) + گوگل‌پلی (نسخه بدون SMS خودکار) + دانلود مستقیم؛ iOS بعد از پایدار شدن اندروید (Shortcuts/share).
-- **اولین کاربران:** کسانی که قسط و چند حساب بانکی دارند و از دفترچه/اکسل خسته‌اند؛ پیام اصلی: «پیامک بانکت را بچسبان، حساب‌وکتابت خودکار می‌شود».
-- **اشتراک:** ماهانه/سه‌ماهه/سالانه با درگاه داخلی (مثل زرین‌پال)، بدون تمدید خودکار، پایان اشتراک ← حساب فقط‌خواندنی و داده پاک نمی‌شود؛ ۱۴ روز رایگان بدون کارت. (طرح مرجع؛ قیمت و پلن بعد از سؤال ۶.)
-- **اعتماد:** صفحه «چه چیزی ذخیره می‌شود و چه چیزی نه» روی لندینگ و داخل اپ؛ بدون تبلیغ و بدون فروش داده.
-- **بازخورد:** تیکت داخل اپ + «این اشتباه بود» روی کارت (با رضایت) ← بهبود الگوها.
+## Idea continued: release and revenue (proposal)
+- **Distribution:** landing site (Persian SEO) + Bazaar and Myket (full version) + Google Play (version without automatic SMS) + direct download; iOS after Android is stable (Shortcuts/share).
+- **First users:** people with installments and several bank accounts who are tired of notebooks/Excel; the core message: "Paste your bank SMS and your bookkeeping becomes automatic".
+- **Subscription:** monthly/quarterly/yearly via a domestic gateway (such as Zarinpal), no auto-renewal, at the end of the subscription the account becomes read-only and data is not deleted; 14 days free without a card. (Reference design; price and plan after question 6.)
+- **Trust:** a "what is stored and what is not" page on the landing site and inside the app; no ads and no data sales.
+- **Feedback:** in-app ticket + "This was wrong" on a card (with consent) -> improved templates.

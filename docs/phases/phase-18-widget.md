@@ -1,21 +1,21 @@
-# فاز ۱۸: ویجت صفحه اصلی گوشی
+# Phase 18: Phone home-screen widget
 
-## هدف
-نمایش خلاصه‌ای کوچک (ارزش خالص و خرج این ماه) روی صفحه اصلی گوشی بدون باز کردن اپ.
+## Goal
+Show a small summary (net worth and this month's spending) on the phone's home screen without opening the app.
 
-## وابستگی‌ها
-فاز ۰۲.
+## Dependencies
+Phase 02.
 
-## تصمیم محدوده
-- **داده:** ویجت داده تازه‌ای نیاز ندارد؛ از همان RPCهای موجود (`NetWorth` و گزارش ماه) در اپ خوانده می‌شود و اپ آخرین مقدار را برای ویجت می‌نویسد. ویجت مستقیم با بک‌اند حرف نمی‌زند (توکن در ویجت نگه‌داری نمی‌شود).
-- **حریم:** ویجت مبلغ را روی صفحه قفل نشان نمی‌دهد مگر کاربر در تنظیمات روشن کند (پیش‌فرض خاموش) و با قفل اپ سازگار است.
-- **کد بومی:** WidgetKit (iOS) و App Widget (اندروید) فقط روی دستگاه قابل راستی‌آزمایی‌اند و پیشنهاد می‌شود با بسته `home_widget`.
+## Scope decision
+- **Data:** the widget needs no new data; it is read in the app from the existing RPCs (`NetWorth` and the month report), and the app writes the latest value for the widget. The widget does not talk to the backend directly (no token is kept in the widget).
+- **Privacy:** the widget does not show amounts on the lock screen unless the user turns that on in settings (default off), and it is compatible with the app lock.
+- **Native code:** WidgetKit (iOS) and App Widget (Android) can only be verified on a device; the `home_widget` package is suggested.
 
-**بیرون از این تحویل:** هیچ کد بومی یا وابستگی جدیدی افزوده نشد، چون در این محیط نمی‌توان ساخت و آزمود.
+**Outside this delivery:** no native code or new dependency was added, because it cannot be built and tested in this environment.
 
-## معیار پذیرش
-- [x] محدوده، منبع داده و حریم تصمیم و ثبت شد.
-- [ ] پیاده‌سازی بومی و تست روی دستگاه.
+## Acceptance
+- [x] Scope, data source and privacy were decided and recorded.
+- [ ] Native implementation and on-device testing.
 
-## وضعیت اجرا
-- 📄 فقط سند تصمیم. ⏳ پیاده‌سازی در اولین نوبت با دسترسی به دستگاه/شبیه‌ساز.
+## Status
+- 📄 Decision document only. ⏳ Implementation in the first session with access to a device/simulator.

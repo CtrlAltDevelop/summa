@@ -1,40 +1,40 @@
-# نقشه راه فاز اول
+# Phase One Roadmap
 
-فاز اول = برابری ویژگی با ترازنما، با ظاهر و برند کاملاً متفاوت، بدون ربات، و با پیامک بانک خودکار. هر ردیف یک ویژگی کاربرپسند است (یک سند در `docs/phases/`). به ترتیب انجام شود؛ ✅ بعد از پذیرش.
+Phase one = feature parity with Taraznama, with a completely different look and brand, no bot, and automatic bank SMS. Each row is one user-facing feature (one document in `docs/phases/`). Do them in order; mark ✅ after acceptance.
 
-| # | فاز | شرح | وابسته به |
+| # | Phase | Description | Depends on |
 |---|---|---|---|
-| 00 | پایه | اسکلت repo، بک‌اند Django+gRPC، اپ Flutter، l10n فارسی و RTL، سیستم طراحی مدرن با قوانین انیمیشن و برند، CI | |
-| 01 | ورود | موبایل + کد پیامکی، رمز اختیاری، نشست‌ها و دستگاه‌ها، محدودیت تلاش | 00 |
-| 01b | کیف پول‌ها | ساخت کیف پول با ارز و بانک دلخواه (چندتا برای هر ارز، نقد)، موجودی اولیه هنگام ساخت، صندوق محاسباتی (موجودی همه و جمع به ارز پایه) ؛ **انواع کیف پول** (نقد، حساب بانکی، کارت اعتباری، BNPL، هدیه‌کارت، رمزارز، طلا…) بر اساس **پروفایل ایران** (فقط ایران؛ ارزهای مختلف می‌ماند) | 01 |
-| 02 | دفتر | ثبت دستی خرج/درآمد با انتخاب کیف پول (ارز و بانک)، فهرست و ویرایش/حذف تراکنش‌ها | 01b |
-| 02b | مدیریت پول | انتقال بین کیف پول‌ها (بانک↔بانک، نقد↔بانک) در بخش خرج‌ها، کارمزد اختیاری، تبدیل ارز با نرخ و کارمزدی که کاربر می‌دهد | 01b، 02 |
-| 03 | دسته‌ها و سقف | دسته‌های پیش‌فرض و دلخواه، سقف ماهانه با هشدار | 02 |
-| 04 | چت دستیار و ثبت با جمله | چت داخل اپ، بسته و مخصوص هر کاربر. کاربر جمله یا متن پیامک همراه موضوعش می‌فرستد؛ AI فقط بررسی می‌کند و در چت جواب/پیشنهاد می‌دهد (مثلاً «انتقال از کارت فلان به فلان ثبت کنم؟») با یک کارت. دکمه «ثبت» میانبری است که گوشی کاربر همان درخواست معمولی ثبت را با محتوای کارت می‌فرستد؛ AI هیچ دسترسی نوشتن ندارد. تفسیر جمله (مبلغ، دسته، تاریخ) فقط فارسی. دموی لندینگ به همین پارسر وصل است | 02، 03 |
-| 05 | پیامک بانک | share یا paste متن پیامک؛ پارس با Ollama + regex و اعتبارسنجی؛ گزارش نتیجه به اپ، صف تأیید، پرسش «برای چه بود؟»، تشخیص تکراری. تقویت اختیاری: خواندن خودکار روی اندروید (نسخه کامل) | 02 |
-| 06 | تقسیم و خارج از جمع | تقسیم خرج بین دسته‌ها، سهم دیگران، بیرون از جمع‌ها | 02، 03 |
-| 06b | برگشت و بازپرداخت | ثبت مرجوعی و برگشت وجه به یک تراکنش قبلی (کامل یا بخشی)، به همان یا کیف پول دیگر؛ در گزارش خرج را کم می‌کند و ارتباط با تراکنش اصلی حفظ می‌شود | 02 |
-| 07 | تراکنش‌های تکراری | گزینه «تکراری» هنگام ثبت؛ کسر خودکار از کیف پول انتخابی؛ نزدیک سررسید اگر موجودی کم بود گزارش؛ روز سررسید می‌پرسد: «از همین حساب کسر شد؟ / از حساب دیگر / لغو شد» | 01b، 02 |
-| 07b | حقوق و یادآور | تعریف روز دریافت حقوق (مثلاً ۱۶ام) یا ثبت «حقوق این ماه را گرفتم»؛ بعد از آن روز یادآور «گرفتی؟»؛ اگر «هنوز نه»، فردا دوباره | 02 |
-| 07c | ساعت حساب‌وکتاب | کاربر یک ساعت روزانه تعیین می‌کند و در آن ساعت اعلان می‌آید تا حساب‌وکتابش را مشخص کند | 02 |
-| 08 | وام و قسط | انواع بدهی، جدول اقساط، «پرداخت شد»، یادآوری push | 02 |
-| 09 | دارایی و قیمت | دارایی‌ها، سرویس قیمت و نرخ تبدیل ارز: **سرویس پس‌زمینه (Celery) در بک‌اند هر چند ساعت نرخ‌ها را به‌روز می‌کند و همه کلاینت‌ها فقط از بک‌اند می‌گیرند**؛ نرخ تقریبی است (صرافی نیستیم). API را مشتری در همین فاز می‌دهد، سود و زیان | 01 |
-| 10 | خالص دارایی و سبدها | خالص دارایی (چند واحد)، کسر وام، سبد هدف | 08، 09 |
-| 11 | گزارش و خروجی | گزارش ماهانه، نمودارها، خروجی CSV | 02، 03 |
-| 12 | آفلاین و همگام‌سازی | پایگاه محلی، صف تغییرات، چنددستگاه | 02 |
-| 13 | اشتراک و پرداخت | پلن‌ها، درگاه، دوره آزمایشی (بعد از سؤال ۶) | 01 |
-| 14 | پشتیبانی | تیکت داخل اپ، فرم تماس | 01 |
-| 15 | حساب، حریم و قفل اپ | قفل اپ (بیومتریک؛ اگر دستگاه ندارد، اول رمز داخل اپ فعال می‌شود)، حذف حساب، تنظیم حریم | 01 |
-| 15b | ورود و خروج داده | خروجی کامل داده و ورود فایل (CSV/اکسل). **قبل از دادن فایل یا پذیرفتن ورود، احراز هویت:** بیومتریک؛ اگر دستگاه بیومتریک ندارد، کاربر اول رمز داخل اپ را فعال می‌کند و بعد برای تأیید همان رمز را وارد می‌کند | 15 |
-| 16 | سایت لندینگ | سایت تعاملی با Three.js، دمو چت زنده (پارسر واقعی روی حساب نمونه) با نشانگر «تراز» که واکنش نشان می‌دهد، محتوا و قیمت‌ها از API بک‌اند و قابل ویرایش در ادمین، معرفی، قیمت، راهنما، مجله، صفحه‌های حقوقی. مستقل از اپ و قابل ساخت موازی | 00 |
-| 16b | مدیریت محتوای لندینگ | اپ cms در بک‌اند: قیمت/پلن، متن، ترجمه، FAQ، مجله؛ پیش‌نویس و انتشار؛ API عمومی با کش | 00 |
-| 17 | ماشین‌حساب‌های عمومی | قسط‌سنج و ابزارهای بدون ثبت‌نام، یکپارچه با دموی لندینگ | 16 |
-| 18 | ویجت | ویجت صفحه اصلی گوشی؛ محدوده و ویژگی‌ها در همین فاز تصمیم گرفته می‌شود | 02 |
-| 19 | انگلیسی و LTR | زبان دوم `en` در اپ و لندینگ، انتخاب زبان، چیدمان چپ‌به‌راست، قالب تاریخ/عدد بر اساس زبان؛ متن‌های سمت سرور هم به زبان کاربر | 00، 16 |
-| 19b | پروفایل کشور | تعمیم پیکربندی ایران به «پروفایل کشور»: ارز پیش‌فرض، تقویم (میلادی کنار شمسی)، انواع کیف پول، بانک‌ها و قالب‌های پیامک، منابع قیمت و نرخ؛ انتخاب کشور در ثبت‌نام و تنظیمات | 19، 01b، 05، 09 |
+| 00 | Foundation | Repo skeleton, Django+gRPC backend, Flutter app, Persian l10n and RTL, a modern design system with animation rules and brand, CI | |
+| 01 | Login | Mobile number + SMS code, optional password, sessions and devices, attempt limits | 00 |
+| 01b | Wallets | Create a wallet with any currency and bank (several per currency, cash), initial balance at creation, the accounting box (all balances and a total in the base currency); **wallet types** (cash, bank account, credit card, BNPL, gift card, crypto, gold...) based on the **Iran profile** (Iran only; multiple currencies stay) | 01 |
+| 02 | Ledger | Manual entry of expenses/income with a wallet choice (currency and bank), transaction list and edit/delete | 01b |
+| 02b | Money management | Transfers between wallets (bank↔bank, cash↔bank) in the expenses section, optional fee, currency conversion with a user-supplied rate and fee | 01b, 02 |
+| 03 | Categories and limits | Default and custom categories, monthly limit with a warning | 02 |
+| 04 | Assistant chat and sentence entry | In-app chat, private to each user. The user sends a sentence or an SMS text along with its topic; the AI only analyses and replies/suggests in the chat (e.g. "Register a transfer from card X to card Y?") with a card. The "Register" button is a shortcut: the user's phone sends the normal register request with the card's content; the AI has no write access. Interpreting the sentence (amount, category, date) is Persian only. The landing demo connects to this same parser | 02, 03 |
+| 05 | Bank SMS | Share or paste the SMS text; parse with Ollama + regex and validation; report the result to the app, confirmation queue, the "What was this for?" question, duplicate detection. Optional enhancement: automatic reading on Android (the full version) | 02 |
+| 06 | Split and excluded from totals | Splitting an expense across categories, others' shares, kept out of the totals | 02, 03 |
+| 06b | Returns and refunds | Record a return or refund against an earlier transaction (full or partial), to the same wallet or another; in reports it reduces the expense and the link to the original transaction is kept | 02 |
+| 07 | Recurring transactions | A "recurring" option when recording; automatic deduction from the chosen wallet; near the due date, a report if the balance is low; on the due day it asks: "Deducted from this account? / From another account / Cancelled" | 01b, 02 |
+| 07b | Salary and reminder | Define the salary day (e.g. the 16th) or record "I received this month's salary"; after that day a "Did you get it?" reminder; if "not yet", again tomorrow | 02 |
+| 07c | Bookkeeping hour | The user sets a daily hour, and at that hour a notification arrives so they can settle their accounts | 02 |
+| 08 | Loans and installments | Kinds of debt, installment schedule, "Paid", push reminders | 02 |
+| 09 | Assets and prices | Assets, the price service and currency conversion rates: **a background service (Celery) in the backend refreshes rates every few hours and all clients read only from the backend**; rates are approximate (we are not an exchange). The client supplies the API in this phase; profit and loss | 01 |
+| 10 | Net worth and portfolios | Net worth (multiple units), loan deduction, target portfolio | 08, 09 |
+| 11 | Reports and export | Monthly report, charts, CSV export | 02, 03 |
+| 12 | Offline and sync | Local database, change queue, multiple devices | 02 |
+| 13 | Subscription and payment | Plans, payment gateway, trial period (after question 6) | 01 |
+| 14 | Support | In-app tickets, contact form | 01 |
+| 15 | Account, privacy and app lock | App lock (biometrics; if the device has none, the in-app passcode is enabled first), account deletion, privacy settings | 01 |
+| 15b | Data import and export | Full data export and file import (CSV/Excel). **Before handing over a file or accepting an import, authenticate:** biometrics; if the device has no biometrics, the user first enables the in-app passcode and then enters that passcode to confirm | 15 |
+| 16 | Landing site | Interactive site with Three.js, a live chat demo (the real parser on a sample account) with the "Taraz" indicator that reacts, content and prices from the backend API and editable in the admin, introduction, pricing, help, magazine, legal pages. Independent of the app and can be built in parallel | 00 |
+| 16b | Landing content management | A `cms` app in the backend: price/plan, copy, translations, FAQ, magazine; draft and publish; a public API with caching | 00 |
+| 17 | Public calculators | Installment calculator and other tools without sign-up, integrated with the landing demo | 16 |
+| 18 | Widget | Phone home-screen widget; scope and features are decided in this phase | 02 |
+| 19 | English and LTR | A second language, `en`, in the app and landing site, a language picker, left-to-right layout, date/number formats by language; server-side texts also in the user's language | 00, 16 |
+| 19b | Country profile | Generalize the Iran configuration into a "country profile": default currency, calendar (Gregorian alongside Shamsi), wallet types, banks and SMS templates, price and rate sources; country choice at sign-up and in settings | 19, 01b, 05, 09 |
 
-## بعد از فاز اول (از بخش ۳ سؤال‌ها)
-ویژگی‌های جدید هنوز گفته نشده؛ هر کدام فاز جدا می‌شود.
+## After phase one (from section 3 of the questions)
+The new features have not been specified yet; each becomes its own phase.
 
-## قاعده
-یک فاز = یک ویژگی. چیز دوم وارد فاز نشود؛ سند فاز جدید بنویس.
+## Rule
+One phase = one feature. Do not let a second thing into a phase; write a new phase document.

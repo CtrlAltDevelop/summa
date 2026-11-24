@@ -1,41 +1,41 @@
-# فاز ۰۸: وام و قسط
+# Phase 08: Loans and installments
 
-## هدف
-کاربر وام، خرید اقساطی یا قرض شخصی را با مبلغ هر قسط، تعداد و تاریخ اولین قسط تعریف می‌کند؛ جدول اقساط ساخته می‌شود، سررسیدهای نزدیک و عقب‌افتاده دیده می‌شوند و «پرداخت شد» یک خرج معمولی ثبت می‌کند.
+## Goal
+The user defines a loan, an installment purchase or a personal debt with the amount of each installment, the count and the date of the first installment; an installment schedule is built, upcoming and overdue due dates are visible, and "Paid" records a normal expense.
 
-## وابستگی‌ها
-فاز ۰۲ (و ۰۳ برای دسته).
+## Dependencies
+Phase 02 (and 03 for the category).
 
-## محدوده
-**داخل**
-- بک‌اند (اپ جدید `apps.debts`): `Debt` و `Installment`؛ سرویس gRPC `DebtController`: `Create` / `List` / `Pay` / `Unpay` / `Delete`.
-- **انواع بدهی:** `bank_loan` (وام بانکی)، `installment_purchase` (خرید اقساطی)، `personal` (قرض شخصی).
-- **جدول اقساط:** `count` قسط مساوی به مبلغ `installment_minor`؛ اولین سررسید `first_due` و بقیه ماهانه در **همان روز ماه شمسی** (ماه کوتاه ← آخر ماه، مثل فاز ۰۷). `principal_minor` اختیاری و فقط اطلاعاتی است (وام با سود: جمع اقساط از اصل بیشتر است).
-- ارز بدهی ثابت است؛ کیف پیش‌فرض پرداخت و دسته (مثلاً «اقساط») اختیاری است.
-- **پرداخت** (`Pay`): خرج معمولی روی کیف انتخابی (یا پیش‌فرض بدهی) با مبلغ قسط (یا مبلغ دلخواه) و زمان همین لحظه؛ `client_mutation_id` ثابت برای هر قسط پس دوبار فقط یک خرج می‌سازد؛ با پرداخت آخرین قسط بدهی بسته می‌شود.
-- **لغو پرداخت** (`Unpay`): خرج ثبت‌شده را حذف می‌کند (اگر خرج برگشت دارد رد می‌شود) و قسط دوباره باز می‌شود.
-- `List`: هر بدهی با اقساطش، `remaining_minor` (جمع اقساط باز)، `paid_count`، `next_due`؛ هر قسط `overdue` دارد (سررسید گذشته به وقت تهران و بی‌پرداخت).
-- اپ: فهرست بدهی‌ها با مانده و سررسید بعدی، صفحه جدول اقساط با «پرداخت شد» و «لغو پرداخت»، فرم تعریف.
+## Scope
+**In**
+- Backend (new app `apps.debts`): `Debt` and `Installment`; gRPC service `DebtController`: `Create` / `List` / `Pay` / `Unpay` / `Delete`.
+- **Debt types:** `bank_loan` (bank loan), `installment_purchase` (installment purchase), `personal` (personal debt).
+- **Installment schedule:** `count` equal installments of `installment_minor`; the first due date is `first_due` and the rest follow monthly on the **same day of the Shamsi month** (short month goes to the last day of the month, as in phase 07). `principal_minor` is optional and informational only (a loan with interest: the sum of the installments exceeds the principal).
+- The debt currency is fixed; a default payment wallet and a category (for example "Installments") are optional.
+- **Payment** (`Pay`): a normal expense on the chosen wallet (or the debt's default) for the installment amount (or a custom amount) at the current moment; a fixed `client_mutation_id` per installment means paying twice creates only one expense; paying the last installment closes the debt.
+- **Unpay** (`Unpay`): deletes the recorded expense (rejected if the expense has a refund) and the installment is reopened.
+- `List`: each debt with its installments, `remaining_minor` (sum of open installments), `paid_count`, `next_due`; each installment has `overdue` (due date passed in Tehran time and unpaid).
+- App: debt list with remaining balance and next due date, installment schedule page with "Paid" and "Unpay", definition form.
 
-**بیرون**
-اعلان push (۰۷c/۱۵؛ فعلاً فقط نشان «عقب‌افتاده» در اپ)، ویرایش بدهی (حذف و ساخت دوباره)، قسط نامساوی، سود و محاسبه نرخ، چک (سؤال باز مشتری)، کسر وام از خالص دارایی (فاز ۱۰ از `remaining_minor` استفاده می‌کند).
+**Out**
+Push notifications (07c/15; for now only an "overdue" badge in the app), editing a debt (delete and recreate), unequal installments, interest and rate calculation, cheques (open client question), deducting loans from net worth (phase 10 uses `remaining_minor`).
 
-## قوانین و لبه‌ها
-- عنوان ۱ تا ۶۰ نویسه؛ مبلغ قسط مثبت؛ تعداد ۱ تا ۱۲۰؛ نوع و ارز معتبر؛ کیف باید مال کاربر و هم‌ارز باشد؛ دسته باید خرج و مال کاربر باشد = `INVALID_ARGUMENT`/`NOT_FOUND`.
-- پرداخت قسط پرداخت‌شده، کیف نامشخص (نه در درخواست نه در بدهی)، کیف بایگانی، ارز متفاوت = `INVALID_ARGUMENT`. بدهی یا قسط دیگران = `NOT_FOUND`.
-- تعریف دوباره با همان `client_mutation_id` همان بدهی را برمی‌گرداند.
+## Rules and edges
+- Title 1 to 60 characters; installment amount positive; count 1 to 120; valid type and currency; the wallet must belong to the user and match the currency; the category must be an expense category and belong to the user = `INVALID_ARGUMENT`/`NOT_FOUND`.
+- Paying an already paid installment, an unspecified wallet (neither in the request nor on the debt), an archived wallet, a different currency = `INVALID_ARGUMENT`. Someone else's debt or installment = `NOT_FOUND`.
+- Creating again with the same `client_mutation_id` returns the same debt.
 
-## تست‌ها
-جدول اقساط (ماه شمسی کوتاه، اسفند، ۱۲۰ قسط)، اعتبارسنجی، پرداخت (کیف پیش‌فرض/دلخواه، مبلغ دلخواه، دوباره، بسته‌شدن)، لغو پرداخت، `overdue`، `remaining_minor`، ایزولاسیون، حذف، gRPC واقعی، اپ.
+## Tests
+Installment schedule (short Shamsi month, Esfand, 120 installments), validation, payment (default/custom wallet, custom amount, repeat, closing), unpay, `overdue`, `remaining_minor`, isolation, delete, real gRPC, app.
 
-## معیار پذیرش
-- [x] وام ۱۲ قسطی ۱۲ سررسید ماهانه درست می‌سازد.
-- [x] «پرداخت شد» یک خرج معمولی ثبت می‌کند و موجودی را کم می‌کند؛ لغو پرداخت برمی‌گرداند.
-- [x] مانده و قسط بعدی درست محاسبه می‌شود.
-- [x] `make check` و `make test` سبز.
+## Acceptance
+- [x] A 12-installment loan produces 12 correct monthly due dates.
+- [x] "Paid" records a normal expense and reduces the balance; unpay restores it.
+- [x] The remaining balance and next installment are computed correctly.
+- [x] `make check` and `make test` are green.
 
-## وضعیت اجرا
-- ✅ بک‌اند: اپ `apps.debts` (`Debt`، `Installment`)، جدول اقساط ماهانه در همان روز ماه شمسی (کوتاه‌تر ← آخر ماه؛ اسفند و سال نو آزموده شد)، `Pay` (خرج معمولی با شناسه ثابت برای هر تلاش)، `Unpay` (حذف خرج و بازکردن قسط؛ اگر خرج دستی حذف شده باشد هم کار می‌کند)، `overdue`، `remaining_minor`، `next_due`، بسته‌شدن با آخرین قسط. DebtController روی gRPC.
-- ✅ اپ: فهرست بدهی‌ها با مانده و عقب‌افتاده، صفحه جدول اقساط (پرداخت شد، لغو پرداخت، انتخاب کیف وقتی بدهی کیف ندارد)، فرم تعریف با تاریخ شمسی (`parseJalaliDate`).
-- ⚠️ بدون اعلان push؛ سررسید قسط در خلاصه روز (۰۷c) هنوز شمرده نمی‌شود. اپ روی دستگاه اجرا نشده.
-- ⏳ بعداً: ویرایش بدهی، اقساط نامساوی، چک (سؤال باز مشتری)، کسر وام از خالص دارایی (فاز ۱۰ از `remaining_minor`).
+## Implementation status
+- ✅ Backend: app `apps.debts` (`Debt`, `Installment`), monthly installment schedule on the same day of the Shamsi month (shorter month goes to the last day; Esfand and the new year were tested), `Pay` (normal expense with a fixed id per attempt), `Unpay` (deletes the expense and reopens the installment; also works if the expense was deleted manually), `overdue`, `remaining_minor`, `next_due`, closing with the last installment. DebtController over gRPC.
+- ✅ App: debt list with remaining balance and overdue marker, installment schedule page (Paid, Unpay, wallet picker when the debt has no wallet), definition form with a Shamsi date (`parseJalaliDate`).
+- ⚠️ No push notifications; installment due dates are not yet counted in the daily summary (07c). The app has not been run on a device.
+- ⏳ Later: editing a debt, unequal installments, cheques (open client question), deducting loans from net worth (phase 10 uses `remaining_minor`).

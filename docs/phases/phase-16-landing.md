@@ -1,29 +1,29 @@
-# فاز ۱۶: سایت لندینگ
+# Phase 16: Landing site
 
-## هدف
-یک سایت عمومی تعاملی که Summa را معرفی می‌کند: صحنه سه‌بعدی «تراز» (ترازو) و دمو زنده چت که با پارسر واقعی بک‌اند کار می‌کند؛ محتوا و قیمت‌ها از API بک‌اند می‌آیند.
+## Goal
+A public interactive site that introduces Summa: a 3D "balance" (scale) scene and a live chat demo powered by the real backend parser; content and prices come from the backend API.
 
-## وابستگی‌ها
-فاز ۰۰ و ۱۶b.
+## Dependencies
+Phases 00 and 16b.
 
-## محدوده
-**داخل**
-- `landing/`: Vite + جاوااسکریپت ساده + Three.js. دستور `make landing` (با پروکسی `/api` به :8010) و `make landing-test`.
-- ترازو با Three.js که با ثبت درآمد/خرج در دمو متمایل می‌شود؛ بارگذاری Three.js پس از متن و جدا (code-split)؛ بدون WebGL یا با `prefers-reduced-motion` فقط نشانگر متنی.
-- دمو چت: `POST /api/v1/assistant/demo` (بدون حساب، محدود، حداکثر ۲۰۰ حرف)؛ نتیجه روی حساب نمونه محلی جمع می‌شود و ترازو را تکان می‌دهد.
-- قیمت‌ها از `/billing/plans`، نرخ‌ها از `/assets/rates`، متن‌ها (خانه، سوالات، درباره، منوها) از CMS (`/cms/...`).
+## Scope
+**In**
+- `landing/`: Vite + plain JavaScript + Three.js. The `make landing` command (with an `/api` proxy to :8010) and `make landing-test`.
+- A Three.js scale that tilts as income/expense is entered in the demo; Three.js loads after the text and separately (code-split); without WebGL or with `prefers-reduced-motion`, only a text indicator is shown.
+- Chat demo: `POST /api/v1/assistant/demo` (no account, rate-limited, at most 200 characters); the result accumulates on a local sample account and moves the scale.
+- Prices from `/billing/plans`, rates from `/assets/rates`, copy (home, FAQ, about, menus) from the CMS (`/cms/...`).
 
-**بیرون**
-ماشین‌حساب‌ها (۱۷)، مجله و راهنما در UI (فقط داده CMS آماده است).
+**Out**
+Calculators (17), magazine and guides in the UI (only the CMS data is ready).
 
-## تست‌ها
-vitest: قالب‌بندی، منطق تراز، کلاینت API، تبدیل محتوا CMS، دمو، قیمت‌ها (۵۲ تست).
+## Tests
+vitest: formatting, balance logic, API client, CMS content mapping, demo, prices (52 tests).
 
-## معیار پذیرش
-- [x] ساخت `vite build` موفق؛ تست‌ها سبز.
-- [x] محتوا و قیمت از بک‌اند.
-- [x] کاهش حرکت و نبود WebGL پشتیبانی می‌شود.
+## Acceptance
+- [x] `vite build` succeeds; tests are green.
+- [x] Content and prices come from the backend.
+- [x] Reduced motion and missing WebGL are supported.
 
-## وضعیت اجرا
-- ✅ همه موارد بالا.
-- ⚠️ در مرورگر واقعی و با بک‌اند زنده بررسی نشده؛ بسته Three.js حدود ۵۳۰ کیلوبایت (۱۳۲ gzip) و جدا بارگذاری می‌شود. صفحات حقوقی پیش‌نویس‌اند و نیاز به بازبینی حقوقی دارند.
+## Status
+- ✅ All of the above.
+- ⚠️ Not checked in a real browser against a live backend; the Three.js bundle is about 530 KB (132 gzip) and loads separately. The legal pages are drafts and need legal review.

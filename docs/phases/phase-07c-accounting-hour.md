@@ -1,31 +1,31 @@
-# فاز ۰۷c: ساعت حساب‌وکتاب
+# Phase 07c: Accounting hour
 
-## هدف
-کاربر یک ساعت روزانه تعیین می‌کند؛ از آن ساعت به بعد اپ یادآوری می‌کند که حساب‌وکتاب امروزش را مشخص کند: سررسیدهای منتظر پاسخ، تراکنش‌های بدون دسته، یا اینکه امروز چیزی ثبت نشده.
+## Goal
+The user sets a daily hour; from that hour on, the app reminds them to settle today's accounts: occurrences waiting for an answer, transactions without a category, or that nothing has been recorded today.
 
-## وابستگی‌ها
-فاز ۰۲، ۰۳ و ۰۷.
+## Dependencies
+Phases 02, 03 and 07.
 
-## محدوده
-**داخل**
-- بک‌اند (اپ `apps.assistant`): مدل `UserPreference` (ساعت حساب‌وکتاب، یا خالی)؛ RPCهای `SetAccountingHour` و `Digest` روی `AssistantController`.
-- **خلاصه روز** (`Digest`) به وقت تهران: تعداد تراکنش‌های امروز، تراکنش‌های امروز بدون دسته («سایر» یا بی‌دسته)، سررسیدهای منتظر پاسخ، هشدارهای کم‌بودن موجودی، ساعت تنظیم‌شده و `should_remind`.
-- `should_remind` درست است اگر ساعت تنظیم شده، ساعت فعلی (تهران) ≥ آن ساعت، و (سررسیدی منتظر باشد یا تراکنش بدون دسته باشد یا امروز چیزی ثبت نشده باشد).
-- ساعت `-1` یادآوری را خاموش می‌کند؛ بازه معتبر ۰ تا ۲۳.
-- اپ: کارت یادآوری روی خانه (وقتی `should_remind`)، انتخاب ساعت، و رابط `ReminderScheduler` برای اعلان محلی روزانه.
+## Scope
+**In**
+- Backend (`apps.assistant` app): a `UserPreference` model (accounting hour, or empty); RPCs `SetAccountingHour` and `Digest` on `AssistantController`.
+- **Daily digest** (`Digest`) in Tehran time: the number of today's transactions, today's transactions without a category ("سایر" (Other) or uncategorized), occurrences waiting for an answer, low-balance warnings, the configured hour and `should_remind`.
+- `should_remind` is true if an hour is set, the current hour (Tehran) is >= that hour, and (an occurrence is waiting, or a transaction has no category, or nothing has been recorded today).
+- Hour `-1` turns the reminder off; the valid range is 0 to 23.
+- App: a reminder card on the home screen (when `should_remind`), an hour picker, and a `ReminderScheduler` interface for a daily local notification.
 
-**بیرون**
-اعلان واقعی سیستم‌عامل (نیاز به افزونه بومی `flutter_local_notifications` یا push و راه‌اندازی روی دستگاه که اینجا قابل راستی‌آزمایی نیست). پیاده‌سازی پیش‌فرض `ReminderScheduler` بی‌اثر است و جای اتصال افزونه روشن است؛ تا آن موقع یادآوری فقط وقتی اپ باز است دیده می‌شود. (فاز ۱۵: تنظیمات حریم و اعلان.)
+**Out**
+A real operating-system notification (needs the native `flutter_local_notifications` plugin or push and device setup, which cannot be verified here). The default `ReminderScheduler` implementation is a no-op and the place to plug in the plugin is clear; until then the reminder is seen only while the app is open. (Phase 15: privacy and notification settings.)
 
-## تست‌ها
-تنظیم و خاموش‌کردن ساعت و اعتبارسنجی، شمارش خلاصه روز با ساعت ثابت (مرز نیمه‌شب تهران)، `should_remind` در حالت‌های مختلف، ایزولاسیون، gRPC واقعی، اپ (کارت، ساعت، scheduler).
+## Tests
+Setting and turning off the hour and validation, digest counts with a fixed clock (Tehran midnight boundary), `should_remind` in different cases, isolation, real gRPC, app (card, hour, scheduler).
 
-## معیار پذیرش
-- [x] با ساعت ۲۰ و سررسید باز، از ساعت ۲۰ تهران `should_remind` درست است و قبلش نه.
-- [x] ساعت خاموش یا کاربر دیگر هرگز یادآوری نمی‌گیرد.
-- [x] `make check` و `make test` سبز.
+## Acceptance
+- [x] With hour 20 and an open occurrence, `should_remind` is true from 20:00 Tehran time and not before.
+- [x] A turned-off hour or another user never gets a reminder.
+- [x] `make check` and `make test` are green.
 
-## وضعیت اجرا
-- ✅ بک‌اند: `UserPreference.accounting_hour`، `SetAccountingHour` (۰ تا ۲۳ یا ‎-۱‎ برای خاموش)، `Digest` (شمارش امروز به وقت تهران با مرز نیمه‌شب، بدون دسته، سررسید منتظر، هشدار موجودی، `should_remind`).
-- ✅ اپ: کارت «حساب‌وکتاب امروز»، انتخاب ساعت، رابط `ReminderScheduler` (پیش‌فرض بی‌اثر) که با ذخیره ساعت صدا زده می‌شود.
-- ⚠️ **اعلان واقعی سیستم‌عامل ساخته نشده**؛ فقط وقتی اپ باز است کارت دیده می‌شود. اتصال افزونه بومی کار فاز ۱۵ (یا هر زمان که روی دستگاه قابل آزمایش باشد) است.
+## Status
+- ✅ Backend: `UserPreference.accounting_hour`, `SetAccountingHour` (0 to 23 or -1 to turn off), `Digest` (today's count in Tehran time with the midnight boundary, uncategorized, waiting occurrence, balance warning, `should_remind`).
+- ✅ App: the "حساب‌وکتاب امروز" (today's accounts) card, hour picker, the `ReminderScheduler` interface (no-op by default) called when the hour is saved.
+- ⚠️ **A real operating-system notification is not built**; the card is seen only while the app is open. Wiring the native plugin is phase 15's job (or whenever it can be tested on a device).

@@ -1,31 +1,31 @@
-# فاز ۰۷b: حقوق و یادآور
+# Phase 07b: Salary and reminder
 
-## هدف
-کاربر روز دریافت حقوق (مثلاً ۱۶ام هر ماه شمسی) را تعریف می‌کند؛ بعد از آن روز اپ می‌پرسد «گرفتی؟». اگر «هنوز نه»، فردا دوباره می‌پرسد. اگر زودتر رسید، با یک لمس «حقوق این ماه را گرفتم» ثبت می‌شود.
+## Goal
+The user defines their payday (for example the 16th of each Shamsi month); after that day the app asks "did you get it?". If "not yet", it asks again tomorrow. If the money arrives earlier, one tap on "I got this month's salary" records it.
 
-## وابستگی‌ها
-فاز ۰۲ و ۰۷ (حقوق یک درآمد تکراری است؛ این فاز رفتار «یادآور» را روی همان می‌سازد).
+## Dependencies
+Phases 02 and 07 (salary is a recurring income; this phase builds the "reminder" behavior on top of it).
 
-## محدوده
-**داخل**
-- بک‌اند (اپ `apps.recurring`): عمل جدید `postpone` در `Resolve` («هنوز نه»): سررسید یک روز جلو می‌رود و فردا دوباره سؤال می‌شود؛ RPC جدید `SettleNow` («گرفتم/پرداخت شد» برای سررسید بعدی، حتی قبل از پنجره ۳ روزه).
-- **تاریخ ثبت:** تأیید یک سررسید آینده (دریافت زودتر) با تاریخ **امروز** ثبت می‌شود؛ سررسید گذشته یا امروز با تاریخ خودش.
-- `postpone` فقط برای سررسید بی‌پاسخ؛ اگر روز بعد قبلاً سررسید همان تعریف باشد `INVALID_ARGUMENT`.
-- `SettleNow`: سررسید باز زودترین را می‌گیرد، وگرنه سررسید بعدی تعریف را همان لحظه می‌سازد و تأیید می‌کند؛ مبلغ متغیر لازم است؛ سررسید دیگران `NOT_FOUND`.
-- اپ: دکمه «هنوز نه» روی کارت سررسید، دکمه «حقوق این ماه را گرفتم» (درآمد) / «این ماه پرداخت شد» (خرج) روی هر تعریف، انتخاب دسته در فرم تعریف (برای حقوق: دسته «حقوق»)، متن «گرفتی؟» برای کارت درآمد.
+## Scope
+**In**
+- Backend (`apps.recurring` app): a new `postpone` action in `Resolve` ("not yet"): the occurrence moves one day forward and is asked again tomorrow; a new RPC `SettleNow` ("got it/paid" for the next occurrence, even before the 3-day window).
+- **Recording date:** confirming a future occurrence (an early receipt) is recorded with **today's** date; an overdue or same-day occurrence keeps its own date.
+- `postpone` only for an unanswered occurrence; if the next day is already an occurrence of the same definition, `INVALID_ARGUMENT`.
+- `SettleNow`: takes the earliest open occurrence, otherwise creates and confirms the definition's next occurrence on the spot; a variable amount is required; someone else's occurrence is `NOT_FOUND`.
+- App: a "Not yet" button on the due card, an "I got this month's salary" (income) / "Paid this month" (expense) button on each definition, a category picker in the definition form (for salary: the "حقوق" (salary) category), the "Did you get it?" text for an income card.
 
-**بیرون**
-اعلان push در ساعت مشخص (۰۷c/۱۵)، یادآوری با تعداد دفعات محدود، تعریف چند حقوق در یک ماه.
+**Out**
+Push notification at a set time (07c/15), reminders with a limited number of repeats, defining several salaries in one month.
 
-## تست‌ها
-`postpone` (فردا دوباره، تعارض، پاسخ‌داده‌شده)، تاریخ ثبت زودهنگام در برابر سررسید گذشته، `SettleNow` (با و بدون سررسید باز، مبلغ متغیر، ایزولاسیون)، gRPC واقعی، اپ (دکمه‌ها و دسته).
+## Tests
+`postpone` (asks again tomorrow, conflict, already answered), early recording date versus overdue occurrence, `SettleNow` (with and without an open occurrence, variable amount, isolation), real gRPC, app (buttons and category).
 
-## معیار پذیرش
-- [x] «هنوز نه» سررسید را به فردا می‌برد و فردا دوباره به‌صورت سررسید می‌آید.
-- [x] «حقوق این ماه را گرفتم» درآمد را با تاریخ امروز ثبت می‌کند.
-- [x] `make check` و `make test` سبز.
+## Acceptance
+- [x] "Not yet" moves the occurrence to tomorrow and it comes back as due tomorrow.
+- [x] "I got this month's salary" records the income with today's date.
+- [x] `make check` and `make test` are green.
 
-## وضعیت اجرا
-- ✅ بک‌اند: عمل `postpone` («هنوز نه» ← فردا دوباره، با رد تعارض با سررسید بعدی)، تاریخ ثبت = کمینهٔ «سررسید» و «امروز»، `SettleNow`.
-- ✅ اپ: دکمه «هنوز نه»، متن «گرفتی؟» و دکمه «گرفتم» برای درآمد، «حقوق این ماه را گرفتم»/«این ماه پرداخت شد» روی تعریف (مبلغ متغیر را می‌پرسد)، انتخاب دسته در فرم تعریف.
-- ⚠️ بدون اعلان push، پس «یادآوری» همان کارت درون اپ است (۰۷c/۱۵). اپ روی دستگاه اجرا نشده.
+## Status
+- ✅ Backend: the `postpone` action ("not yet" → asked again tomorrow, rejecting a clash with the next occurrence), recording date = the minimum of "due date" and "today", `SettleNow`.
+- ✅ App: the "Not yet" button, the "Did you get it?" text and a "Got it" button for income, "I got this month's salary"/"Paid this month" on a definition (asks for a variable amount), category picker in the definition form.
+- ⚠️ No push notification, so the "reminder" is the in-app card (07c/15). The app has not been run on a device.

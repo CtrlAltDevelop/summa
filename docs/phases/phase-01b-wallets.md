@@ -1,40 +1,40 @@
-# فاز ۰۱b: کیف پول‌ها
+# Phase 01b: Wallets
 
-## هدف
-کاربر کیف پول می‌سازد (نقد، حساب بانکی، کارت اعتباری…) با ارز دلخواه و موجودی اولیه، و در صفحه اصلی موجودی هر کیف و جمع هر ارز («صندوق حساب‌وکتاب») را می‌بیند.
+## Goal
+The user creates wallets (cash, bank account, credit card, ...) with any currency and an opening balance, and on the home screen sees each wallet's balance and a total per currency (the "ledger box").
 
-## وابستگی‌ها
-فاز ۰۱.
+## Dependencies
+Phase 01.
 
-## محدوده
-**داخل**
-- بک‌اند: اپ `apps.wallets` با مدل‌های `Wallet` و `LedgerEvent`؛ سرویس gRPC `WalletsController` با `Create` / `List` / `Archive`.
-- موجودی **ذخیره نمی‌شود**؛ جمع رویدادهای دفتر است. موجودی اولیه یک رویداد `opening_balance` است (صفر ← بدون رویداد). فقط کارت اعتباری و BNPL می‌توانند منفی (بدهی) شروع کنند.
-- پول = عدد صحیح به کوچک‌ترین واحد (`int64`)؛ ارزهای فعلی در پروفایل ایران (`apps/wallets/profile.py`): تومان، ریال، دلار، یورو، درهم، لیر، تتر؛ اعشار هر ارز در همان جدول.
-- انواع: نقد، بانکی، کارت اعتباری، BNPL، هدیه‌کارت، رمزارز، طلا (طلا و رمزارز با فاز ۰۹ معنا پیدا می‌کنند).
-- `client_mutation_id` یکتا برای هر کاربر: ارسال دوباره همان فرم، کیف دوم نمی‌سازد.
-- بایگانی کیف پول (نه حذف): از جمع‌ها بیرون می‌رود و در فهرست با نشانه می‌ماند.
-- اپ: کارت جمع هر ارز، فهرست کیف‌ها، فرم ساخت (نام، نوع، ارز، بانک اختیاری، موجودی اولیه با ارقام فارسی و جداکننده هزارگان).
+## Scope
+**In**
+- Backend: the `apps.wallets` app with `Wallet` and `LedgerEvent` models; gRPC service `WalletsController` with `Create` / `List` / `Archive`.
+- Balance is **not stored**; it is the sum of ledger events. The opening balance is an `opening_balance` event (zero → no event). Only credit card and BNPL wallets may start negative (debt).
+- Money = integer in the smallest unit (`int64`); the currencies in the Iran profile today (`apps/wallets/profile.py`): Toman, Rial, USD, EUR, AED, TRY, USDT; each currency's decimals live in the same table.
+- Types: cash, bank, credit card, BNPL, gift card, crypto, gold (gold and crypto gain meaning with phase 09).
+- `client_mutation_id`, unique per user: resubmitting the same form does not create a second wallet.
+- Archiving a wallet (not deleting): it leaves the totals and stays in the list with a marker.
+- App: a total card per currency, the wallet list, a create form (name, type, currency, optional bank, opening balance with Persian digits and thousands separator).
 
-**بیرون**
-جمع به ارز پایه (نیازمند نرخ، فاز ۰۹)، ثبت خرج/درآمد (۰۲)، انتقال بین کیف‌ها (۰۲b)، ویرایش نام کیف، دکمه بایگانی در اپ (RPC آماده است).
+**Out**
+Totals in the base currency (needs rates, phase 09), recording expense/income (02), transfers between wallets (02b), renaming a wallet, an archive button in the app (the RPC is ready).
 
-## قوانین و لبه‌ها
-- هر خواندن و نوشتن با کاربر احراز‌شده فیلتر می‌شود؛ شناسه کیف دیگران یا ناشناخته = `NOT_FOUND`.
-- ارز یا نوع ناشناخته، نام خالی یا بیش از ۶۰ حرف، بانک بیش از ۴۰ حرف = `INVALID_ARGUMENT`.
-- جمع‌ها فقط کیف‌های فعال را می‌شمارند.
+## Rules and edges
+- Every read and write is filtered by the authenticated user; another user's wallet id or an unknown one = `NOT_FOUND`.
+- Unknown currency or type, an empty name or one over 60 characters, a bank over 40 characters = `INVALID_ARGUMENT`.
+- Totals count active wallets only.
 
-## تست‌ها
-بک‌اند: سرویس (موجودی اولیه، صفر، بدهی، idempotency، ورودی نامعتبر، ایزولاسیون کاربر، جمع و بایگانی) و gRPC واقعی (ساخت/فهرست، کاربر دیگر، ارز نامعتبر، بدون توکن، مقدار بالای ۳۲ بیت).
-اپ: `parseMinor`/`formatMinor`، ویجت: حالت خالی، ساخت با موجودی، نام خالی، منفی برای بانک، خطای سرور.
+## Tests
+Backend: service (opening balance, zero, debt, idempotency, invalid input, user isolation, totals and archive) and real gRPC (create/list, other user, invalid currency, no token, value above 32 bits).
+App: `parseMinor`/`formatMinor`; widget: empty state, create with a balance, empty name, negative for a bank wallet, server error.
 
-## معیار پذیرش
-- [x] ساخت کیف با ارز و موجودی اولیه؛ موجودی از رویدادها.
-- [x] چند کیف برای یک ارز، و ارزهای مختلف، با جمع جدا برای هر ارز.
-- [x] تست «کاربر دیگر» برای فهرست و بایگانی.
-- [x] مبلغ‌های بزرگ (ریالی) در `int64` سالم می‌مانند.
-- [x] `make check` سبز.
+## Acceptance
+- [x] Create a wallet with a currency and an opening balance; balance comes from events.
+- [x] Several wallets in one currency, and different currencies, with a separate total per currency.
+- [x] "Other user" test for list and archive.
+- [x] Large (Rial) amounts stay intact in `int64`.
+- [x] `make check` green.
 
-## وضعیت اجرا
-- ✅ بک‌اند و اپ پیاده شد؛ اپ هنوز روی دستگاه/شبیه‌ساز اجرا نشده.
-- ⏳ بعداً: جمع به ارز پایه (۰۹)، بایگانی در رابط، ویرایش کیف.
+## Status
+- ✅ Backend and app implemented; the app has not yet been run on a device/simulator.
+- ⏳ Later: totals in the base currency (09), archive in the UI, wallet editing.

@@ -1,29 +1,29 @@
-# فاز ۱۶b: مدیریت محتوای لندینگ
+# Phase 16b: Landing content management
 
-## هدف
-متن‌ها، سؤالات پرتکرار، منو و قیمت پلن‌های سایت لندینگ از بک‌اند و ادمین ویرایش شود، نه از کد سایت.
+## Goal
+The landing site's copy, FAQ, menus and plan prices are edited through the backend and admin, not in the site's code.
 
-## وابستگی‌ها
-فاز ۰۰ (و ۱۳ برای قیمت پلن‌ها).
+## Dependencies
+Phase 00 (and 13 for plan prices).
 
-## محدوده
-**داخل**
-- بک‌اند: اپ آماده `apps.cms` (صفحه، بخش، فیلدهای نوع‌دار و چندزبانه، پیش‌نویس و زمان‌بندی انتشار، منو، پیش‌نمایش، sitemap، خروجی/ورود JSON، ادمین) **روشن شد**: `DJANGO_CMS_ENABLED=true` و `DJANGO_CMS_LANGUAGES=fa`. API خواندنی عمومی همان `GET /api/v1/cms/pages|menus|site`.
-- **محتوای اولیه** (متن فارسی بازنویسی‌شده و مال خودمان، نه کپی مرجع) در `landing/content/landing.json`: صفحه‌های `home` (قهرمان، سه قدم، ویژگی‌ها، حریم خصوصی)، `faq`، `about`، `privacy`، `terms` و دو منو. با `manage.py cms_import landing/content/landing.json` وارد می‌شود (idempotent) و بعد از آن همه چیز از ادمین ویرایش می‌شود. **صفحه‌های حقوقی صراحتاً «پیش‌نویس و نیازمند بازبینی حقوقی»اند.**
-- **قیمت پلن‌ها** از `Plan`های فاز ۱۳ می‌آید: `GET /api/v1/billing/plans` عمومی؛ هیچ قیمتی در کد یا محتوا نیست.
-- **قیمت‌های زنده:** `GET /api/v1/assets/rates` عمومی و فقط‌خواندنی (تقریبی).
-- **دموی چت:** `POST /api/v1/assistant/demo` پارسر واقعی را روی یک حساب نمونه (دو کیف و دسته‌های پیش‌فرض) اجرا می‌کند؛ بدون ورود، بدون ذخیره، حداکثر ۲۰۰ نویسه و ۲۰ بار در دقیقه برای هر نشانی.
+## Scope
+**In**
+- Backend: the ready-made `apps.cms` app (pages, sections, typed multilingual fields, drafts and scheduled publishing, menus, preview, sitemap, JSON export/import, admin) **was switched on**: `DJANGO_CMS_ENABLED=true` and `DJANGO_CMS_LANGUAGES=fa`. The public read API is the same `GET /api/v1/cms/pages|menus|site`.
+- **Initial content** (Persian copy, rewritten and our own, not copied from the reference) in `landing/content/landing.json`: the pages `home` (hero, three steps, features, privacy), `faq`, `about`, `privacy`, `terms`, and two menus. It is loaded with `manage.py cms_import landing/content/landing.json` (idempotent), and after that everything is edited from the admin. **The legal pages are explicitly marked "draft, needs legal review".**
+- **Plan prices** come from phase 13's `Plan`s: `GET /api/v1/billing/plans` is public; no price lives in code or content.
+- **Live rates:** `GET /api/v1/assets/rates` is public and read-only (approximate).
+- **Chat demo:** `POST /api/v1/assistant/demo` runs the real parser on a sample account (two wallets and the default categories); no sign-in, nothing stored, at most 200 characters and 20 requests per minute per address.
 
-**بیرون**
-نوشتن محتوا از API (عمداً نیست؛ ادمین)، ترجمه به زبان دیگر (فقط فارسی)، کش CDN و هدر `Cache-Control` (استقرار)، تشخیص نشانی واقعی پشت reverse proxy برای محدودیت نرخ دمو (تصمیم استقرار؛ فعلاً `REMOTE_ADDR`).
+**Out**
+Writing content through the API (deliberately absent; use the admin), translation into another language (Persian only), CDN caching and the `Cache-Control` header (deployment), detecting the real client address behind a reverse proxy for demo rate limiting (a deployment decision; for now `REMOTE_ADDR`).
 
-## تست‌ها
-واردکردن محتوا و خواندن از API (صفحه‌ها، سه قدم، پنج ویژگی، چهار سؤال، صفحه‌های حقوقی پیش‌نویس، منوها، idempotent)، دمو (جمله ← کارت، کیف نام‌برده، انتقال، بدون مبلغ، طول، سقف نرخ هر نشانی، بدون ذخیره)، `plans` عمومی، `rates` عمومی.
+## Tests
+Content import and reading from the API (pages, three steps, five features, four FAQ items, draft legal pages, menus, idempotency), demo (sentence -> card, named wallet, transfer, no amount, length, per-address rate limit, nothing stored), public `plans`, public `rates`.
 
-## معیار پذیرش
-- [x] محتوای اولیه وارد می‌شود و از API خوانده می‌شود.
-- [x] دمو بدون حساب کار می‌کند و چیزی ذخیره نمی‌کند.
-- [x] `make check` و `make test` سبز.
+## Acceptance
+- [x] The initial content imports and is read from the API.
+- [x] The demo works without an account and stores nothing.
+- [x] `make check` and `make test` are green.
 
-## وضعیت اجرا
-- ✅ همه موارد بالا. برای ساخت سایت روی این API به فاز ۱۶ بروید.
+## Status
+- ✅ All of the above. To build the site on this API, continue to phase 16.

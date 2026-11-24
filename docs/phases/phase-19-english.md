@@ -27,7 +27,6 @@ offers.
 **Out** (other phases)
 - Any third language.
 - Currency, calendar, banks or price sources per country — phase 19b.
-- Translating the existing Persian docs in `docs/` — on request, not a gate.
 
 ## Interfaces
 - proto: `locale` on the user settings message, returned by the profile RPC
@@ -71,3 +70,12 @@ offers.
 - [ ] Landing switches language without a reload and sets `lang`/`dir`.
 - [ ] Dates, digits and separators correct in both locales.
 - [ ] `make check` and `make test` green.
+
+## Status
+Done in the app: `app_en.arb` (parity test), a locale controller with a
+device-locale first-run default and a language row in Privacy and security,
+RTL/LTR following the locale, and locale-aware digits, separators and Shamsi
+month names. The existing Persian docs are translated.
+Not done yet: the proto `locale` field and server-generated text in English,
+the per-user (reinstall-surviving) locale, the landing language switch, and an
+LTR layout review of every screen.

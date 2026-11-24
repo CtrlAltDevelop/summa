@@ -1,32 +1,32 @@
-# فاز ۱۴: پشتیبانی
+# Phase 14: Support
 
-## هدف
-کاربر از داخل اپ تیکت پشتیبانی باز کند و گفت‌وگوی خودش را با تیم ببیند و جواب بدهد.
+## Goal
+The user opens a support ticket from inside the app and sees their own conversation with the team and can reply.
 
-## وابستگی‌ها
-فاز ۰۱.
+## Dependencies
+Phase 01.
 
-## محدوده
-**داخل**
-- بک‌اند: از اپ آماده `apps.support` (تیکت و چت، ادمین، SLA، دسته‌ها، چهار transport) استفاده می‌شود؛ **فقط روشن شد**: `DJANGO_SUPPORT_ENABLED=true` در `.env.example`، پروتو در فهرست Dart (`DART_PROTOS`) و تست یکپارچه برای کاربر Summa (باز کردن تیکت، گفت‌وگو، ایزولاسیون بین دو کاربر، موضوع و متن الزامی). قواعد «چه کسی چه می‌بیند» (پیام داخلی تیم، تیکت دیگران = `NOT_FOUND`) همان‌هایی است که تست‌های خود اپ پوشش می‌دهند.
-- اپ: صفحه «پشتیبانی» (فهرست تیکت‌های خود کاربر با وضعیت، تاریخ آخرین پیام و نشان «پیام جدید»)، فرم تیکت جدید (موضوع و متن)، صفحه گفت‌وگو (پیام‌های کاربر و پشتیبان، پاسخ‌دادن).
+## Scope
+**In**
+- Backend: the ready-made `apps.support` app (tickets and chat, admin, SLA, categories, four transports) is used; it was **only switched on**: `DJANGO_SUPPORT_ENABLED=true` in `.env.example`, the proto in the Dart list (`DART_PROTOS`) and an integration test for a Summa user (open a ticket, conversation, isolation between two users, subject and body required). The "who sees what" rules (internal team messages, someone else's ticket = `NOT_FOUND`) are the ones the app's own tests cover.
+- App: a "Support" page (the user's own tickets with status, last-message date and a "new message" badge), a new-ticket form (subject and body), a conversation page (user and support messages, replying).
 
-**بیرون**
-چت زنده (WebSocket) و اعلان پیام جدید (نیاز به push)، پیوست و آپلود، امتیازدهی، دسته‌بندی تیکت از سمت کاربر، **فرم تماس عمومی برای افراد بدون حساب** (روی سایت لندینگ، فاز ۱۶)، پنل پشتیبان (همان ادمین Django است).
+**Out**
+Live chat (WebSocket) and new-message notifications (need push), attachments and uploads, rating, ticket categorization by the user, a **public contact form for people without an account** (on the landing site, phase 16), the support agent panel (it is the Django admin).
 
-## قوانین و لبه‌ها
-- هر تیکت فقط برای صاحبش دیده و نوشته می‌شود؛ دیگران `NOT_FOUND`.
-- تیکت بدون موضوع یا بدون متن = `INVALID_ARGUMENT`.
-- با حالت فقط‌خواندنی اشتراک (فاز ۱۳) باز کردن تیکت **ممکن نیست**، چون `Open`/`Send` نوشتنی‌اند؛ این برای حسابی که باید تمدید کند ناخوشایند است (باید از طریق کانال دیگری با ما تماس بگیرد). تصمیم: در فاز ۱۳ «پشتیبانی» به فهرست خواندنی‌ها اضافه نشد چون ماژول `apps.support` جدا از قواعد billing است؛ **نیاز به تصمیم مشتری** (آیا حساب منقضی می‌تواند تیکت بزند؟). تا آن موقع `BILLING_ENFORCED` خاموش است.
+## Rules and edges
+- Each ticket is visible and writable only to its owner; others get `NOT_FOUND`.
+- A ticket without a subject or without a body = `INVALID_ARGUMENT`.
+- With the subscription read-only mode (phase 13), opening a ticket is **not possible**, because `Open`/`Send` are writes; this is unfortunate for an account that needs to renew (it has to contact us through another channel). Decision: in phase 13 "support" was not added to the list of reads because the `apps.support` module is separate from the billing rules; **needs a client decision** (can an expired account open a ticket?). Until then `BILLING_ENFORCED` is off.
 
-## تست‌ها
-بک‌اند: سه تست یکپارچه با ورود Summa. اپ: ویجت (فهرست خالی، باز کردن تیکت، اعتبارسنجی، خطا، گفت‌وگو و پاسخ، پیام پشتیبان و نشان خوانده‌نشده).
+## Tests
+Backend: three integration tests with a Summa login. App: widgets (empty list, opening a ticket, validation, error, conversation and reply, support message and unread badge).
 
-## معیار پذیرش
-- [x] کاربر تیکت باز می‌کند و پاسخ می‌دهد.
-- [x] کاربر دیگر تیکت او را نمی‌بیند و در آن نمی‌نویسد.
-- [x] `make check` و `make test` سبز.
+## Acceptance
+- [x] The user opens a ticket and replies.
+- [x] Another user cannot see their ticket or write in it.
+- [x] `make check` and `make test` are green.
 
-## وضعیت اجرا
-- ✅ بک‌اند روشن و سه تست یکپارچه؛ اپ: فهرست، تیکت جدید، گفت‌وگو.
-- ⚠️ بدون اعلان و چت زنده؛ اپ روی دستگاه اجرا نشده.
+## Implementation status
+- ✅ Backend switched on with three integration tests; app: list, new ticket, conversation.
+- ⚠️ No notifications and no live chat; the app has not been run on a device.

@@ -1,48 +1,48 @@
-# فاز ۰۰: پایه
+# Phase 00: Foundation
 
-## هدف
-یک مخزن آماده کار که هر فاز بعدی روی آن ساخته شود: بک‌اند gRPC، اپ Flutter با سیستم طراحی و حرکت، CI، و دموی «سلام» انتها‌به‌انتها.
+## Goal
+A ready-to-work repository that every later phase builds on: a gRPC backend, a Flutter app with a design system and motion, CI, and an end-to-end "hello" demo.
 
-## وابستگی‌ها
-هیچ.
+## Dependencies
+None.
 
-## محدوده
-**داخل**
-- اسکلت مخزن طبق `docs/06-architecture.md`: `backend/`، `app/`، `deploy/` (لندینگ در فاز ۱۶).
-- بک‌اند: Django + grpcio (از `django-ninja-starter` اگر مناسب بود، با خاموش‌کردن اپ‌های اضافه)؛ PostgreSQL، Redis، Celery در docker compose؛ تنظیمات محیطی؛ یک سرویس نمونه `Ping`؛ ساختار `.proto` و تولید stub (Python و Dart).
-- اپ: Flutter، Riverpod + freezed، ناوبری، l10n فارسی و RTL، تقویم شمسی، ارقام فارسی، تم تیره و شیشه‌ای (تنها تم).
-- **سیستم طراحی:** توکن‌ها (رنگ، تایپ، فاصله، شعاع، حرکت)، ویجت‌های پایه `Sm*`، آیکن‌ها، قواعد انیمیشن (مدت/منحنی، کاهش حرکت)، صفحه گالری (`/debug/gallery`)، **قاعده:** مقدار خام رنگ/شعاع/آیکن بیرون از توکن‌ها ممنوع و با تست کنترل می‌شود.
-- هویت بصری: ۲–۳ جهت نمونه (روشن/هوایی، نرم/شیشه‌ای…) با ظاهر کاملاً متفاوت از ترازنما؛ انتخاب نهایی پیش از پایان فاز.
-- CI: ruff، mypy، `makemigrations --check`، `buf lint`، stub به‌روز، pytest با پوشش، `dart format`، `flutter analyze`، `flutter test`.
-- `Makefile` با `setup`، `dev`، `serve`، `grpc`، `proto`، `check`، `test`.
-- دموی انتها‌به‌انتها: اپ `Liveness` را از بک‌اند gRPC صدا می‌زند و نتیجه را با انیمیشن نشان می‌دهد.
+## Scope
+**In**
+- Repository skeleton per `docs/06-architecture.md`: `backend/`, `app/`, `deploy/` (landing comes in phase 16).
+- Backend: Django + grpcio (from `django-ninja-starter` if suitable, with the extra apps switched off); PostgreSQL, Redis, Celery in docker compose; environment settings; a sample `Ping` service; `.proto` layout and stub generation (Python and Dart).
+- App: Flutter, Riverpod + freezed, navigation, Persian l10n and RTL, Shamsi calendar, Persian digits, dark glass theme (the only theme).
+- **Design system:** tokens (colour, type, spacing, radius, motion), base `Sm*` widgets, icons, animation rules (duration/curve, reduced motion), a gallery page (`/debug/gallery`), **rule:** raw colour/radius/icon values outside the tokens are forbidden and enforced by a test.
+- Visual identity: 2-3 sample directions (light/airy, soft/glass, ...) with an appearance entirely different from taraznama; final pick before the phase ends.
+- CI: ruff, mypy, `makemigrations --check`, `buf lint`, stubs up to date, pytest with coverage, `dart format`, `flutter analyze`, `flutter test`.
+- `Makefile` with `setup`, `dev`, `serve`, `grpc`, `proto`, `check`, `test`.
+- End-to-end demo: the app calls `Liveness` on the gRPC backend and shows the result with an animation.
 
-**بیرون**
-ورود، کیف پول، هر ویژگی دیگر.
+**Out**
+Login, wallets, every other feature.
 
-## رابط‌ها
-`HealthController.Liveness` (موجود در starter). تنظیمات: `.env.example`.
+## Interfaces
+`HealthController.Liveness` (present in the starter). Settings: `.env.example`.
 
-## قوانین و لبه‌ها
-- هیچ رازی در مخزن؛ `.env` در gitignore.
-- gRPC-Web برای وب (پروکسی) یا وب بعداً؛ اگر وب هدف اولیه نیست، دسکتاپ/موبایل اولویت دارد.
-- اعداد و تاریخ همیشه از لایه فرمت مشترک (فارسی/شمسی)؛ تست.
+## Rules and edges
+- No secrets in the repo; `.env` is in gitignore.
+- gRPC-Web for the web (proxy) or web later; if the web is not the first target, desktop/mobile take priority.
+- Numbers and dates always go through the shared formatting layer (Persian/Shamsi); tested.
 
-## امنیت و حریم
-لاگ بدون داده کاربر؛ وابستگی‌ها قفل‌شده؛ بدون تله‌متری.
+## Security and privacy
+Logs carry no user data; dependencies are pinned; no telemetry.
 
-## تست‌ها
-واحد برای فرمت عدد/تاریخ و توکن‌ها؛ تست ویجت برای گالری؛ تست ویجت صفحه سلامت با سرویس جعلی؛ تست ممنوعیت مقدار خام.
+## Tests
+Unit for number/date formatting and tokens; widget test for the gallery; widget test for the health screen with a fake service; the raw-value ban test.
 
-## معیار پذیرش
-- [ ] `make setup && make run-lite` روی ماشین تمیز بالا می‌آید.
-- [ ] اپ `Liveness` را صدا می‌زند و جواب را نشان می‌دهد.
-- [ ] `make check` و `make test` سبز؛ پوشش کد جدید ≥ ۸۰٪.
-- [ ] CI سبز.
-- [ ] گالری همه ویجت‌ها را در RTL و با تم تیره‌شیشه‌ای نشان می‌دهد.
-- [ ] تست ممنوعیت مقدار خام بدون استثنا می‌گذرد.
-- [ ] هویت بصری (تیره و شیشه‌ای، انتخاب مشتری) در `docs/brand.md` ثبت شده.
+## Acceptance
+- [ ] `make setup && make run-lite` comes up on a clean machine.
+- [ ] The app calls `Liveness` and shows the response.
+- [ ] `make check` and `make test` green; new-code coverage >= 80%.
+- [ ] CI green.
+- [ ] The gallery shows every widget in RTL with the dark glass theme.
+- [ ] The raw-value ban test passes with no exceptions.
+- [ ] The visual identity (dark glass, client's choice) is recorded in `docs/brand.md`.
 
-## وضعیت اجرا
-- ✅ اسکلت بک‌اند (از starter؛ اپ‌های shop/wallet/club/support/cms/notifications خاموش)، اپ Flutter (اندروید/iOS/macOS؛ شناسه `com.summa.app`)، توکن‌ها و ویجت‌های `Sm*`، گالری `/debug/gallery`، l10n فارسی، فرمت عدد/تاریخ شمسی، دموی سلامت، تست ممنوعیت مقدار خام، Makefile، compose، CI.
-- ⏳ بیرون از این اجرا: فونت فارسی بسته‌بندی‌شده (فعلاً فونت سیستم)، `docs/brand.md`، وب (تصمیم: فعلاً نه)، اجرای CI روی GitHub (ریموت نیست).
+## Status
+- ✅ Backend skeleton (from the starter; the shop/wallet/club/support/cms/notifications apps switched off), Flutter app (Android/iOS/macOS; id `com.summa.app`), tokens and `Sm*` widgets, `/debug/gallery`, Persian l10n, Shamsi number/date formatting, health demo, raw-value ban test, Makefile, compose, CI.
+- ⏳ Outside this run: bundled Persian font (system font for now), `docs/brand.md`, web (decision: not for now), running CI on GitHub (no remote).

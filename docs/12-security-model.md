@@ -1,44 +1,44 @@
-# مدل امنیت و حریم Summa (پیشنهاد)
+# Summa security and privacy model (proposal)
 
-> داده مالی شخصی حساس است. این سند تضاد «Ollama روی سرور» با «رمزنگاری سرتاسری» را باز می‌کند و یک انتخاب پیشنهاد می‌دهد.
+> Personal financial data is sensitive. This document unpacks the conflict between "Ollama on the server" and "end-to-end encryption" and proposes one choice.
 
-## طبقه‌بندی داده
-| سطح | نمونه | رفتار |
+## Data classification
+| Level | Examples | Behaviour |
 |---|---|---|
-| بحرانی | متن خام پیامک، یادداشت‌ها، رمز اپ، توکن‌ها | ذخیره نمی‌شود (پیامک) یا رمزنگاری سطح فیلد؛ هرگز در لاگ |
-| حساس | مبلغ، موجودی، نام کیف پول و بانک، دسته | فقط برای خود کاربر؛ رمزنگاری در حالت سکون؛ بدون دسترسی ادمین |
-| عادی | تنظیمات، ساعت یادآور | محافظت‌شده معمولی |
-| عمومی | محتوای لندینگ | کش و CDN |
+| Critical | Raw SMS text, notes, app passcode, tokens | Not stored (SMS) or field-level encrypted; never in logs |
+| Sensitive | Amount, balance, wallet and bank name, category | Visible only to the user; encrypted at rest; no admin access |
+| Normal | Settings, reminder time | Ordinary protection |
+| Public | Landing content | Cache and CDN |
 
-## تضاد و انتخاب
-- **رمزنگاری سرتاسری (E2E):** سرور هیچ‌وقت داده را نمی‌بیند، ولی Ollama، بینش، گزارش سروری و همگام‌سازی هوشمند عملاً ممکن نیست و پردازش باید روی گوشی برود.
-- **پیشنهاد (برای فاز اول): سرور-خوان محدود.** سرور برای پارس و گزارش داده را می‌بیند ولی:
-  1. TLS در مسیر؛ دیسک و پشتیبان رمزنگاری‌شده؛
-  2. رمزنگاری سطح فیلد برای یادداشت و هر متن آزاد (کلید جدا برای هر کاربر، نگه‌داری کلید در KMS/مخزن جدا از دیتابیس)؛
-  3. **متن پیامک بعد از پارس ذخیره نمی‌شود** (فقط نتیجه ساختاریافته)؛ فقط با رضایت صریح برای بهبود الگو؛
-  4. ادمین و پشتیبان به داده مالی دسترسی ندارند؛ دسترسی پشتیبان فقط با تأیید کاربر، ۲۴ ساعت، با لاگ؛
-  5. لاگ و ردیابی خطا بدون مبلغ و متن (فیلتر پیش از ارسال).
-- **راه آینده:** «حالت خصوصی» اختیاری که پارس را روی دستگاه انجام می‌دهد (مدل کوچک محلی) برای کسانی که نمی‌خواهند متن به سرور برود. در فاز اول ساخته نمی‌شود.
-- اگر مشتری E2E را الزام کند: معماری فاز ۰۴/۰۵ و گزارش‌ها باید روی دستگاه بروند؛ این یک تصمیم بزرگ است و باید قبل از شروع ساخت گرفته شود.
+## The conflict and the choice
+- **End-to-end encryption (E2E):** the server never sees the data, but Ollama, insights, server-side reports and smart sync become practically impossible, and processing has to move to the phone.
+- **Proposal (for phase one): limited server-read.** The server sees data for parsing and reports, but:
+  1. TLS in transit; disk and backups encrypted;
+  2. Field-level encryption for notes and any free text (a separate key per user, with the key held in a KMS/vault separate from the database);
+  3. **SMS text is not stored after parsing** (only the structured result); stored only with explicit consent to improve patterns;
+  4. Admins and support have no access to financial data; support access only with user approval, for 24 hours, logged;
+  5. Logs and error tracking carry no amounts or text (filtered before sending).
+- **Future path:** an optional "private mode" that parses on the device (a small local model) for those who do not want text to go to the server. Not built in phase one.
+- If the client requires E2E: the architecture of phases 04/05 and the reports must move onto the device; this is a big decision and must be made before building starts.
 
-## احراز هویت و نشست
-- موبایل + OTP، رمز اختیاری؛ محدودیت تلاش و انتظار تصاعدی؛ پاسخ یکسان برای شماره‌ی دارای حساب و بدون حساب (جلوگیری از شمارش حساب‌ها).
-- نشست‌ها با دستگاه ثبت می‌شوند؛ خروج از همه دستگاه‌ها؛ تغییر رمز بقیه را خارج می‌کند.
-- **قفل اپ** با بیومتریک (یا رمز داخل اپ) هنگام بازشدن و برای عملیات حساس (ورود/خروج داده، حذف حساب).
-- (اختیاری بعداً) اتصال توکن به دستگاه.
+## Authentication and sessions
+- Mobile + OTP, optional password; attempt limits and progressive back-off; identical response for a number with an account and without one (prevents account enumeration).
+- Sessions are recorded per device; sign out of all devices; changing the password signs out the rest.
+- **App lock** with biometrics (or the in-app passcode) on open and for sensitive operations (data import/export, account deletion).
+- (Optional later) bind the token to the device.
 
-## تهدیدها و پاسخ
-| تهدید | پاسخ |
+## Threats and responses
+| Threat | Response |
 |---|---|
-| کاربر A داده کاربر B را بخواند | فیلتر کاربر در هر کوئری + تست «کاربر دیگر» برای هر سرویس؛ شناسه کاربر هرگز از کلاینت |
-| تزریق در متن پیامک (prompt injection) | مدل بدون ابزار؛ خروجی با schema و اعتبارسنجی؛ ثبت فقط با «ثبت» کاربر |
-| نشت از لاگ و پشتیبان | لاگ بدون مبلغ/متن؛ پشتیبان رمزنگاری‌شده؛ دسترسی محدود |
-| سوءاستفاده از OTP/پیامک | rate limit، انتظار تصاعدی، پاسخ یکسان |
-| سرقت گوشی | قفل اپ، پنهان‌کردن مبلغ روی صفحه قفل و اعلان، خروج از راه دور |
-| فشار روی Ollama (DoS) | rate limit هر کاربر، صف، حداکثر طول متن، regex اول |
-| ادمین سوءاستفاده | نقش‌ها، لاگ دسترسی، نبود دسترسی به داده مالی |
-| حذف ناقص حساب | حذف واقعی از دیتابیس و پشتیبان‌ها طبق برنامه (به‌جز رسید پرداخت) |
+| User A reads user B's data | User filter in every query + an "other user" test for every service; the user id never comes from the client |
+| Injection in SMS text (prompt injection) | Model without tools; schema-validated output; recording only on the user's "Register" |
+| Leaks from logs and backups | Logs without amounts/text; encrypted backups; restricted access |
+| OTP/SMS abuse | Rate limit, progressive back-off, identical response |
+| Phone theft | App lock, hiding amounts on the lock screen and in notifications, remote sign-out |
+| Load on Ollama (DoS) | Per-user rate limit, queue, maximum text length, regex first |
+| Admin abuse | Roles, access log, no access to financial data |
+| Incomplete account deletion | Real deletion from the database and backups on schedule (except payment receipts) |
 
-## قوانین و شفافیت
-- صفحه «چه ذخیره می‌شود و چه نه» در اپ و لندینگ؛ رضایت قبل از اولین ارسال پیامک به سرور؛ خروجی کامل و حذف حساب؛ بدون فروش داده و بدون تبلیغ.
-- شرایط و حریم خصوصی باید بررسی حقوقی شود (مرجع هم «نیاز به بررسی حقوقی» بود).
+## Rules and transparency
+- A "What is stored and what is not" page in the app and on the landing site; consent before the first SMS is sent to the server; full export and account deletion; no data sales and no ads.
+- Terms and privacy policy must get a legal review (the reference also said "needs legal review").

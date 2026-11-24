@@ -1,79 +1,79 @@
-# سؤال‌های باز پروژه Summa (فلو به فلو)
+# Summa Open Questions (flow by flow)
 
-مشتری (خارجی) گفته اپ باید کاملاً متفاوت از ترازنما باشد ولی در نهایت حسابداری شخصی. جواب‌ها اینجا ثبت شود.
+The (foreign) client said the app must be completely different from Taraznama but, in the end, still personal accounting. Record the answers here.
 
-نکته: مشتری بین‌المللی است؛ پس سؤال‌های بومی‌سازی (زبان‌ها، ارز، کشور هدف، تقویم، منابع قیمت، پیامک بانک، پیام‌رسان به‌جای بله/تلگرام) باید در بخش صفر روشن شود.
+Note: the client is international, so the localisation questions (languages, currency, target country, calendar, price sources, bank SMS, a messenger instead of Bale/Telegram) must be settled in section zero.
 
-## صفر: چهارچوب
-1. «شکل دیگر» یعنی چه؟ فقط UI/برند، یا منطق و ایده محصول هم؟
-   - **جواب:** همه‌چیز فرق دارد (UI، برند، منطق و ایده)؛ ویژگی‌های جدید زیادی می‌آید و بعضی بخش‌ها اصلاً نمی‌خواهیم.
-   - **ربات:** کلاً حذف (نه بله، نه تلگرام، نه ایتا). فلو ۶ منتفی است.
-   - **پیامک بانک:** اپ خودش پیامک‌ها را می‌خواند و مبلغ و تراکنش را خودکار از پیامک بانک تحلیل می‌کند. از کاربر فقط پرسیده می‌شود «این برای چه خریدی بود؟». یعنی ثبت دستی مبلغ نیست و صف تأیید ترازنما جایش را به این فلو می‌دهد. (اثر روی فلو ۳ و ۲)
-2. چه چیزهایی از ترازنما **نباشد**؟
-   - **جواب (فازبندی):** فاز اول از نظر ویژگی‌ها شبیه ترازنماست؛ ویژگی‌های جدید و تفاوت‌های بزرگ‌تر در فازهای بعدی می‌آیند.
-   - استثناهای فاز اول: ربات نیست، و پیامک بانک خودکار خوانده می‌شود (نه ثبت دستی).
-   - ظاهر و برند از همان فاز اول کاملاً متفاوت از ترازنماست (فقط ویژگی‌های فاز اول شبیه است).
-   - هنوز فهرست دقیق «چه چیزی نباشد» جز این‌ها گفته نشده.
-3. چه چیزهایی **اضافه** شود؟
-   - فعلاً کنار گذاشته شد؛ فاز اول اول اجرا می‌شود.
-4. مخاطب: ایرانی؟ فقط فارسی و شمسی؟
-   - **جواب:** کشور هدف فقط ایران و زبان فقط فارسی (راست‌به‌چپ، شمسی). ارزها و انواع کیف پول متعدد نگه داشته شد.
-   - **کیف پول:** هر کاربر در جریان ساخت حساب، کیف پول با ارز دلخواه می‌سازد؛ برای هر ارز چند کیف پول ممکن است (مثلاً تومان در ۳ بانک با ۳ موجودی جدا، یا پول نقد). هنگام ساخت کیف پول، موجودی اولیه همان ارز پرسیده می‌شود. «صندوق محاسباتی» همه کیف پول‌ها را یک‌جا نشان می‌دهد. هنگام ثبت خرج مشخص می‌شود از کدام کیف پول (ارز و بانک). اپ فقط حسابداری است و پولی جابه‌جا نمی‌شود. با این حال در بخش خرج‌ها گزینه «مدیریت پول» هست: انتقال بین بانک‌ها یا نقد↔بانک، با کارمزد اختیاری؛ برای تبدیل ارز، نرخ و کارمزد را کاربر وارد می‌کند.
-   - **بک‌اند:** Django + grpcio.
-   - **به‌روزرسانی (۱۴۰۴/۰۹/۰۳ — ۲۰۲۶-۱۱-۲۴):** مشتری گفت زبان محصول انگلیسی شود و پشتیبانی از کاربران خارج از ایران در همه بخش‌های اپ به فاز بعدی اضافه شود. فاز ۱۹ (انگلیسی و LTR) و فاز ۱۹b (پروفایل کشور) ساخته شد؛ «فقط ایران / فقط فارسی» دیگر محدودیت دائمی نیست. زبان کاری اسناد و کد از این پس انگلیسی است؛ اسناد فارسی موجود در صورت درخواست ترجمه می‌شوند.
-5. پلتفرم: PWA، اپ نیتیو، ربات بله/تلگرام/ایتا؟
-   - **تصمیم‌گرفته‌شده:** یک اپ Flutter (یک کدبیس برای وب، موبایل و دسکتاپ) + بک‌اند gRPC + یک سایت لندینگ جدا برای معرفی محصول. ربات و PWA جدا در این تصمیم نیست؛ اگر ربات لازم است در فلو ۶ دوباره پرسیده شود.
-6. مدل درآمد و پلن‌ها همان است یا فرق دارد؟
+## Zero: Framework
+1. What does "a different shape" mean? Only UI/brand, or the logic and product idea too?
+   - **Answer:** everything is different (UI, brand, logic and idea); many new features are coming and some parts are not wanted at all.
+   - **Bot:** removed entirely (no Bale, no Telegram, no Eitaa). Flow 6 is dropped.
+   - **Bank SMS:** the app reads the SMS messages itself and analyses the amount and transaction automatically from the bank SMS. The user is only asked "What was this purchase for?". That means no manual amount entry, and Taraznama's confirmation queue gives its place to this flow. (Affects flows 3 and 2)
+2. What should **not** be in Taraznama's feature set?
+   - **Answer (phasing):** phase one is similar to Taraznama in features; new features and bigger differences come in later phases.
+   - Phase-one exceptions: no bot, and bank SMS is read automatically (not manual entry).
+   - Look and brand are completely different from Taraznama from phase one (only the phase-one features are similar).
+   - No precise "what should not exist" list beyond these has been given yet.
+3. What should be **added**?
+   - Set aside for now; phase one is executed first.
+4. Audience: Iranian? Persian and Shamsi only?
+   - **Answer:** the target country is Iran only and the language is Persian only (right-to-left, Shamsi). Multiple currencies and wallet types were kept.
+   - **Wallet:** during account creation each user creates wallets with any currency; several wallets per currency are possible (for example Toman in 3 banks with 3 separate balances, or cash). When a wallet is created, the initial balance in that currency is asked. The "accounting box" (calculation box) shows all wallets in one place. When recording an expense, it is specified which wallet (currency and bank) it comes from. The app is bookkeeping only and no money moves. Even so, there is a "money management" option in the expenses section: transfers between banks or cash↔bank, with an optional fee; for currency conversion, the user enters the rate and the fee.
+   - **Backend:** Django + grpcio.
+   - **Update (1404/09/03 — 2026-11-24):** the client said the product language should become English and that support for users outside Iran should be added to all parts of the app in a later phase. Phase 19 (English and LTR) and phase 19b (country profile) were created; "Iran only / Persian only" is no longer a permanent restriction. The working language of docs and code is English from now on; the existing Persian docs are translated on request.
+5. Platform: PWA, native app, Bale/Telegram/Eitaa bot?
+   - **Decided:** one Flutter app (one codebase for web, mobile and desktop) + a gRPC backend + a separate landing site to introduce the product. A bot and a separate PWA are not part of this decision; if a bot is needed, ask again in flow 6.
+6. Is the revenue model and plans the same or different?
 
-## فلو ۱: ثبت‌نام و ورود
-- موبایل + OTP کافی است یا ایمیل/گوگل/رمز هم؟ رمز اختیاری بماند؟
-- ورود با ربات (که ترازنما حذف کرد) لازم است؟
-- سرویس پیامک؟ محدودیت‌ها همان باشد؟
-- onboarding چندمرحله‌ای؟
+## Flow 1: Sign-up and login
+- Are mobile + OTP enough, or also email/Google/password? Should the optional password stay?
+- Is login through the bot (which Taraznama removed) needed?
+- SMS service? Should the limits stay the same?
+- A multi-step onboarding?
 
-## فلو ۲: ثبت خرج و درآمد
-- ثبت با جمله فارسی لازم است؟ پارسر با LLM یا قاعده‌محور؟
-- دسته‌ها همین ۱۷ تا؟ دسته دلخواه و سقف؟
-- تقسیم خرج، سهم دیگران، بیرون از جمع‌ها؟
-- «همیشگی‌ها» و ثبت آفلاین؟
-- چند حساب/کارت و موجودی؟
+## Flow 2: Recording expenses and income
+- Is entry with a Persian sentence needed? Parser with an LLM or rule-based?
+- Are the categories just these 17? Custom categories and limits?
+- Splitting an expense, others' shares, excluded from totals?
+- "Always-on items" (recurring) and offline entry?
+- How many accounts/cards and balances?
 
-## فلو ۳: پیامک بانک
-- اصلاً لازم است؟ (پرهزینه در پشتیبانی)
-- آیفون با Shortcuts، اندروید با اپ SMS، یا paste دستی؟
-- صف تأیید یا ثبت مستقیم؟
-- فهرست بانک‌های پشتیبانی‌شده؟
+## Flow 3: Bank SMS
+- Is it needed at all? (expensive in support)
+- iPhone with Shortcuts, Android with the SMS app, or manual paste?
+- Confirmation queue or direct recording?
+- The list of supported banks?
 
-## فلو ۴: وام و قسط
-- انواع بدهی؟ فیلدها؟ جدول خودکار با نرخ سود یا مبلغ ثابت؟
-- یادآوری از چه کانال‌هایی و چند روز قبل؟
-- کسر وام از خالص دارایی و استثنای قسط خرید؟
+## Flow 4: Loans and installments
+- Kinds of debt? Fields? An automatic schedule with an interest rate or a fixed amount?
+- Reminders through which channels and how many days before?
+- Deducting loans from net worth and the exception for purchase installments?
 
-## فلو ۵: دارایی و قیمت
-- انواع دارایی؟ (طلا، سکه، نقره، تتر، رمزارز، بورس، صندوق، ملک، خودرو)
-- منبع قیمت؟ API رایگان یا پولی؟ (هزینه دائمی)
-- نمایش به گرم طلا/دلار و مقایسه با تورم؟
-- سبد هدف؟ هماهنگ‌سازی با قیمت پلتفرم؟ سود و زیان؟
+## Flow 5: Assets and prices
+- Kinds of assets? (gold, coins, silver, Tether, crypto, stocks, funds, property, vehicles)
+- Price source? Free or paid API? (an ongoing cost)
+- Display in grams of gold/dollars and comparison with inflation?
+- Target portfolio? Sync with the platform's price? Profit and loss?
 
-## فلو ۶: ربات
-- **تصمیم:** ربات پیام‌رسان (بله/تلگرام/ایتا) نیست. به‌جایش **چت دستیار داخل اپ** هست (بسته برای هر کاربر؛ دستیار با کارت تأیید پیشنهاد می‌دهد و فقط خود اپ بعد از تأیید کاربر به سرور می‌نویسد). جزئیات در فاز ۰۴.
-- بقیه سؤال‌های این فلو منتفی‌اند مگر دوباره لازم شود.
-- بله، تلگرام، یا هر دو؟ ایتا؟
-- فقط ثبت و گزارش، یا AI هم؟ دکمه‌های inline؟
+## Flow 6: Bot
+- **Decision:** there is no messenger bot (Bale/Telegram/Eitaa). Instead there is an **in-app assistant chat** (private to each user; the assistant makes suggestions with a confirmation card, and only the app itself writes to the server after the user confirms). Details in phase 04.
+- The rest of this flow's questions are dropped unless they become necessary again.
+- Bale, Telegram, or both? Eitaa?
+- Only recording and reporting, or AI too? Inline buttons?
 
-## فلو ۷: گزارش و تحلیل
-- گزارش ماهانه، نمودارها، تراز؟ خروجی/ورود CSV و اکسل؟
-- خلاصه و تشخیص خرج غیرعادی با AI؟
+## Flow 7: Reports and analysis
+- Monthly report, charts, balance (تراز)? CSV and Excel export/import?
+- Summary and unusual-spending detection with AI?
 
-## فلو ۸: ابزار و محتوا
-- ابزارهای عمومی برای SEO؟ قیمت زنده عمومی؟ مجله و راهنما؟ کی محتوا می‌نویسد؟
+## Flow 8: Tools and content
+- Public tools for SEO? A public live price? Magazine and help? Who writes the content?
 
-## فلو ۹: پرداخت و اشتراک
-- درگاه؟ تعداد پلن‌ها؟ دوره آزمایشی؟ تمدید خودکار؟ فاکتور و ارزش افزوده؟ رفرال/شریک؟
+## Flow 9: Payment and subscription
+- Gateway? Number of plans? Trial period? Auto-renewal? Invoice and VAT? Referral/partner?
 
-## فلو ۱۰: پشتیبانی، حریم و ادمین
-- تیکت داخل اپ؟ فرم تماس؟ خروجی و حذف حساب؟
-- پنل ادمین؟ دسترسی موقت پشتیبان؟ لاگ و مانیتورینگ و صفحه وضعیت؟
+## Flow 10: Support, privacy and admin
+- In-app tickets? Contact form? Export and account deletion?
+- Admin panel? Temporary support access? Logs, monitoring and a status page?
 
-## بعد از جمع‌بندی
-زمان‌بندی، فازبندی، نیازمندی‌ها و برآورد هزینه.
+## After the wrap-up
+Scheduling, phasing, requirements and a cost estimate.

@@ -1,32 +1,32 @@
-# منابع قیمت
+# Price sources
 
-بروزرسانی: هر ۱ دقیقه از همه منابع به‌صورت هم‌زمان. اگر یک منبع قطع باشد بقیه جایگزین می‌شوند.
+Refresh: every 1 minute from all sources simultaneously. If one source is down, the others take over.
 
-| دارایی | منبع و قاعده |
+| Asset | Source and rule |
 |---|---|
-| تتر و رمزارز | **میانه** نوبیتکس، والکس، بیت‌پین؛ برای تتر تترلند هم |
-| انس طلا و نقره | Gold API؛ برای طلا اگر قطع بود PAXG |
-| طلای ۱۸ عیار | میلی ← TGJU ← اتحادیه طلا و جواهر تهران ← الانچند (اولین منبعی که جواب بدهد) |
-| سکه | TGJU ← اتحادیه ← الانچند (اولین پاسخ) |
-| نقره | انس نقره × تتر |
-| سهام و صندوق‌ها | قیمت پایانی سامانه معاملات بورس تهران؛ هر ۲ دقیقه در ساعت بازار؛ خارج از بازار قیمت آخرین روز معاملاتی |
-| صندوق طلا | بورس کالا (۲۰ صندوق، مثل طلا، عیار، کهربا، زر) |
+| Tether and crypto | **Median** of Nobitex, Wallex, Bitpin; for Tether, Tetherland as well |
+| Gold and silver ounce | Gold API; for gold, PAXG if it is down |
+| 18-karat gold | Milli -> TGJU -> Tehran Gold and Jewelry Union -> Alanchand (the first source that responds) |
+| Coins | TGJU -> Union -> Alanchand (first response) |
+| Silver | Silver ounce x Tether |
+| Stocks and funds | Closing price from the Tehran Stock Exchange trading system; every 2 minutes during market hours; outside market hours, the price of the last trading day |
+| Gold funds | Iran Commodity Exchange (20 funds, such as Tala, Ayar, Kahroba, Zar) |
 
-## fallback وقتی همه منابع داخلی طلا قطع‌اند
-قیمت گرم ۱۸ = انس جهانی (دلار) ÷ ۳۱٫۱۰۳۵ × ۰٫۷۵ × تتر (تومان). حباب بازار داخلی در آن نیست، پس با قیمت واقعی تفاوت دارد.
+## Fallback when all domestic gold sources are down
+18-karat gram price = global ounce (USD) ÷ 31.1035 × 0.75 × Tether (Toman). The domestic market premium is not included, so it differs from the real price.
 
-## اگر همه منابع یک قیمت قطع شوند
-آخرین قیمت نگه داشته می‌شود و «چند دقیقه پیش» نشان داده می‌شود (stale).
+## If all sources for one price are down
+The last price is kept and shown as "a few minutes ago" (stale).
 
-## هماهنگ‌سازی با پلتفرم کاربر
-درصد اختلاف ذخیره می‌شود و روی قیمت‌های بعدی اعمال می‌شود. بیش از ۴۰٪ رد می‌شود (احتمال اشتباه تایپی). «صفر کن» اختلاف را حذف می‌کند.
+## Syncing with the user's platform
+The percentage difference is stored and applied to later prices. More than 40% is rejected (likely a typo). "Reset to zero" removes the difference.
 
-## صفحه `/prices`
-- مبدل: تومان، ۱۰ میلیون، ۱۰۰ میلیون، ۱ میلیارد، گرم طلا، ۱۰۰ تتر.
-- تابلوی طلا ۱۸ / تتر / نقره با تاریخچه.
-- جدول: سکه امامی، بهار آزادی، نیم، ربع، گرمی، انس طلا، انس نقره، BTC، ETH، SOL، XRP، BNB، TRX، DOGE، ADA، NOT، SHIB با تغییر ۲۴ ساعته.
-- جدول «صندوق‌های طلا، امروز» و میزان نزدیکی به قیمت طلا.
-- مقایسه کارمزد پلتفرم‌های طلا (میلی ۰٫۵٪، ملی‌گلد ۰٫۸٪، طلاسی ۰٫۷٪ در نمونه صفحه اصلی؛ اعداد نمونه). لینک‌های رفرال برچسب دارند.
+## The `/prices` page
+- Converter: Toman, 10 million, 100 million, 1 billion, gold grams, 100 Tether.
+- Board for 18-karat gold / Tether / silver with history.
+- Table: Emami coin, Bahar Azadi, half, quarter, gram coin, gold ounce, silver ounce, BTC, ETH, SOL, XRP, BNB, TRX, DOGE, ADA, NOT, SHIB with 24-hour change.
+- "Gold funds, today" table and how closely each tracks the gold price.
+- Fee comparison of gold platforms (Milli 0.5%, Melli Gold 0.8%, Talasi 0.7% in the home page sample; sample figures). Referral links are labelled.
 
-## نکته هزینه
-همه این منابع غیررسمی/API عمومی‌اند و ممکن است محدودیت یا هزینه داشته باشند؛ در برآورد پروژه باید جدا لحاظ شود.
+## Cost note
+All of these sources are unofficial or public APIs and may have limits or costs; they must be budgeted separately in the project estimate.

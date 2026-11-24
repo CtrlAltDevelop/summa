@@ -1,39 +1,39 @@
-# فاز ۰۲: دفتر
+# Phase 02: Ledger
 
-## هدف
-کاربر خرج و درآمد را دستی با انتخاب کیف پول ثبت می‌کند، فهرستشان را می‌بیند و ویرایش یا حذف می‌کند؛ موجودی کیف‌ها خودکار به‌روز می‌شود.
+## Goal
+The user records expenses and income manually by picking a wallet, sees the list, and edits or deletes entries; wallet balances update automatically.
 
-## وابستگی‌ها
-فاز ۰۱b.
+## Dependencies
+Phase 01b.
 
-## محدوده
-**داخل**
-- بک‌اند (همان اپ `apps.wallets`): رویدادهای `income` و `expense` روی `LedgerEvent`؛ سرویس gRPC `LedgerController` با `Record` / `List` / `Edit` / `Delete`.
-- رویداد تغییرناپذیر است: **ویرایش** یک رویداد جایگزین می‌سازد (`replaces`) و قبلی را باطل (`voided`) می‌کند؛ **حذف** فقط باطل می‌کند. موجودی و جمع‌ها رویدادهای باطل‌شده را نمی‌شمارند.
-- فیلدها: کیف پول، نوع، مبلغ (`int64`، مثبت)، زمان وقوع (پیش‌فرض اکنون، UTC)، یادداشت (≤ ۲۰۰ حرف)، `client_mutation_id` یکتا برای هر کاربر.
-- فهرست: جدیدترین اول، فیلتر اختیاری کیف پول، `limit` (پیش‌فرض ۵۰، حداکثر ۲۰۰).
-- اپ: دکمه ثبت خرج/درآمد، فرم (کیف، نوع، مبلغ، یادداشت)، فهرست تراکنش‌ها در خانه با تاریخ شمسی، حذف.
+## Scope
+**In**
+- Backend (same `apps.wallets` app): `income` and `expense` events on `LedgerEvent`; gRPC service `LedgerController` with `Record` / `List` / `Edit` / `Delete`.
+- An event is immutable: **editing** an event creates a replacement (`replaces`) and voids (`voided`) the old one; **deleting** only voids. Balances and totals do not count voided events.
+- Fields: wallet, type, amount (`int64`, positive), occurrence time (default now, UTC), note (<= 200 characters), `client_mutation_id` unique per user.
+- List: newest first, optional wallet filter, `limit` (default 50, max 200).
+- App: a record expense/income button, a form (wallet, type, amount, note), a transaction list on the home screen with Shamsi dates, delete.
 
-**بیرون**
-دسته‌ها (۰۳)، انتقال (۰۲b)، برگشت (۰۶b)، تقسیم (۰۶)، ویرایش در رابط اپ (RPC آماده است)، صفحه‌بندی بی‌پایان.
+**Out**
+Categories (03), transfers (02b), refunds (06b), splits (06), editing in the app UI (the RPC is ready), infinite pagination.
 
-## قوانین و لبه‌ها
-- هر دسترسی با کاربر احراز‌شده فیلتر می‌شود؛ رویداد یا کیف دیگران = `NOT_FOUND`.
-- ثبت روی کیف بایگانی‌شده، مبلغ ≤ ۰، یادداشت بلند، نوع نامعتبر = `INVALID_ARGUMENT`.
-- موجودی اولیه قابل ویرایش یا حذف نیست.
-- ویرایش یا حذف رویداد باطل‌شده = `NOT_FOUND`.
+## Rules and edges
+- Every access is filtered by the authenticated user; another user's event or wallet = `NOT_FOUND`.
+- Recording on an archived wallet, amount <= 0, a long note, an invalid type = `INVALID_ARGUMENT`.
+- The opening balance cannot be edited or deleted.
+- Editing or deleting a voided event = `NOT_FOUND`.
 
-## تست‌ها
-سرویس: ثبت خرج/درآمد و اثر بر موجودی، idempotency، کیف بایگانی، ورودی نامعتبر، ایزولاسیون، ویرایش، حذف، موجودی اولیه محافظت‌شده، فیلتر و ترتیب فهرست. gRPC واقعی. اپ: ویجت ثبت، فهرست، حذف.
+## Tests
+Service: recording expense/income and the effect on balance, idempotency, archived wallet, invalid input, isolation, edit, delete, protected opening balance, list filter and order. Real gRPC. App: record widget, list, delete.
 
-## معیار پذیرش
-- [x] ثبت خرج موجودی را کم و درآمد زیاد می‌کند.
-- [x] ویرایش/حذف موجودی را درست می‌کند و ردپای رویداد می‌ماند.
-- [x] تست «کاربر دیگر» برای ثبت، فهرست، ویرایش و حذف.
-- [x] `make check` و `make test` سبز.
+## Acceptance
+- [x] Recording an expense lowers the balance and income raises it.
+- [x] Edit/delete fix the balance and the event trail remains.
+- [x] "Other user" test for record, list, edit and delete.
+- [x] `make check` and `make test` green.
 
-## وضعیت اجرا
-- ✅ بک‌اند: `LedgerController` (Record/List/Edit/Delete) در `apps.wallets`؛ ویرایش = رویداد جایگزین، حذف = باطل‌کردن؛ موجودی رویدادهای باطل را نمی‌شمارد؛ مبلغ `int64`.
-- ✅ اپ: ثبت خرج/درآمد، فهرست با تاریخ شمسی، حذف؛ موجودی کیف‌ها پس از هر تغییر دوباره خوانده می‌شود.
-- ⚠️ هنوز روی دستگاه/شبیه‌ساز اجرا نشده. زمان وقوع در اپ همیشه «اکنون» است (سرور از ISO-8601 با منطقه زمانی پشتیبانی می‌کند).
-- ⏳ بعداً: ویرایش در رابط اپ، انتخاب تاریخ، دسته‌ها (۰۳).
+## Status
+- ✅ Backend: `LedgerController` (Record/List/Edit/Delete) in `apps.wallets`; edit = replacement event, delete = voiding; balance does not count voided events; amount is `int64`.
+- ✅ App: record expense/income, list with Shamsi dates, delete; wallet balances are re-read after every change.
+- ⚠️ Not yet run on a device/simulator. Occurrence time in the app is always "now" (the server supports ISO-8601 with a time zone).
+- ⏳ Later: editing in the app UI, date picking, categories (03).

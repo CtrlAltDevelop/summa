@@ -1,55 +1,55 @@
-# فاز ۰۱: ورود
+# Phase 01: Login
 
-## هدف
-کاربر با شماره موبایل و کد پیامکی وارد می‌شود (حساب برای شماره جدید خودکار ساخته می‌شود)، نامش را می‌گوید و در اپ می‌ماند.
+## Goal
+The user signs in with a mobile number and an SMS code (an account is created automatically for a new number), gives their name, and stays in the app.
 
-## وابستگی‌ها
-فاز ۰۰.
+## Dependencies
+Phase 00.
 
-## محدوده
-**داخل**
-- بک‌اند: ورود `sms_code` از starter (بدون ثبت‌نام جدا: شماره جدید در تأیید کد حساب می‌سازد)، حالت توکن `rotation` (access + refresh با تشخیص استفاده مجدد)، فیلتر پیامک پشت یک backend قابل‌تعویض (dev: کنسول؛ ارائه‌دهنده ایرانی بعداً).
-- **شماره ایرانی:** `09123456789`، `9123456789`، `+98 912 345 6789`، `0098…`، و ارقام فارسی/عربی همگی به `+989123456789` نرمال می‌شوند؛ شماره‌های خارجی با `+` پذیرفته می‌ماند.
-- نام نمایشی: بعد از ورود اگر خالی است، اپ می‌پرسد و با `AccountService.Update` ذخیره می‌کند.
-- اپ: صفحه شماره، صفحه کد (۶ رقم، شمارش معکوس ارسال مجدد، ورود خودکار پس از رقم آخر)، صفحه نام، نگه‌داری توکن در **ذخیره امن** دستگاه، تازه‌سازی خودکار توکن، خروج، نگه‌داشتن نشست بین اجراها.
-- محدودیت‌ها (تنظیم، نه کد جدید): کد ۵ دقیقه؛ ۵ حدس؛ ارسال مجدد ≥ ۶۰ ثانیه؛ حداکثر ۵ کد در ساعت برای هر شماره.
+## Scope
+**In**
+- Backend: the starter's `sms_code` login (no separate sign-up: a new number creates the account at code verification), `rotation` token mode (access + refresh with reuse detection), SMS filter behind a swappable backend (dev: console; an Iranian provider later).
+- **Iranian numbers:** `09123456789`, `9123456789`, `+98 912 345 6789`, `0098…`, and Persian/Arabic digits all normalize to `+989123456789`; foreign numbers with `+` stay accepted.
+- Display name: after login, if empty, the app asks and saves it with `AccountService.Update`.
+- App: number screen, code screen (6 digits, resend countdown, auto-submit after the last digit), name screen, token kept in the device **secure storage**, automatic token refresh, sign-out, session kept between runs.
+- Limits (configuration, not new code): code valid 5 minutes; 5 guesses; resend >= 60 seconds; at most 5 codes per hour per number.
 
-**بیرون**
-رمز اختیاری، نشست‌ها و لیست دستگاه‌ها، قفل اپ و بیومتریک (فاز ۱۵)، ارائه‌دهنده واقعی پیامک (وابسته به انتخاب مشتری)، ورود با Google و غیره.
+**Out**
+Optional password, sessions and device list, app lock and biometrics (phase 15), a real SMS provider (depends on the client's choice), Google sign-in and similar.
 
-## رابط‌ها
-gRPC: `SmsCodeController.LoginStart/LoginVerify/Logout`، `AccountService.Me/UpdateProfile`، و refresh توکن از سرویس حالت `rotation`. صفحه‌ها: ورود، کد، نام.
+## Interfaces
+gRPC: `SmsCodeController.LoginStart/LoginVerify/Logout`, `AccountService.Me/UpdateProfile`, and token refresh from the `rotation`-mode service. Screens: login, code, name.
 
-## قوانین و لبه‌ها
-- پاسخ شروع برای شماره دارای حساب و بدون حساب یکسان است (شمارش حساب‌ها ممکن نیست).
-- شماره نامعتبر: پیام روشن فارسی، بدون ارسال پیامک.
-- کد غلط: شمارنده تلاش؛ پس از حد، چالش باطل می‌شود و کاربر باید کد جدید بخواهد.
-- پایان اعتبار access ← refresh خودکار؛ refresh نامعتبر یا استفاده مجدد ← خروج و بازگشت به صفحه ورود.
-- بدون اینترنت: خطای روشن، بدون چرخش بی‌پایان.
+## Rules and edges
+- The start response is identical for a number with an account and without one (accounts cannot be enumerated).
+- Invalid number: a clear Persian message, no SMS sent.
+- Wrong code: attempt counter; past the limit the challenge is voided and the user must request a new code.
+- Access expiry → automatic refresh; an invalid or reused refresh → sign-out and back to the login screen.
+- No internet: a clear error, no endless spinner.
 
-## امنیت و حریم
-- توکن‌ها فقط در Keychain/Keystore (ذخیره امن)، هرگز در لاگ یا `SharedPreferences`.
-- کد پیامک در لاگ سرور فقط با backend کنسول (فقط توسعه)؛ بررسی‌های سیستم در production هشدار می‌دهند.
-- شماره در لاگ ماسک می‌شود.
+## Security and privacy
+- Tokens live only in Keychain/Keystore (secure storage), never in logs or `SharedPreferences`.
+- The SMS code appears in the server log only with the console backend (development only); production system checks warn about it.
+- The number is masked in logs.
 
-## تست‌ها
-بک‌اند: نرمال‌سازی شماره (فرم‌های ایرانی، ارقام فارسی، خارجی، نامعتبر)، جریان کامل ورود با backend پیامک حافظه‌ای (شماره جدید و موجود)، حدس غلط، اتمام تلاش.
-اپ: یونیت برای ذخیره توکن و refresh، ویجت برای هر سه صفحه (حالت‌های خالی/خطا/بارگذاری)، جریان کامل با کلاینت جعلی.
+## Tests
+Backend: number normalization (Iranian forms, Persian digits, foreign, invalid), the full login flow with an in-memory SMS backend (new and existing number), wrong guess, attempts exhausted.
+App: unit tests for token storage and refresh, widget tests for all three screens (empty/error/loading states), full flow with a fake client.
 
-## معیار پذیرش
-- [x] شماره ایرانی با هر فرم رایج پذیرفته و یکسان ذخیره می‌شود.
-- [x] شماره جدید: کد ← نام ← صفحه اصلی؛ شماره موجود: کد ← صفحه اصلی.
-- [x] نشست بعد از بستن و باز کردن اپ می‌ماند؛ توکن منقضی خودکار تازه می‌شود.
-- [x] خروج توکن را ابطال و ذخیره را پاک می‌کند.
-- [x] پاسخ شروع برای شماره دارای حساب و بدون حساب یکسان است.
-- [x] تست «کاربر دیگر»: هر خوانش پروفایل فقط مال کاربر احراز‌شده است.
-- [x] `make check` و `make test` سبز؛ پوشش کد جدید ≥ ۸۰٪.
+## Acceptance
+- [x] An Iranian number in any common form is accepted and stored the same way.
+- [x] New number: code → name → home; existing number: code → home.
+- [x] The session survives closing and reopening the app; an expired token refreshes automatically.
+- [x] Sign-out revokes the token and clears storage.
+- [x] The start response is identical for a number with an account and without one.
+- [x] "Other user" test: every profile read belongs only to the authenticated user.
+- [x] `make check` and `make test` green; new-code coverage >= 80%.
 
-## وضعیت اجرا
-- ✅ بک‌اند: ورود `sms_code` (حالت توکن rotation)؛ شماره ایرانی با هر فرم و ارقام فارسی/عربی نرمال می‌شود؛ تنظیمات: کد ۶ رقم، ۵ دقیقه، ۵ حدس، ارسال مجدد ≥ ۶۰ ثانیه، ۵ کد در ساعت.
-- ✅ **اصلاح باگ gRPC starter:** کد غلط، منقضی، نرخ‌محدودی و شماره نامعتبر در مسیر gRPC به `UNKNOWN` تبدیل می‌شد؛ حالا با `register_grpc_error` به `INVALID_ARGUMENT`/`NOT_FOUND`/`RESOURCE_EXHAUSTED` نگاشت می‌شود (تست دارد).
-- ✅ اپ: صفحه‌های شماره، کد، نام، خانه (موقت)، `AuthGate`، ذخیره امن توکن، refresh خودکار و تلاش یک‌باره، خروج؛ ۳۵ تست.
-- ✅ راستی‌آزمایی انتها‌به‌انتها با سرور gRPC واقعی از Dart: شماره محلی ← کد ← توکن ← نام ← refresh ← خروج (پس از خروج توکن رد می‌شود).
-- ⚠️ هنوز روی دستگاه/شبیه‌ساز اجرا نشده (ذخیره امن Keychain و ظاهر واقعی دیده نشده).
-- ⏳ ارائه‌دهنده واقعی پیامک: فقط backend کنسول (کد در لاگ سرور توسعه). با تعیین ارائه‌دهنده، یک کلاس با `send(destination, body)` اضافه می‌شود.
-- توجه: «انتظار تصاعدی بعد از کد غلط» ترازنما را نساختم؛ starter فقط شمارنده تلاش + cooldown + سقف ساعتی دارد و کافی دانستم.
+## Status
+- ✅ Backend: `sms_code` login (rotation token mode); an Iranian number normalizes in any form and with Persian/Arabic digits; settings: 6-digit code, 5 minutes, 5 guesses, resend >= 60 seconds, 5 codes per hour.
+- ✅ **Starter gRPC bug fix:** wrong code, expired code, rate limiting and invalid number were turning into `UNKNOWN` on the gRPC path; they now map to `INVALID_ARGUMENT`/`NOT_FOUND`/`RESOURCE_EXHAUSTED` through `register_grpc_error` (tested).
+- ✅ App: number, code, name and home (temporary) screens, `AuthGate`, secure token storage, automatic refresh with a single retry, sign-out; 35 tests.
+- ✅ End-to-end check against a real gRPC server from Dart: local number → code → token → name → refresh → sign-out (after sign-out the token is rejected).
+- ⚠️ Not yet run on a device/simulator (Keychain secure storage and the real appearance not seen).
+- ⏳ Real SMS provider: console backend only (the code appears in the dev server log). Once a provider is chosen, one class with `send(destination, body)` is added.
+- Note: I did not build taraznama's "progressive back-off after a wrong code"; the starter has only an attempt counter + cooldown + hourly cap, which I judged sufficient.

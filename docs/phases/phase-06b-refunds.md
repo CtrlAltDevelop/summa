@@ -1,39 +1,39 @@
-# فاز ۰۶b: برگشت و بازپرداخت
+# Phase 06b: Refunds and reimbursements
 
-## هدف
-وقتی کالایی مرجوع می‌شود یا پولی برمی‌گردد، کاربر آن را به همان خرج قبلی وصل می‌کند (کامل یا بخشی، به همان کیف یا کیف دیگر). موجودی درست می‌شود، سقف دسته آن خرج را کم می‌کند و ارتباط با تراکنش اصلی می‌ماند.
+## Goal
+When an item is returned or money comes back, the user links it to the original expense (fully or partially, to the same wallet or another). The balance is corrected, the category budget of that expense is reduced, and the link to the original transaction is kept.
 
-## وابستگی‌ها
-فاز ۰۲ و ۰۳ (و ۰۶).
+## Dependencies
+Phases 02 and 03 (and 06).
 
-## محدوده
-**داخل**
-- بک‌اند (اپ `apps.wallets`): نوع رویداد `refund` (ورودی به کیف) با `refund_of` به خرج اصلی؛ RPC `LedgerController.Refund`.
-- برگشت فقط برای **خرج** است، با مبلغ مثبت؛ مبلغ صفر یعنی «تمام باقی‌مانده». جمع برگشت‌های فعال یک خرج از مبلغ آن بیشتر نمی‌شود.
-- کیف مقصد پیش‌فرض کیف خرج اصلی است؛ کیف دیگر باید هم‌ارز باشد (برگشت بین دو ارز ← خطا، مثل تبدیل نرخ ناخواسته).
-- برگشت دسته و فلگ «بیرون از جمع» خرج اصلی را می‌گیرد؛ مصرف سقف = خرج‌ها − برگشت‌ها در همان بازه (هرگز منفی نمی‌شود).
-- فهرست: `refund_of` برای رویداد برگشت و `refunded_minor` برای خرج.
-- حذف برگشت مجاز است. حذف یا ویرایش خرجی که برگشت فعال دارد **ممنوع** است (اول برگشت‌ها را حذف کن). ویرایش برگشت ممنوع (حذف و ثبت دوباره).
-- idempotent با `client_mutation_id`.
-- اپ: دکمه «برگشت» روی هر خرج، فرم (مبلغ اختیاری، کیف، یادداشت)، نشان «برگشت‌خورده» در فهرست.
+## Scope
+**In**
+- Backend (`apps.wallets` app): an event kind `refund` (inflow to a wallet) with `refund_of` pointing to the original expense; RPC `LedgerController.Refund`.
+- A refund applies only to an **expense**, with a positive amount; amount zero means "the whole remainder". The sum of active refunds of an expense cannot exceed its amount.
+- The destination wallet defaults to the original expense's wallet; another wallet must be in the same currency (a refund across two currencies → error, like an unintended rate conversion).
+- A refund inherits the original expense's category and "outside totals" flag; budget usage = expenses − refunds in the same range (never negative).
+- List: `refund_of` on a refund event and `refunded_minor` on an expense.
+- Deleting a refund is allowed. Deleting or editing an expense that has an active refund is **forbidden** (delete the refunds first). Editing a refund is forbidden (delete and record again).
+- Idempotent via `client_mutation_id`.
+- App: a "Refund" button on each expense, a form (optional amount, wallet, note), a "Refunded" badge in the list.
 
-**بیرون**
-برگشت درآمد، برگشت بین ارزها، برگشت از طریق جمله/پیامک (پیشنهاد کارت برگشت: بعداً)، گزارش‌ها (۱۱).
+**Out**
+Income refunds, refunds across currencies, refunds via sentence/SMS (refund card suggestion: later), reports (11).
 
-## قوانین و لبه‌ها
-- خرج دیگران یا باطل‌شده = `NOT_FOUND`؛ رویداد غیرخرج (درآمد/انتقال/برگشت) = `INVALID_ARGUMENT`.
-- مبلغ منفی، بیش از باقی‌مانده، کیف بایگانی، ارز متفاوت، یادداشت بلند = `INVALID_ARGUMENT`.
+## Rules and edges
+- Someone else's or voided expense = `NOT_FOUND`; a non-expense event (income/transfer/refund) = `INVALID_ARGUMENT`.
+- A negative amount, more than the remainder, an archived wallet, a different currency, a long note = `INVALID_ARGUMENT`.
 
-## تست‌ها
-سرویس: برگشت کامل و بخشی و موجودی، باقی‌مانده و سقف، کیف دیگر، سقف مبلغ، ارز متفاوت، غیرخرج، ایزولاسیون، idempotency، حذف برگشت، حذف/ویرایش خرج دارای برگشت، ویرایش برگشت. gRPC واقعی. اپ: ویجت فرم برگشت.
+## Tests
+Service: full and partial refund and balance, remainder and budget, another wallet, amount cap, different currency, non-expense, isolation, idempotency, deleting a refund, deleting/editing an expense with a refund, editing a refund. Real gRPC. App: refund form widget.
 
-## معیار پذیرش
-- [x] برگشت بخشی موجودی را به اندازه همان مبلغ بالا می‌برد و باقی‌مانده را کم می‌کند.
-- [x] مصرف سقف دسته با برگشت کم می‌شود.
-- [x] نمی‌شود بیش از مبلغ خرج برگشت داد.
-- [x] `make check` و `make test` سبز.
+## Acceptance
+- [x] A partial refund raises the balance by that amount and reduces the remainder.
+- [x] Category budget usage drops with a refund.
+- [x] You cannot refund more than the expense amount.
+- [x] `make check` and `make test` are green.
 
-## وضعیت اجرا
-- ✅ بک‌اند: نوع `refund` با `refund_of`، `Refund` RPC (کامل با مبلغ صفر یا بخشی، کیف دیگر هم‌ارز)، سقف مبلغ با قفل ردیف، کم‌شدن مصرف سقف (حداقل صفر)، `refunded_minor` در فهرست، حذف/ویرایش خرج دارای برگشت ممنوع.
-- ✅ اپ: دکمه «برگشت» روی خرج، فرم، نشان «برگشت‌خورده»، پیام وقتی حذف خرج دارای برگشت رد می‌شود.
-- ⚠️ هنوز روی دستگاه/شبیه‌ساز اجرا نشده. برگشت از طریق جمله/پیامک (کارت پیشنهادی برگشت) ساخته نشده.
+## Status
+- ✅ Backend: the `refund` kind with `refund_of`, the `Refund` RPC (full with amount zero or partial, another wallet in the same currency), amount cap with a row lock, budget usage reduced (minimum zero), `refunded_minor` in the list, deleting/editing an expense with a refund forbidden.
+- ✅ App: "Refund" button on an expense, form, "Refunded" badge, a message when deleting an expense that has a refund is rejected.
+- ⚠️ Not yet run on a device/simulator. Refund via sentence/SMS (a suggested refund card) is not built.

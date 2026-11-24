@@ -1,40 +1,40 @@
-# فاز ۰۲b: مدیریت پول (انتقال بین کیف‌ها)
+# Phase 02b: Money management (transfers between wallets)
 
-## هدف
-کاربر پول را بین دو کیف پول خودش جابه‌جا می‌کند (بانک↔بانک، نقد↔بانک)، با کارمزد اختیاری و برای ارزهای مختلف با نرخی که خودش می‌نویسد.
+## Goal
+The user moves money between two of their own wallets (bank to bank, cash to bank), with an optional fee and, for different currencies, a rate they enter themselves.
 
-## وابستگی‌ها
-فاز ۰۱b و ۰۲.
+## Dependencies
+Phases 01b and 02.
 
-## محدوده
-**داخل**
-- بک‌اند (اپ `apps.wallets`): RPC `LedgerController.Transfer`؛ هر انتقال دو رویداد جفت‌شده با یک `transfer_id` است: `transfer_out` از مبدأ و `transfer_in` در مقصد. کارمزد، اگر باشد، یک رویداد `expense` معمولی روی کیف مبدأ با همان `transfer_id` است (در جمع «خرج» حساب می‌شود، خود انتقال نه).
-- انتقال هم‌ارز: مبلغ مقصد = مبلغ مبدأ. انتقال بین دو ارز: کاربر **نرخ** را می‌نویسد (واحد ارز مقصد به‌ازای یک واحد ارز مبدأ، رشته اعشاری)؛ مبلغ مقصد با Decimal و گرد‌کردن نیم‌به‌بالا به اعشار ارز مقصد محاسبه می‌شود (بدون float). نرخ روی رویداد ثبت می‌ماند.
-- **حذف** هر پای انتقال همه پاهایش (جفت و کارمزد) را باطل می‌کند. ویرایش پای انتقال پذیرفته نمی‌شود.
-- فهرست دفتر انتقال‌ها را هم نشان می‌دهد.
-- اپ: فرم انتقال (مبدأ، مقصد، مبلغ، نرخ فقط وقتی ارزها فرق دارند، کارمزد اختیاری، یادداشت).
+## Scope
+**In**
+- Backend (`apps.wallets` app): RPC `LedgerController.Transfer`; each transfer is two paired events sharing one `transfer_id`: `transfer_out` from the source and `transfer_in` into the destination. A fee, if any, is a normal `expense` event on the source wallet with the same `transfer_id` (it counts in the "expense" total; the transfer itself does not).
+- Same-currency transfer: destination amount = source amount. Cross-currency transfer: the user writes the **rate** (units of the destination currency per one unit of the source currency, as a decimal string); the destination amount is computed with Decimal and half-up rounding to the destination currency's decimals (no float). The rate stays on the event.
+- **Deleting** either leg of a transfer voids all its legs (the pair and the fee). Editing a transfer leg is not accepted.
+- The ledger list also shows transfers.
+- App: transfer form (source, destination, amount, rate only when currencies differ, optional fee, note).
 
-**بیرون**
-نرخ زنده (فاز ۰۹)، ویرایش انتقال، انتخاب تاریخ.
+**Out**
+Live rates (phase 09), editing a transfer, date picking.
 
-## قوانین و لبه‌ها
-- مبدأ = مقصد، کیف بایگانی‌شده، مبلغ ≤ ۰، کارمزد منفی = `INVALID_ARGUMENT`. کیف دیگران = `NOT_FOUND`.
-- ارزهای متفاوت بدون نرخ مثبت = `INVALID_ARGUMENT`؛ ارز یکسان با نرخ = `INVALID_ARGUMENT`.
-- مبلغ مقصد که به صفر گرد شود = `INVALID_ARGUMENT`.
-- ارسال دوباره همان `client_mutation_id` همان انتقال را برمی‌گرداند و دوباره نمی‌سازد.
+## Rules and edges
+- Source = destination, archived wallet, amount <= 0, negative fee = `INVALID_ARGUMENT`. Another user's wallet = `NOT_FOUND`.
+- Different currencies without a positive rate = `INVALID_ARGUMENT`; the same currency with a rate = `INVALID_ARGUMENT`.
+- A destination amount that rounds to zero = `INVALID_ARGUMENT`.
+- Resubmitting the same `client_mutation_id` returns the same transfer and does not create it again.
 
-## تست‌ها
-سرویس: اثر بر دو موجودی، کارمزد، نرخ و گرد‌کردن، idempotency، ورودی‌های نامعتبر، ایزولاسیون، حذف همه پاها، ویرایش ممنوع. gRPC واقعی. اپ: ویجت فرم هم‌ارز و بین‌ارزی، فهرست، حذف.
+## Tests
+Service: effect on both balances, fee, rate and rounding, idempotency, invalid inputs, isolation, deleting all legs, editing forbidden. Real gRPC. App: widget tests for the same-currency and cross-currency form, list, delete.
 
-## معیار پذیرش
-- [x] انتقال موجودی مبدأ را کم و مقصد را زیاد می‌کند.
-- [x] کارمزد فقط از مبدأ کم می‌شود.
-- [x] تبدیل ارز با نرخ کاربر و بدون float.
-- [x] حذف انتقال همه پاها را باطل می‌کند.
-- [x] `make check` و `make test` سبز.
+## Acceptance
+- [x] A transfer lowers the source balance and raises the destination's.
+- [x] The fee is deducted from the source only.
+- [x] Currency conversion with the user's rate and no float.
+- [x] Deleting a transfer voids all its legs.
+- [x] `make check` and `make test` green.
 
-## وضعیت اجرا
-- ✅ بک‌اند: `LedgerController.Transfer`؛ دو رویداد جفت‌شده (`transfer_out`/`transfer_in`) و کارمزد به‌صورت خرج روی مبدأ؛ نرخ کاربر با Decimal و گرد‌کردن نیم‌به‌بالا؛ حذف یک پا همه پاها را باطل می‌کند؛ ویرایش پای انتقال ممنوع.
-- ✅ اپ: فرم انتقال (نرخ فقط برای ارزهای متفاوت)، فهرست با پاهای انتقال، حذف.
-- ⚠️ هنوز روی دستگاه/شبیه‌ساز اجرا نشده.
-- ⏳ بعداً: «خارج از جمع‌ها» برای انتقال‌ها در گزارش‌ها (۱۱)، نرخ پیشنهادی از نرخ‌های زنده (۰۹)، انتخاب تاریخ.
+## Status
+- ✅ Backend: `LedgerController.Transfer`; two paired events (`transfer_out`/`transfer_in`) and the fee as an expense on the source; user rate with Decimal and half-up rounding; deleting one leg voids all legs; editing a transfer leg is forbidden.
+- ✅ App: transfer form (rate only for different currencies), list with transfer legs, delete.
+- ⚠️ Not yet run on a device/simulator.
+- ⏳ Later: "outside the totals" for transfers in reports (11), suggested rate from live rates (09), date picking.

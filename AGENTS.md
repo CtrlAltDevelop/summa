@@ -7,7 +7,7 @@ Canonical instructions for any AI agent or human working in this repo.
 
 Summa: a personal-accounting app (expenses, installments/loans, assets) for a
 client, deliberately different in identity and form from the
-reference app taraznama.com. Docs are Persian so far (`docs/`); new docs and code comments are written in English from phase 19 on. They hold reference research plus
+reference app taraznama.com. Docs are in English (`docs/`; the earlier Persian docs were translated). They hold reference research plus
 `docs/05-open-questions.md`, the client questions answered flow by flow starting
 at section zero (what "different" means, audience, platform, revenue).
 
@@ -33,7 +33,7 @@ Details: `docs/06-architecture.md`; phases: `docs/07-roadmap.md`. No bot. Iran a
 ## Rules
 
 0. Work one phase at a time in `docs/07-roadmap.md` order; one feature per phase; a phase doc (`docs/08-phase-template.md`) comes before code.
-1. Existing docs stay Persian; write new docs in English. Keep wording rewritten, never copied from taraznama.com.
+1. Write docs and code comments in English. Keep wording rewritten, never copied from taraznama.com.
 2. Client answers go into `docs/05-open-questions.md`; run `docs-sync` after.
 3. Section zero answers decide localisation (languages, currency, calendar,
    price sources, bank SMS, messenger); revisit later flows after it. As of

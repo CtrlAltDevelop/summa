@@ -1,42 +1,42 @@
-# فاز ۰۹: دارایی و قیمت
+# Phase 09: Assets and prices
 
-## هدف
-کاربر دارایی‌هایش (طلا، سکه، ارز، رمزارز…) را با مقدار و قیمت خرید ثبت می‌کند و ارزش امروز و سود و زیان را می‌بیند. نرخ‌ها را **بک‌اند** نگه می‌دارد و همه کلاینت‌ها فقط از آن می‌گیرند؛ نرخ تقریبی است (صرافی نیستیم).
+## Goal
+The user records their assets (gold, coins, currencies, crypto…) with quantity and purchase price and sees today's value and profit and loss. The **backend** holds the rates and all clients only read from it; rates are approximate (we are not an exchange).
 
-## وابستگی‌ها
-فاز ۰۱.
+## Dependencies
+Phase 01.
 
-## محدوده
-**داخل**
-- بک‌اند (اپ جدید `apps.assets`): `Rate`، `Asset`، `Lot`؛ سرویس‌های gRPC `RateController` (`List`، `Convert`) و `AssetController` (`Create`، `AddLot`، `Sell`، `Delete`، `List`).
-- **فهرست نمادها** (پروفایل ایران، `profile.py`): طلای ۱۸ عیار (گرم)، سکه‌ها (امامی، بهار آزادی، نیم، ربع، گرمی)، ارزها (دلار، یورو، درهم، لیر، تتر)، رمزارزها (BTC، ETH). قیمت همه به **تومان به‌ازای یک واحد**.
-- **منابع قیمت قابل‌تعویض:** هر منبع یک شیء با `fetch(symbols)` است. `HttpJsonSource` عمومی (آدرس + نگاشت نماد ← مسیر در JSON) با تنظیم `DJANGO_ASSETS_SOURCES` (JSON). **API واقعی مشتری هنوز داده نشده**؛ بدون منبع تنظیم‌شده نرخ فقط دستی است (`manage.py set_rate`).
-- **قاعده نمادها:** `first` (اولین منبعی که جواب بدهد) یا `median` (میانه همه جواب‌ها)؛ مقدار نامعتبر (صفر، منفی، غیرعددی) یا پرش بیش از ۵۰٪ نسبت به قبلی (قابل تنظیم) **رد** می‌شود. اگر همه منابع قطع باشند آخرین قیمت می‌ماند و `stale` می‌شود (بیش از ۶ ساعت، قابل تنظیم).
-- `manage.py refresh_rates` (cron؛ Celery نصب نیست) همه نرخ‌ها را به‌روز می‌کند.
-- **تبدیل ارز** (`Convert`): از طریق تومان؛ ریال = ۰٫۱ تومان؛ نرخ ناموجود = خطا؛ پاسخ می‌گوید نرخ کهنه است یا نه. (جمع کیف‌ها به ارز پایه و خالص دارایی در فاز ۱۰ از همین می‌آید.)
-- **دارایی:** نماد از فهرست یا «دلخواه» با قیمت دستی؛ هر دارایی چند **خرید (lot)** دارد با مقدار (رشته اعشاری تا ۸ رقم، بدون float) و قیمت واحد (تومان) و تاریخ.
-- **ارزش و سود:** ارزش = مقدار × نرخ روز (گرد نیم‌به‌بالا)، هزینه = جمع مقدار × قیمت خرید، سود/زیان = ارزش − هزینه، و سود/زیان **تحقق‌یافته** از فروش.
-- **فروش** (`Sell`): FIFO روی lotها؛ سود تحقق‌یافته = (قیمت فروش − قیمت خرید) × مقدار.
-- اپ: فهرست دارایی‌ها با ارزش و سود/زیان و نشان «قیمت کهنه»، فرم افزودن، صفحه دارایی (خرید جدید، فروش، حذف)، صفحه قیمت‌ها.
+## Scope
+**In**
+- Backend (new app `apps.assets`): `Rate`, `Asset`, `Lot`; gRPC services `RateController` (`List`, `Convert`) and `AssetController` (`Create`, `AddLot`, `Sell`, `Delete`, `List`).
+- **Symbol list** (Iran profile, `profile.py`): 18-karat gold (gram), coins (Emami, Bahar Azadi, half, quarter, gram), currencies (dollar, euro, dirham, lira, Tether), crypto (BTC, ETH). All priced in **Toman per one unit**.
+- **Swappable price sources:** each source is an object with `fetch(symbols)`. A generic `HttpJsonSource` (URL + symbol-to-JSON-path mapping) configured with `DJANGO_ASSETS_SOURCES` (JSON). **The client's real API has not been provided yet**; with no configured source, rates are manual only (`manage.py set_rate`).
+- **Per-symbol policy:** `first` (the first source that answers) or `median` (the median of all answers); an invalid value (zero, negative, non-numeric) or a jump of more than 50% from the previous value (configurable) is **rejected**. If all sources are down, the last price stays and becomes `stale` (older than 6 hours, configurable).
+- `manage.py refresh_rates` (cron; Celery is not installed) refreshes all rates.
+- **Currency conversion** (`Convert`): via Toman; rial = 0.1 Toman; a missing rate is an error; the response says whether the rate is stale. (Summing wallets into the base currency and net worth in phase 10 come from this.)
+- **Asset:** a symbol from the list or "custom" with a manual price; each asset has several **purchases (lots)** with a quantity (decimal string up to 8 places, no float), a unit price (Toman) and a date.
+- **Value and profit:** value = quantity x today's rate (rounded half up), cost = sum of quantity x purchase price, profit/loss = value - cost, and **realized** profit/loss from sales.
+- **Sale** (`Sell`): FIFO over lots; realized profit = (sale price - purchase price) x quantity.
+- App: asset list with value and profit/loss and a "stale price" badge, add form, asset page (new purchase, sell, delete), prices page.
 
-**بیرون**
-منبع واقعی نرخ (وابسته به API مشتری)، تاریخچه قیمت و نمودار، سهام و صندوق (بورس)، هماهنگ‌سازی درصد اختلاف با پلتفرم کاربر، Celery beat (فاز استقرار ۱۷)، حذف یا ویرایش یک lot.
+**Out**
+A real rate source (depends on the client's API), price history and charts, stocks and funds (stock exchange), reconciling percentage differences with the user's platform, Celery beat (deployment phase 17), deleting or editing a single lot.
 
-## قوانین و لبه‌ها
-- مقدار مثبت با حداکثر ۸ رقم اعشار؛ قیمت واحد صفر یا بیشتر؛ فروش بیشتر از موجودی = `INVALID_ARGUMENT`؛ نماد ناشناخته (غیر از «دلخواه») = `INVALID_ARGUMENT`؛ دلخواه بدون نام یا قیمت = `INVALID_ARGUMENT`.
-- دارایی دیگران = `NOT_FOUND`. نرخ نمادی که منبعی برایش نیست: `price_known` نادرست و ارزش صفر؛ جمع‌ها آن را نمی‌شمارند.
+## Rules and edges
+- Quantity positive with at most 8 decimal places; unit price zero or more; selling more than the holding = `INVALID_ARGUMENT`; unknown symbol (other than "custom") = `INVALID_ARGUMENT`; custom without a name or price = `INVALID_ARGUMENT`.
+- Someone else's asset = `NOT_FOUND`. A symbol with no source for its rate: `price_known` is false and the value is zero; totals do not count it.
 
-## تست‌ها
-منابع (first، median، رد مقدار نامعتبر، رد پرش، همه قطع ← stale)، `HttpJsonSource` با سرور محلی، تبدیل ارز، دارایی و lot، ارزش و سود، فروش FIFO، ایزولاسیون، دستورها، gRPC واقعی، اپ.
+## Tests
+Sources (first, median, reject invalid value, reject jump, all down becomes stale), `HttpJsonSource` with a local server, currency conversion, asset and lot, value and profit, FIFO sale, isolation, commands, real gRPC, app.
 
-## معیار پذیرش
-- [x] ارزش و سود و زیان دارایی با نرخ فعلی درست محاسبه می‌شود.
-- [x] فروش جزئی FIFO سود تحقق‌یافته را درست می‌دهد.
-- [x] نرخ بد رد می‌شود و با قطع همه منابع قیمت کهنه علامت می‌خورد.
-- [x] `make check` و `make test` سبز.
+## Acceptance
+- [x] Asset value and profit and loss are computed correctly with the current rate.
+- [x] A partial FIFO sale gives the correct realized profit.
+- [x] A bad rate is rejected and the price is flagged stale when all sources are down.
+- [x] `make check` and `make test` are green.
 
-## وضعیت اجرا
-- ✅ بک‌اند: اپ `apps.assets` (`Rate`، `Asset`، `Lot`)، فهرست نمادهای ایران، منابع قابل‌تعویض با `HttpJsonSource`، `refresh` با `first`/`median`، رد مقدار نامعتبر و پرش بیش از ۵۰٪، ماندن آخرین قیمت و `stale` وقتی منابع قطع‌اند، `Convert` (از طریق تومان، ریال = ۰٫۱ تومان)، دارایی با lot و ارزش/هزینه/سود، فروش FIFO با سود تحقق‌یافته، فرمان‌های `set_rate` و `refresh_rates`، `RatesController` و `AssetsController` روی gRPC. مقدار همه‌جا رشته اعشاری با Decimal است.
-- ✅ اپ: فهرست دارایی‌ها با ارزش و سود/زیان و «کهنه»، فرم افزودن (نماد فهرست یا دلخواه)، صفحه دارایی (خرید جدید، فروش، حذف)، صفحه قیمت‌ها.
-- ⚠️ **API واقعی نرخ مشتری هنوز داده نشده**؛ بدون `DJANGO_ASSETS_SOURCES` نرخ‌ها دستی‌اند (`manage.py set_rate USD 61000`). `HttpJsonSource` فقط با سرور محلی آزموده شده، نه با منبع واقعی. Celery نصب نیست: `manage.py refresh_rates` را با cron اجرا کنید (وصل Celery beat در فاز ۱۷). اپ روی دستگاه اجرا نشده.
-- ⏳ بعداً: سهام و صندوق، تاریخچه قیمت و نمودار، هماهنگ‌سازی درصد اختلاف با پلتفرم کاربر، حذف/ویرایش یک lot، قیمت‌گذاری حذف‌شده از `Convert` در جمع کیف‌ها (فاز ۱۰).
+## Implementation status
+- ✅ Backend: app `apps.assets` (`Rate`, `Asset`, `Lot`), Iran symbol list, swappable sources with `HttpJsonSource`, `refresh` with `first`/`median`, rejection of invalid values and jumps above 50%, last price kept and `stale` when sources are down, `Convert` (via Toman, rial = 0.1 Toman), asset with lots and value/cost/profit, FIFO sale with realized profit, `set_rate` and `refresh_rates` commands, `RatesController` and `AssetsController` over gRPC. Quantity is a decimal string with Decimal everywhere.
+- ✅ App: asset list with value and profit/loss and "stale", add form (list symbol or custom), asset page (new purchase, sell, delete), prices page.
+- ⚠️ **The client's real rate API has not been provided yet**; without `DJANGO_ASSETS_SOURCES` the rates are manual (`manage.py set_rate USD 61000`). `HttpJsonSource` has only been tested with a local server, not a real source. Celery is not installed: run `manage.py refresh_rates` from cron (Celery beat wiring in phase 17). The app has not been run on a device.
+- ⏳ Later: stocks and funds, price history and charts, reconciling percentage differences with the user's platform, deleting/editing a lot, pricing removed from `Convert` in wallet totals (phase 10).

@@ -1,40 +1,40 @@
-# فاز ۰۷: تراکنش‌های تکراری
+# Phase 07: Recurring transactions
 
-## هدف
-خرج یا درآمدی که هر ماه (یا هفته) تکرار می‌شود (اجاره، قسط، اشتراک، حقوق) یک بار تعریف می‌شود. نزدیک سررسید، اگر موجودی کیف کم باشد گزارش می‌دهد؛ روز سررسید می‌پرسد «از همین حساب کسر شد؟ / از حساب دیگر / لغو شد».
+## Goal
+An expense or income that repeats every month (or week) (rent, installment, subscription, salary) is defined once. Near the due date it reports if the wallet balance is low; on the due day it asks "was it deducted from this account? / from another account / canceled".
 
-## وابستگی‌ها
-فاز ۰۱b و ۰۲ (و ۰۳ برای دسته).
+## Dependencies
+Phases 01b and 02 (and 03 for categories).
 
-## محدوده
-**داخل**
-- بک‌اند (اپ جدید `apps.recurring`): `Recurring` (کیف، نوع، مبلغ ثابت یا متغیر، دسته، یادداشت، دوره، روز، `auto_confirm`، فعال/متوقف) و `Occurrence` (سررسید و وضعیت `pending`/`confirmed`/`cancelled`). سرویس gRPC `RecurringController`: `Create` / `List` / `SetActive` / `Delete` / `Resolve`.
-- **دوره:** ماهانه با روز **ماه شمسی** (۱ تا ۳۱؛ اگر ماه کوتاه‌تر باشد به آخر ماه می‌رود) یا هفتگی با روز هفته. سررسید بعدی از تاریخ امروز به وقت تهران محاسبه می‌شود.
-- **تولید سررسیدها** (`process`): تا ۳ روز جلوتر رکورد `Occurrence` ساخته می‌شود (حداکثر ۱۲ مورد عقب‌افتاده در هر بار). `List` برای کاربر `process` را اجرا می‌کند و فرمان `manage.py process_recurring` برای همه کاربران (cron/Celery beat بعداً؛ Celery فعلاً نصب نیست).
-- **وضعیت نمایشی:** `upcoming` (سررسید آینده) و `due` (امروز یا گذشته و بی‌پاسخ). **کم‌بودن موجودی:** برای سررسیدی که مبلغش معلوم است اگر موجودی کیف از مبلغ کمتر باشد `low_balance` درست است.
-- **Resolve:** `confirm` (از همان کیف: یک خرج/درآمد معمولی با `client_mutation_id` ثابت ثبت می‌شود)، `other_wallet` (از کیف دیگر هم‌ارز)، `cancel` (فقط همین سررسید). مبلغ متغیر هنگام تأیید لازم است.
-- `auto_confirm` (فقط مبلغ ثابت): روز سررسید خودکار ثبت می‌شود؛ اگر نشد (کیف بایگانی…) در حالت `due` می‌ماند و می‌پرسد.
-- اپ: فرم تعریف، فهرست تکراری‌ها با سررسید بعدی و هشدار موجودی، کارت‌های «سررسید» با سه دکمه.
+## Scope
+**In**
+- Backend (new `apps.recurring` app): `Recurring` (wallet, kind, fixed or variable amount, category, note, period, day, `auto_confirm`, active/paused) and `Occurrence` (due date and status `pending`/`confirmed`/`cancelled`). gRPC service `RecurringController`: `Create` / `List` / `SetActive` / `Delete` / `Resolve`.
+- **Period:** monthly with a **Shamsi month** day (1 to 31; if the month is shorter it moves to the month's last day) or weekly with a weekday. The next due date is computed from today's date in Tehran time.
+- **Generating occurrences** (`process`): `Occurrence` records are created up to 3 days ahead (at most 12 overdue items per run). `List` runs `process` for the user, and the command `manage.py process_recurring` runs it for all users (cron/Celery beat later; Celery is not installed for now).
+- **Display status:** `upcoming` (due in the future) and `due` (today or past and unanswered). **Low balance:** for an occurrence whose amount is known, `low_balance` is true if the wallet balance is less than the amount.
+- **Resolve:** `confirm` (from the same wallet: a normal expense/income is recorded with a fixed `client_mutation_id`), `other_wallet` (from another wallet in the same currency), `cancel` (this occurrence only). A variable amount is required at confirmation.
+- `auto_confirm` (fixed amount only): recorded automatically on the due day; if that fails (archived wallet...) it stays `due` and asks.
+- App: a definition form, a list of recurring items with the next due date and balance warning, "due" cards with three buttons.
 
-**بیرون**
-اعلان push (۰۷c/۱۵)، دوره‌های دیگر (سالانه، هر N روز)، ویرایش تعریف (حذف و ساخت دوباره)، تکراری انتقال.
+**Out**
+Push notification (07c/15), other periods (yearly, every N days), editing a definition (delete and recreate), recurring transfers.
 
-## قوانین و لبه‌ها
-- کیف یا دسته دیگران = `NOT_FOUND`. مبلغ منفی، روز خارج از بازه، دوره نامعتبر، کیف بایگانی، یادداشت بلند = `INVALID_ARGUMENT`.
-- `auto_confirm` با مبلغ متغیر = `INVALID_ARGUMENT`.
-- پاسخ به سررسید پاسخ‌داده‌شده = `INVALID_ARGUMENT`؛ سررسید دیگران = `NOT_FOUND`.
-- پاسخ‌دادن دوبار (دو بار تأیید) فقط یک رویداد می‌سازد.
+## Rules and edges
+- Someone else's wallet or category = `NOT_FOUND`. A negative amount, a day out of range, an invalid period, an archived wallet, a long note = `INVALID_ARGUMENT`.
+- `auto_confirm` with a variable amount = `INVALID_ARGUMENT`.
+- Resolving an already resolved occurrence = `INVALID_ARGUMENT`; someone else's occurrence = `NOT_FOUND`.
+- Resolving twice (confirming twice) creates only one event.
 
-## تست‌ها
-تقویم (تبدیل میلادی ← شمسی، طول ماه)، سررسید بعدی (ماه کوتاه، اسفند کبیسه، هفتگی)، `process` (پنجره ۳ روزه، سقف عقب‌افتاده، idempotent)، `Resolve` (سه حالت، متغیر، کیف دیگر، دوباره)، `auto_confirm`، هشدار موجودی، ایزولاسیون، فرمان. gRPC واقعی. اپ: ویجت.
+## Tests
+Calendar (Gregorian → Shamsi conversion, month length), next due date (short month, leap Esfand, weekly), `process` (3-day window, overdue cap, idempotent), `Resolve` (three modes, variable, another wallet, again), `auto_confirm`, balance warning, isolation, the command. Real gRPC. App: widget.
 
-## معیار پذیرش
-- [x] اجاره ماهانه روز ۱۵ شمسی هر ماه سررسید درست می‌سازد.
-- [x] سه روز قبل با موجودی کم `low_balance` می‌دهد.
-- [x] تأیید یک خرج معمولی ثبت می‌کند و دوباره‌زدن دوباره ثبت نمی‌کند.
-- [x] `make check` و `make test` سبز.
+## Acceptance
+- [x] A monthly rent on the 15th of each Shamsi month creates the correct due dates.
+- [x] Three days ahead with a low balance gives `low_balance`.
+- [x] Confirming records one normal expense and tapping again does not record again.
+- [x] `make check` and `make test` are green.
 
-## وضعیت اجرا
-- ✅ بک‌اند: اپ `apps.recurring` (`Recurring`، `Occurrence`)، سررسید ماهانه با روز **ماه شمسی** (کوتاه‌تر ← آخر ماه، اسفند کبیسه) و هفتگی، پنجره ۳ روزه و سقف ۱۲ عقب‌افتاده، `low_balance`، `Resolve` (تأیید/کیف دیگر/لغو)، `auto_confirm`، فرمان `process_recurring`، `RecurringController` روی gRPC. تبدیل میلادی ← شمسی هم به `calendar.py` اضافه شد.
-- ✅ اپ: فرم تعریف (ماهانه/هفتگی، مبلغ ثابت یا متغیر، ثبت خودکار)، کارت‌های سررسید با سه دکمه، هشدار موجودی، توقف/حذف.
-- ⚠️ Celery نصب نیست: تولید سررسیدها هنگام `List` برای همان کاربر و با `manage.py process_recurring` (cron) انجام می‌شود؛ وصل‌کردن Celery beat به همین تابع کار فاز استقرار (۱۷) است. اعلان push هنوز نیست (۰۷c/۱۵). اپ روی دستگاه اجرا نشده.
+## Status
+- ✅ Backend: `apps.recurring` app (`Recurring`, `Occurrence`), monthly due dates by **Shamsi month** day (shorter → last day, leap Esfand) and weekly, a 3-day window and a cap of 12 overdue, `low_balance`, `Resolve` (confirm/other wallet/cancel), `auto_confirm`, the `process_recurring` command, `RecurringController` over gRPC. Gregorian → Shamsi conversion was also added to `calendar.py`.
+- ✅ App: a definition form (monthly/weekly, fixed or variable amount, auto-record), due cards with three buttons, balance warning, pause/delete.
+- ⚠️ Celery is not installed: occurrences are generated on `List` for that user and by `manage.py process_recurring` (cron); wiring Celery beat to the same function is a deployment-phase (17) task. There is no push notification yet (07c/15). The app has not been run on a device.

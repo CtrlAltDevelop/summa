@@ -1,38 +1,38 @@
-# فاز ۱۰: خالص دارایی و سبدها
+# Phase 10: Net worth and baskets
 
-## هدف
-کاربر یک عدد می‌بیند: خالص دارایی = موجودی کیف‌ها + ارزش دارایی‌ها − مانده بدهی‌ها، به **تومان** و همزمان به دلار و گرم طلا. و می‌تواند **سبد هدف** بسازد (مثلاً «پیش‌پرداخت خانه») که پیشرفتش از ارزش کیف‌ها و دارایی‌های وصل‌شده به آن حساب می‌شود.
+## Goal
+The user sees one number: net worth = wallet balances + asset value - remaining debt, in **Toman** and at the same time in dollars and grams of gold. They can also create a **target basket** (for example "House down payment") whose progress is computed from the value of the wallets and assets linked to it.
 
-## وابستگی‌ها
-فاز ۰۱b، ۰۸ و ۰۹.
+## Dependencies
+Phases 01b, 08 and 09.
 
-## محدوده
-**داخل**
-- بک‌اند (اپ جدید `apps.networth`): `Basket` و `BasketItem`؛ سرویس gRPC `NetWorthController`: `Get` / `ListBaskets` / `CreateBasket` / `DeleteBasket`.
-- **خالص دارایی** (`Get`): موجودی هر کیف **غیربایگانی** (با تبدیل هر ارز به تومان از نرخ‌های فاز ۰۹)، ارزش دارایی‌هایی که قیمتشان معلوم است، و مانده بدهی‌های باز (تبدیل‌شده به تومان). خروجی: جمع و سه مؤلفه، معادل **دلار** و **گرم طلای ۱۸ عیار** (خالی اگر نرخ نیست)، `stale` اگر هر نرخ به‌کاررفته کهنه باشد، فهرست **ارزهای بدون نرخ** (کنار گذاشته می‌شوند و اعلام می‌شوند) و تعداد دارایی‌های بی‌قیمت.
-- موجودی هر ارز اول جمع و بعد یک بار تبدیل می‌شود (گردکردن نیم‌به‌بالا؛ خطا از جمع‌شدن گردشدگی‌ها نمی‌آید).
-- **سبد هدف:** نام (۱ تا ۶۰ نویسه)، مبلغ هدف (تومان، مثبت)، و آیتم‌ها (کیف‌ها و دارایی‌های خود کاربر). پیشرفت = ارزش آیتم‌ها به تومان؛ `percent` = ⌊ارزش × ۱۰۰ ÷ هدف⌋ (می‌تواند از ۱۰۰ بیشتر شود). یک آیتم در چند سبد می‌تواند باشد، ولی نه دو بار در یک سبد. حداکثر ۲۰ سبد برای هر کاربر.
-- اپ: کارت خالص دارایی بالای خانه (تومان، دلار، گرم طلا، هشدارها، جزئیات مؤلفه‌ها)، سبدها با نوار پیشرفت، فرم ساخت سبد با انتخاب چندتایی آیتم‌ها.
+## Scope
+**In**
+- Backend (new app `apps.networth`): `Basket` and `BasketItem`; gRPC service `NetWorthController`: `Get` / `ListBaskets` / `CreateBasket` / `DeleteBasket`.
+- **Net worth** (`Get`): the balance of each **non-archived** wallet (converting each currency to Toman with the phase 09 rates), the value of assets whose price is known, and the remaining balance of open debts (converted to Toman). Output: the total and three components, the **dollar** and **18-karat gold gram** equivalents (empty if there is no rate), `stale` if any rate used is stale, the list of **currencies without a rate** (set aside and reported) and the count of unpriced assets.
+- The balance of each currency is summed first and converted once (rounded half up; the error does not come from adding up rounded values).
+- **Target basket:** a name (1 to 60 characters), a target amount (Toman, positive) and items (the user's own wallets and assets). Progress = value of the items in Toman; `percent` = floor(value x 100 / target) (can exceed 100). An item can be in several baskets, but not twice in the same basket. At most 20 baskets per user.
+- App: net worth card at the top of home (Toman, dollars, gold grams, warnings, component details), baskets with a progress bar, basket creation form with multi-select of items.
 
-**بیرون**
-ویرایش سبد (حذف و ساخت دوباره)، موعد هدف و پیشنهاد پس‌انداز ماهانه، نمودار تاریخچه خالص دارایی (نیاز به ذخیره روزانه)، سهام و صندوق (با فاز بورس).
+**Out**
+Editing a basket (delete and recreate), target date and monthly saving suggestion, net worth history chart (needs daily storage), stocks and funds (with the stock exchange phase).
 
-## قوانین و لبه‌ها
-- نام یا هدف نامعتبر، بیش از ۲۰ سبد، آیتم تکراری یا نوع نامعتبر = `INVALID_ARGUMENT`؛ کیف یا دارایی دیگران = `NOT_FOUND`؛ سبد دیگران = `NOT_FOUND`.
-- کیف بایگانی‌شده در خالص دارایی نیست؛ اگر در سبدی باشد ارزشش در آن سبد صفر حساب می‌شود.
-- ارزی که نرخ ندارد از جمع بیرون می‌ماند و در `unconverted` می‌آید.
+## Rules and edges
+- Invalid name or target, more than 20 baskets, duplicate item or invalid type = `INVALID_ARGUMENT`; someone else's wallet or asset = `NOT_FOUND`; someone else's basket = `NOT_FOUND`.
+- An archived wallet is not in net worth; if it is in a basket, its value counts as zero in that basket.
+- A currency with no rate is left out of the total and appears in `unconverted`.
 
-## تست‌ها
-ترکیب مؤلفه‌ها (کیف ریالی/دلاری، دارایی، بدهی)، بدون نرخ، کهنه، بایگانی، دلار و گرم طلا، گرد‌کردن، سبد (پیشرفت، بیش از ۱۰۰٪، اعتبارسنجی، حد ۲۰، ایزولاسیون)، gRPC واقعی، اپ.
+## Tests
+Combining components (rial/dollar wallet, asset, debt), no rate, stale, archived, dollar and gold gram, rounding, basket (progress, over 100%, validation, the 20 limit, isolation), real gRPC, app.
 
-## معیار پذیرش
-- [x] خالص دارایی = کیف‌ها + دارایی‌ها − بدهی‌ها به تومان، درست و با ارز بدون نرخ اعلام‌شده.
-- [x] معادل دلار و گرم طلا از نرخ‌های موجود ساخته می‌شود.
-- [x] پیشرفت سبد با ارزش واقعی آیتم‌ها محاسبه می‌شود.
-- [x] `make check` و `make test` سبز.
+## Acceptance
+- [x] Net worth = wallets + assets - debts in Toman, correct, with currencies without a rate reported.
+- [x] The dollar and gold gram equivalents are built from the available rates.
+- [x] Basket progress is computed from the real value of the items.
+- [x] `make check` and `make test` are green.
 
-## وضعیت اجرا
-- ✅ بک‌اند: اپ `apps.networth` با `NetWorthController` (`Get`، `ListBaskets`، `CreateBasket`، `DeleteBasket`). خالص دارایی = کیف‌های غیربایگانی + ارزش دارایی‌های قیمت‌دار − مانده بدهی‌ها، هر ارز اول جمع و بعد یک بار به تومان تبدیل می‌شود، معادل دلار و گرم طلا، `stale`، ارزهای بدون نرخ و دارایی‌های بی‌قیمت اعلام می‌شوند. سبد: پیشرفت از ارزش آیتم‌ها، بیش از ۱۰۰٪ ممکن، حد ۲۰ سبد، آیتم دیگران `NOT_FOUND`.
-- ✅ اپ: کارت خالص دارایی بالای کیف‌ها، سبدها با نوار پیشرفت، فرم ساخت سبد با انتخاب چندتایی (`MultiChoices`). کارت و سبدها وقتی کیف‌ها، دارایی‌ها یا بدهی‌ها عوض شوند دوباره خوانده می‌شوند.
-- ⚠️ بدون تاریخچه خالص دارایی (نمودار) چون روزانه ذخیره نمی‌شود. اپ روی دستگاه اجرا نشده.
-- ⏳ بعداً: ویرایش سبد، موعد هدف، نمودار، سهام و صندوق.
+## Implementation status
+- ✅ Backend: app `apps.networth` with `NetWorthController` (`Get`, `ListBaskets`, `CreateBasket`, `DeleteBasket`). Net worth = non-archived wallets + value of priced assets - remaining debt, each currency summed first then converted once to Toman, dollar and gold gram equivalents, `stale`, currencies without a rate and unpriced assets are reported. Basket: progress from the value of items, over 100% possible, limit of 20 baskets, someone else's item is `NOT_FOUND`.
+- ✅ App: net worth card above the wallets, baskets with a progress bar, basket creation form with multi-select (`MultiChoices`). The card and baskets are re-read when wallets, assets or debts change.
+- ⚠️ No net worth history (chart) because it is not stored daily. The app has not been run on a device.
+- ⏳ Later: editing a basket, target date, chart, stocks and funds.

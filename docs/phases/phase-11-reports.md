@@ -1,38 +1,38 @@
-# فاز ۱۱: گزارش و خروجی
+# Phase 11: Reports and export
 
-## هدف
-کاربر برای هر ماه شمسی می‌بیند چقدر درآمد و خرج داشته، خرجش بین دسته‌ها چطور تقسیم شده و روزبه‌روز چه بوده؛ و داده‌اش را می‌تواند به CSV بگیرد.
+## Goal
+For each Shamsi month the user sees how much income and expense they had, how their spending splits across categories and what happened day by day; and they can export their data as CSV.
 
-## وابستگی‌ها
-فاز ۰۲ و ۰۳ (و ۰۶، ۰۶b برای قواعد «خارج از جمع» و برگشت).
+## Dependencies
+Phases 02 and 03 (and 06, 06b for the "excluded from totals" and refund rules).
 
-## محدوده
-**داخل**
-- بک‌اند (اپ جدید `apps.reports`): سرویس gRPC `ReportController`: `Monthly` و `ExportCsv`.
-- **`Monthly(starts_at, ends_at, currency)`**: بازه را **اپ** می‌دهد (ماه شمسی به UTC؛ سرور تقویم نمی‌داند)؛ حداکثر ۳۶۶ روز. گزارش **برای یک ارز** است؛ ارزها قاعدتاً با هم جمع نمی‌شوند (سیاست نرخ تاریخی هنوز تصمیم نشده، پس تبدیل ضمنی نداریم). پاسخ: درآمد، خرج، خالص، تعداد تراکنش، تفکیک دسته‌ها (خرج و درآمد جدا، بدون‌دسته هم)، سری روزانه (روز تهران)، پرخرج‌ترین دسته، و فهرست ارزهای دارای فعالیت در بازه.
-- **قواعد:** انتقال‌ها شمرده نمی‌شوند. خرج «بیرون از جمع» و برگشتِ آن شمرده نمی‌شود. **برگشت از خرج کم می‌شود** (در دسته و روز خود برگشت). کارمزد انتقال خرج عادی بدون دسته است. بخش‌های تقسیم هر کدام در دسته خودشان می‌آیند. رویداد باطل‌شده و موجودی اولیه شمرده نمی‌شود. بازه نیم‌باز `[start, end)`.
-- **`ExportCsv(starts_at, ends_at)`** (بازه اختیاری): تمام رویدادهای دفتر کاربر با ستون‌های تاریخ شمسی و ISO، نوع، مبلغ (عدد اعشاری درست بر اساس ارز)، ارز، کیف، دسته، یادداشت، بیرون از جمع، شناسه تقسیم/انتقال/برگشت. UTF-8 با BOM برای اکسل؛ سلول‌هایی که با `= + - @` شروع شوند برای جلوگیری از اجرای فرمول پیشوند می‌گیرند؛ حداکثر ۵۰٬۰۰۰ ردیف.
-- اپ: صفحه «گزارش ماه» با رفتن به ماه قبل/بعد، انتخاب ارز، کارت‌های درآمد/خرج/خالص، نوار دسته‌ها، نمودار ستونی روزانه.
+## Scope
+**In**
+- Backend (new app `apps.reports`): gRPC service `ReportController`: `Monthly` and `ExportCsv`.
+- **`Monthly(starts_at, ends_at, currency)`**: the **app** supplies the range (Shamsi month converted to UTC; the server does not know the calendar); at most 366 days. The report is **for a single currency**; currencies are not summed together (the historical-rate policy is not decided yet, so there is no implicit conversion). Response: income, expense, net, transaction count, category breakdown (expense and income separate, uncategorized too), daily series (Tehran day), top spending category, and the list of currencies with activity in the range.
+- **Rules:** transfers are not counted. An "excluded from totals" expense and its refund are not counted. **A refund reduces the expense** (in the refund's own category and day). A transfer fee is a normal expense with no category. Split parts each land in their own category. A voided event and the initial balance are not counted. The range is half-open `[start, end)`.
+- **`ExportCsv(starts_at, ends_at)`** (range optional): all of the user's ledger events with columns for Shamsi and ISO date, type, amount (decimal number correct for the currency), currency, wallet, category, note, excluded from totals, split/transfer/refund id. UTF-8 with a BOM for Excel; cells starting with `= + - @` get a prefix to prevent formula execution; at most 50,000 rows.
+- App: a "Month report" page with previous/next month navigation, currency picker, income/expense/net cards, category bars, a daily bar chart.
 
-**بیرون**
-**دکمه خروجی در اپ** (طبق قانون پروژه خروجی و ورود داده باید پشت بیومتریک/رمز اپ باشد؛ آن قفل فاز ۱۵ است و دکمه در ۱۵b ساخته می‌شود)، گزارش چندارزی با نرخ تاریخی، گزارش سالانه، مقایسه دو ماه، PDF، ورود فایل.
+**Out**
+**The export button in the app** (per the project rule, export and import must sit behind biometrics/the app passcode; that lock is phase 15 and the button is built in 15b), multi-currency reports with historical rates, annual report, two-month comparison, PDF, file import.
 
-## قوانین و لبه‌ها
-- `starts_at`/`ends_at` با منطقه زمانی و `start < end` و حداکثر ۳۶۶ روز؛ ارز نامعتبر = `INVALID_ARGUMENT`.
-- همه چیز فقط برای کاربر احراز‌شده؛ کاربر دیگر گزارش یا خروجی دیگری را نمی‌بیند.
-- ماه بی‌تراکنش: صفر و فهرست‌های خالی (نه خطا).
+## Rules and edges
+- `starts_at`/`ends_at` with a time zone, `start < end`, at most 366 days; an invalid currency = `INVALID_ARGUMENT`.
+- Everything is only for the authenticated user; one user never sees another's report or export.
+- A month with no transactions: zeros and empty lists (not an error).
 
-## تست‌ها
-جمع‌ها و قواعد (بیرون از جمع، برگشت، انتقال، کارمزد، تقسیم، باطل، مرز بازه)، ارزهای جدا، تفکیک دسته با برگشت، سری روزانه تهران، پرخرج‌ترین دسته، اعتبارسنجی، ایزولاسیون، CSV (سرستون، گریز نویسه‌ها، تزریق فرمول، BOM، اعشار ارز، بازه، سقف)، gRPC واقعی، اپ.
+## Tests
+Totals and rules (excluded from totals, refund, transfer, fee, split, voided, range boundary), separate currencies, category breakdown with refunds, Tehran daily series, top spending category, validation, isolation, CSV (header, character escaping, formula injection, BOM, currency decimals, range, cap), real gRPC, app.
 
-## معیار پذیرش
-- [x] جمع خرج با برگشت و «بیرون از جمع» درست است.
-- [x] نمودار روزانه به روز تهران می‌ریزد.
-- [x] CSV فارسی در اکسل درست باز می‌شود و فرمول اجرا نمی‌کند.
-- [x] `make check` و `make test` سبز.
+## Acceptance
+- [x] The expense total with refunds and "excluded from totals" is correct.
+- [x] The daily chart buckets by Tehran day.
+- [x] A Persian CSV opens correctly in Excel and does not execute formulas.
+- [x] `make check` and `make test` are green.
 
-## وضعیت اجرا
-- ✅ بک‌اند: اپ `apps.reports` با `ReportController` (`Monthly`، `ExportCsv`). گزارش یک ارز با درآمد/خرج/خالص، تفکیک دسته (برگشت کم می‌شود، بیرون از جمع و انتقال نمی‌آید، کارمزد «بدون دسته»)، سری روزانه به روز تهران، پرخرج‌ترین دسته و ارزهای دارای فعالیت. CSV با BOM، گریز درست نویسه‌ها، خنثی‌کردن فرمول (`'` پیش از `= + - @`)، اعشار هر ارز و سقف ۵۰٬۰۰۰ ردیف.
-- ✅ اپ: «گزارش ماه» با ماه قبل/بعد (ماه شمسی)، انتخاب ارز، کارت‌ها، نوار دسته‌ها و نمودار ستونی روزانه.
-- ⚠️ **دکمه خروجی CSV در اپ نیست** عمداً: طبق قانون پروژه خروجی داده باید پشت بیومتریک/رمز اپ باشد (فاز ۱۵ و ۱۵b). تا آن موقع RPC با توکن عادی کار می‌کند ولی از رابط در دسترس نیست. اپ روی دستگاه اجرا نشده.
-- ⏳ بعداً: گزارش چندارزی با سیاست نرخ تاریخی (سؤال باز)، مقایسه دو ماه، گزارش سالانه.
+## Implementation status
+- ✅ Backend: app `apps.reports` with `ReportController` (`Monthly`, `ExportCsv`). A single-currency report with income/expense/net, category breakdown (refund reduces, excluded-from-totals and transfers are left out, fee is "uncategorized"), daily series by Tehran day, top spending category and currencies with activity. CSV with BOM, correct character escaping, formula neutralization (`'` before `= + - @`), each currency's decimals and the 50,000-row cap.
+- ✅ App: "Month report" with previous/next (Shamsi month), currency picker, cards, category bars and a daily bar chart.
+- ⚠️ **There is deliberately no CSV export button in the app**: per the project rule, data export must be behind biometrics/the app passcode (phase 15 and 15b). Until then the RPC works with a normal token but is not reachable from the UI. The app has not been run on a device.
+- ⏳ Later: multi-currency report with a historical-rate policy (open question), two-month comparison, annual report.

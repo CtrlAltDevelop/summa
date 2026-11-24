@@ -1,39 +1,39 @@
-# فاز ۰۶: تقسیم و خارج از جمع
+# Phase 06: Split and outside totals
 
-## هدف
-یک خرج را بین چند دسته تقسیم کنیم و بخشی از آن را «بیرون از جمع‌ها» بگذاریم (مثلاً سهم دیگران در یک شام گروهی): پول از کیف کم می‌شود ولی در سقف‌ها و گزارش‌های خرج خود کاربر نمی‌آید.
+## Goal
+Split one expense across several categories and put part of it "outside the totals" (for example, other people's share of a group dinner): the money leaves the wallet but does not count in the user's own budgets and expense reports.
 
-## وابستگی‌ها
-فاز ۰۲ و ۰۳.
+## Dependencies
+Phases 02 and 03.
 
-## محدوده
-**داخل**
-- بک‌اند (اپ `apps.wallets`): فیلدهای `outside_totals` و `split_id` روی `LedgerEvent`؛ RPC جدید `LedgerController.RecordSplit`؛ `Record` و `Edit` فلگ `outside_totals` را می‌گیرند.
-- **تقسیم:** ۲ تا ۱۰ بخش، هر بخش یک دسته (اختیاری) + مبلغ مثبت + فلگ «بیرون از جمع». هر بخش یک رویداد خرج است و همه یک `split_id` دارند؛ جمع بخش‌ها از کیف کم می‌شود. ارسال دوباره همان `client_mutation_id` همان تقسیم را برمی‌گرداند.
-- **بیرون از جمع:** موجودی کیف را عادی تغییر می‌دهد، اما از مصرف سقف‌ها بیرون است و در گزارش‌های خرج (فاز ۱۱) نمی‌آید.
-- حذف یک بخش همه بخش‌های همان تقسیم را باطل می‌کند؛ ویرایش یک بخش پذیرفته نمی‌شود (حذف و ثبت دوباره). ویرایش یک رویداد تکی می‌تواند فلگ را عوض کند.
-- فهرست دفتر `outside_totals` و `split_id` را هم برمی‌گرداند.
-- اپ: گزینه «بیرون از جمع» در فرم ثبت، فرم «تقسیم خرج»، نشانه در فهرست.
+## Scope
+**In**
+- Backend (`apps.wallets` app): `outside_totals` and `split_id` fields on `LedgerEvent`; a new RPC `LedgerController.RecordSplit`; `Record` and `Edit` accept the `outside_totals` flag.
+- **Split:** 2 to 10 parts, each with a category (optional), a positive amount and an "outside totals" flag. Each part is one expense event and all share a `split_id`; the sum of the parts is deducted from the wallet. Resending the same `client_mutation_id` returns the same split.
+- **Outside totals:** changes the wallet balance as usual, but is excluded from budget usage and does not appear in expense reports (phase 11).
+- Deleting one part voids all parts of that split; editing a single part is not accepted (delete and record again). Editing a standalone event may change the flag.
+- The ledger list also returns `outside_totals` and `split_id`.
+- App: an "outside totals" option in the record form, a "Split expense" form, an indicator in the list.
 
-**بیرون**
-ویرایش بخش‌های تقسیم، سهم دیگران به‌صورت بدهکاری/طلب (دفتر قرض)، انتخاب تاریخ.
+**Out**
+Editing split parts, others' share as debt/receivable (debt ledger), date picking.
 
-## قوانین و لبه‌ها
-- تقسیم فقط برای خرج است. دسته باید خرج و مال خود کاربر باشد (دسته دیگران = `NOT_FOUND`).
-- بخش صفر یا منفی، کمتر از ۲ یا بیشتر از ۱۰ بخش، کیف بایگانی، یادداشت بلند = `INVALID_ARGUMENT`.
-- درآمد و انتقال فلگ «بیرون از جمع» ندارند (نادیده/رد می‌شود: درآمد با فلگ = `INVALID_ARGUMENT`).
+## Rules and edges
+- Splitting is for expenses only. The category must be an expense category belonging to the user (someone else's category = `NOT_FOUND`).
+- A zero or negative part, fewer than 2 or more than 10 parts, an archived wallet, a long note = `INVALID_ARGUMENT`.
+- Income and transfers have no "outside totals" flag (ignored/rejected: income with the flag = `INVALID_ARGUMENT`).
 
-## تست‌ها
-سرویس: تقسیم و اثر بر موجودی، سقف با بخش بیرونی، فلگ روی ثبت و ویرایش، ورودی‌های نامعتبر، idempotency، حذف گروهی، ویرایش بخش ممنوع، ایزولاسیون. gRPC واقعی. اپ: ویجت فرم تقسیم و فلگ.
+## Tests
+Service: split and its effect on balance, budget with an outside part, flag on record and edit, invalid inputs, idempotency, group delete, part editing forbidden, isolation. Real gRPC. App: split form widget and the flag.
 
-## معیار پذیرش
-- [x] تقسیم سه‌بخشی موجودی را به اندازه جمع کم می‌کند و هر بخش دسته خودش را دارد.
-- [x] بخش «بیرون از جمع» در سقف حساب نمی‌شود ولی از موجودی کم می‌شود.
-- [x] حذف یک بخش کل تقسیم را باطل می‌کند.
-- [x] `make check` و `make test` سبز.
+## Acceptance
+- [x] A three-part split reduces the balance by the total and each part has its own category.
+- [x] An "outside totals" part does not count toward a budget but is deducted from the balance.
+- [x] Deleting one part voids the whole split.
+- [x] `make check` and `make test` are green.
 
-## وضعیت اجرا
-- ✅ بک‌اند: `outside_totals` و `split_id` روی رویداد، `RecordSplit` (۲ تا ۱۰ بخش، idempotent)، فلگ روی `Record`/`Edit` (`optional` در proto: تنظیم‌نشده = بدون تغییر)، سقف‌ها بخش‌های بیرونی را نمی‌شمارند، حذف یک بخش کل تقسیم را باطل می‌کند، ویرایش بخش ممنوع.
-- ✅ اپ: فرم «تقسیم خرج»، گزینه «بیرون از جمع» در فرم ثبت (فقط خرج)، نشانه‌ها در فهرست.
-- ⚠️ هنوز روی دستگاه/شبیه‌ساز اجرا نشده.
-- ⏳ بعداً: دفتر قرض برای سهم دیگران، گزارش‌هایی که فلگ را رعایت کنند (۱۱).
+## Status
+- ✅ Backend: `outside_totals` and `split_id` on the event, `RecordSplit` (2 to 10 parts, idempotent), the flag on `Record`/`Edit` (`optional` in proto: unset = unchanged), budgets do not count outside parts, deleting one part voids the whole split, part editing forbidden.
+- ✅ App: "Split expense" form, "outside totals" option in the record form (expenses only), indicators in the list.
+- ⚠️ Not yet run on a device/simulator.
+- ⏳ Later: a debt ledger for others' share, reports that honor the flag (11).

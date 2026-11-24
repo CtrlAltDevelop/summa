@@ -1,86 +1,86 @@
-# معماری Summa
+# Summa Architecture
 
-## تصمیم‌ها
-| بخش | انتخاب |
+## Decisions
+| Area | Choice |
 |---|---|
-| اپ | Flutter، یک کدبیس (اندروید، iOS، وب، دسکتاپ) |
-| بک‌اند | Django + grpcio (gRPC برای داده اپ). REST فقط برای وبهوک، آپلود و پرداخت |
-| دیتابیس و کار پس‌زمینه | PostgreSQL، Redis، Celery |
-| سایت لندینگ | سایت جدا با **Three.js**، تعاملی؛ کاربر همان‌جا می‌تواند محصول را امتحان کند (دمو قابل‌استفاده بدون ثبت‌نام). معرفی، قیمت، ماشین‌حساب‌ها، مجله، راهنما |
-| طراحی و حرکت | UI مدرن و پر از انیمیشن در اپ (انیمیشن‌های Flutter، Rive/Lottie برای موارد پیچیده) و لندینگ؛ سیستم طراحی و قوانین حرکت در فاز ۰۰ |
-| پارس پیامک | Ollama (مدل کوچک) روی سرور خودمان + الگوهای regex هر بانک؛ بدون سرویس بیرونی |
-| ربات | **ندارد** (نه بله، نه تلگرام، نه ایتا) |
-| زبان و بازار | **فقط ایران و فارسی** (راست‌به‌چپ، تقویم شمسی، اعداد فارسی). متن‌ها فقط برای نظم در فایل‌های l10n فلاتر نگه‌داری می‌شوند؛ زبان دیگر هدف نیست. **ارزها و انواع کیف پول متعدد می‌ماند** |
+| App | Flutter, one codebase (Android, iOS, web, desktop) |
+| Backend | Django + grpcio (gRPC for app data). REST only for webhooks, uploads and payments |
+| Database and background jobs | PostgreSQL, Redis, Celery |
+| Landing site | Separate site built with **Three.js**, interactive; visitors can try the product right there (a demo usable without signing up). Introduction, pricing, calculators, magazine, help |
+| Design and motion | Modern, animation-rich UI in the app (Flutter animations, Rive/Lottie for complex cases) and on the landing site; design system and motion rules in phase 00 |
+| SMS parsing | Ollama (small model) on our own server + per-bank regex patterns; no external service |
+| Bot | **None** (no Bale, no Telegram, no Eitaa) |
+| Language and market | **Iran only and Persian only** (right-to-left, Shamsi calendar, Persian digits). Strings are kept in the Flutter l10n files only for tidiness; another language is not a goal. **Multiple currencies and wallet types are kept** |
 
-## اصول
-1. **قرارداد اول:** `.proto` منبع حقیقت است؛ stubها تولیدی‌اند و دستی ویرایش نمی‌شوند.
-2. **داده هر کاربر جداست:** هر کوئری به کاربر احراز‌شده محدود است؛ شناسه کاربر از کلاینت پذیرفته نمی‌شود.
-3. **پول:** عدد صحیح به کوچک‌ترین واحد (نه float)، همراه کد ارز. تبدیل ارز فقط در لایه نمایش و گزارش.
-4. **تقویم و ارز قابل تعویض:** ذخیره همیشه UTC و میلادی؛ نمایش شمسی یا میلادی طبق تنظیم کاربر.
-5. **رویدادمحور:** هر تغییر یک رویداد؛ پایه‌ی آفلاین/همگام‌سازی و خروجی کامل داده.
-6. **آفلاین:** پایگاه محلی در اپ + صف تغییرات با `client_mutation_id` یکتا (idempotent).
-7. **پیامک بانک (مسیر مشترک همه پلتفرم‌ها):** کاربر متن پیامک را با «ارسال به Summa» (share) یا کپی و paste در یک کادر داخل اپ می‌دهد. متن به بک‌اند می‌رود و یک مدل کوچک **Ollama** روی سرور آن را به ساختار تبدیل می‌کند (مبلغ، نوع برداشت/واریز، تاریخ، مانده، فروشنده اگر باشد) و نتیجه را همراه گزارش به اپ برمی‌گرداند. بعد صف تأیید و پرسش «برای چه بود؟».
-   - **اعتبارسنجی بدون LLM:** خروجی مدل فقط با schema ثابت (JSON) پذیرفته می‌شود و مبلغ باید عیناً در متن پیامک باشد؛ وگرنه رد یا به صف تأیید با اطمینان پایین می‌رود. اول الگوی هر بانک (regex) و فقط اگر نخورد، مدل.
-   - **امنیت:** متن پیامک داده است، نه دستور (prompt injection)؛ مدل ابزار و دسترسی ندارد. متن خام بعد از پردازش ذخیره نمی‌شود (یا فقط با رضایت کاربر برای بهبود)، در لاگ نمی‌آید، و فقط بین اپ و سرور خودمان می‌رود، نه سرویس بیرونی.
-   - **حریم:** کاربر قبل از اولین ارسال می‌بیند که متن به سرور می‌رود. rate limit و صف (Celery) برای جلوگیری از فشار روی مدل.
-   - خواندن خودکار SMS روی اندروید (نسخه کامل) فقط تقویت اختیاری است و همین مسیر را به‌صورت خودکار صدا می‌زند. iOS: Shortcuts همین API را صدا می‌زند.
-8. **یادآوری:** اعلان push (جایگزین ربات)؛ پیامک و ایمیل اختیاری.
-9. **قیمت دارایی:** سرویس مرکزی قیمت با fallback چندمنبعی و نشان stale؛ منبع به بازار هدف بستگی دارد (باز).
+## Principles
+1. **Contract first:** the `.proto` files are the source of truth; stubs are generated and never edited by hand.
+2. **Each user's data is separate:** every query is scoped to the authenticated user; the user id is never accepted from the client.
+3. **Money:** an integer in the smallest unit (never a float), together with a currency code. Currency conversion happens only in the display and reporting layer.
+4. **Swappable calendar and currency:** storage is always UTC and Gregorian; display is Shamsi or Gregorian according to the user's setting.
+5. **Event-driven:** every change is an event; this is the foundation for offline/sync and for a full data export.
+6. **Offline:** a local database in the app + a queue of changes with a unique `client_mutation_id` (idempotent).
+7. **Bank SMS (the shared path for all platforms):** the user hands over the SMS text with "Share to Summa" (share) or by copying and pasting it into a box inside the app. The text goes to the backend, where a small **Ollama** model turns it into a structure (amount, withdrawal/deposit type, date, balance, merchant if present) and returns the result to the app together with a report. Then comes the confirmation queue and the question "What was this for?".
+   - **Validation without an LLM:** the model's output is accepted only against a fixed schema (JSON), and the amount must appear verbatim in the SMS text; otherwise it is rejected or sent to the confirmation queue with low confidence. Each bank's pattern (regex) comes first, and the model runs only if it does not match.
+   - **Security:** SMS text is data, not instructions (prompt injection); the model has no tools and no access. Raw text is not stored after processing (or only with the user's consent, to improve the parser), never appears in logs, and travels only between the app and our own server, never to an external service.
+   - **Privacy:** before the first send, the user sees that the text goes to the server. Rate limiting and a queue (Celery) keep load on the model under control.
+   - Automatic SMS reading on Android (the full version) is only an optional enhancement and calls this same path automatically. iOS: Shortcuts calls the same API.
+8. **Reminders:** push notifications (the replacement for a bot); SMS and email are optional.
+9. **Asset prices:** a central price service with multi-source fallback and a stale marker; the sources depend on the target market (open).
 
-## کیف پول و ارز
-- بازار هدف فقط ایران و زبان فقط فارسی؛ تقویم شمسی (میلادی فقط برای نمایش ارزهای خارجی در صورت نیاز). **ارزها باز می‌مانند** (هر ارز ISO و ارز سفارشی مثل طلا/تتر).
-- **کیف پول** = (ارز + بانک یا «نقد» + نام + موجودی). برای هر ارز می‌شود چند کیف پول داشت. موجودی اولیه هنگام ساخت گرفته می‌شود و به‌صورت یک رویداد «موجودی اولیه» ثبت می‌شود، نه عدد دستی روی حساب.
-- هر تراکنش به یک کیف پول وصل است و ارزش را به ارز همان کیف پول ثبت می‌کند. موجودی همیشه از رویدادها محاسبه می‌شود.
-- «صندوق محاسباتی»: همه کیف پول‌ها، موجودی هر کدام، و جمع کل به **ارز پایه** انتخابی کاربر با نرخ تبدیل (منبع نرخ: API تبدیل که مشتری در فاز ۰۹ می‌دهد).
-- **مدیریت پول** (یک نوع ثبت در بخش خرج‌ها، بدون جابه‌جایی واقعی پول؛ فقط ثبت حسابداری): کاربر انتقال بین کیف پول‌ها را ثبت می‌کند: بانک ↔ بانک، نقد ↔ بانک (واریز و برداشت نقدی).
-  - هر انتقال دو رویداد جفت است: خروج از مبدأ و ورود به مقصد، با یک شناسه انتقال. از جمع خرج و درآمد و دسته‌ها بیرون می‌ماند.
-  - **کارمزد** اختیاری است و کاربر ثبت می‌کند؛ مبلغ و ارز کارمزد جدا، به‌صورت یک خرج عادی (دسته «کارمزد») از کیف پول مبدأ، و در جمع خرج‌ها می‌آید.
-  - **تبدیل ارز:** وقتی مبدأ و مقصد ارز متفاوت دارند، اپ **نرخ تبدیل را از کاربر می‌گیرد** (پیش‌فرض: آخرین نرخ سیستم به‌عنوان پیشنهاد، قابل ویرایش) و مقدار مقصد را محاسبه می‌کند؛ کاربر مقدار نهایی را هم می‌تواند دستی عوض کند. نرخ استفاده‌شده در همان انتقال ذخیره می‌شود و بعداً عوض نمی‌شود. کارمزد تبدیل هم همان‌جا گرفته می‌شود.
-- پیامک بانک: بانک فرستنده کیف پول پیشنهادی را تعیین می‌کند؛ کاربر در صف تأیید می‌تواند عوض کند.
+## Wallets and currency
+- The target market is Iran only and the language is Persian only; the calendar is Shamsi (Gregorian only for displaying foreign currencies if needed). **Currencies stay open** (any ISO currency and custom currencies such as gold/Tether).
+- **Wallet** = (currency + bank or "cash" + name + balance). A user can have several wallets per currency. The initial balance is collected at creation and recorded as an "initial balance" event, not as a number typed onto the account.
+- Every transaction is attached to one wallet and records its value in that wallet's currency. The balance is always computed from events.
+- The "accounting box" (calculation box): all wallets, the balance of each, and a grand total in the user's chosen **base currency** using conversion rates (rate source: the conversion API the client provides in phase 09).
+- **Money management** (a kind of entry in the expenses section, with no real movement of money; bookkeeping only): the user records transfers between wallets: bank ↔ bank, cash ↔ bank (cash deposit and withdrawal).
+  - Each transfer is a pair of events: an outflow from the source and an inflow to the destination, sharing one transfer id. It is left out of the totals for expenses, income and categories.
+  - A **fee** is optional and entered by the user; it has its own amount and currency, is recorded as an ordinary expense (category "Fee" / کارمزد) from the source wallet, and counts in the expense totals.
+  - **Currency conversion:** when the source and destination have different currencies, the app **asks the user for the conversion rate** (default: the system's latest rate as a suggestion, editable) and computes the destination amount; the user can also override the final amount by hand. The rate used is stored on that transfer and never changes afterwards. The conversion fee is collected there as well.
+- Bank SMS: the sending bank determines the suggested wallet; the user can change it in the confirmation queue.
 
-## چت دستیار داخل اپ (بدون ربات پیام‌رسان)
-- چت یک محیط است که کاربر در آن پیام می‌دهد: می‌تواند جمله بنویسد، یا **متن پیامک را بفرستد و بگوید برای چه موضوعی بود**.
-- چت فقط داخل اپ و **بسته برای هر کاربر** است: هر دسترسی با احراز هویت و محدود به همان کاربر.
-- **هوش مصنوعی فقط بررسی می‌کند و جواب می‌دهد.** مثلاً: «می‌خواهی یک انتقال بین حساب‌هایت، از کارت فلان به فلان، ثبت کنم؟». AI فقط با کاربر در چت تعامل دارد؛ هیچ ابزار نوشتن یا دسترسی مستقیم به داده ندارد.
-- پیشنهاد AI به‌صورت **کارت** نمایش داده می‌شود (کارت تراکنش، انتقال، یادآور…). دکمه «ثبت» روی کارت فقط یک **میانبر** است: با زدنش **گوشی کاربر** همان درخواست معمولی ثبت (همان که فرم دستی می‌فرستد) را با محتوای کارت به سرور می‌فرستد. همین، نه بیشتر. کاربر قبل از زدن می‌تواند محتوا را ویرایش کند.
-- نتیجه: مسیر نوشتن داده فقط درخواست‌های معمولی اپ با احراز کاربر است؛ اگر AI اشتباه کند یا فریب بخورد (prompt injection) بدون تأیید کاربر چیزی ثبت نمی‌شود.
+## In-app assistant chat (no messenger bot)
+- The chat is an environment where the user sends messages: they can write a sentence, or **send an SMS text and say what it was for**.
+- The chat lives only inside the app and is **private to each user**: every access is authenticated and scoped to that user.
+- **The AI only analyses and replies.** For example: "Do you want me to register a transfer between your accounts, from card X to card Y?" The AI interacts only with the user in the chat; it has no write tool and no direct access to data.
+- An AI suggestion is displayed as a **card** (a transaction card, a transfer, a reminder...). The "Register" button on the card is only a **shortcut**: when pressed, **the user's phone** sends the normal register request (the same one the manual form sends) to the server with the card's content. Nothing more. The user can edit the content before pressing it.
+- Result: the only write path is the app's normal authenticated requests; if the AI is wrong or gets tricked (prompt injection), nothing is registered without the user's confirmation.
 
-## پروفایل ایران
-- یک پروفایل پیکربندی برای ایران: ارز پیش‌فرض (تومان/ریال)، تقویم شمسی، **انواع کیف پول**، فهرست بانک‌ها و الگوهای پیامک، منابع نرخ. در بک‌اند نگه‌داری و از ادمین ویرایش می‌شود. ساختار چندکشوری نمی‌سازیم (YAGNI)؛ فقط پیکربندی جدا از کد می‌ماند.
+## Iran profile
+- One configuration profile for Iran: default currency (Toman/Rial), Shamsi calendar, **wallet types**, the list of banks and SMS patterns, rate sources. It is kept in the backend and edited from the admin. We do not build a multi-country structure (YAGNI); only the configuration stays separate from code.
 
-## نرخ ارز
-- سرویس پس‌زمینه (Celery beat) هر چند ساعت نرخ‌ها را می‌گیرد و در بک‌اند نگه می‌دارد؛ اپ و لندینگ فقط از بک‌اند می‌خوانند. نرخ تقریبی است و برای نمایش جمع کل و پیشنهاد در تبدیل ارز است، نه معامله.
+## FX rates
+- A background service (Celery beat) fetches rates every few hours and keeps them in the backend; the app and the landing site read only from the backend. The rate is approximate and is meant for displaying the grand total and for suggestions in currency conversion, not for trading.
 
-## یادآورها
-- سرویس زمان‌بندی یادآور (push): حقوق (روز مشخص + «هنوز نه» ← فردا)، ساعت حساب‌وکتاب روزانه، سررسید تراکنش تکراری (+ هشدار موجودی ناکافی قبل از آن)، قسط. هر کاربر ساعت و منطقه زمانی خودش را دارد.
+## Reminders
+- A reminder scheduling service (push): salary (a specific day + "not yet" -> tomorrow), the daily bookkeeping hour, the due date of a recurring transaction (+ a warning about insufficient balance before it), installments. Each user has their own hour and time zone.
 
-## احراز هویت برای عملیات حساس
-- ورود/خروج داده و بقیه عملیات حساس: اول بیومتریک دستگاه. اگر دستگاه بیومتریک ندارد، اپ از کاربر می‌خواهد اول **رمز داخل اپ** را فعال کند و بعد برای تأیید همان رمز را می‌گیرد. بدون این احراز، فایلی داده یا پذیرفته نمی‌شود.
+## Authentication for sensitive operations
+- Data export/import and other sensitive operations: device biometrics first. If the device has no biometrics, the app asks the user to enable the **in-app passcode** first, and then asks for that passcode for confirmation. Without this authentication, no data file is handed over or accepted.
 
-## طراحی و حرکت
-- هویت بصری کاملاً متفاوت از ترازنما؛ سیستم طراحی (رنگ، تایپ، فاصله، حرکت) در توکن‌ها، بدون مقدار خام در ویجت‌ها.
-- انیمیشن بخشی از محصول است: گذار صفحه‌ها، ثبت تراکنش، نمودارها، شمارش اعداد، حالت‌های خالی و بارگذاری.
-- محدودیت‌ها: احترام به «کاهش حرکت» سیستم، اجرای روان ۶۰fps روی دستگاه‌های متوسط، قابل‌استفاده با کیبورد و screen reader.
-- لندینگ: صحنه Three.js با کنترل کیفیت بر اساس دستگاه (fallback ساده در موبایل ضعیف یا کاهش حرکت)، بدون اینکه محتوا و CTA فقط داخل canvas باشد (SEO و دسترس‌پذیری).
+## Design and motion
+- A visual identity completely different from Taraznama; the design system (color, type, spacing, motion) lives in tokens, with no raw values in widgets.
+- Animation is part of the product: screen transitions, recording a transaction, charts, number counting, empty and loading states.
+- Constraints: respect the system "reduce motion" setting, smooth 60fps on mid-range devices, usable with a keyboard and a screen reader.
+- Landing: a Three.js scene with device-based quality control (a simple fallback on weak mobiles or with reduced motion), without leaving content and the CTA only inside the canvas (SEO and accessibility).
 
-## لندینگ و بک‌اند
-- لندینگ داده‌اش را از **همان بک‌اند** می‌گیرد؛ هر چیز متغیر از پنل ادمین قابل ویرایش است، بدون deploy مجدد: قیمت و پلن‌ها، متن‌ها و ترجمه‌ها، سؤالات متداول، مجله و راهنما، قیمت زنده نمونه، اعلان‌ها.
-- بک‌اند یک API عمومی فقط‌خواندنی (REST با کش و ETag) برای لندینگ می‌دهد؛ ویرایش با ادمین (اپ cms در Django، پنل Unfold) و نقش ویرایشگر محتوا.
-- نسخه‌بندی و پیش‌نمایش: تغییر محتوا اول پیش‌نویس است، بعد منتشر می‌شود
-- دموی لندینگ: کاربر در یک چت/ورودی جمله می‌نویسد (مثل «قهوه ۹۵»)، **همان پارسر واقعی بک‌اند** روی یک حساب نمونه جواب می‌دهد (مبلغ، دسته، دکمه‌های تغییر دسته) و نشانگر «تراز» بالای صفحه با هر ثبت واکنش نشان می‌دهد (صحنه Three.js). حساب نمونه خودکار پاک می‌شود، rate limit دارد و داده واقعی کسی را لمس نمی‌کند.
+## Landing and backend
+- The landing site takes its data from **the same backend**; everything variable can be edited from the admin panel without redeploying: prices and plans, copy and translations, FAQs, magazine and help, the live sample price, announcements.
+- The backend exposes a read-only public API (REST with caching and ETag) for the landing site; editing goes through the admin (the `cms` app in Django, the Unfold panel) with a content-editor role.
+- Versioning and preview: a content change is a draft first, then it is published.
+- Landing demo: the user types a sentence into a chat/input (such as "قهوه ۹۵" — "coffee 95"), **the same real backend parser** answers on a sample account (amount, category, category-change buttons), and the "Taraz" (تراز, "balance") indicator at the top of the page reacts to each entry (a Three.js scene). The sample account is wiped automatically, is rate limited, and never touches anyone's real data.
 
-## چیدمان مخزن (هدف)
+## Repository layout (target)
 ```
 summa/
   AGENTS.md  README.md
-  docs/              مستندات فارسی و فازها
+  docs/              Persian docs and phases
   app/               Flutter
-  backend/           Django + gRPC (+ .proto کنار سرویس‌ها)
-  landing/           سایت معرفی
-  deploy/            docker compose، CI
+  backend/           Django + gRPC (+ .proto next to the services)
+  landing/           introduction site
+  deploy/            docker compose, CI
 ```
 
-## باز / وابسته به بخش صفر
-- منابع قیمت و فهرست دارایی‌ها برای بازار غیرایرانی (طلا/تتر/بورس مخصوص ایران است).
-- فهرست بانک‌ها و قالب پیامک‌ها، مخصوص هر کشور.
-- مدل درآمد و پلن‌ها (سؤال ۶).
+## Open / depends on section zero
+- Price sources and the asset list for non-Iranian markets (gold/Tether/stock market are specific to Iran).
+- The list of banks and SMS templates, specific to each country.
+- Revenue model and plans (question 6).

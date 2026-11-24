@@ -1,54 +1,54 @@
-# مشخصات پارس جمله و پیامک (پیشنهاد اولیه)
+# Sentence and SMS parsing spec (initial proposal)
 
-> پایه فازهای ۰۴ و ۰۵. قواعد زیر حداقل رفتار مورد انتظار است؛ هر قاعده یک تست دارد. بازنویسی‌شده و بخشی مستقل از مرجع، نه کپی.
+> Basis for phases 04 and 05. The rules below are the minimum expected behaviour; every rule has a test. Rewritten, partly independent of the reference, not copied.
 
-## ۱. پاک‌سازی ورودی
-- یکسان‌سازی ارقام (فارسی، عربی، انگلیسی)، حروف («ي ك» ← «ی ک»)، نیم‌فاصله و فاصله‌های اضافه، جداکننده هزارگان (`,` `٬` `،`).
-- حذف لینک و شماره‌پیگیری‌های بلند از ورودی مبلغ‌یاب (ولی نگه‌داری برای ردیابی).
+## 1. Input cleanup
+- Normalize digits (Persian, Arabic, English), letters ("ي ك" → "ی ک"; Arabic yeh/kaf to Persian), zero-width non-joiners and extra spaces, and thousands separators (`,` `٬` `،`).
+- Strip links and long tracking numbers from the amount finder's input (but keep them for tracing).
 
-## ۲. مبلغ
-- **واحد:** «ریال» یا «ر» ← به تومان تقسیم بر ۱۰؛ «تومان/تومن/ت» بدون تبدیل؛ «هزار تومان» ×۱۰۰۰؛ «میلیون»، «میلیارد»؛ «k» = هزار.
-- **عبارات:** «۲ میلیون و ۵۰۰»، «۲٫۵ میلیون»، «دو و نیم میلیون»، «۲۸۵ هزار».
-- **ابهام:** عدد بدون واحد در جمله ← با تاریخچه همان دسته حدس می‌زند؛ وگرنه کارت با «واحد؟» (تومان/هزار تومان) نشان می‌دهد. **پیامک بانک** معمولاً ریال است ولی هر الگوی بانک واحد پیش‌فرض خودش را دارد.
-- **نه مبلغ:** ساعت (۱۴:۳۰)، تاریخ، تعداد («۳ نفر»)، شماره کارت، کد پیگیری.
-- **قانون طلایی:** مبلغ استخراج‌شده باید در متن ورودی (پس از پاک‌سازی) عیناً پیدا شود؛ وگرنه اطمینان صفر.
+## 2. Amount
+- **Unit:** "ریال" or "ر" (Rial) → divide by 10 to get Toman; "تومان/تومن/ت" (Toman) no conversion; "هزار تومان" (thousand Toman) ×1000; "میلیون" (million), "میلیارد" (billion); "k" = thousand.
+- **Expressions:** "۲ میلیون و ۵۰۰" (2 million and 500), "۲٫۵ میلیون" (2.5 million), "دو و نیم میلیون" (two and a half million), "۲۸۵ هزار" (285 thousand).
+- **Ambiguity:** a number without a unit in a sentence → guess from the history of the same category; otherwise the card shows a "Unit?" prompt (Toman / thousand Toman). **Bank SMS** is usually in Rial, but each bank pattern has its own default unit.
+- **Not an amount:** time of day (14:30), dates, counts ("۳ نفر", 3 people), card numbers, tracking codes.
+- **Golden rule:** the extracted amount must appear verbatim in the input text (after cleanup); otherwise confidence is zero.
 
-## ۳. جهت و نوع
-- **خروجی (خرج):** برداشت، خرید، پرداخت، انتقال از، کارمزد، قسط، شارژ.
-- **ورودی (درآمد):** واریز، دریافت، سپرده، حقوق، کارمزد معکوس/بازگشت.
-- جمله: «+» ابتدای پیام = درآمد؛ «برگشت/مرجوعی/پس گرفتم» ← پیشنهاد برگشت به تراکنش قبلی (فاز ۰۶b).
-- «انتقال بین حساب‌های خودم» (کارت‌به‌کارت، پایا…) ← پیشنهاد کارت انتقال (فاز ۰۲b)، نه خرج.
-- **نادیده:** رمز پویا/یکبارمصرف، کد فعال‌سازی، تبلیغ، پیامک «ناموفق»، و هر پیامی بدون مبلغ؛ پیام ناموفق می‌تواند یادآوری ملایم بدهد و ثبت نمی‌شود.
+## 3. Direction and type
+- **Outflow (expense):** withdrawal, purchase, payment, transfer from, fee, installment, top-up (برداشت، خرید، پرداخت، انتقال از، کارمزد، قسط، شارژ).
+- **Inflow (income):** deposit, receipt, savings deposit, salary, reversed fee/refund (واریز، دریافت، سپرده، حقوق، کارمزد معکوس/بازگشت).
+- Sentence: a leading "+" in the message = income; "برگشت/مرجوعی/پس گرفتم" (returned / refund / I got it back) → suggest a refund against the earlier transaction (phase 06b).
+- "انتقال بین حساب‌های خودم" (transfer between my own accounts; card-to-card, Paya, etc.) → suggest a transfer card (phase 02b), not an expense.
+- **Ignored:** dynamic/one-time passwords, activation codes, ads, "failed" (ناموفق) SMS, and any message without an amount; a failed message may show a gentle reminder and is not recorded.
 
-## ۴. تاریخ و زمان
-- فرمت‌های رایج شمسی (`۱۴۰۵/۰۹/۰۱`، `۰۹/۰۱`، با ساعت) ← UTC با منطقه Asia/Tehran.
-- جمله: «دیروز»، «پریروز»، «شنبه»، «اول ماه»؛ بدون تاریخ = الان.
-- تاریخ آینده بیش از ۱ روز یا گذشته بیش از ۱ سال ← اطمینان کم.
+## 4. Date and time
+- Common Shamsi formats (`۱۴۰۵/۰۹/۰۱`, `۰۹/۰۱`, with time) → UTC using the Asia/Tehran zone.
+- Sentence: "دیروز" (yesterday), "پریروز" (the day before yesterday), "شنبه" (Saturday), "اول ماه" (first of the month); no date = now.
+- A future date more than 1 day ahead, or a past date more than 1 year back → low confidence.
 
-## ۵. کیف پول
-- از **شماره کارت/حساب ناقص** (۴ رقم آخر) و **فرستنده بانک** پیشنهاد کیف پول؛ اولین بار کاربر تأیید می‌کند و نگاشت ذخیره می‌شود.
-- اگر پیامک مانده دارد: مقایسه با موجودی محاسبه‌شده ← تفاوت = هشدار تطبیق.
+## 5. Wallet
+- Suggest a wallet from the **partial card/account number** (last 4 digits) and the **bank sender**; the user confirms the first time and the mapping is stored.
+- If the SMS includes a balance: compare with the computed balance → a difference raises a reconciliation warning.
 
-## ۶. دسته و فروشنده
-- اگر نام فروشنده یا کلیدواژه در متن بود (اسنپ، دیجی‌کالا…) ← قاعده‌های پروفایل ایران ← پیشنهاد دسته.
-- حافظه کاربر: دستهٔ قبلی همان فروشنده/الگو اولویت دارد.
-- بدون فروشنده (حالت رایج پیامک بانک) ← کارت «برای چه بود؟» با ۳ پیشنهاد.
+## 6. Category and merchant
+- If a merchant name or keyword is in the text (اسنپ, دیجی‌کالا, …; Snapp, Digikala) → Iran-profile rules → category suggestion.
+- User memory: the previous category for the same merchant/pattern takes priority.
+- No merchant (the common case for bank SMS) → a "What was this for?" card with 3 suggestions.
 
-## ۷. امتیاز اطمینان و رفتار
-| اطمینان | شرط | رفتار |
+## 7. Confidence score and behaviour
+| Confidence | Condition | Behaviour |
 |---|---|---|
-| بالا | الگوی بانک خورد، مبلغ و جهت و تاریخ معتبر، کیف پول نگاشت‌شده | کارت پیش‌پر، یک لمس «ثبت» |
-| متوسط | فقط regex عمومی/Ollama، همه‌چیز معتبر | کارت با فیلد مشکوک علامت‌دار |
-| پایین | مبلغ عیناً در متن نیست، نوع نامعلوم، تاریخ نامعقول | کارت خالی برای تکمیل دستی (یا «نفهمیدم») |
-- هیچ سطحی **بی‌صدا** ثبت نمی‌کند؛ ثبت همیشه با زدن «ثبت» توسط کاربر است (یا قاعده تکراری که کاربر خودش فعال کرده).
-- **تشخیص تکراری:** مبلغ + کیف پول + زمان نزدیک (±۵ دقیقه) + جهت ← «این قبلاً ثبت شد، ادغام کنم؟».
+| High | Bank pattern matched, amount, direction and date valid, wallet mapped | Pre-filled card, one tap to "Register" |
+| Medium | Generic regex/Ollama only, everything valid | Card with the suspect field highlighted |
+| Low | Amount not verbatim in the text, unknown type, implausible date | Empty card for manual completion (or "I didn't understand") |
+- No level records **silently**; recording always happens when the user taps "Register" (or a recurring rule the user enabled themselves).
+- **Duplicate detection:** amount + wallet + close time (±5 minutes) + direction → "This was already recorded, merge?".
 
-## ۸. مجموعه نمونه و تست
-- برای هر بانک پوشه‌ای از نمونه‌ها: `متن پیامک` ← `خروجی مورد انتظار` (JSON)، با نام‌ها و شماره‌ها ناشناس‌شده.
-- گیت CI: دقت مبلغ ≥ ۹۹٪ و جهت ≥ ۹۸٪ روی مجموعه نمونه (حدها قابل بازنگری با داده واقعی)؛ هر مدل/الگو/پرامپت جدید قبل از انتشار می‌سنجد.
-- نمونه‌های منفی (رمز، تبلیغ، ناموفق) ← خروجی «نادیده».
-- هر خطای گزارش‌شده‌ی کاربر (با رضایت) به یک نمونه تبدیل می‌شود.
+## 8. Sample set and tests
+- A folder of samples per bank: `SMS text` → `expected output` (JSON), with names and numbers anonymized.
+- CI gate: amount accuracy ≥ 99% and direction ≥ 98% on the sample set (thresholds open to revision with real data); every new model/pattern/prompt is measured before release.
+- Negative samples (passwords, ads, failed) → output "ignored".
+- Every user-reported error (with consent) becomes a sample.
 
-## ۹. پرامپت Ollama (اصول، نه متن)
-- خروجی فقط JSON با schema ثابت؛ دمای پایین؛ پیام کاربر فقط داده، با جداکننده روشن؛ مدل ابزار ندارد؛ پاسخ نامعتبر ← یک بار تلاش مجدد ← «نفهمیدم».
-- انتخاب مدل: کوچک و چندزبانه با توان فارسی؛ سنجش روی مجموعه نمونه قبل از انتخاب؛ نسخه مدل در هر `SmsParse` ثبت می‌شود.
+## 9. Ollama prompt (principles, not text)
+- Output is JSON only with a fixed schema; low temperature; the user message is data only, with a clear delimiter; the model has no tools; an invalid response → one retry → "I didn't understand".
+- Model choice: small and multilingual with Persian ability; measured on the sample set before choosing; the model version is recorded on every `SmsParse`.

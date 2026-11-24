@@ -1,55 +1,56 @@
-# Summa: مستندات بررسی مرجع (ترازنما، taraznama.com)
+# Summa: Reference Research Docs (Taraznama, taraznama.com)
 
-**Summa** اپ حسابداری شخصی (خرج، قسط، دارایی) برای مشتری خارجی است و از نظر هویت و شکل کاملاً متفاوت از ترازنما ساخته می‌شود. این مستندها بررسی ترازنما به‌عنوان مرجع ویژگی‌ها هستند و نباید عیناً کپی شوند.
-تاریخ بررسی: ۱۴۰۵/۰۹/۰۱ (2026-11-22).
+**Summa** is a personal-accounting app (expenses, installments, assets) for a foreign client, built with an identity and shape completely different from Taraznama. These docs are a study of Taraznama as a feature reference and must not be copied verbatim.
+Research date: 1405/09/01 (2026-11-22).
 
-## تصمیم‌های ثبت‌شده
-- استک: اپ Flutter، بک‌اند gRPC، و سایت لندینگ برای معرفی (مشابه ساختار پروژه taskforge، بدون لندینگ در آن). جزئیات در [AGENTS.md](../AGENTS.md). [پیش‌نمایش زندهٔ لندینگ](https://ctrlaltdevelop.github.io/summa/) (ایستا، بدون بک‌اند).
-- بک‌اند: Django + grpcio. فقط ایران و فارسی (ارزهای مختلف نگه داشته شد). ربات حذف؛ پیامک بانک خودکار. ظاهر و برند از فاز اول متفاوت.
+## Recorded decisions
+- Stack: a Flutter app, a gRPC backend, and a landing site for introduction (similar to the structure of the taskforge project, which has no landing site). Details in [AGENTS.md](../AGENTS.md). [Live preview of the landing site](https://ctrlaltdevelop.github.io/summa/) (static, no backend).
+- Backend: Django + grpcio. Iran only and Persian only (multiple currencies kept). Bot removed; bank SMS is automatic. Look and brand are different from phase one.
 
-## فهرست
-1. [product-overview.md](01-product-overview.md): هویت محصول، پلتفرم‌ها، نقشه سایت، پلن‌ها و مدل درآمد
-2. [features-flows.md](02-features-flows.md): فلوهای کاربری (ورود، ثبت خرج، پیامک بانک، قسط، دارایی، ربات، ابزارها، پشتیبانی)
-3. [prices-data-sources.md](03-prices-data-sources.md): منابع قیمت و قوانین fallback
-4. [security-privacy.md](04-security-privacy.md): امنیت، حریم خصوصی، موارد حقوقی
-5. [open-questions.md](05-open-questions.md): سؤال‌های باز برای مشتری، فلو به فلو
-6. [architecture.md](06-architecture.md): معماری و اصول
-7. [roadmap.md](07-roadmap.md): فازهای اول (یک ویژگی در هر فاز)
-8. [phase-template.md](08-phase-template.md): قالب سند فاز
-9. [concept.md](09-concept.md): ایده کامل (پیشنهادهای تکمیلی، هنوز تصمیم نهایی نیست)
-10. [data-model.md](10-data-model.md): مدل داده، سرویس‌های gRPC و پایپ‌لاین پارس (پیشنهاد اولیه)
-11. [parsing-spec.md](11-parsing-spec.md): مشخصات پارس جمله و پیامک، اطمینان و تست (پیشنهاد اولیه)
-12. [security-model.md](12-security-model.md): مدل امنیت و حریم؛ تضاد E2E با Ollama (پیشنهاد)
-13. [phases/phase-00-foundation.md](phases/phase-00-foundation.md): سند فاز ۰۰ (آماده برای شروع)
-14. [phases/phase-01b-wallets.md](phases/phase-01b-wallets.md): سند فاز ۰۱b (کیف پول‌ها)
-15. [phases/phase-02-ledger.md](phases/phase-02-ledger.md): سند فاز ۰۲ (دفتر)
-16. [phases/phase-02b-transfers.md](phases/phase-02b-transfers.md): سند فاز ۰۲b (انتقال بین کیف‌ها)
-17. [phases/phase-03-categories.md](phases/phase-03-categories.md): سند فاز ۰۳ (دسته‌ها و سقف)
-18. [phases/phase-04-assistant.md](phases/phase-04-assistant.md): سند فاز ۰۴ (چت دستیار)
-19. [phases/phase-05-sms.md](phases/phase-05-sms.md): سند فاز ۰۵ (پیامک بانک)
-20. [phases/phase-06-split.md](phases/phase-06-split.md): سند فاز ۰۶ (تقسیم و خارج از جمع)
-21. [phases/phase-06b-refunds.md](phases/phase-06b-refunds.md): سند فاز ۰۶b (برگشت و بازپرداخت)
-22. [phases/phase-07-recurring.md](phases/phase-07-recurring.md): سند فاز ۰۷ (تراکنش‌های تکراری)
-23. [phases/phase-07b-salary.md](phases/phase-07b-salary.md): سند فاز ۰۷b (حقوق و یادآور)
-24. [phases/phase-07c-accounting-hour.md](phases/phase-07c-accounting-hour.md): سند فاز ۰۷c (ساعت حساب‌وکتاب)
-25. [phases/phase-08-debts.md](phases/phase-08-debts.md): سند فاز ۰۸ (وام و قسط)
-26. [phases/phase-09-assets.md](phases/phase-09-assets.md): سند فاز ۰۹ (دارایی و قیمت)
-27. [phases/phase-10-networth.md](phases/phase-10-networth.md): سند فاز ۱۰ (خالص دارایی و سبدها)
-28. [phases/phase-11-reports.md](phases/phase-11-reports.md): سند فاز ۱۱ (گزارش و خروجی)
-29. [phases/phase-12-sync.md](phases/phase-12-sync.md): سند فاز ۱۲ (آفلاین و همگام‌سازی)
-30. [phases/phase-13-billing.md](phases/phase-13-billing.md): سند فاز ۱۳ (اشتراک و پرداخت)
-31. [phases/phase-14-support.md](phases/phase-14-support.md): سند فاز ۱۴ (پشتیبانی)
-32. [phases/phase-15-privacy.md](phases/phase-15-privacy.md): سند فاز ۱۵ (حساب، حریم و قفل اپ)
-33. [phases/phase-15b-data.md](phases/phase-15b-data.md): سند فاز ۱۵b (ورود و خروج داده)
-34. [phases/phase-16b-cms.md](phases/phase-16b-cms.md): سند فاز ۱۶b (مدیریت محتوای لندینگ)
-35. [phases/phase-16-landing.md](phases/phase-16-landing.md): سند فاز ۱۶ (سایت لندینگ)
-36. [phases/phase-17-calculators.md](phases/phase-17-calculators.md): سند فاز ۱۷ (ماشین‌حساب‌های عمومی)
-37. [phases/phase-18-widget.md](phases/phase-18-widget.md): سند فاز ۱۸ (ویجت، فقط تصمیم محدوده)
+## Index
+1. [product-overview.md](01-product-overview.md): product identity, platforms, site map, plans and revenue model
+2. [features-flows.md](02-features-flows.md): user flows (login, recording expenses, bank SMS, installments, assets, bot, tools, support)
+3. [prices-data-sources.md](03-prices-data-sources.md): price sources and fallback rules
+4. [security-privacy.md](04-security-privacy.md): security, privacy, legal items
+5. [open-questions.md](05-open-questions.md): open questions for the client, flow by flow
+6. [architecture.md](06-architecture.md): architecture and principles
+7. [roadmap.md](07-roadmap.md): the phase-one phases (one feature per phase)
+8. [phase-template.md](08-phase-template.md): the phase document template
+9. [concept.md](09-concept.md): the full idea (supplementary proposals, not yet a final decision)
+10. [data-model.md](10-data-model.md): data model, gRPC services and the parsing pipeline (initial proposal)
+11. [parsing-spec.md](11-parsing-spec.md): sentence and SMS parsing spec, confidence and tests (initial proposal)
+12. [security-model.md](12-security-model.md): security and privacy model; the E2E vs Ollama conflict (proposal)
+13. [phases/phase-00-foundation.md](phases/phase-00-foundation.md): phase 00 document (ready to start)
+14. [phases/phase-01b-wallets.md](phases/phase-01b-wallets.md): phase 01b document (wallets)
+15. [phases/phase-02-ledger.md](phases/phase-02-ledger.md): phase 02 document (ledger)
+16. [phases/phase-02b-transfers.md](phases/phase-02b-transfers.md): phase 02b document (transfers between wallets)
+17. [phases/phase-03-categories.md](phases/phase-03-categories.md): phase 03 document (categories and limits)
+18. [phases/phase-04-assistant.md](phases/phase-04-assistant.md): phase 04 document (assistant chat)
+19. [phases/phase-05-sms.md](phases/phase-05-sms.md): phase 05 document (bank SMS)
+20. [phases/phase-06-split.md](phases/phase-06-split.md): phase 06 document (split and excluded from totals)
+21. [phases/phase-06b-refunds.md](phases/phase-06b-refunds.md): phase 06b document (returns and refunds)
+22. [phases/phase-07-recurring.md](phases/phase-07-recurring.md): phase 07 document (recurring transactions)
+23. [phases/phase-07b-salary.md](phases/phase-07b-salary.md): phase 07b document (salary and reminder)
+24. [phases/phase-07c-accounting-hour.md](phases/phase-07c-accounting-hour.md): phase 07c document (bookkeeping hour)
+25. [phases/phase-08-debts.md](phases/phase-08-debts.md): phase 08 document (loans and installments)
+26. [phases/phase-09-assets.md](phases/phase-09-assets.md): phase 09 document (assets and prices)
+27. [phases/phase-10-networth.md](phases/phase-10-networth.md): phase 10 document (net worth and portfolios)
+28. [phases/phase-11-reports.md](phases/phase-11-reports.md): phase 11 document (reports and export)
+29. [phases/phase-12-sync.md](phases/phase-12-sync.md): phase 12 document (offline and sync)
+30. [phases/phase-13-billing.md](phases/phase-13-billing.md): phase 13 document (subscription and payment)
+31. [phases/phase-14-support.md](phases/phase-14-support.md): phase 14 document (support)
+32. [phases/phase-15-privacy.md](phases/phase-15-privacy.md): phase 15 document (account, privacy and app lock)
+33. [phases/phase-15b-data.md](phases/phase-15b-data.md): phase 15b document (data import and export)
+34. [phases/phase-16b-cms.md](phases/phase-16b-cms.md): phase 16b document (landing content management)
+35. [phases/phase-16-landing.md](phases/phase-16-landing.md): phase 16 document (landing site)
+36. [phases/phase-17-calculators.md](phases/phase-17-calculators.md): phase 17 document (public calculators)
+37. [phases/phase-18-widget.md](phases/phase-18-widget.md): phase 18 document (widget, scope decision only)
+38. [phases/phase-19-english.md](phases/phase-19-english.md): phase 19 document (English and LTR)
+39. [phases/phase-19b-country-profiles.md](phases/phase-19b-country-profiles.md): phase 19b document (country profile)
 
-## محدودیت‌های بررسی
-- همه صفحه‌های عمومی خونده شد، به جز `/disclosure` (دوبار خطای ۵۰۳؛ لیست شریک‌های رفرال و مدل درآمد رفرال مشخص نیست).
-- `/login` و `/dashboard` با جاوااسکریپت رندر می‌شن و محتواشون گرفته نشد. فلوی ورود از مقاله راهنما استخراج شده.
-- قیمت‌های `/pricing` در استخراج خراب شده بودن (جزئیات در فایل اول).
-- صفحه قیمت‌ها لینک مستقیم به ویژگی‌ها نداره. توضیح ویژگی‌ها در ۲۲ مقاله `/help` بود.
-- محتوا خلاصه و بازنویسی‌شده است، نه کپی عین متن سایت.
-
+## Research limitations
+- All public pages were read, except `/disclosure` (a 503 error twice; the list of referral partners and the referral revenue model are unknown).
+- `/login` and `/dashboard` render with JavaScript and their content was not captured. The login flow was extracted from a help article.
+- The `/pricing` prices were garbled in extraction (details in the first file).
+- The pricing page has no direct link to the features. The feature descriptions were in the 22 `/help` articles.
+- The content is summarised and rewritten, not a verbatim copy of the site's text.
