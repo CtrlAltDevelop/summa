@@ -18,7 +18,7 @@ describe('renderTools', () => {
     const [loan] = root.querySelectorAll('article');
     const [a, r, m] = loan.querySelectorAll('input');
     type(a, '۱۲۰۰'); type(r, '0'); type(m, '12');
-    expect(loan.querySelector('.result').textContent).toContain('۱۰۰');
+    expect(loan.querySelector('.result').textContent).toContain('100');
   });
   it('shows a hint for bad input and skips unknown rates', () => {
     const root = renderTools(rates);

@@ -6,11 +6,11 @@ import { prefersReducedMotion } from '../src/motion.js';
 const rate = (over) => ({ symbol: 'USD', name: 'دلار', unit: 'دلار', price: '61000', known: true, stale: false, ...over });
 
 describe('prices', () => {
-  it('shows a known price in toman with Persian digits', () => {
+  it('shows a known price in toman', () => {
     const table = renderRates([rate()]);
 
     expect(table.querySelector('th').textContent).toBe('دلار (دلار)');
-    expect(table.querySelector('td').textContent).toBe(`۶۱٬۰۰۰ ${TEXT.toman}`);
+    expect(table.querySelector('td').textContent).toBe(`61,000 ${TEXT.toman}`);
   });
 
   it('says unknown instead of showing zero', () => {
@@ -26,14 +26,14 @@ describe('prices', () => {
   });
 
   it('always carries the not-an-exchange note', () => {
-    expect(renderRates([]).textContent).toContain('Summa صرافی نیست');
+    expect(renderRates([]).textContent).toContain('not an exchange');
   });
 
   it('lists the plans from the admin with their price and period', () => {
     const section = renderPlans([{ name: 'ماهانه', description: 'همه امکانات', price_minor: 150000, period_days: 30 }]);
 
     expect(section.querySelector('h3').textContent).toBe('ماهانه');
-    expect(section.querySelector('.price').textContent).toBe(`۱۵۰٬۰۰۰ ${TEXT.toman} · ۳۰ ${TEXT.days}`);
+    expect(section.querySelector('.price').textContent).toBe(`150,000 ${TEXT.toman} · 30 ${TEXT.days}`);
     expect(section.textContent).toContain('همه امکانات');
   });
 

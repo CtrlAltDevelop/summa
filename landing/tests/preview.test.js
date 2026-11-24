@@ -34,6 +34,6 @@ describe('static preview api', () => {
   it('explains that the chat demo needs the backend', async () => {
     const error = await api.demo('x').catch((e) => e);
 
-    expect(messageFor(error)).toContain('نسخهٔ نمایشی');
+    expect(messageFor(error)).toContain('static preview');
   });
 });

@@ -1,8 +1,7 @@
 import bundle from '../content/landing.json';
 
 import { ApiError } from './api.js';
-
-const LANGUAGE = 'fa';
+import { LANGUAGE } from './locale.js';
 
 const text = (value) => value?.[LANGUAGE] ?? '';
 
@@ -17,12 +16,12 @@ function section(exported) {
 
 /** Sample prices, clearly not live: the preview banner says so. */
 export const SAMPLE_RATES = [
-  ['GOLD18', 'طلای ۱۸ عیار', 'گرم', 4_100_000],
-  ['COIN_EMAMI', 'سکه امامی', 'عدد', 47_500_000],
-  ['USD', 'دلار', 'دلار', 62_000],
-  ['EUR', 'یورو', 'یورو', 67_000],
-  ['AED', 'درهم', 'درهم', 16_900],
-  ['USDT', 'تتر', 'تتر', 62_100],
+  ['GOLD18', '18k gold', 'gram', 4_100_000],
+  ['COIN_EMAMI', 'Emami coin', 'coin', 47_500_000],
+  ['USD', 'US dollar', 'USD', 62_000],
+  ['EUR', 'Euro', 'EUR', 67_000],
+  ['AED', 'UAE dirham', 'AED', 16_900],
+  ['USDT', 'Tether', 'USDT', 62_100],
 ].map(([symbol, name, unit, price]) => ({ symbol, name, unit, price: String(price), known: true, stale: false }));
 
 /**

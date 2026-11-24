@@ -37,7 +37,7 @@ describe('the live demo', () => {
     expect(demo.account.income).toBe(900);
     expect(scale.setTilt).toHaveBeenLastCalledWith(tilt(900, 0));
     expect(demo.root.querySelector('.done').textContent).toBe(MESSAGES.registered);
-    expect(demo.root.querySelector('.totals').textContent).toContain('۹۰۰');
+    expect(demo.root.querySelector('.totals').textContent).toContain('900 Toman');
   });
 
   it('an expense tips the other way', async () => {
@@ -75,7 +75,7 @@ describe('the live demo', () => {
     }
   });
 
-  it('says what went wrong in Persian and stays usable', async () => {
+  it('says what went wrong and stays usable', async () => {
     const api = { demo: vi.fn().mockRejectedValue(new ApiError(429, 'x')) };
     const demo = createDemo(api, null);
 

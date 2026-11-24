@@ -1,3 +1,5 @@
+import { LANGUAGE } from './locale.js';
+
 export class ApiError extends Error {
   constructor(status, message, { preview = false } = {}) {
     super(message);
@@ -35,8 +37,8 @@ export function createApi(fetchImpl = globalThis.fetch.bind(globalThis), base = 
   }
 
   return {
-    page: (slug) => call(`/cms/pages/${encodeURIComponent(slug)}?language=fa`),
-    menu: (name) => call(`/cms/menus/${encodeURIComponent(name)}?language=fa`),
+    page: (slug) => call(`/cms/pages/${encodeURIComponent(slug)}?language=${LANGUAGE}`),
+    menu: (name) => call(`/cms/menus/${encodeURIComponent(name)}?language=${LANGUAGE}`),
     plans: () => call('/billing/plans'),
     rates: () => call('/assets/rates'),
     demo: (text) =>

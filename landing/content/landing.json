@@ -2,13 +2,16 @@
   "version": 1,
   "site": {
     "name": {
-      "fa": "Summa"
+      "fa": "Summa",
+      "en": "Summa"
     },
     "tagline": {
-      "fa": "خرج، قسط و دارایی، یک‌جا"
+      "fa": "خرج، قسط و دارایی، یک‌جا",
+      "en": "Spending, instalments and assets in one place"
     },
     "description": {
-      "fa": "اپ حسابداری شخصی برای ایران"
+      "fa": "اپ حسابداری شخصی برای ایران",
+      "en": "Personal accounting, built for real life"
     }
   },
   "pages": [
@@ -17,10 +20,12 @@
       "name": "خانه",
       "status": "published",
       "title": {
-        "fa": "Summa | حساب‌وکتاب شخصی برای خرج، قسط و دارایی"
+        "fa": "Summa | حساب‌وکتاب شخصی برای خرج، قسط و دارایی",
+        "en": "Summa | Personal accounting for spending, instalments and assets"
       },
       "description": {
-        "fa": "همه خرج‌ها، اقساط و دارایی‌هایت یک‌جا. جمله یا پیامک بانک را بفرست، بقیه‌اش با Summa."
+        "fa": "همه خرج‌ها، اقساط و دارایی‌هایت یک‌جا. جمله یا پیامک بانک را بفرست، بقیه‌اش با Summa.",
+        "en": "Every expense, instalment and asset in one place. Send a sentence or a bank SMS and Summa does the rest."
       },
       "sections": [
         {
@@ -34,7 +39,8 @@
               "field_type": "text",
               "order": 0,
               "values": {
-                "fa": "خرجت را بنویس؛ حسابش را Summa نگه می‌دارد."
+                "fa": "خرجت را بنویس؛ حسابش را Summa نگه می‌دارد.",
+                "en": "Write down what you spent. Summa keeps the books."
               }
             },
             {
@@ -43,7 +49,8 @@
               "field_type": "text",
               "order": 1,
               "values": {
-                "fa": "یک جمله یا متن پیامک بانکی بفرست. Summa مبلغ و دسته را می‌فهمد و فقط وقتی تو بگویی «ثبت» ثبت می‌کند."
+                "fa": "یک جمله یا متن پیامک بانکی بفرست. Summa مبلغ و دسته را می‌فهمد و فقط وقتی تو بگویی «ثبت» ثبت می‌کند.",
+                "en": "Send one sentence, or paste a bank message. Summa reads the amount and the category, and records nothing until you tap Register."
               }
             },
             {
@@ -52,7 +59,8 @@
               "field_type": "text",
               "order": 2,
               "values": {
-                "fa": "همین حالا امتحان کن"
+                "fa": "همین حالا امتحان کن",
+                "en": "Try it now"
               }
             }
           ]
@@ -68,7 +76,8 @@
               "field_type": "text",
               "order": 0,
               "values": {
-                "fa": "چطور کار می‌کند؟"
+                "fa": "چطور کار می‌کند؟",
+                "en": "How it works"
               }
             }
           ],
@@ -84,7 +93,8 @@
                   "field_type": "text",
                   "order": 0,
                   "values": {
-                    "fa": "بنویس یا بچسبان"
+                    "fa": "بنویس یا بچسبان",
+                    "en": "Write or paste"
                   }
                 },
                 {
@@ -93,7 +103,8 @@
                   "field_type": "textarea",
                   "order": 1,
                   "values": {
-                    "fa": "«۲۵۰ هزار تومن خرید نان» یا متن پیامک بانک را در چت بنویس."
+                    "fa": "«۲۵۰ هزار تومن خرید نان» یا متن پیامک بانک را در چت بنویس.",
+                    "en": "“250,000 toman on groceries”, or the text of a bank message, straight into the chat."
                   }
                 }
               ]
@@ -109,7 +120,8 @@
                   "field_type": "text",
                   "order": 0,
                   "values": {
-                    "fa": "کارت را ببین"
+                    "fa": "کارت را ببین",
+                    "en": "Check the card"
                   }
                 },
                 {
@@ -118,7 +130,8 @@
                   "field_type": "textarea",
                   "order": 1,
                   "values": {
-                    "fa": "Summa مبلغ، دسته و کیف پول را حدس می‌زند و یک کارت پیشنهاد می‌دهد."
+                    "fa": "Summa مبلغ، دسته و کیف پول را حدس می‌زند و یک کارت پیشنهاد می‌دهد.",
+                    "en": "Summa works out the amount, the category and the wallet, and hands you a card."
                   }
                 }
               ]
@@ -134,7 +147,8 @@
                   "field_type": "text",
                   "order": 0,
                   "values": {
-                    "fa": "ثبت کن"
+                    "fa": "ثبت کن",
+                    "en": "Register it"
                   }
                 },
                 {
@@ -143,7 +157,8 @@
                   "field_type": "textarea",
                   "order": 1,
                   "values": {
-                    "fa": "با یک لمس ثبت می‌شود؛ بدون تأیید تو هیچ چیزی ثبت نمی‌شود."
+                    "fa": "با یک لمس ثبت می‌شود؛ بدون تأیید تو هیچ چیزی ثبت نمی‌شود.",
+                    "en": "One tap and it is on the books. Nothing is recorded without you."
                   }
                 }
               ]
@@ -161,7 +176,8 @@
               "field_type": "text",
               "order": 0,
               "values": {
-                "fa": "هرچه برای حساب‌وکتاب لازم است"
+                "fa": "هرچه برای حساب‌وکتاب لازم است",
+                "en": "Everything the books need"
               }
             }
           ],
@@ -177,7 +193,8 @@
                   "field_type": "text",
                   "order": 0,
                   "values": {
-                    "fa": "کیف پول‌های متعدد"
+                    "fa": "کیف پول‌های متعدد",
+                    "en": "Wallets that match real life"
                   }
                 },
                 {
@@ -186,7 +203,8 @@
                   "field_type": "textarea",
                   "order": 1,
                   "values": {
-                    "fa": "نقد، بانک، ارز و تتر؛ هر کدام با موجودی خودش و انتقال بین‌شان با کارمزد و نرخ دلخواه."
+                    "fa": "نقد، بانک، ارز و تتر؛ هر کدام با موجودی خودش و انتقال بین‌شان با کارمزد و نرخ دلخواه.",
+                    "en": "Cash, bank, foreign currency and crypto — each with its own balance, and transfers between them with your own rate and fee."
                   }
                 }
               ]
@@ -202,7 +220,8 @@
                   "field_type": "text",
                   "order": 0,
                   "values": {
-                    "fa": "سقف برای هر دسته"
+                    "fa": "سقف برای هر دسته",
+                    "en": "A ceiling per category"
                   }
                 },
                 {
@@ -211,7 +230,8 @@
                   "field_type": "textarea",
                   "order": 1,
                   "values": {
-                    "fa": "برای هر دسته سقف ماهانه بگذار و هرچه نزدیک شدی ببین، با ماه شمسی."
+                    "fa": "برای هر دسته سقف ماهانه بگذار و هرچه نزدیک شدی ببین، با ماه شمسی.",
+                    "en": "Set a monthly limit for any category and watch it fill up long before the month ends."
                   }
                 }
               ]
@@ -227,7 +247,8 @@
                   "field_type": "text",
                   "order": 0,
                   "values": {
-                    "fa": "وام و قسط"
+                    "fa": "وام و قسط",
+                    "en": "Loans and instalments"
                   }
                 },
                 {
@@ -236,7 +257,8 @@
                   "field_type": "textarea",
                   "order": 1,
                   "values": {
-                    "fa": "جدول اقساط، سررسید نزدیک و «پرداخت شد» با یک لمس."
+                    "fa": "جدول اقساط، سررسید نزدیک و «پرداخت شد» با یک لمس.",
+                    "en": "The full schedule, what falls due next, and “paid” in a single tap."
                   }
                 }
               ]
@@ -252,7 +274,8 @@
                   "field_type": "text",
                   "order": 0,
                   "values": {
-                    "fa": "دارایی و سود و زیان"
+                    "fa": "دارایی و سود و زیان",
+                    "en": "Assets, profit and loss"
                   }
                 },
                 {
@@ -261,7 +284,8 @@
                   "field_type": "textarea",
                   "order": 1,
                   "values": {
-                    "fa": "طلا، سکه، ارز و رمزارز با قیمت روز و خالص دارایی به تومان، دلار و گرم طلا."
+                    "fa": "طلا، سکه، ارز و رمزارز با قیمت روز و خالص دارایی به تومان، دلار و گرم طلا.",
+                    "en": "Gold, coins, currency and crypto at today's price, with net worth in your base currency, in dollars, or in grams of gold."
                   }
                 }
               ]
@@ -277,7 +301,8 @@
                   "field_type": "text",
                   "order": 0,
                   "values": {
-                    "fa": "بدون اینترنت هم"
+                    "fa": "بدون اینترنت هم",
+                    "en": "Works without a signal"
                   }
                 },
                 {
@@ -286,7 +311,8 @@
                   "field_type": "textarea",
                   "order": 1,
                   "values": {
-                    "fa": "تراکنش‌هایت در صف می‌ماند و با اتصال، دقیقاً یک بار ثبت می‌شود."
+                    "fa": "تراکنش‌هایت در صف می‌ماند و با اتصال، دقیقاً یک بار ثبت می‌شود.",
+                    "en": "Entries queue up on the phone and land exactly once when you are back online."
                   }
                 }
               ]
@@ -304,7 +330,8 @@
               "field_type": "text",
               "order": 0,
               "values": {
-                "fa": "داده‌ات مال خودت است"
+                "fa": "داده‌ات مال خودت است",
+                "en": "Your data stays yours"
               }
             },
             {
@@ -313,7 +340,8 @@
               "field_type": "textarea",
               "order": 1,
               "values": {
-                "fa": "متن پیامک بعد از پردازش ذخیره نمی‌شود. اپ با رمز یا بیومتریک قفل می‌شود، خروجی و حذف حساب فقط بعد از تأیید هویت ممکن است، و حذف حساب واقعاً همه چیز را پاک می‌کند."
+                "fa": "متن پیامک بعد از پردازش ذخیره نمی‌شود. اپ با رمز یا بیومتریک قفل می‌شود، خروجی و حذف حساب فقط بعد از تأیید هویت ممکن است، و حذف حساب واقعاً همه چیز را پاک می‌کند.",
+                "en": "Message text is discarded once it has been read. The app locks with a passcode or biometrics, export and account deletion both require you to prove it is you, and deleting your account really does erase everything."
               }
             }
           ]
@@ -325,10 +353,12 @@
       "name": "سؤالات پرتکرار",
       "status": "published",
       "title": {
-        "fa": "سؤالات پرتکرار | Summa"
+        "fa": "سؤالات پرتکرار | Summa",
+        "en": "FAQ | Summa"
       },
       "description": {
-        "fa": "جواب سؤال‌های رایج درباره Summa"
+        "fa": "جواب سؤال‌های رایج درباره Summa",
+        "en": "Common questions about Summa"
       },
       "sections": [
         {
@@ -342,7 +372,8 @@
               "field_type": "text",
               "order": 0,
               "values": {
-                "fa": "سؤالات پرتکرار"
+                "fa": "سؤالات پرتکرار",
+                "en": "Frequently asked"
               }
             }
           ],
@@ -358,7 +389,8 @@
                   "field_type": "text",
                   "order": 0,
                   "values": {
-                    "fa": "آیا به حساب بانکی من وصل می‌شود؟"
+                    "fa": "آیا به حساب بانکی من وصل می‌شود؟",
+                    "en": "Does it connect to my bank account?"
                   }
                 },
                 {
@@ -367,7 +399,8 @@
                   "field_type": "textarea",
                   "order": 1,
                   "values": {
-                    "fa": "نه. Summa رمز و اطلاعات بانکی نمی‌گیرد؛ فقط متنی را که خودت می‌فرستی می‌خواند."
+                    "fa": "نه. Summa رمز و اطلاعات بانکی نمی‌گیرد؛ فقط متنی را که خودت می‌فرستی می‌خواند.",
+                    "en": "No. Summa never asks for banking credentials. It only reads the text you choose to send it."
                   }
                 }
               ]
@@ -383,7 +416,8 @@
                   "field_type": "text",
                   "order": 0,
                   "values": {
-                    "fa": "خودش بدون اجازه من چیزی ثبت می‌کند؟"
+                    "fa": "خودش بدون اجازه من چیزی ثبت می‌کند؟",
+                    "en": "Will it record things without asking?"
                   }
                 },
                 {
@@ -392,7 +426,8 @@
                   "field_type": "textarea",
                   "order": 1,
                   "values": {
-                    "fa": "نه. هر پیشنهاد یک کارت است و ثبت فقط با زدن «ثبت» توسط خودت انجام می‌شود."
+                    "fa": "نه. هر پیشنهاد یک کارت است و ثبت فقط با زدن «ثبت» توسط خودت انجام می‌شود.",
+                    "en": "No. Every suggestion is a card, and nothing is written until you tap Register."
                   }
                 }
               ]
@@ -408,7 +443,8 @@
                   "field_type": "text",
                   "order": 0,
                   "values": {
-                    "fa": "قیمت‌ها دقیق‌اند؟"
+                    "fa": "قیمت‌ها دقیق‌اند؟",
+                    "en": "Are the prices exact?"
                   }
                 },
                 {
@@ -417,7 +453,8 @@
                   "field_type": "textarea",
                   "order": 1,
                   "values": {
-                    "fa": "نه، تقریبی‌اند. Summa صرافی نیست و توصیه خرید و فروش نمی‌دهد."
+                    "fa": "نه، تقریبی‌اند. Summa صرافی نیست و توصیه خرید و فروش نمی‌دهد.",
+                    "en": "No, they are approximate. Summa is not an exchange and gives no buy or sell advice."
                   }
                 }
               ]
@@ -433,7 +470,8 @@
                   "field_type": "text",
                   "order": 0,
                   "values": {
-                    "fa": "با تغییر گوشی داده‌ام می‌ماند؟"
+                    "fa": "با تغییر گوشی داده‌ام می‌ماند؟",
+                    "en": "Do I keep my data on a new phone?"
                   }
                 },
                 {
@@ -442,7 +480,8 @@
                   "field_type": "textarea",
                   "order": 1,
                   "values": {
-                    "fa": "بله. داده روی سرور نگه‌داری می‌شود و با ورود دوباره برمی‌گردد."
+                    "fa": "بله. داده روی سرور نگه‌داری می‌شود و با ورود دوباره برمی‌گردد.",
+                    "en": "Yes. Your data is kept on the server and comes back when you sign in again."
                   }
                 }
               ]
@@ -456,10 +495,12 @@
       "name": "درباره",
       "status": "published",
       "title": {
-        "fa": "درباره Summa | Summa"
+        "fa": "درباره Summa | Summa",
+        "en": "About Summa | Summa"
       },
       "description": {
-        "fa": "درباره Summa"
+        "fa": "درباره Summa",
+        "en": "About Summa"
       },
       "sections": [
         {
@@ -473,7 +514,8 @@
               "field_type": "text",
               "order": 0,
               "values": {
-                "fa": "درباره Summa"
+                "fa": "درباره Summa",
+                "en": "About Summa"
               }
             },
             {
@@ -482,7 +524,8 @@
               "field_type": "textarea",
               "order": 1,
               "values": {
-                "fa": "Summa برای کسانی ساخته شده که می‌خواهند بدانند پولشان کجا می‌رود، بدون اینکه ساعت‌ها جدول پر کنند."
+                "fa": "Summa برای کسانی ساخته شده که می‌خواهند بدانند پولشان کجا می‌رود، بدون اینکه ساعت‌ها جدول پر کنند.",
+                "en": "Summa is for people who want to know where their money goes without spending their evenings filling in a spreadsheet."
               }
             }
           ]
@@ -494,10 +537,12 @@
       "name": "حریم خصوصی",
       "status": "published",
       "title": {
-        "fa": "حریم خصوصی | Summa"
+        "fa": "حریم خصوصی | Summa",
+        "en": "Privacy | Summa"
       },
       "description": {
-        "fa": "حریم خصوصی"
+        "fa": "حریم خصوصی",
+        "en": "Privacy"
       },
       "sections": [
         {
@@ -511,7 +556,8 @@
               "field_type": "text",
               "order": 0,
               "values": {
-                "fa": "حریم خصوصی"
+                "fa": "حریم خصوصی",
+                "en": "Privacy"
               }
             },
             {
@@ -520,7 +566,8 @@
               "field_type": "textarea",
               "order": 1,
               "values": {
-                "fa": "این صفحه پیش‌نویس است و پیش از انتشار عمومی باید بازبینی حقوقی شود. داده‌های مالی فقط برای خود کاربر در دسترس است و متن پیامک پس از پردازش ذخیره نمی‌شود."
+                "fa": "این صفحه پیش‌نویس است و پیش از انتشار عمومی باید بازبینی حقوقی شود. داده‌های مالی فقط برای خود کاربر در دسترس است و متن پیامک پس از پردازش ذخیره نمی‌شود.",
+                "en": "This page is a draft and needs a legal review before it goes public. Financial data is visible only to the person it belongs to, and message text is not stored once it has been read."
               }
             }
           ]
@@ -532,10 +579,12 @@
       "name": "شرایط استفاده",
       "status": "published",
       "title": {
-        "fa": "شرایط استفاده | Summa"
+        "fa": "شرایط استفاده | Summa",
+        "en": "Terms of use | Summa"
       },
       "description": {
-        "fa": "شرایط استفاده"
+        "fa": "شرایط استفاده",
+        "en": "Terms of use"
       },
       "sections": [
         {
@@ -549,7 +598,8 @@
               "field_type": "text",
               "order": 0,
               "values": {
-                "fa": "شرایط استفاده"
+                "fa": "شرایط استفاده",
+                "en": "Terms of use"
               }
             },
             {
@@ -558,7 +608,8 @@
               "field_type": "textarea",
               "order": 1,
               "values": {
-                "fa": "این صفحه پیش‌نویس است و پیش از انتشار عمومی باید بازبینی حقوقی شود. Summa صرافی، کیف پول یا مشاور سرمایه‌گذاری نیست و قیمت‌ها تقریبی‌اند."
+                "fa": "این صفحه پیش‌نویس است و پیش از انتشار عمومی باید بازبینی حقوقی شود. Summa صرافی، کیف پول یا مشاور سرمایه‌گذاری نیست و قیمت‌ها تقریبی‌اند.",
+                "en": "This page is a draft and needs a legal review before it goes public. Summa is not an exchange, a wallet or an investment adviser, and its prices are approximate."
               }
             }
           ]
@@ -573,21 +624,24 @@
       "items": [
         {
           "label": {
-            "fa": "خانه"
+            "fa": "خانه",
+            "en": "Home"
           },
           "page": "home",
           "order": 0
         },
         {
           "label": {
-            "fa": "سؤالات پرتکرار"
+            "fa": "سؤالات پرتکرار",
+            "en": "FAQ"
           },
           "page": "faq",
           "order": 1
         },
         {
           "label": {
-            "fa": "درباره"
+            "fa": "درباره",
+            "en": "About"
           },
           "page": "about",
           "order": 2
@@ -600,14 +654,16 @@
       "items": [
         {
           "label": {
-            "fa": "حریم خصوصی"
+            "fa": "حریم خصوصی",
+            "en": "Privacy"
           },
           "page": "privacy",
           "order": 0
         },
         {
           "label": {
-            "fa": "شرایط استفاده"
+            "fa": "شرایط استفاده",
+            "en": "Terms of use"
           },
           "page": "terms",
           "order": 1

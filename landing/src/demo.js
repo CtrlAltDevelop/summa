@@ -1,20 +1,21 @@
 import { emptyAccount, register, tilt } from './balance.js';
 import { el } from './dom.js';
-import { formatNumber } from './format.js';
+import { formatMoney } from './format.js';
 
 export const MESSAGES = {
-  offline: 'اتصال برقرار نشد. اینترنت را بررسی کن.',
-  preview: 'این نسخهٔ نمایشی ایستاست؛ دموی زنده به بک‌اند نیاز دارد. پروژه را اجرا کن (make run-lite) تا امتحانش کنی.',
-  rate: 'چند بار پشت‌سر هم امتحان کردی؛ کمی صبر کن.',
-  generic: 'مشکلی پیش آمد. دوباره امتحان کن.',
-  placeholder: 'مثلاً: ۲۵۰ هزار تومن خرید نان',
-  registered: 'ثبت شد',
-  register: 'ثبت',
-  income: 'درآمد',
-  expense: 'خرج',
-  send: 'ارسال',
+  offline: 'No connection. Check your internet and try again.',
+  preview: 'This is a static preview; the live demo needs the backend. Run the project (make run-lite) to try it.',
+  rate: 'That is a lot of tries in a row. Give it a moment.',
+  generic: 'Something went wrong. Try again.',
+  hint: 'Try “250,000 toman on groceries” or “salary 30,000,000 toman”, then tap Register and watch the scale.',
+  placeholder: 'e.g. 250,000 toman on groceries',
+  registered: 'Registered',
+  register: 'Register',
+  income: 'Income',
+  expense: 'Spent',
+  send: 'Send',
+  label: 'Write what you spent',
 };
-
 /** The sentence for an API failure. */
 export function messageFor(error) {
   if (error?.preview) return MESSAGES.preview;
@@ -32,14 +33,17 @@ export function messageFor(error) {
  */
 export function createDemo(api, scale) {
   let account = emptyAccount();
-  const log = el('div', { class: 'log', role: 'log', 'aria-live': 'polite' });
+  const log = el('div', { class: 'log', role: 'log', 'aria-live': 'polite' }, el('p', { class: 'hint' }, MESSAGES.hint));
   const totals = el('p', { class: 'totals' });
-  const input = el('input', { type: 'text', maxlength: 200, placeholder: MESSAGES.placeholder, 'aria-label': 'جمله‌ات را بنویس' });
+  const input = el('input', { type: 'text', maxlength: 200, placeholder: MESSAGES.placeholder, 'aria-label': MESSAGES.label });
   const send = el('button', { type: 'submit', class: 'button' }, MESSAGES.send);
   const form = el('form', { class: 'composer' }, input, send);
 
   function paint() {
-    totals.textContent = `${MESSAGES.income}: ${formatNumber(account.income)} · ${MESSAGES.expense}: ${formatNumber(account.expense)}`;
+    totals.replaceChildren(
+      el('span', { class: 'total in' }, `${MESSAGES.income}: ${formatMoney(account.income)}`),
+      el('span', { class: 'total out' }, `${MESSAGES.expense}: ${formatMoney(account.expense)}`),
+    );
     scale?.setTilt(tilt(account.income, account.expense));
   }
 
@@ -64,6 +68,7 @@ export function createDemo(api, scale) {
     const text = input.value.trim();
     if (!text) return;
     input.value = '';
+    log.querySelector('.hint')?.remove();
     bubble(text, 'me');
     send.disabled = true;
     try {

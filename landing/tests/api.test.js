@@ -14,12 +14,12 @@ describe('createApi', () => {
     expect(fetchImpl).toHaveBeenCalledWith('/api/v1/billing/plans', undefined);
   });
 
-  it('asks for the Persian version of a page and escapes the slug', async () => {
+  it('asks for the site language and escapes the slug', async () => {
     const fetchImpl = vi.fn().mockResolvedValue(reply(200, { data: {} }));
 
     await createApi(fetchImpl).page('a b');
 
-    expect(fetchImpl.mock.calls[0][0]).toBe('/api/v1/cms/pages/a%20b?language=fa');
+    expect(fetchImpl.mock.calls[0][0]).toBe('/api/v1/cms/pages/a%20b?language=en');
   });
 
   it('posts the demo sentence as JSON', async () => {

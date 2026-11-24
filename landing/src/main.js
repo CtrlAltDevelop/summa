@@ -15,15 +15,15 @@ if (preview) {
     el(
       'p',
       { class: 'preview-banner', role: 'note' },
-      'نسخهٔ نمایشی ایستا: قیمت‌ها نمونه‌اند و دموی چت به بک‌اند نیاز دارد. ',
-      el('a', { href: 'https://github.com/CtrlAltDevelop/summa', rel: 'noopener' }, 'کد روی GitHub'),
+      'Static preview: the prices are samples and the chat demo needs the backend. ',
+      el('a', { href: 'https://github.com/CtrlAltDevelop/summa', rel: 'noopener' }, 'Source on GitHub'),
     ),
   );
 }
 const app = document.getElementById('app');
 
 /** Show a failure in place of a section instead of leaving the page blank. */
-const unavailable = () => el('p', { class: 'muted' }, 'این بخش فعلاً در دسترس نیست.');
+const unavailable = () => el('p', { class: 'muted' }, 'This section is unavailable right now.');
 
 async function safe(promise, render) {
   try {
@@ -34,7 +34,7 @@ async function safe(promise, render) {
 }
 
 async function home() {
-  const canvas = el('canvas', { class: 'scale', 'aria-label': 'ترازوی حساب‌وکتاب', role: 'img' });
+  const canvas = el('canvas', { class: 'scale', 'aria-label': 'A balance scale that tips with the demo account', role: 'img' });
   // Three.js is the heavy part: load it after the text, and live without it if
   // it cannot load or WebGL is missing.
   const scale = await import('./hero.js').then((m) => m.createScale(canvas)).catch(() => null);
@@ -42,7 +42,7 @@ async function home() {
   const [page, rates, plans, faq] = [api.page('home'), api.rates(), api.plans(), api.page('faq')];
 
   const hero = await safe(page, (p) =>
-    el('section', { class: 'hero' }, renderHero(p), el('div', { class: 'stage' }, scale ? canvas : null)),
+    el('section', { class: 'hero' }, renderHero(p), el('div', { class: 'stage' }, el('div', { class: 'stage-glow', 'aria-hidden': true }), scale ? canvas : null)),
   );
   app.replaceChildren(
     hero,
@@ -74,7 +74,7 @@ async function chrome() {
     api.menu('footer').catch(() => null),
   ]);
   nav.replaceChildren(...renderMenu(main));
-  footer.replaceChildren(...renderMenu(foot));
+  footer.replaceChildren(...renderMenu(foot), el('span', { class: 'copyright' }, `© ${new Date().getFullYear()} Summa`));
 }
 
 window.addEventListener('hashchange', route);

@@ -1,16 +1,17 @@
 import { convert, loanPayment, monthsToGoal } from './calculators.js';
+import { heading } from './content.js';
 import { el } from './dom.js';
 import { formatDecimal, formatNumber, toLatinDigits } from './format.js';
 
 export const TEXT = {
-  title: 'ابزارهای رایگان',
-  note: 'بدون ثبت‌نام؛ نتیجه‌ها تقریبی‌اند.',
-  loan: 'قسط‌سنج', amount: 'مبلغ وام (تومان)', rate: 'سود سالانه (٪)', months: 'تعداد ماه‌ها',
-  payment: 'قسط ماهانه', total: 'جمع پرداختی', interest: 'جمع سود',
-  goal: 'هدف پس‌انداز', goalAmount: 'مبلغ هدف (تومان)', monthly: 'پس‌انداز ماهانه (تومان)', yearsMonths: 'ماه',
-  convert: 'مبدل ارز و طلا', value: 'مقدار', from: 'از', to: 'به',
-  invalid: 'ورودی‌ها را بررسی کنید.',
-};
+  title: 'Free tools',
+  note: 'No sign-up needed; the results are approximate.',
+  loan: 'Loan calculator', amount: 'Loan amount (Toman)', rate: 'Yearly interest (%)', months: 'Number of months',
+  payment: 'Monthly payment', total: 'Total paid', interest: 'Total interest',
+  goal: 'Savings goal', goalAmount: 'Target amount (Toman)', monthly: 'Saved each month (Toman)', yearsMonths: 'months',
+  convert: 'Currency and gold converter', value: 'Amount', from: 'From', to: 'To',
+  invalid: 'Check the values above.',
+}
 
 const num = (input) => Number(toLatinDigits(input.value.trim()) || NaN);
 const field = (label, control) => el('label', {}, el('span', {}, label), control);
@@ -37,7 +38,7 @@ export function renderTools(rates) {
     return [n === null ? TEXT.invalid : `${formatNumber(n)} ${TEXT.yearsMonths}`];
   });
   const known = (rates ?? []).filter((r) => r.known && Number(r.price) > 0);
-  const section = [el('h2', {}, TEXT.title), el('p', { class: 'muted' }, TEXT.note), el('div', { class: 'grid' }, loan, save, known.length ? converter(known) : null)];
+  const section = [heading(TEXT.title), el('p', { class: 'muted lead-note' }, TEXT.note), el('div', { class: 'grid' }, loan, save, known.length ? converter(known) : null)];
   return el('section', { id: 'tools' }, ...section);
 }
 

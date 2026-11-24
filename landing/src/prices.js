@@ -1,15 +1,16 @@
+import { heading } from './content.js';
 import { el } from './dom.js';
 import { formatDecimal, formatNumber } from './format.js';
 
 export const TEXT = {
-  rates: 'قیمت‌های امروز',
-  ratesNote: 'قیمت‌ها تقریبی‌اند؛ Summa صرافی نیست و توصیه خرید و فروش نمی‌دهد.',
-  unknown: 'نامشخص',
-  stale: 'کهنه',
-  plans: 'پلن‌ها',
-  soon: 'پلن‌ها به‌زودی اعلام می‌شوند.',
-  toman: 'تومان',
-  days: 'روز',
+  rates: "Today's prices",
+  ratesNote: 'Prices are approximate. Summa is not an exchange and gives no buy or sell advice.',
+  unknown: 'Unknown',
+  stale: 'Stale',
+  plans: 'Plans',
+  soon: 'Plans are coming soon.',
+  toman: 'Toman',
+  days: 'days',
 };
 
 /** The price table. A symbol with no known price says so instead of showing 0. */
@@ -26,7 +27,7 @@ export function renderRates(rates) {
   return el(
     'section',
     { id: 'prices' },
-    el('h2', {}, TEXT.rates),
+    heading(TEXT.rates),
     el('div', { class: 'glass block' }, el('table', {}, el('tbody', {}, ...rows))),
     el('p', { class: 'muted' }, TEXT.ratesNote),
   );
@@ -49,5 +50,5 @@ export function renderPlans(plans) {
         ),
       )
     : el('p', { class: 'muted' }, TEXT.soon);
-  return el('section', { id: 'plans' }, el('h2', {}, TEXT.plans), body);
+  return el('section', { id: 'plans' }, heading(TEXT.plans), body);
 }
