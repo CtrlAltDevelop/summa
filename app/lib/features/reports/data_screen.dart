@@ -116,7 +116,7 @@ class _DataScreenState extends ConsumerState<DataScreen> {
       ..invalidate(categoriesControllerProvider);
     setState(() => _preview = null);
     _csv.clear();
-    _say(l10n.dataImported(toPersianDigits('${result.imported}')));
+    _say(l10n.dataImported(localDigits('${result.imported}')));
   });
 
   @override
@@ -148,15 +148,15 @@ class _DataScreenState extends ConsumerState<DataScreen> {
           const SizedBox(height: SmSpace.md),
           Text(
             l10n.dataPreviewResult(
-              toPersianDigits('${preview.rows}'),
-              toPersianDigits('${preview.importable}'),
-              toPersianDigits('${preview.skipped}'),
+              localDigits('${preview.rows}'),
+              localDigits('${preview.importable}'),
+              localDigits('${preview.skipped}'),
             ),
             style: SmType.body,
           ),
           for (final e in preview.errors.take(_shownErrors))
             Text(
-              l10n.dataLineError(toPersianDigits('${e.line}'), e.message),
+              l10n.dataLineError(localDigits('${e.line}'), e.message),
               style: SmType.caption.copyWith(color: SmColors.danger),
             ),
         ],

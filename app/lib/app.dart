@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 
+import 'core/l10n/locale_controller.dart';
 import 'core/ui/theme.dart';
 import 'features/auth/auth_gate.dart';
 import 'features/debug/gallery_screen.dart';
@@ -11,7 +13,7 @@ import 'l10n/gen/app_localizations.dart';
 const String galleryRoute = '/debug/gallery';
 const String healthRoute = '/debug/health';
 
-class SummaApp extends StatelessWidget {
+class SummaApp extends ConsumerWidget {
   const SummaApp({this.initialRoute = '/', super.key});
 
   final String initialRoute;
@@ -31,14 +33,12 @@ class SummaApp extends StatelessWidget {
     builder: _screens[name] ?? _gate,
   );
 
-  static const Locale _persian = Locale('fa');
-
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
     return MaterialApp(
       onGenerateTitle: (context) => AppLocalizations.of(context).appName,
       theme: buildSummaTheme(),
-      locale: _persian,
+      locale: ref.watch(localeProvider),
       supportedLocales: AppLocalizations.supportedLocales,
       localizationsDelegates: const [
         AppLocalizations.delegate,

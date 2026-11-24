@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:summa/app.dart';
 
@@ -6,7 +7,9 @@ void main() {
   testWidgets('gallery shows every shared widget and ends the count', (
     t,
   ) async {
-    await t.pumpWidget(const SummaApp(initialRoute: galleryRoute));
+    await t.pumpWidget(
+      const ProviderScope(child: SummaApp(initialRoute: galleryRoute)),
+    );
     await t.pumpAndSettle();
 
     expect(find.text('گالری اجزا'), findsOneWidget);
@@ -18,9 +21,11 @@ void main() {
 
   testWidgets('reduced motion shows the final count immediately', (t) async {
     await t.pumpWidget(
-      const MediaQuery(
-        data: MediaQueryData(disableAnimations: true),
-        child: SummaApp(initialRoute: galleryRoute),
+      const ProviderScope(
+        child: MediaQuery(
+          data: MediaQueryData(disableAnimations: true),
+          child: SummaApp(initialRoute: galleryRoute),
+        ),
       ),
     );
     await t.pump();

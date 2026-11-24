@@ -87,7 +87,7 @@ class _DebtTile extends StatelessWidget {
               ),
             ),
             Text(
-              toPersianDigits('${debt.paidCount}/${debt.count}'),
+              localDigits('${debt.paidCount}/${debt.count}'),
               style: SmType.body,
             ),
           ],

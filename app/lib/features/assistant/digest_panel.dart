@@ -41,7 +41,7 @@ class DigestPanel extends ConsumerWidget {
                     ? digest.accountingHour
                     : -1,
                 label: (h) =>
-                    h < 0 ? l10n.accountingHourOff : toPersianDigits('$h:00'),
+                    h < 0 ? l10n.accountingHourOff : localDigits('$h:00'),
                 onSelected: (h) => setAccountingHour(ref, h),
               ),
             ],
@@ -64,13 +64,11 @@ class _ReminderCard extends StatelessWidget {
       if (digest.entriesToday == 0)
         l10n.digestNothingYet
       else
-        l10n.digestEntries(toPersianDigits('${digest.entriesToday}')),
+        l10n.digestEntries(localDigits('${digest.entriesToday}')),
       if (digest.uncategorizedToday > 0)
-        l10n.digestUncategorized(
-          toPersianDigits('${digest.uncategorizedToday}'),
-        ),
+        l10n.digestUncategorized(localDigits('${digest.uncategorizedToday}')),
       if (digest.dueQuestions > 0)
-        l10n.digestDue(toPersianDigits('${digest.dueQuestions}')),
+        l10n.digestDue(localDigits('${digest.dueQuestions}')),
     ];
     return SmGlassCard(
       padding: const EdgeInsets.all(SmSpace.lg),

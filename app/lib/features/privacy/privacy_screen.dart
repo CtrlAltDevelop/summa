@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../core/format/persian.dart';
+import '../../core/l10n/locale_controller.dart';
 import '../../core/ui/tokens/tokens.dart';
 import '../../core/ui/widgets/widgets.dart';
 import '../../l10n/gen/app_localizations.dart';
@@ -81,9 +82,9 @@ class _PrivacyScreenState extends ConsumerState<PrivacyScreen> {
   String _delayLabel(AppLocalizations l10n, int seconds) {
     if (seconds == 0) return l10n.lockDelayNow;
     if (seconds < 60) {
-      return l10n.lockDelaySeconds(toPersianDigits('$seconds'));
+      return l10n.lockDelaySeconds(localDigits('$seconds'));
     }
-    return l10n.lockDelayMinutes(toPersianDigits('${seconds ~/ 60}'));
+    return l10n.lockDelayMinutes(localDigits('${seconds ~/ 60}'));
   }
 
   @override
@@ -94,6 +95,18 @@ class _PrivacyScreenState extends ConsumerState<PrivacyScreen> {
     return SmScreen(
       title: l10n.privacyTitle,
       children: [
+        Text(l10n.languageTitle, style: SmType.caption),
+        const SizedBox(height: SmSpace.sm),
+        Choices<String>(
+          values: supportedLanguages,
+          selected: ref.watch(localeProvider).languageCode,
+          label: (code) => code == 'fa' ? l10n.languageFa : l10n.languageEn,
+          onSelected: (code) =>
+              ref.read(localeProvider.notifier).select(Locale(code)),
+        ),
+        const SizedBox(height: SmSpace.xs),
+        Text(l10n.languageShamsiNote, style: SmType.caption),
+        const SizedBox(height: SmSpace.xl),
         SmButton(
           label: lock.enabled ? l10n.lockDisable : l10n.lockEnable,
           onPressed: lock.enabled ? _disable : _enable,
@@ -129,7 +142,7 @@ class _PrivacyScreenState extends ConsumerState<PrivacyScreen> {
           selected: retention ?? 0,
           label: (d) => d == 0
               ? l10n.retentionForever
-              : l10n.retentionDays(toPersianDigits('$d')),
+              : l10n.retentionDays(localDigits('$d')),
           onSelected: (d) => setChatRetention(ref, d),
         ),
         const SizedBox(height: SmSpace.xxl),

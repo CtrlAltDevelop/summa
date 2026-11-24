@@ -1160,4 +1160,22 @@ class AppLocalizationsFa extends AppLocalizations {
 
   @override
   String get setupLater => 'بعداً';
+
+  @override
+  String get listSeparator => '، ';
+
+  @override
+  String get unlockReason => 'باز کردن Summa';
+
+  @override
+  String get languageTitle => 'زبان';
+
+  @override
+  String get languageFa => 'فارسی';
+
+  @override
+  String get languageEn => 'English';
+
+  @override
+  String get languageShamsiNote => 'تاریخ‌ها شمسی‌اند.';
 }

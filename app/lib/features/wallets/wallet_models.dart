@@ -86,8 +86,8 @@ String formatMinor(int minor, String currency) {
   final whole = minor.abs() ~/ scale;
   final fraction = (minor.abs() % scale).toString().padLeft(decimals, '0');
   final sign = minor < 0 ? '-' : '';
-  return toPersianDigits(
-    '$sign${formatNumber(whole).replaceFirst('-', '')}٫$fraction',
+  return localDigits(
+    '$sign${formatNumber(whole).replaceFirst('-', '')}$decimalMark$fraction',
   );
 }
 

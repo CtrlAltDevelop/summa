@@ -1,0 +1,558 @@
+{
+  "@@locale": "en",
+  "appName": "Summa",
+  "healthTitle": "Server connection",
+  "healthChecking": "Checking…",
+  "healthOk": "Server is ready",
+  "healthFailed": "Could not connect",
+  "healthRetry": "Check again",
+  "healthLatency": "Latency: {ms} ms",
+  "@healthLatency": {
+    "placeholders": {
+      "ms": {
+        "type": "String"
+      }
+    }
+  },
+  "galleryTitle": "Component gallery",
+  "galleryButton": "Primary button",
+  "galleryCard": "Glass card",
+  "galleryCount": "Counter",
+  "galleryStatus": "Statuses",
+  "statusOk": "Success",
+  "statusWarn": "Warning",
+  "statusBad": "Error",
+  "loginTitle": "Sign in to Summa",
+  "loginSubtitle": "Enter your mobile number and we will send you a verification code.",
+  "phoneLabel": "Mobile number",
+  "phoneHint": "0912 345 6789",
+  "sendCode": "Send code",
+  "codeTitle": "Verification code",
+  "codeSubtitle": "A 6-digit code was sent to {destination}.",
+  "@codeSubtitle": {
+    "placeholders": {
+      "destination": {
+        "type": "String"
+      }
+    }
+  },
+  "codeLabel": "6-digit code",
+  "verify": "Verify",
+  "resendIn": "Resend in {seconds} s",
+  "@resendIn": {
+    "placeholders": {
+      "seconds": {
+        "type": "String"
+      }
+    }
+  },
+  "resend": "Resend code",
+  "changeNumber": "Change number",
+  "nameTitle": "What is your name?",
+  "nameSubtitle": "This is how we will greet you.",
+  "nameLabel": "Name",
+  "continueLabel": "Continue",
+  "homeGreeting": "Hello {name}",
+  "@homeGreeting": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "signOut": "Sign out",
+  "errInvalidPhone": "This number is not valid. Enter an Iranian mobile number.",
+  "errWrongCode": "The code is wrong or has expired. Try again.",
+  "errTooMany": "Too many attempts. Try again in a little while.",
+  "errOffline": "Could not connect. Check your internet.",
+  "errUnknown": "Something went wrong. Try again.",
+  "retry": "Try again",
+  "walletsTotalTitle": "Ledger balance",
+  "walletsEmpty": "You have no wallets yet. Create the first one to see your balance.",
+  "walletAdd": "New wallet",
+  "walletFormTitle": "New wallet",
+  "walletNameLabel": "Wallet name",
+  "walletKindLabel": "Type",
+  "walletCurrencyLabel": "Currency",
+  "walletBankLabel": "Bank (optional)",
+  "walletOpeningLabel": "Opening balance",
+  "walletSave": "Save",
+  "walletNameRequired": "Enter a name for the wallet.",
+  "walletBalanceInvalid": "The opening balance is not valid. Only credit cards and installments can start negative.",
+  "kindCash": "Cash",
+  "kindBank": "Bank account",
+  "kindCreditCard": "Credit card",
+  "kindBnpl": "Installment purchase",
+  "kindGiftCard": "Gift card",
+  "kindCrypto": "Crypto",
+  "kindGold": "Gold",
+  "currencyIRT": "Toman",
+  "currencyIRR": "Rial",
+  "currencyUSD": "Dollar",
+  "currencyEUR": "Euro",
+  "currencyAED": "Dirham",
+  "currencyTRY": "Lira",
+  "currencyUSDT": "Tether",
+  "entryAdd": "Record an expense or income",
+  "entryFormTitle": "New entry",
+  "entryExpense": "Expense",
+  "entryIncome": "Income",
+  "entryWalletLabel": "Wallet",
+  "entryAmountLabel": "Amount",
+  "entryNoteLabel": "Note (optional)",
+  "entryAmountInvalid": "The amount is not valid. Enter a number greater than zero.",
+  "entryDelete": "Delete",
+  "transferAdd": "Transfer between wallets",
+  "transferFormTitle": "Transfer money",
+  "transferFrom": "From wallet",
+  "transferTo": "To wallet",
+  "transferRateLabel": "Rate (target units per one source unit)",
+  "transferFeeLabel": "Fee (optional)",
+  "transferOut": "Transfer (withdrawal)",
+  "transferIn": "Transfer (deposit)",
+  "transferSameWallet": "The source and target must be two different wallets.",
+  "transferRateInvalid": "The rate is not valid. Enter a number greater than zero.",
+  "transferFeeInvalid": "The fee is not valid.",
+  "entryCategoryLabel": "Category",
+  "categoriesTitle": "Categories and caps",
+  "categoriesOpen": "Categories and monthly caps",
+  "categoryNameLabel": "New category name",
+  "categoryAdd": "Add",
+  "categoryExpenses": "Expense categories",
+  "categoryIncomes": "Income categories",
+  "categoryNameInvalid": "The category name is not valid or already exists.",
+  "budgetSet": "Cap",
+  "budgetFormTitle": "Monthly cap",
+  "budgetLimitLabel": "Cap (zero means no cap)",
+  "budgetCurrencyLabel": "Currency",
+  "budgetsTitle": "This month's caps",
+  "budgetOver": "Over the cap",
+  "budgetWarning": "Close to the cap",
+  "chatOpen": "Assistant",
+  "chatTitle": "Assistant",
+  "chatHint": "e.g. 250,000 toman on bread",
+  "chatSend": "Send",
+  "chatRegister": "Register",
+  "chatRegistered": "Registered",
+  "chatClear": "Clear chat",
+  "chatChooseWallet": "Choose a wallet",
+  "chatEmpty": "Write a sentence and I will make a card to register.",
+  "smsOpen": "Bank SMS",
+  "smsTitle": "Bank SMS",
+  "smsPasteLabel": "Paste the SMS text here",
+  "smsAnalyze": "Check SMS",
+  "smsIgnoredOtp": "This SMS is a one-time code; it will not be registered.",
+  "smsIgnoredFailed": "This transaction failed; it will not be registered.",
+  "smsIgnoredAd": "This SMS is an advertisement; it will not be registered.",
+  "smsIgnoredNoAmount": "I could not find an amount in this SMS.",
+  "smsKindLabel": "Transaction type",
+  "smsWhatFor": "What was it for?",
+  "smsBalance": "Balance after the transaction",
+  "smsLowConfidence": "I am not sure; please check before registering.",
+  "smsDuplicate": "A similar transaction was already registered. Register anyway?",
+  "smsCardNote": "This card (last 4 digits {last4}) will be linked to this wallet next time.",
+  "@smsCardNote": {
+    "placeholders": {
+      "last4": {
+        "type": "String"
+      }
+    }
+  },
+  "entryOutsideLabel": "Ledger",
+  "entryCounted": "In totals",
+  "entryOutside": "Outside totals",
+  "entryOutsideTag": "Outside totals",
+  "entrySplitTag": "Split",
+  "splitOpen": "Split an expense",
+  "splitTitle": "Split an expense",
+  "splitPart": "Part",
+  "splitAddPart": "Add a part",
+  "splitTotal": "Total",
+  "splitNeedsTwo": "At least two parts with a valid amount are needed.",
+  "entryRefund": "Refund",
+  "refundOpen": "Refund",
+  "refundTitle": "Refund",
+  "refundAmountLabel": "Amount (empty = everything left)",
+  "refundRemaining": "Refundable",
+  "entryRefundedTag": "Refunded",
+  "entryDeleteBlocked": "This expense has a refund; delete the refunds first.",
+  "refundInvalid": "The refund amount is not valid or is more than what is left.",
+  "recurringOpen": "Recurring transactions",
+  "recurringTitle": "Recurring transaction",
+  "recurringAdd": "New recurring",
+  "recurringNoteLabel": "Title (e.g. rent)",
+  "recurringAmountLabel": "Amount (empty = I ask each time)",
+  "recurringPeriodLabel": "Repeats",
+  "recurringMonthly": "Monthly",
+  "recurringWeekly": "Weekly",
+  "recurringDayLabel": "Day of the Shamsi month (1 to 31)",
+  "recurringWeekdayLabel": "Day of the week",
+  "recurringAuto": "Register automatically on the due day",
+  "recurringAskMe": "Ask me",
+  "recurringNext": "Next due",
+  "recurringPause": "Pause",
+  "recurringResume": "Resume",
+  "recurringDayInvalid": "The day is not valid.",
+  "weekdaySat": "Saturday",
+  "weekdaySun": "Sunday",
+  "weekdayMon": "Monday",
+  "weekdayTue": "Tuesday",
+  "weekdayWed": "Wednesday",
+  "weekdayThu": "Thursday",
+  "weekdayFri": "Friday",
+  "occurrenceDueTitle": "Due",
+  "occurrenceUpcoming": "Upcoming",
+  "occurrenceLowBalance": "The wallet balance is low for this amount.",
+  "occurrenceDeducted": "Deducted from this account",
+  "occurrenceOtherWallet": "From another account",
+  "occurrenceCancelled": "Cancelled",
+  "occurrenceAmountLabel": "Amount this time",
+  "occurrenceNeedsAmount": "Enter the amount for this time.",
+  "occurrenceNotYet": "Not yet",
+  "occurrenceGotIt": "Got it",
+  "occurrenceDidYouGetIt": "Did you get it?",
+  "recurringReceived": "I received this month's salary",
+  "recurringPaid": "Paid this month",
+  "recurringCategoryLabel": "Category",
+  "digestTitle": "Today's books",
+  "digestEntries": "Entries recorded today: {count}",
+  "@digestEntries": {
+    "placeholders": {
+      "count": {
+        "type": "String"
+      }
+    }
+  },
+  "digestUncategorized": "Uncategorized: {count}",
+  "@digestUncategorized": {
+    "placeholders": {
+      "count": {
+        "type": "String"
+      }
+    }
+  },
+  "digestDue": "Dues waiting for an answer: {count}",
+  "@digestDue": {
+    "placeholders": {
+      "count": {
+        "type": "String"
+      }
+    }
+  },
+  "digestNothingYet": "You have not recorded anything today.",
+  "accountingHourTitle": "Daily accounting hour",
+  "accountingHourOff": "Off",
+  "debtAdd": "New loan or installment",
+  "debtTitle": "Loan or installment",
+  "debtFormTitle": "New debt",
+  "debtKindLoan": "Bank loan",
+  "debtKindPurchase": "Installment purchase",
+  "debtKindPersonal": "Personal debt",
+  "debtTitleLabel": "Title (e.g. mortgage)",
+  "debtInstallmentLabel": "Amount of each installment",
+  "debtCountLabel": "Number of installments",
+  "debtFirstDueLabel": "First installment date (e.g. 1405/09/15)",
+  "debtPrincipalLabel": "Principal (optional)",
+  "debtWalletLabel": "Paying wallet (optional)",
+  "debtRemaining": "Remaining",
+  "debtNextDue": "Next installment",
+  "debtClosed": "Settled",
+  "debtOverdue": "Overdue",
+  "installmentPay": "Paid",
+  "installmentUndo": "Undo payment",
+  "installmentPaid": "Paid",
+  "debtDelete": "Delete debt",
+  "debtCountInvalid": "The number of installments must be between 1 and 120.",
+  "debtDateInvalid": "The first installment date is not valid.",
+  "debtPayWallet": "Which wallet pays?",
+  "debtPayFailed": "The payment failed; check the wallet and amount.",
+  "assetsTitle": "Assets",
+  "assetAdd": "New asset",
+  "assetsValue": "Asset value",
+  "assetsProfit": "Profit and loss",
+  "assetsRealized": "Realized profit",
+  "assetFormTitle": "New asset",
+  "assetCustom": "Custom",
+  "assetNameLabel": "Asset name",
+  "assetQuantityLabel": "Quantity",
+  "assetBuyPriceLabel": "Buy price per unit (Toman)",
+  "assetManualPriceLabel": "Today's price per unit (Toman)",
+  "assetBuyMore": "New purchase",
+  "assetSell": "Sell",
+  "assetSellPriceLabel": "Sell price per unit (Toman)",
+  "assetDelete": "Delete asset",
+  "assetUnknownPrice": "The price of this asset is not known yet.",
+  "assetStale": "Stale price",
+  "assetQuantityInvalid": "The quantity is not valid.",
+  "assetPriceInvalid": "The price is not valid.",
+  "assetNameInvalid": "A name and today's price are required.",
+  "assetFailed": "It did not work; check the quantity and price.",
+  "assetCost": "Purchase cost",
+  "assetHeld": "Current quantity",
+  "pricesOpen": "Prices",
+  "pricesTitle": "Prices",
+  "priceUnknown": "Unknown",
+  "priceStaleSuffix": "stale",
+  "priceSourcePrefix": "Source",
+  "netWorthTitle": "Net worth",
+  "netWorthWallets": "Wallets",
+  "netWorthAssets": "Assets",
+  "netWorthDebts": "Debts",
+  "netWorthGold": "Grams of 18k gold",
+  "netWorthStale": "Some rates are stale; the number is approximate.",
+  "netWorthUnconverted": "Currencies without a rate (left out): {codes}",
+  "@netWorthUnconverted": {
+    "placeholders": {
+      "codes": {
+        "type": "String"
+      }
+    }
+  },
+  "netWorthUnpriced": "Assets without a price: {count}",
+  "@netWorthUnpriced": {
+    "placeholders": {
+      "count": {
+        "type": "String"
+      }
+    }
+  },
+  "basketsTitle": "Goal baskets",
+  "basketAdd": "New goal basket",
+  "basketFormTitle": "Goal basket",
+  "basketNameLabel": "Goal name (e.g. house down payment)",
+  "basketTargetLabel": "Target amount (Toman)",
+  "basketItemsLabel": "What counts towards this goal?",
+  "basketTargetInvalid": "The target amount is not valid.",
+  "basketDelete": "Delete basket",
+  "basketProgress": "{percent}% of the goal",
+  "@basketProgress": {
+    "placeholders": {
+      "percent": {
+        "type": "String"
+      }
+    }
+  },
+  "reportOpen": "Monthly report",
+  "reportTitle": "Monthly report",
+  "reportPrev": "Previous month",
+  "reportNext": "Next month",
+  "reportIncome": "Income",
+  "reportExpense": "Expenses",
+  "reportNet": "Net",
+  "reportByCategory": "Expenses by category",
+  "reportIncomeByCategory": "Income by category",
+  "reportDaily": "Daily expenses",
+  "reportEmpty": "There are no transactions this month.",
+  "reportEntries": "Transactions: {count}",
+  "@reportEntries": {
+    "placeholders": {
+      "count": {
+        "type": "String"
+      }
+    }
+  },
+  "reportTop": "Biggest spending category: {name}",
+  "@reportTop": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "reportFailed": "The report could not be loaded. Try again.",
+  "outboxPending": "Transactions waiting to send: {count}",
+  "@outboxPending": {
+    "placeholders": {
+      "count": {
+        "type": "String"
+      }
+    }
+  },
+  "outboxRetry": "Send again",
+  "outboxSavedOffline": "You are offline; saved and will be sent when you reconnect.",
+  "outboxFailedTitle": "These transactions were not registered",
+  "outboxFailedDismiss": "Remove",
+  "outboxQueued": "Waiting to send",
+  "billingOpen": "Subscription",
+  "billingTitle": "Subscription",
+  "billingStatusNone": "You have no subscription yet.",
+  "billingStatusTrial": "Trial; {days} days left",
+  "@billingStatusTrial": {
+    "placeholders": {
+      "days": {
+        "type": "String"
+      }
+    }
+  },
+  "billingStatusActive": "Subscription active; {days} days left",
+  "@billingStatusActive": {
+    "placeholders": {
+      "days": {
+        "type": "String"
+      }
+    }
+  },
+  "billingStatusExpired": "Your subscription has ended.",
+  "billingStartTrial": "Start the trial",
+  "billingBuy": "Buy",
+  "billingNoPlans": "There are no plans to buy right now.",
+  "billingPlanLine": "{price} Toman · {days} days",
+  "@billingPlanLine": {
+    "placeholders": {
+      "price": {
+        "type": "String"
+      },
+      "days": {
+        "type": "String"
+      }
+    }
+  },
+  "billingPayAt": "Pay here:",
+  "billingCheckPayment": "Check payment",
+  "billingNotConfirmed": "The payment is not confirmed yet.",
+  "billingFailed": "It did not work. Try again.",
+  "readOnlyBanner": "Your subscription has ended; for now you can only view your data.",
+  "readOnlyRenew": "Renew",
+  "supportOpen": "Support",
+  "supportTitle": "Support",
+  "supportNew": "New ticket",
+  "supportEmpty": "You have no tickets yet.",
+  "supportSubjectLabel": "Subject",
+  "supportBodyLabel": "Describe your problem or question",
+  "supportSend": "Send",
+  "supportReplyHint": "Write your message",
+  "supportSubjectRequired": "Write a subject and a message.",
+  "supportFailed": "It was not sent. Try again.",
+  "supportStatusOpen": "Open",
+  "supportStatusPending": "Waiting for a reply",
+  "supportStatusResolved": "Resolved",
+  "supportStatusClosed": "Closed",
+  "supportFromTeam": "Support",
+  "supportFromYou": "You",
+  "supportUnread": "New message",
+  "lockTitle": "Summa is locked",
+  "lockPasscodeLabel": "App passcode",
+  "lockUnlock": "Unlock",
+  "lockBiometric": "Unlock with biometrics",
+  "lockWrong": "The passcode is wrong.",
+  "lockWait": "Too many attempts; wait a moment and try again.",
+  "privacyOpen": "Privacy and security",
+  "privacyTitle": "Privacy and security",
+  "lockEnable": "Turn on app lock",
+  "lockDisable": "Turn off the lock",
+  "lockChange": "Change passcode",
+  "lockNewPasscode": "New passcode (4 to 8 digits)",
+  "lockConfirmPasscode": "Repeat the passcode",
+  "lockMismatch": "The two passcodes do not match.",
+  "lockInvalid": "The passcode must be 4 to 8 digits.",
+  "lockCurrentPasscode": "Current passcode",
+  "lockBiometricToggle": "Biometrics",
+  "lockOn": "On",
+  "lockOff": "Off",
+  "lockDelayLabel": "Auto-lock after",
+  "lockDelayNow": "Immediately",
+  "lockDelaySeconds": "{count} seconds",
+  "@lockDelaySeconds": {
+    "placeholders": {
+      "count": {
+        "type": "String"
+      }
+    }
+  },
+  "lockDelayMinutes": "{count} minutes",
+  "@lockDelayMinutes": {
+    "placeholders": {
+      "count": {
+        "type": "String"
+      }
+    }
+  },
+  "lockSave": "Save",
+  "strongAuthReason": "Confirm your identity to continue",
+  "strongAuthNeedPasscode": "This action is sensitive. Set an app passcode first.",
+  "strongAuthPrompt": "Enter the app passcode",
+  "strongAuthDenied": "Not confirmed.",
+  "retentionTitle": "Chat retention",
+  "retentionForever": "Forever",
+  "retentionDays": "{count} days",
+  "@retentionDays": {
+    "placeholders": {
+      "count": {
+        "type": "String"
+      }
+    }
+  },
+  "deleteAccountOpen": "Delete account",
+  "deleteAccountWarning": "All your data will be erased permanently and cannot be recovered. Type DELETE to confirm.",
+  "deleteAccountConfirmLabel": "Confirmation phrase",
+  "deleteAccountButton": "Delete account permanently",
+  "deleteAccountFailed": "The deletion did not go through. Type the phrase correctly or try again.",
+  "dataOpen": "Data export and import",
+  "dataTitle": "Data export and import",
+  "dataExport": "Export as CSV",
+  "dataExported": "Export ready: {where}",
+  "@dataExported": {
+    "placeholders": {
+      "where": {
+        "type": "String"
+      }
+    }
+  },
+  "dataExportFailed": "The export failed. Try again.",
+  "dataImportTitle": "Import from CSV",
+  "dataImportHint": "Paste the CSV text here (headers: date, kind, amount, wallet, …)",
+  "dataPreview": "Preview",
+  "dataImport": "Import transactions",
+  "dataDenied": "Identity not confirmed; nothing was done.",
+  "dataPreviewResult": "Rows: {rows} · importable: {ok} · skipped: {skipped}",
+  "@dataPreviewResult": {
+    "placeholders": {
+      "rows": {
+        "type": "String"
+      },
+      "ok": {
+        "type": "String"
+      },
+      "skipped": {
+        "type": "String"
+      }
+    }
+  },
+  "dataImported": "{count} transactions imported.",
+  "@dataImported": {
+    "placeholders": {
+      "count": {
+        "type": "String"
+      }
+    }
+  },
+  "dataLineError": "Line {line}: {message}",
+  "@dataLineError": {
+    "placeholders": {
+      "line": {
+        "type": "String"
+      },
+      "message": {
+        "type": "String"
+      }
+    }
+  },
+  "dataImportFailed": "The import failed. Check the file.",
+  "netWorthHistoryEmpty": "The chart builds up over a few days; one point is recorded each day.",
+  "netWorthRange": "{days} days",
+  "@netWorthRange": {
+    "placeholders": {
+      "days": {
+        "type": "String"
+      }
+    }
+  },
+  "setupTitle": "Complete your account",
+  "setupLater": "Later",
+  "listSeparator": ", ",
+  "unlockReason": "Unlock Summa",
+  "languageTitle": "Language",
+  "languageFa": "فارسی",
+  "languageEn": "English",
+  "languageShamsiNote": "Dates stay in the Shamsi calendar for now."
+}

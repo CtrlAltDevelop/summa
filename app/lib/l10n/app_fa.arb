@@ -548,5 +548,11 @@
     }
   },
   "setupTitle": "حساب‌ات را کامل کن",
-  "setupLater": "بعداً"
+  "setupLater": "بعداً",
+  "listSeparator": "، ",
+  "unlockReason": "باز کردن Summa",
+  "languageTitle": "زبان",
+  "languageFa": "فارسی",
+  "languageEn": "English",
+  "languageShamsiNote": "تاریخ‌ها شمسی‌اند."
 }

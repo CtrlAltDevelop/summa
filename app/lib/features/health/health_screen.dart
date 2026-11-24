@@ -45,7 +45,7 @@ class HealthScreen extends ConsumerWidget {
                               text: l10n.healthOk,
                               status: SmStatus.success,
                               detail: l10n.healthLatency(
-                                toPersianDigits('${r.latency.inMilliseconds}'),
+                                localDigits('${r.latency.inMilliseconds}'),
                               ),
                             )
                           : _Message(

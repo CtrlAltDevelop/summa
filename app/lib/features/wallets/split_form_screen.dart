@@ -136,7 +136,7 @@ class _SplitFormScreenState extends ConsumerState<SplitFormScreen> {
         for (var i = 0; i < _parts.length; i++) ...[
           const SizedBox(height: SmSpace.xl),
           Text(
-            toPersianDigits('${l10n.splitPart} ${i + 1}'),
+            localDigits('${l10n.splitPart} ${i + 1}'),
             style: SmType.caption,
           ),
           const SizedBox(height: SmSpace.sm),

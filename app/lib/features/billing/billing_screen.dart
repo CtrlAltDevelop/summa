@@ -77,7 +77,7 @@ class _BillingScreenState extends ConsumerState<BillingScreen> {
                     Text(
                       l10n.billingPlanLine(
                         formatNumber(p.priceMinor),
-                        toPersianDigits('${p.periodDays}'),
+                        localDigits('${p.periodDays}'),
                       ),
                       style: SmType.caption,
                     ),
@@ -143,7 +143,7 @@ class _BillingScreenState extends ConsumerState<BillingScreen> {
   }
 
   String _statusText(AppLocalizations l10n, SubscriptionStatus s) {
-    final days = toPersianDigits('${s.daysLeft}');
+    final days = localDigits('${s.daysLeft}');
     return switch (s.status) {
       'trial' => l10n.billingStatusTrial(days),
       'active' => l10n.billingStatusActive(days),

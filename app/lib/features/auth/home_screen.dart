@@ -26,7 +26,7 @@ import 'setup_prompt.dart';
 
 /// Width from which home becomes a sidebar plus a two-column card grid.
 const double _wideBreakpoint = 900;
-const double _sidebarWidth = 250;
+const double _sidebarWidth = 290; // fits the longest English label
 
 /// Home: greeting, the wallets and their totals, sign-out.
 class HomeScreen extends ConsumerWidget {

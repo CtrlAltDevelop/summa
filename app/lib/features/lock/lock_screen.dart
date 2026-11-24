@@ -86,7 +86,7 @@ class _LockScreenState extends ConsumerState<LockScreen> {
                       label: l10n.lockBiometric,
                       onPressed: () => ref
                           .read(lockProvider.notifier)
-                          .unlockWithBiometrics(),
+                          .unlockWithBiometrics(reason: l10n.unlockReason),
                     ),
                   ],
                 ],

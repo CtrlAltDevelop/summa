@@ -98,7 +98,7 @@ class _ReportScreenState extends ConsumerState<ReportScreen> {
               ),
             ),
             Text(
-              l10n.reportEntries(toPersianDigits('${r.entries}')),
+              l10n.reportEntries(localDigits('${r.entries}')),
               style: SmType.caption,
             ),
             if (r.topExpenseCategory.isNotEmpty)

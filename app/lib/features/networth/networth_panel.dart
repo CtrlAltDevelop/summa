@@ -25,9 +25,9 @@ class NetWorthCard extends ConsumerWidget {
     final warnings = [
       if (worth.stale) l10n.netWorthStale,
       if (worth.unconverted.isNotEmpty)
-        l10n.netWorthUnconverted(worth.unconverted.join('، ')),
+        l10n.netWorthUnconverted(worth.unconverted.join(l10n.listSeparator)),
       if (worth.unpricedAssets > 0)
-        l10n.netWorthUnpriced(toPersianDigits('${worth.unpricedAssets}')),
+        l10n.netWorthUnpriced(localDigits('${worth.unpricedAssets}')),
     ];
     return SmGlassCard(
       strong: true,
@@ -200,7 +200,7 @@ class _HistoryChartState extends ConsumerState<_HistoryChart> {
               GestureDetector(
                 onTap: () => setState(() => _days = d),
                 child: SmChip(
-                  l10n.netWorthRange(toPersianDigits('$d')),
+                  l10n.netWorthRange(localDigits('$d')),
                   selected: d == _days,
                 ),
               ),
@@ -308,7 +308,7 @@ class _BasketTile extends ConsumerWidget {
           Text(
             '${formatNumber(b.valueMinor)} / ${formatNumber(b.targetMinor)} '
             '${currencyLabel(l10n, 'IRT')} · '
-            '${l10n.basketProgress(toPersianDigits('${b.percent}'))}',
+            '${l10n.basketProgress(localDigits('${b.percent}'))}',
             style: SmType.caption,
           ),
         ],

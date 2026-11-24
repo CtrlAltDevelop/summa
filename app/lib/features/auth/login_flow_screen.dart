@@ -178,7 +178,7 @@ class _LoginFlowScreenState extends ConsumerState<LoginFlowScreen> {
         Text(l10n.codeTitle, style: SmType.title),
         const SizedBox(height: SmSpace.sm),
         Text(
-          l10n.codeSubtitle(toPersianDigits(challenge.destination)),
+          l10n.codeSubtitle(localDigits(challenge.destination)),
           style: SmType.caption,
         ),
         const SizedBox(height: SmSpace.xl),
@@ -202,7 +202,7 @@ class _LoginFlowScreenState extends ConsumerState<LoginFlowScreen> {
               ? _LinkText(label: l10n.resend, onTap: _send)
               : Text(
                   _secondsLeft > 0
-                      ? l10n.resendIn(toPersianDigits('$_secondsLeft'))
+                      ? l10n.resendIn(localDigits('$_secondsLeft'))
                       : '',
                   style: SmType.caption,
                 ),

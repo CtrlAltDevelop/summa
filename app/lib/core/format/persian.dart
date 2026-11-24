@@ -3,8 +3,25 @@ import 'package:shamsi_date/shamsi_date.dart';
 const _latinDigits = '0123456789';
 const _persianDigits = '۰۱۲۳۴۵۶۷۸۹';
 const _arabicDigits = '٠١٢٣٤٥٦٧٨٩';
-const _thousandsSeparator = '٬';
 const _groupSize = 3;
+
+// ponytail: one process-wide language, set by the locale controller; per-call
+// locale plumbing through 50 call sites is the upgrade if two locales ever
+// render at once.
+String _language = 'fa';
+
+/// Switches digits, separators and month names to [code] (`fa` or `en`).
+void setFormatLanguage(String code) => _language = code;
+
+bool get _isEnglish => _language == 'en';
+
+/// The decimal mark of the active language: `٫` or `.`.
+String get decimalMark => _isEnglish ? '.' : '٫';
+String get _thousandsSeparator => _isEnglish ? ',' : '٬';
+
+/// Digits in the active language's script.
+String localDigits(String input) =>
+    _isEnglish ? toLatinDigits(input) : toPersianDigits(input);
 
 /// Replaces Latin and Arabic-Indic digits with Persian ones.
 String toPersianDigits(String input) {
@@ -52,26 +69,32 @@ String formatNumber(num value) {
     groups.insert(0, digits.substring(start, end));
   }
   final text = groups.join(_thousandsSeparator);
-  return toPersianDigits(negative ? '-$text' : text);
+  return localDigits(negative ? '-$text' : text);
 }
 
-const _monthNames = [
+const _monthNamesFa = [
   'فروردین', 'اردیبهشت', 'خرداد', 'تیر', 'مرداد', 'شهریور',
   'مهر', 'آبان', 'آذر', 'دی', 'بهمن', 'اسفند', //
 ];
+const _monthNamesEn = [
+  'Farvardin', 'Ordibehesht', 'Khordad', 'Tir', 'Mordad', 'Shahrivar',
+  'Mehr', 'Aban', 'Azar', 'Dey', 'Bahman', 'Esfand', //
+];
+
+List<String> get _monthNames => _isEnglish ? _monthNamesEn : _monthNamesFa;
 
 /// `۱۴۰۵/۰۹/۰۱`
 String formatJalaliDate(DateTime date) {
   final j = Jalali.fromDateTime(date);
   final month = j.month.toString().padLeft(2, '0');
   final day = j.day.toString().padLeft(2, '0');
-  return toPersianDigits('${j.year}/$month/$day');
+  return localDigits('${j.year}/$month/$day');
 }
 
 /// `۱ آذر ۱۴۰۵`
 String formatJalaliLong(DateTime date) {
   final j = Jalali.fromDateTime(date);
-  return toPersianDigits('${j.day} ${_monthNames[j.month - 1]} ${j.year}');
+  return localDigits('${j.day} ${_monthNames[j.month - 1]} ${j.year}');
 }
 
 /// The Shamsi month containing [moment], as `[start, end)` in UTC.
@@ -119,7 +142,7 @@ String quantityText(String input) =>
 
 /// Persian digits for a decimal quantity such as `0.5` -> `۰٫۵`.
 String formatQuantity(String quantity) =>
-    toPersianDigits(quantity.replaceAll('.', '٫'));
+    localDigits(quantity.replaceAll('.', decimalMark));
 
 /// The Shamsi month [offset] months from the one containing [moment]
 /// (0 = this month, -1 = last), as `[start, end)` in UTC.
@@ -141,5 +164,5 @@ String formatQuantity(String quantity) =>
 /// `آذر ۱۴۰۵` for the Shamsi month containing [moment].
 String formatJalaliMonth(DateTime moment) {
   final j = Jalali.fromDateTime(moment);
-  return toPersianDigits('${_monthNames[j.month - 1]} ${j.year}');
+  return localDigits('${_monthNames[j.month - 1]} ${j.year}');
 }

@@ -43,7 +43,7 @@ class _OutboxPanelState extends ConsumerState<OutboxPanel> {
           children: [
             if (outbox.pending.isNotEmpty) ...[
               Text(
-                l10n.outboxPending(toPersianDigits('${outbox.pending.length}')),
+                l10n.outboxPending(localDigits('${outbox.pending.length}')),
                 style: SmType.body,
               ),
               for (final e in outbox.pending)

@@ -81,7 +81,7 @@ class _DebtScreenState extends ConsumerState<DebtScreen> {
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                             Text(
-                              toPersianDigits(
+                              localDigits(
                                 '${i.number}) '
                                 '${formatMinor(i.amountMinor, debt.currency)} $unit',
                               ),

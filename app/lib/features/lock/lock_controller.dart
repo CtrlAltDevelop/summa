@@ -215,12 +215,12 @@ class LockController extends Notifier<LockState> {
     return result;
   }
 
-  Future<bool> unlockWithBiometrics() async {
+  Future<bool> unlockWithBiometrics({String reason = 'Unlock Summa'}) async {
     final auth = ref.read(authenticatorProvider);
     if (!state.enabled || !state.biometric || !await auth.canUseBiometrics()) {
       return false;
     }
-    final ok = await auth.authenticate('باز کردن Summa');
+    final ok = await auth.authenticate(reason);
     if (ok) state = state.copyWith(locked: false);
     return ok;
   }

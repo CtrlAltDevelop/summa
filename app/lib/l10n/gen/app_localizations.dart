@@ -5,6 +5,7 @@ import 'package:flutter/widgets.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:intl/intl.dart' as intl;
 
+import 'app_localizations_en.dart';
 import 'app_localizations_fa.dart';
 
 // ignore_for_file: type=lint
@@ -92,7 +93,10 @@ abstract class AppLocalizations {
       ];
 
   /// A list of this localizations delegate's supported locales.
-  static const List<Locale> supportedLocales = <Locale>[Locale('fa')];
+  static const List<Locale> supportedLocales = <Locale>[
+    Locale('en'),
+    Locale('fa'),
+  ];
 
   /// No description provided for @appName.
   ///
@@ -2265,6 +2269,42 @@ abstract class AppLocalizations {
   /// In fa, this message translates to:
   /// **'بعداً'**
   String get setupLater;
+
+  /// No description provided for @listSeparator.
+  ///
+  /// In fa, this message translates to:
+  /// **'، '**
+  String get listSeparator;
+
+  /// No description provided for @unlockReason.
+  ///
+  /// In fa, this message translates to:
+  /// **'باز کردن Summa'**
+  String get unlockReason;
+
+  /// No description provided for @languageTitle.
+  ///
+  /// In fa, this message translates to:
+  /// **'زبان'**
+  String get languageTitle;
+
+  /// No description provided for @languageFa.
+  ///
+  /// In fa, this message translates to:
+  /// **'فارسی'**
+  String get languageFa;
+
+  /// No description provided for @languageEn.
+  ///
+  /// In fa, this message translates to:
+  /// **'English'**
+  String get languageEn;
+
+  /// No description provided for @languageShamsiNote.
+  ///
+  /// In fa, this message translates to:
+  /// **'تاریخ‌ها شمسی‌اند.'**
+  String get languageShamsiNote;
 }
 
 class _AppLocalizationsDelegate
@@ -2278,7 +2318,7 @@ class _AppLocalizationsDelegate
 
   @override
   bool isSupported(Locale locale) =>
-      <String>['fa'].contains(locale.languageCode);
+      <String>['en', 'fa'].contains(locale.languageCode);
 
   @override
   bool shouldReload(_AppLocalizationsDelegate old) => false;
@@ -2287,6 +2327,8 @@ class _AppLocalizationsDelegate
 AppLocalizations lookupAppLocalizations(Locale locale) {
   // Lookup logic when only language code is specified.
   switch (locale.languageCode) {
+    case 'en':
+      return AppLocalizationsEn();
     case 'fa':
       return AppLocalizationsFa();
   }
