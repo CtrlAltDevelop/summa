@@ -5,11 +5,12 @@ name: Landing preview
 # that it needs the real server.
 
 on:
-  push:
+  # A PR to main builds and tests the site; once it is merged the site is published.
+  pull_request:
     branches: [main]
     paths: ['landing/**', '.github/workflows/landing-preview.yml']
-  # A PR to main builds and tests the site; only a push to main publishes it.
-  pull_request:
+  pull_request_target:
+    types: [closed]
     branches: [main]
     paths: ['landing/**', '.github/workflows/landing-preview.yml']
   workflow_dispatch:
@@ -25,12 +26,15 @@ concurrency:
 
 jobs:
   build:
+    if: github.event_name != 'pull_request_target' || github.event.pull_request.merged == true
     runs-on: ubuntu-latest
     defaults:
       run:
         working-directory: landing
     steps:
       - uses: actions/checkout@v7
+        with:
+          ref: ${{ github.event.pull_request.merge_commit_sha || github.sha }}
       - uses: actions/setup-node@v6
         with:
           node-version: 22
@@ -48,7 +52,7 @@ jobs:
 
   deploy:
     needs: build
-    if: github.event_name != 'pull_request'
+    if: github.event_name == 'workflow_dispatch' || github.event.pull_request.merged == true
     runs-on: ubuntu-latest
     environment:
       name: github-pages

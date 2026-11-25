@@ -1,29 +1,43 @@
 name: CI
 
+# Runs only for pull requests into main.
 on:
   pull_request:
+    branches: [main]
 
-permissions:
-  contents: read
+concurrency:
+  group: ci-${{ github.ref }}
+  cancel-in-progress: true
+
+permissions: {}
 
 jobs:
   backend:
-    runs-on: ubuntu-latest
-    defaults:
-      run:
-        working-directory: backend
-    steps:
-      - uses: actions/checkout@v7
-      - uses: actions/setup-python@v7
-        with:
-          python-version: "3.13"
-          cache: pip
-      - run: python -m pip install -e '.[dev,asgi,redis]'
-      - run: make check
-      - run: make test
+    name: Backend
+    uses: CtrlAltDevelop/ci-workflows/.github/workflows/python-test.yml@v1.2.0
+    permissions:
+      contents: read
+    with:
+      working-directory: backend
+      python-version: "3.13"
+      install: uv venv && uv pip install -e '.[dev,asgi,redis]'
+      test-command: uv run --no-sync make check && uv run --no-sync make test
 
+  app:
+    name: App
+    uses: CtrlAltDevelop/ci-workflows/.github/workflows/flutter-android.yml@v1.1.1
+    permissions:
+      contents: read
+    with:
+      working-directory: app
+      flutter-version: "3.50.0"
+
+  # No shared buf workflow exists: this is the only caller, so it stays inline.
   contract:
+    name: Contract
     runs-on: ubuntu-latest
+    permissions:
+      contents: read
     steps:
       - uses: actions/checkout@v7
       - uses: bufbuild/buf-setup-action@v1
@@ -32,19 +46,3 @@ jobs:
           # rate limit and fails at random.
           github_token: ${{ secrets.GITHUB_TOKEN }}
       - run: buf lint
-
-  app:
-    runs-on: ubuntu-latest
-    defaults:
-      run:
-        working-directory: app
-    steps:
-      - uses: actions/checkout@v7
-      - uses: subosito/flutter-action@v2
-        with:
-          channel: stable
-          cache: true
-      - run: flutter pub get
-      - run: dart format --output=none --set-exit-if-changed lib test
-      - run: flutter analyze --no-fatal-infos
-      - run: flutter test --coverage
